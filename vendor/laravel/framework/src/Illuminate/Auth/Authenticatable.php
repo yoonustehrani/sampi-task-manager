@@ -5,7 +5,7 @@ namespace Illuminate\Auth;
 trait Authenticatable
 {
     /**
-     * The column name of the "remember me" token.
+     * The column name of the "remember me" token. hello world !
      *
      * @var string
      */
