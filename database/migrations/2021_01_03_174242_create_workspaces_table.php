@@ -16,8 +16,16 @@ class CreateWorkspacesTable extends Migration
         Schema::create('workspaces', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->timestamps();
+            $table->softDeletes();
+        });
+        Schema::create('user_workspace', function (Blueprint $table) {
+            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('workspace_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('workspace_id')->references('id')->on('workspaces')->onDelete('cascade')->onUpdate('cascade');
+            $table->boolean('is_admin')->default(false);
         });
     }
 
@@ -28,6 +36,7 @@ class CreateWorkspacesTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('user_workspace');
         Schema::dropIfExists('workspaces');
     }
 }
