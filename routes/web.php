@@ -17,6 +17,19 @@ Route::get('/', function () {
     return view('dashboard');
 });
 
-Auth::routes();
+Route::group(['prefix' => 'task-manager', 'as' => 'task-manager.', 'middleware' => ['auth']], function () {
+    Route::get('dashboard', function() {
+        return view('dashboard');
+    });
+    Route::resource('users', 'UserController');
+    Route::resource('roles', 'RoleController');
+    Route::resource('permissions', 'PermissionController');
+    Route::resource('proiorities', 'ProiorityController');
+    Route::resource('workspaces',  'WorkspaceController');
+    Route::resource('demands',     'DemandController');
+    Route::resource('tasks',       'TaskController');
+});
+
+Auth::routes(['register' => false]);
 
 Route::get('/home', 'HomeController@index')->name('home');

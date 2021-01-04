@@ -4,12 +4,13 @@ namespace App;
 
 use App\Traits\RoleAndPermissionTrait;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    use Notifiable, RoleAndPermissionTrait;
+    use Notifiable, RoleAndPermissionTrait, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -39,6 +40,26 @@ class User extends Authenticatable
     ];
     public function workspaces()
     {
-        return $this->belongsToMany(Workspace::class);
+        return $this->belongsToMany(Workspace::class)->withPivot('is_admin');
+    }
+    public function tasks()
+    {
+        return $this->belongsToMany(Task::class);
+    }
+    public function finished_tasks()
+    {
+        return $this->belongsToMany(Task::class)->whereNotNull('finished_at');
+    }
+    public function unfinished_tasks()
+    {
+        return $this->belongsToMany(Task::class)->whereNull('finished_at');
+    }
+    public function demands()
+    {
+        return $this->hasMany(Demand::class, 'from_id');
+    }
+    public function asked_demands()
+    {
+        return $this->hasMany(Demand::class, 'to_id');
     }
 }
