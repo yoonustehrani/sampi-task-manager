@@ -11110,7 +11110,16 @@ nav .horizental-menu li:hover > a {
 }
 
 div.admin-info-container {
-  margin-top: -10px;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+div.admin-info-container > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
 }
 
 div.admin-info-container img {
@@ -11120,32 +11129,23 @@ div.admin-info-container img {
   border: 3px solid #24394d;
   transition: 0.4s;
   overflow: hidden;
+  padding: 1px;
 }
 
 div.admin-info-container img:hover {
   transform: scale(1.1);
 }
 
-div.admin-info-container a.admin-email-link {
+div.admin-info-container p.admin-email-link {
   font-family: Iransans;
-  text-decoration: none !important;
-  transition: 0.3s;
   color: #24394d;
-  border: 3px solid #24394d;
-  border-radius: 30px;
-  padding: 4px;
   font-size: 12px;
+  position: relative;
+  top: 8px;
 }
 
-div.admin-info-container a.admin-email-link:hover {
-  background-color: #24394d;
-  color: #9bb3d1;
-}
-
-div.drop-down-container button {
-  border: 3px solid #24394d;
-  background-color: #9bb3d1;
-  transition: 0.3s;
+div.drop-down-container {
+  bottom: 8px;
 }
 
 div.drop-down-container button i {
@@ -11153,19 +11153,11 @@ div.drop-down-container button i {
 }
 
 div.drop-down-container button:hover {
-  background-color: #24394d;
-  color: #fff;
+  border: 1px solid #24394d;
 }
 
-div.drop-down-container button:hover i {
-  color: #5c98cf;
-}
-
-div.drop-down-container div.dropdown-menu i {
-  color: #24394d;
-}
-
+div.drop-down-container div.dropdown-menu i,
 div.drop-down-container div.dropdown-menu a {
-  color: #5c98cf;
+  color: #24394d;
 }
 

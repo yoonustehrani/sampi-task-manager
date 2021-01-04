@@ -171,7 +171,15 @@ nav {
 }
 
 div.admin-info-container {
-    margin-top: -10px;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    > div {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+    }
     img {
         width: 60px;
         height: 60px;
@@ -179,48 +187,33 @@ div.admin-info-container {
         border: 3px solid #24394d;
         transition: 0.4s;
         overflow: hidden;
+        padding: 1px;
     }
     img:hover {
         transform: scale(1.1);
     }
-    a.admin-email-link {
+    p.admin-email-link {
         font-family: Iransans;
-        text-decoration: none !important;
-        transition: 0.3s;
         color: #24394d;
-        border: 3px solid #24394d;
-        border-radius: 30px;
-        padding: 4px;
         font-size: 12px;
-    }
-    a.admin-email-link:hover {
-        background-color: #24394d;
-        color: #9bb3d1;
+        position: relative;
+        top: 8px;
     }
 }
 
 div.drop-down-container {
+    bottom: 8px;
     button {
-        border: 3px solid #24394d;
-        background-color: #9bb3d1;
-        transition: 0.3s;
         i {
             color: #24394d;
         }
     }
     button:hover {
-        background-color: #24394d;
-        color: #fff;
-        i {
-            color: #5c98cf;
-        }
+        border: 1px solid #24394d;
     }
     div.dropdown-menu {
-        i {
+        i, a {
             color: #24394d;
-        }
-        a {
-            color: #5c98cf;
         }
     }
 }
