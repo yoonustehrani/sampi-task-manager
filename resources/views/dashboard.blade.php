@@ -14,25 +14,25 @@
             <nav>
                 <ul class="horizental-menu col-12">
                     <li>
-                        <a target="" href="">امورات<i class="fab fa-accessible-icon"></i></a>
+                        <a href="">امورات<i class="fas fa-tasks"></i></a>
                     </li>
                     <li class="has_sub">
                         <p>
-                            <a target="" href="">
-                                نیاز ها<i class="fab fa-accessible-icon"></i>
+                            <a href="#demands">
+                                نیاز ها<i class="fab fa-stack-exchange"></i>
                             </a>
                             <i class="opener fa fa-angle-left"></i>
                         </p>
                         <ul>
-                            <li class="sub"><a href="">ضروری و مهم<i class=""></i></a></li>
-                            <li class="sub"><a href="">ضروری و غیر مهم</a></li>
-                            <li class="sub"><a href="">غیر ضروری و مهم</a></li>
-                            <li class="sub"><a href="">غیر ضروری و غیر مهم</a></li>
+                            <li class="sub"><a href="">ضروری و مهم<i class="fas fa-hourglass-end"></i></a></li>
+                            <li class="sub"><a href="">ضروری و غیر مهم<i class="fas fa-hourglass-half"></i></a></li>
+                            <li class="sub"><a href="">غیر ضروری و مهم<i class="fas fa-hourglass-start"></i></a></li>
+                            <li class="sub"><a href="">غیر ضروری و غیر مهم<i class="fas fa-hourglass"></i></a></li>
                         </ul>
                     </li>
                     <li>
                         <a href="" id="toggle-logout">
-                            <i class="fas fa-power-off"></i> خروج
+                        <i class="fas fa-sign-out-alt"></i> خروج
                         </a>
                     </li>
                     <form class="d-none" id="logout-form" action="{{ route('logout') }}" method="POST">@csrf</form>
