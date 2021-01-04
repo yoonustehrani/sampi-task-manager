@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Permission;
 use Illuminate\Http\Request;
 
 class PermissionController extends Controller
@@ -13,7 +14,7 @@ class PermissionController extends Controller
      */
     public function index()
     {
-        //
+        $permissions = Permission::withCount(['roles'])->paginate(10);
     }
 
     /**
@@ -34,51 +35,60 @@ class PermissionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $permission = new Permission();
+        $permission->key = $request->key; // unique
+        $permission->label = $request->label;
+        $permission->save();
+        // redirect()->to(route());
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $permission
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($permission)
     {
-        //
+        $permission = Permission::with('roles.users')->findOrFail($permission);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $permission
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($permission)
     {
-        //
+        $permission = Permission::findOrFail($permission);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  int  $permission
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $permission)
     {
-        //
+        $permission = Permission::findOrFail($permission);
+        $permission->key = $request->key; // unique
+        $permission->label = $request->label;
+        $permission->save();
+        // return redirect()->to(route());
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int  $permission
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($permission)
     {
-        //
+        Permission::findOrFail($permission)->delete();
+        return back();
     }
 }

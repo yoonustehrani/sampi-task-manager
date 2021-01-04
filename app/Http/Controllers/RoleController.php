@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Permission;
+use App\Role;
+use App\User;
 use Illuminate\Http\Request;
 
 class RoleController extends Controller
@@ -13,7 +16,8 @@ class RoleController extends Controller
      */
     public function index()
     {
-        //
+        $roles = Role::withCount(['permissions', 'users'])->all();
+        // return view('');
     }
 
     /**
@@ -23,7 +27,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        //
+        // return view('');
     }
 
     /**
@@ -34,7 +38,11 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $role = new Role();
+        $role->name = $request->name;
+        $role->label = $request->label;
+        $role->permissions()->attach($request->input('permissions'));
+        $role->save();
     }
 
     /**
@@ -43,19 +51,20 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($role)
     {
-        //
+        $role = Role::with(['permissions', 'users'])->findOrFail($role);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $role
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($role)
     {
+        $role = Role::findOrFail($role);
         //
     }
 
@@ -63,22 +72,27 @@ class RoleController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  int  $role
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $role)
     {
-        //
+        $role = Role::findOrFail($role);
+        $role->name = $request->name;
+        $role->label = $request->label;
+        $role->permissions()->sync($request->input('permissions'));
+        $role->save();
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int  $role
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($role)
     {
-        //
+        Role::findOrFail($role)->delete();
+        return back();
     }
 }

@@ -1,0 +1,30 @@
+<?php
+
+return [
+    'failed' => 'کاربری با این اطلاعات ورودی وجود ندارد',
+    'throttle' => 'دفعات اقدام به ورود بیش از حد شده اند. لطفا :seconds ثانیه بعد اقدام کنید.',
+    'register' => 'ثبت نام',
+    'remember' => 'مرا به خاطر بسپار',
+    'login' => 'ورود',
+    'passwordforget' => 'رمز عبورتان را فراموش کرده اید ؟',
+    'name' => 'نام کاربری',
+    'email' => 'ایمیل',
+    'email_or_phone' => 'ایمیل یا شماره تلفن',
+    'birthdate' => 'تاریخ تولد',
+    'sms_code' => 'کد تایید پیامک شده را وارد کنید',
+    'password' => 'رمز عبور',
+    'passwordconfirm' => 'تایید رمز عبور',
+    'sex' => 'جنس',
+    'phonenumber' => 'شماره همراه',
+    'country' => 'کشور',
+    'state' => 'استان / ایالت',
+    'verifyemail' => 'ایمیل خود را تایید کنید',
+    'freshLinkMessage' => 'یک لینک تایید تازه به ایمیل شما ارسال شده است.',
+    'checkYourEmailMessage' => 'قبل از ادامه لطفا ایمیل خود را جهت لینک تایید چک کنید.',
+    'ifDidnotRecieveEmail' => 'اگر ایمیلی دریافت نکردید',
+    'requestAnother' => 'برای یک درخواست دیگر اینجا کلیک کنید',
+    'signinLinkedIn' => 'ورود با LinkedIn',
+    'signinGoogle' => 'ورود با Google',
+    'resetpassword' => 'تعویض کلمه عبور',
+    'logout' => 'خروج'
+];
