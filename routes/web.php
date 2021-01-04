@@ -18,7 +18,7 @@ Route::get('/', function () {
 });
 
 Route::group(['prefix' => 'task-manager', 'as' => 'task-manager.', 'middleware' => ['auth']], function () {
-    Route::get('dashboard', function() {
+    Route::get('/', function() {
         return view('dashboard');
     });
     Route::resource('users', 'UserController');
