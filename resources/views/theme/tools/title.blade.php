@@ -5,4 +5,5 @@
         @endif
         {{ $title }}
     </h2>
+    {{ $slot }}
 </div>

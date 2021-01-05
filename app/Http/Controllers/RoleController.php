@@ -38,11 +38,19 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        $role = new Role();
-        $role->name = $request->name;
-        $role->label = $request->label;
-        $role->permissions()->attach($request->input('permissions'));
-        $role->save();
+        try {
+            \DB::beginTransaction();
+            $role = new Role();
+            $role->name = $request->name;
+            $role->label = $request->label;
+            $role->save();
+            $permissions = (in_array('0', $request->input('permissions'))) ? Permission::all() : $request->input('permissions');
+            $role->permissions()->attach($permissions);
+            \DB::commit();
+        } catch(\Exception $e) {
+            \DB::rollBack();
+        }
+        return redirect()->to(route('task-manager.roles.index'));
     }
 
     /**

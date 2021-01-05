@@ -17,6 +17,7 @@ class CreateWorkspacesTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->text('description')->nullable();
+            $table->text('avatar_pic');
             $table->timestamps();
             $table->softDeletes();
         });

@@ -7,6 +7,9 @@
             direction: rtl;
             text-align: center;
         }
+        form {
+            direction: rtl;
+        }
     </style>
 @endsection
 
@@ -28,6 +31,3 @@
     </div>
 @endsection
 
-@push('scripts')
-    <script src="{{ asset('js/app.js') }}"></script>
-@endpush
