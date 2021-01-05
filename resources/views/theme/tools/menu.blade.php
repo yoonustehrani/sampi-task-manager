@@ -6,7 +6,7 @@
         <li class="has_sub">
             <p>
                 <a href="#demands">
-                    مدیریت سیستمی<i class="fas fa-desktop"></i>
+                    مدیریت سیستمی <i class="fas fa-desktop"></i>
                 </a>
                 <i class="opener fa fa-angle-left"></i>
             </p>
@@ -40,9 +40,7 @@
             </ul>
         </li>
         <li>
-            <a href="" id="toggle-logout">
-            <i class="fas fa-sign-out-alt"></i> خروج
-            </a>
+            <a href="#" id="toggle-logout">خروج <i class="fas fa-power-off"></i></a>
         </li>
         <form class="d-none" id="logout-form" action="{{ route('logout') }}" method="POST">@csrf</form>
     </ul>
