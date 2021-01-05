@@ -10922,6 +10922,18 @@ html {
   direction: rtl;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a,
+button {
+  direction: rtl;
+}
+
 .full-sc {
   height: 100%;
 }
@@ -10965,7 +10977,7 @@ html {
 #mainpage {
   background: #E9EAEF;
   padding: 0px;
-  overflow-y: auto;
+  overflow-y: hidden;
   transition: 0.5s;
   float: left;
 }
@@ -10974,6 +10986,11 @@ html {
   background: #ffffff;
   height: 71px;
   padding: 15px 10px;
+}
+
+.contentbar {
+  overflow-y: auto;
+  height: 100%;
 }
 
 nav a:hover {

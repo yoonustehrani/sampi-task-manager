@@ -10921,15 +10921,6 @@ body {
   padding: 0;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  direction: rtl;
-}
-
 .container {
   width: 100%;
   height: 100%;
