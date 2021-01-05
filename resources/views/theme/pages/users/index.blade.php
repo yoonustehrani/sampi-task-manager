@@ -60,4 +60,7 @@
             @endforeach
         @endcomponent
     @endcomponent
+    <div class="col-12 p-0 float-right text-center mt-3 mb-4">
+        {{ $users->links() }}
+    </div>
 @endsection

@@ -14,7 +14,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::with(['roles'])->paginate(20);
+        $users = User::with(['roles'])->paginate(15);
         return view('theme.pages.users.index', compact('users'));
     }
 

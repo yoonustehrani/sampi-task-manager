@@ -14,7 +14,7 @@ class PermissionController extends Controller
      */
     public function index()
     {
-        $permissions = Permission::withCount(['roles'])->paginate(20);
+        $permissions = Permission::withCount(['roles'])->paginate(15);
         return view('theme.pages.permissions.index', compact('permissions'));
     }
 
