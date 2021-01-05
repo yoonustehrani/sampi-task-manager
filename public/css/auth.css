@@ -10946,9 +10946,13 @@ body {
   width: 50%;
 }
 
+.container form input.hidden {
+  display: none;
+}
+
 .container form input.auth-input {
   border: 0;
-  outline: none !important;
+  outline: 0 !important;
   background: transparent !important;
   border-bottom: 2px solid #f2fcfe;
   border-radius: 0 !important;
@@ -10957,8 +10961,8 @@ body {
   color: #f2fcfe;
 }
 
-.container form input:focus {
-  outline: none !important;
+.container form input.auth-input:focus {
+  box-shadow: inset 0 -1px 0 #ddd;
 }
 
 .container form ::-moz-placeholder {

@@ -15,6 +15,7 @@
         </div>
         <form action="{{ route('login') }}" method="post" autocomplete="off">
             @csrf
+            <input autocomplete="false" name="hidden" type="text" class="hidden">
             <div class="form-group input-group mb-4">
                 <div class="input-group-prepend">
                     <i class="fas fa-user-tie input-icon"></i>

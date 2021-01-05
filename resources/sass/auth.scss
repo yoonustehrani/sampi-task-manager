@@ -49,9 +49,12 @@ html, body {
         }
     }
     form {
+        input.hidden {
+            display: none;
+        }
         input.auth-input {
             border: 0;
-            outline: none !important;
+            outline: 0 !important;
             background: transparent !important;
             border-bottom: 2px solid #f2fcfe;
             border-radius: 0 !important;
@@ -59,8 +62,8 @@ html, body {
             font-family: 10px;
             color: #f2fcfe;
         }
-        input:focus {
-            outline: none !important;
+        input.auth-input:focus {
+          box-shadow: inset 0 -1px 0 #ddd;
         }
         ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
             color: #f2fcfe;
@@ -76,8 +79,6 @@ html, body {
           }
         > button {
             font-family: $iran-sans;
-        }
-        > button:hover {
         }
         i.input-icon {
             color: #f2fcfe;
