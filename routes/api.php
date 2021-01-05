@@ -27,9 +27,9 @@ Route::group(['prefix' => 'task-manager', 'as' => 'api.task-manager.'], function
     })->name('roles.index');
     Route::get('users/{user}/roles', function ($user) {
         return \App\User::findOrFail($user)->roles()->get();
-    });
+    })->name('user.roles');
     Route::get('roles/{role}/permissions', function ($role) {
         return \App\Role::findOrFail($role)->permissions()->get();
-    });
+    })->name('role.permissions');
 });
 

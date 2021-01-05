@@ -1,5 +1,9 @@
 @extends('theme.panel')
 
+@section('title')
+لیست کاربران
+@endsection
+
 @section('page-content')
     @component('theme.tools.title', ['title' => 'لیست کاربران', 'create' => route('task-manager.users.create')])
         
@@ -7,6 +11,7 @@
     @component('theme.tools.table')
         @component('theme.tools.table-head')
             <th scope="col">#</th>
+            <th scope="col">نام خانوادگی</th>
             <th scope="col">نام کاربری</th>
             <th scope="col">ایمیل</th>
             <th scope="col">chat id تلگرام</th>
@@ -22,6 +27,9 @@
                     </th>
                     <td class="text-right">
                         <img src="{{ asset($user->avatar_pic ?: 'images/male-avatar.svg') }}" alt="" style="height: 30px; widh: 30px;">
+                        {{ $user->fullname }}
+                    </td>
+                    <td>
                         <span class="mr-3">{{ $user->name }}</span>
                     </td>
                     <td>
@@ -48,13 +56,15 @@
                         </a>
                     </td>
                     <td>
+                        @if (auth()->user()->id !== $user->id)
                         <form action="{{ route('task-manager.users.destroy', ['user' => $user->id]) }}" method="post">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-sm btn-danger">
-                            <i class="fas fa-trash"></i>
-                        </button>
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-sm btn-danger">
+                                <i class="fas fa-trash"></i>
+                            </button>
                         </form>
+                        @endif
                     </td>
                 </tr>
             @endforeach

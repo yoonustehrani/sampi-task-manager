@@ -1,5 +1,9 @@
 @extends('theme.panel')
 
+@section('title')
+ویرایش مجوز ({{ $permission->key }})
+@endsection
+
 @section('page-content')
     @component('theme.tools.title', ['title' => "ویرایش مجوز شماره #{$permission->id}"])@endcomponent
     <form class="col-12 float-left p-0 form-group text-right" action="{{ route('task-manager.permissions.update', ['permission' => $permission->id]) }}" method="post">

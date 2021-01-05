@@ -15,7 +15,7 @@ class RoleSeeder extends Seeder
         $roles = [
             'developer' => 'توسعه دهنده',
             'CEO' => 'مدیر عامل',
-            'CTO' => 'مدیر ارشد اجرایی',
+            'CTO' => 'مدیر ارشد فناوری',
             'CFO' => 'مدیر ارشد مالی',
             'COO' => 'مدیر ارشد اجرایی',
             'member' => 'عضو',

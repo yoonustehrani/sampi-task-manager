@@ -1,5 +1,9 @@
 @extends('theme.panel')
 
+@section('title')
+افزودن سمت
+@endsection
+
 @section('page-content')
     @component('theme.tools.title', ['title' => 'ایجاد سمت جدید'])@endcomponent
     <form class="col-12 float-left p-0 form-group text-right" action="{{ route('task-manager.roles.store') }}" method="post">

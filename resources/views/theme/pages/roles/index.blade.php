@@ -1,5 +1,9 @@
 @extends('theme.panel')
 
+@section('title')
+لیست سمت ها
+@endsection
+
 @section('page-content')
     @component('theme.tools.title', ['title' => 'لیست سمت ها', 'create' => route('task-manager.roles.create')])
         

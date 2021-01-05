@@ -2,12 +2,19 @@
 
 @section('head')
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <title>@yield('title')| {{ config('app.name') }}</title>
     <style>
         table {
             direction: rtl;
             text-align: center;
         }
         form {
+            direction: rtl;
+        }
+        .d-ltr {
+            direction: ltr;
+        }
+        .d-rtl {
             direction: rtl;
         }
     </style>

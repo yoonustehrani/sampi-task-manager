@@ -1,5 +1,9 @@
 @extends('theme.panel')
 
+@section('title')
+افزودن مجوز
+@endsection
+
 @section('page-content')
     @component('theme.tools.title', ['title' => 'ایجاد مجوز جدید'])@endcomponent
     <form class="col-12 float-left p-0 form-group text-right" action="{{ route('task-manager.permissions.store') }}" method="post">

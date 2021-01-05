@@ -1,10 +1,17 @@
 {
     "label": "برچسب",
+    "first_name": "نام",
+    "last_name": "نام خانوادگی",
     "key": "کلید",
     "name": "نام",
+    "username": "نام کاربری",
     "email": "ایمیل",
     "password": "رمز عبور",
     "save": "ذخیره",
     "permissions": "مجوزها",
-    "all": "همه"
+    "roles": "سمت ها",
+    "avatar_pic": "عکس آواتار",
+    "all": "همه",
+    "confirm": "تایید",
+    "telegram_chat_id": "تلگرام chat_id"
 }
