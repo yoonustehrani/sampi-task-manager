@@ -1,7 +1,7 @@
 @extends('theme.panel')
 
 @section('page-content')
-    @component('theme.tools.title', ['title' => 'لیست کاربران'])
+    @component('theme.tools.title', ['title' => 'لیست کاربران', 'create' => route('task-manager.users.create')])
         
     @endcomponent
     @component('theme.tools.table')

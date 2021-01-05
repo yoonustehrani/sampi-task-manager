@@ -1,7 +1,7 @@
 @extends('theme.panel')
 
 @section('page-content')
-    @component('theme.tools.title', ['title' => 'لیست سمت ها'])
+    @component('theme.tools.title', ['title' => 'لیست سمت ها', 'create' => route('task-manager.roles.create')])
         
     @endcomponent
     @component('theme.tools.table')
