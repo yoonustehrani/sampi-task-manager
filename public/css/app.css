@@ -10919,7 +10919,6 @@ html {
   margin: 0px;
   padding: 0px;
   overflow: hidden;
-  direction: rtl;
 }
 
 h1,
@@ -10927,10 +10926,7 @@ h2,
 h3,
 h4,
 h5,
-h6,
-p,
-a,
-button {
+h6 {
   direction: rtl;
 }
 
@@ -11085,7 +11081,6 @@ nav .horizental-menu li.active ul li p,
 nav .horizental-menu li.active ul li a {
   font-size: 16px;
   padding-left: 20px;
-  direction: rtl;
 }
 
 nav .horizental-menu li.has_sub > p a {
