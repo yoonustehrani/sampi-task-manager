@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Priority;
 use Illuminate\Http\Request;
 
 class ProiorityController extends Controller
@@ -13,7 +14,8 @@ class ProiorityController extends Controller
      */
     public function index()
     {
-        //
+        $proiorities = Priority::all();
+        return view('theme.pages.proiorities.index', compact('proiorities'));
     }
 
     /**

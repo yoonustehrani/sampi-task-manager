@@ -19,7 +19,7 @@ Route::get('/', function () {
 
 Route::group(['prefix' => 'task-manager', 'as' => 'task-manager.', 'middleware' => ['auth']], function () {
     Route::get('/', function() {
-        return view('dashboard');
+        return view('theme.dashboard');
     });
     Route::resource('users', 'UserController');
     Route::resource('roles', 'RoleController');

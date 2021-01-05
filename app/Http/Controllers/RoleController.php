@@ -16,8 +16,8 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $roles = Role::withCount(['permissions', 'users'])->all();
-        // return view('');
+        $roles = Role::withCount(['permissions', 'users'])->get();
+        return view('theme.pages.roles.index', compact('roles'));
     }
 
     /**

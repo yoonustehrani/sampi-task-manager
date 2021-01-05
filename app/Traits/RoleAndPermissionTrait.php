@@ -2,6 +2,9 @@
 
 namespace App\Traits;
 
+use App\Role;
+use App\Permission;
+
 trait RoleAndPermissionTrait {
     public function permissions()
     {
