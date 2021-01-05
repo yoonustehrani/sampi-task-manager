@@ -14,7 +14,7 @@
     <div class="col-12 admin-area p-0 m-0 h-12">
         <div class="col-lg-2 col-md-3 d-md-block d-none h-12 p-0" id="right-menu">
             <div class="top-section col-12 text-center float-left">
-                <img class="logo-top" src="{{ asset('images/sampi-logo.jpg') }}" alt="sampi-tech-group">
+                <img class="logo-top" src="{{ asset('images/logo/sampi.png') }}" alt="sampi-tech-group">
                 <p class="col-12 m-0 mt-1 p-0 float-right text-center">Task Manager</p>
             </div>
             @include('theme.tools.menu')
