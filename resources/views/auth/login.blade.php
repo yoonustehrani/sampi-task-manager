@@ -24,7 +24,7 @@
                 </div>
                 <input type="password" name="password" class="auth-input form-control text-center" placeholder="Password" autocomplete="off">
             </div>
-            <button class="btn text-center" type="submit">Login</button>
+            <button class="btn btn-outline-light text-center" type="submit">Login</button>
         </form>
     </div>
 </div>

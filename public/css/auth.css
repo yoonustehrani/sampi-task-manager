@@ -10995,11 +10995,6 @@ body {
 
 .container form > button {
   font-family: "Iransans";
-  background-color: #c0d6e4;
-}
-
-.container form > button:hover {
-  background-color: #6897bb;
 }
 
 .container form i.input-icon {
