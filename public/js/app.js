@@ -65898,7 +65898,7 @@ if (document.getElementById('example')) {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-$('#toggle-logout').on('click', function (e) {
+$('#logout-dropdown, #toggle-logout').on('click', function (e) {
   e.preventDefault();
   $('#logout-form').trigger('submit');
 });

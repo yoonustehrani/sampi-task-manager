@@ -10970,6 +10970,12 @@ h6 {
   left: -50% !important;
 }
 
+.vertical-centerlize {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
 #mainpage {
   background: #E9EAEF;
   padding: 0px;
@@ -10981,7 +10987,9 @@ h6 {
 #mainpage .navbar-top {
   background: #ffffff;
   height: 71px;
-  padding: 15px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .contentbar {
@@ -11122,12 +11130,6 @@ nav .horizental-menu li:hover > a {
   background: rgba(0, 0, 0, 0.5);
 }
 
-div.admin-info-container {
-  position: relative;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
 div.admin-info-container > div {
   display: flex;
   flex-direction: column;
@@ -11176,5 +11178,13 @@ div.drop-down-container button:hover {
 div.drop-down-container div.dropdown-menu i,
 div.drop-down-container div.dropdown-menu a {
   color: #24394d;
+}
+
+.badge-warning {
+  background-color: #f3c609 !important;
+}
+
+.badge-success {
+  background-color: #0b9e3c !important;
 }
 

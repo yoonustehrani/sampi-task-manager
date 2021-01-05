@@ -43,6 +43,11 @@ h1, h2, h3, h4, h5, h6 {
     transition: 2s;
     left: -50% !important;
 }
+.vertical-centerlize {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
 #mainpage {
     background: $silver;
     padding: 0px;
@@ -52,7 +57,10 @@ h1, h2, h3, h4, h5, h6 {
     .navbar-top {
         background: $white;
         height: 71px;
-        padding: 15px 10px;
+        // padding: 15px 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
     }
 }
 .contentbar {
@@ -176,11 +184,10 @@ nav {
 ::-webkit-scrollbar-thumb:window-inactive {
     background: rgba(0,0,0,0.5);
 }
-
 div.admin-info-container {
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
+    // position: relative;
+    // top: 50%;
+    // transform: translateY(-50%);
     > div {
         display: flex;
         flex-direction: column;
@@ -224,4 +231,10 @@ div.drop-down-container {
             color: #24394d;
         }
     }
+}
+.badge-warning {
+    background-color: #f3c609 !important;
+}
+.badge-success {
+    background-color: #0b9e3c !important;
 }
