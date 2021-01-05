@@ -1,7 +1,7 @@
 @extends('theme.panel')
 
 @section('page-content')
-    @component('theme.tools.title', ['title' => 'لیست اولویت ها'])
+    @component('theme.tools.title', ['title' => 'لیست اولویت ها', 'create' => route('task-manager.proiorities.create')])
         
     @endcomponent
     @component('theme.tools.table')

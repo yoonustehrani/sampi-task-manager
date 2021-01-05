@@ -25,7 +25,7 @@ class PermissionController extends Controller
      */
     public function create()
     {
-        //
+        return view('theme.pages.permissions.create');
     }
 
     /**

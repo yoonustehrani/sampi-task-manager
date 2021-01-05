@@ -1,7 +1,7 @@
 @extends('theme.panel')
 
 @section('page-content')
-    @component('theme.tools.title', ['title' => 'لیست مجوز ها'])
+    @component('theme.tools.title', ['title' => 'لیست مجوز ها', 'create' => route('task-manager.permissions.create')])
         
     @endcomponent
     @component('theme.tools.table')
