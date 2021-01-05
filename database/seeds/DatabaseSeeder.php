@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
         $user->name = 'elnovel';
         $user->email = 'elnovelofficial@gmail.com';
         $user->password = bcrypt('hello123');
+        $user->api_token = \Illuminate\Support\Str::uuid();
         $user->save();
         $roles = Role::all();
         $user->roles()->attach($roles);

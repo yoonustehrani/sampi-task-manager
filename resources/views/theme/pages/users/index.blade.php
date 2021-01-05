@@ -5,9 +5,7 @@
 @endsection
 
 @section('page-content')
-    @component('theme.tools.title', ['title' => 'لیست کاربران', 'create' => route('task-manager.users.create')])
-        
-    @endcomponent
+    @component('theme.tools.title', ['title' => 'لیست کاربران', 'create' => route('task-manager.users.create')]) @endcomponent
     @component('theme.tools.table')
         @component('theme.tools.table-head')
             <th scope="col">#</th>
