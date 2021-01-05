@@ -13,7 +13,7 @@
         <div class="avatar-container mb-4">
             <img src="{{ asset('/images/logo/sampi.png') }}" alt=""></img>
         </div>
-        <form action="{{ route('logout') }}" method="post" autocomplete="off">
+        <form action="{{ route('login') }}" method="post" autocomplete="off">
             @csrf
             <div class="form-group input-group mb-4">
                 <div class="input-group-prepend">
