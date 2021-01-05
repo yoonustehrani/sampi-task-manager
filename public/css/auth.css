@@ -10921,6 +10921,15 @@ body {
   padding: 0;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  direction: rtl;
+}
+
 .container {
   width: 100%;
   height: 100%;
@@ -10955,6 +10964,10 @@ body {
   font-family: "Iransans";
   font-family: 10px;
   color: #f2fcfe;
+}
+
+.container form input:focus {
+  outline: none !important;
 }
 
 .container form ::-moz-placeholder {

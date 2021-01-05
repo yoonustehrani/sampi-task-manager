@@ -65904,7 +65904,7 @@ $('#toggle-logout').on('click', function (e) {
 });
 $('.has_sub').on('click', function () {
   $(this).toggleClass('active');
-  $(' .opener').toggleClass('opened');
+  $(' .opener', this).toggleClass('opened');
 });
 
 /***/ }),

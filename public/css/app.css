@@ -10919,6 +10919,7 @@ html {
   margin: 0px;
   padding: 0px;
   overflow: hidden;
+  direction: rtl;
 }
 
 .full-sc {
@@ -10964,7 +10965,7 @@ html {
 #mainpage {
   background: #E9EAEF;
   padding: 0px;
-  overflow: hidden;
+  overflow-y: auto;
   transition: 0.5s;
   float: left;
 }
@@ -11009,8 +11010,8 @@ nav .horizental-menu li a {
   height: 100%;
   float: right;
   color: #E9EAEF;
-  font-family: Nunito, sans-serif;
-  font-size: 18px;
+  font-family: "Iransans";
+  font-size: 15px;
   transition: 0.3s;
 }
 
@@ -11067,6 +11068,7 @@ nav .horizental-menu li.active ul li p,
 nav .horizental-menu li.active ul li a {
   font-size: 16px;
   padding-left: 20px;
+  direction: rtl;
 }
 
 nav .horizental-menu li.has_sub > p a {
@@ -11136,7 +11138,7 @@ div.admin-info-container img:hover {
 }
 
 div.admin-info-container p.admin-email-link {
-  font-family: Iransans;
+  font-family: "Iransans";
   color: #24394d;
   font-size: 12px;
   position: relative;
@@ -11145,6 +11147,10 @@ div.admin-info-container p.admin-email-link {
 
 div.drop-down-container {
   bottom: 8px;
+}
+
+div.drop-down-container button {
+  font-family: "Iransans";
 }
 
 div.drop-down-container button i {
