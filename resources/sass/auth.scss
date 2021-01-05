@@ -1,0 +1,85 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+@import url('https://fonts.googleapis.com/css?family=Nunito|Open+Sans');
+@import '../../node_modules/@fortawesome/fontawesome-free/css/all.min.css';
+@import 'fonts';
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+// colors
+@import 'colors';
+
+// styles
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+    background-image: url('/images/auth/office-background.jpg');
+    background-size: cover;
+    div.card {
+        background-color: rgba($color: #34495E, $alpha: 0.5);
+        border-radius: 5px;
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+        padding: 50px;
+    }
+    div.avatar-container {
+        // position: relative;
+        // width: 40%;
+        // height: 0;
+        // padding-bottom: 40%;
+        margin-left: auto;
+        margin-right: auto;
+        > img {
+            width: 50%;
+            // border-radius: 100px;
+            // border: 3px solid #34495E;
+        }
+    }
+    form {
+        input.auth-input {
+            border: 0;
+            outline: none !important;
+            background: transparent !important;
+            border-bottom: 2px solid #f2fcfe;
+            border-radius: 0 !important;
+            font-family: $iran-sans;
+            font-family: 10px;
+            color: #f2fcfe;
+        }
+        ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+            color: #f2fcfe;
+            opacity: 1; /* Firefox */
+          }
+          
+          :-ms-input-placeholder { /* Internet Explorer 10-11 */
+            color: #f2fcfe;
+          }
+          
+          ::-ms-input-placeholder { /* Microsoft Edge */
+            color: #f2fcfe;
+          }
+        > button {
+            font-family: $iran-sans;
+        }
+        > button:hover {
+        }
+        i.input-icon {
+            color: #f2fcfe;
+            font-size: 30px;
+            position: absolute;
+        }
+    }
+}
