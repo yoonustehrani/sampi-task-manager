@@ -10912,6 +10912,73 @@ a.text-dark:focus {
   }
 }
 
+.analysis-container {
+  display: flex;
+  flex-direction: row-reverse;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.analysis-container > div {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin: 20px;
+  text-align: right;
+  border-radius: 5px;
+  box-shadow: 0 0 10px 1px #c5c4c4;
+}
+
+.analysis-container > div > a > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.analysis-container > div > a > div :first-child {
+  font-weight: bold;
+}
+
+.analysis-container span {
+  margin-right: 10px;
+  font-size: 18px;
+  font-family: "Iransans";
+}
+
+.analysis-container span,
+.analysis-container i {
+  color: #ffffff;
+  transition: 0.3s;
+}
+
+.analysis-container a.item-link:hover span,
+.analysis-container a.item-link:hover i {
+  color: #181818;
+}
+
+.analysis-container div.projects {
+  background-color: #203A43;
+}
+
+.analysis-container div.finished-tasks {
+  background-color: #b92b27;
+}
+
+.analysis-container div.finished-demands {
+  background-color: #4e54c8;
+}
+
+.analysis-container div.delayed-tasks {
+  background-color: #fdbb2d;
+}
+
+.analysis-container div.current-tasks {
+  background-color: #45a247;
+}
+
+.analysis-container div.current-demands {
+  background-color: #f46b45;
+}
+
 body,
 html {
   width: 100%;

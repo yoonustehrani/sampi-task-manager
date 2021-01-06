@@ -44,9 +44,8 @@ $('.scr-controller').click(function(){
     return closeFullscreen();
 });
 
-$('.collapser-btn').click(function(){
-    $(' > i',this).toggleClass('fa-angle-double-right fa-angle-double-left');
+$('.collapser-btn').click(function() {
+    $('.collapser-btn > i').toggleClass('fa-angle-double-right fa-angle-double-left');
     $("#right-menu").toggleClass('collapsed');
     $("#mainpage").toggleClass('col-lg-10 col-md-9')
-
 });

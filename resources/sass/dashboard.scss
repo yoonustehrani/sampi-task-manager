@@ -1,0 +1,56 @@
+.analysis-container {
+    display: flex;
+    flex-direction: row-reverse;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    > div {
+        padding-top: 20px;
+        padding-bottom: 20px;
+        margin: 20px;
+        text-align: right;
+        border-radius: 5px;
+        box-shadow: 0 0 10px 1px #c5c4c4;
+        > a {
+            > div {
+                display: flex;
+                flex-direction: column;
+                :first-child {
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+    span {
+        margin-right: 10px;
+        font-size: 18px;
+        font-family: $iran-sans;
+    }
+    span, i {
+        color: #ffffff;
+        transition: 0.3s;
+    }
+    a.item-link:hover {
+        span, i {
+            color: #181818;
+        }
+    }
+    div.projects {
+        background-color: #203A43;
+    }
+    div.finished-tasks {
+        background-color: #b92b27;
+    }
+    div.finished-demands {
+        background-color: #4e54c8;
+    }
+    div.delayed-tasks {
+        background-color: #fdbb2d;
+    }
+    div.current-tasks {
+        background-color: #45a247;
+    }
+    div.current-demands {
+        background-color: #f46b45;
+    }
+}

@@ -1,4 +1,15 @@
 const mix = require('laravel-mix');
+const src = {
+    res: {
+        js: 'resources/js/',
+        sass: 'resources/sass/',
+        react: 'resources/js/react/'
+    },
+    pub: {
+        js: 'public/js/',
+        css: 'public/css/'
+    }
+}
 
 /*
  |--------------------------------------------------------------------------
@@ -10,7 +21,11 @@ const mix = require('laravel-mix');
  | file for the application as well as bundling up all the JS files.
  |
  */
+
 mix.disableNotifications();
-mix.react('resources/js/app.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css')
-    .sass('resources/sass/auth.scss', 'public/css')
+
+var { res, pub } = src
+mix.react(res.js + 'app.js', pub.js)
+    .sass(res.sass + 'app.scss', pub.css)
+    .sass(res.sass + 'auth.scss', pub.css)
+    .react(res.react + 'dashboard.js', pub.js)
