@@ -15,9 +15,9 @@ class CreateWorkspacesTable extends Migration
     {
         Schema::create('workspaces', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('title');
+            $table->string('title')->unique();
             $table->text('description')->nullable();
-            $table->text('avatar_pic');
+            $table->text('avatar_pic')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

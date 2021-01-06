@@ -1,4 +1,8 @@
 {
+    "title": "عنوان",
+    "description": "توضیحات",
+    "users": "کاربران",
+    "employees": "کارمندان",
     "label": "برچسب",
     "first_name": "نام",
     "last_name": "نام خانوادگی",

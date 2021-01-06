@@ -24,8 +24,16 @@ class Workspace extends Model
     {
         return $this->hasMany(Task::class);
     }
+    public function finished_tasks()
+    {
+        return $this->hasMany(Task::class)->whereFinished(true);
+    }
     public function demands()
     {
         return $this->hasMany(Demand::class);
+    }
+    public function demands_left()
+    {
+        return $this->hasMany(Demand::class)->whereNull('finished_at');
     }
 }

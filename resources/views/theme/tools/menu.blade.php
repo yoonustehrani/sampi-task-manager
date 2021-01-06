@@ -3,6 +3,9 @@
         <li>
             <a href="{{ route('task-manager.') }}">داشبورد <i class="fas fa-tachometer-alt"></i></a>
         </li>
+        <li>
+            <a href="{{ route('task-manager.workspaces.index') }}">پروژه ها <i class="fas fa-briefcase"></i></a>
+        </li>
         <li class="has_sub">
             <p>
                 <a href="#demands">
