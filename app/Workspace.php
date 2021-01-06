@@ -10,7 +10,7 @@ class Workspace extends Model
     use SoftDeletes;
     public function users()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class)->withPivot('is_admin');
     }
     public function admins()
     {
@@ -24,8 +24,16 @@ class Workspace extends Model
     {
         return $this->hasMany(Task::class);
     }
+    public function finished_tasks()
+    {
+        return $this->hasMany(Task::class)->whereFinished(true);
+    }
     public function demands()
     {
         return $this->hasMany(Demand::class);
+    }
+    public function demands_left()
+    {
+        return $this->hasMany(Demand::class)->whereNull('finished_at');
     }
 }

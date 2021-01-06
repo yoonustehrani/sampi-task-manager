@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use App\Workspace;
 use Illuminate\Http\Request;
 
@@ -18,7 +19,8 @@ class WorkspaceController extends Controller
      */
     public function index()
     {
-        $workspaces = Workspace::withCount(['tasks', 'demands', 'admins'])->all();
+        $workspaces = Workspace::withCount(['tasks', 'finished_tasks', 'demands_left', 'users'])->paginate(5);
+        return view('theme.pages.workspaces.index', compact('workspaces'));
     }
 
     /**
@@ -28,7 +30,8 @@ class WorkspaceController extends Controller
      */
     public function create()
     {
-        //
+        $users = User::where('id', '!=', auth()->user()->id)->get();
+        return view('theme.pages.workspaces.create', compact('users'));
     }
 
     /**
@@ -39,15 +42,14 @@ class WorkspaceController extends Controller
      */
     public function store(Request $request)
     {
-        return $request;
         $workspace = new Workspace();
         $workspace->title = $request->title;
         $workspace->description = $request->description;
-        // $things = collect([]);
-        // $things->diff();
-        $workspace->admins()->attach($request->input('admins'));
-        $workspace->members()->attach($request->input('members'));
+        $workspace->avatar_pic = $request->avatar_pic ?: '';
         $workspace->save();
+        $workspace->admins()->attach([auth()->user()->id]);
+        $workspace->members()->attach($request->input('members'));
+        return redirect()->to(route('task-manager.workspaces.index'));
     }
 
     /**
@@ -69,7 +71,9 @@ class WorkspaceController extends Controller
      */
     public function edit($workspace)
     {
-        $workspace = Workspace::findOrFail($workspace);
+        $users = User::all();
+        $workspace = Workspace::with(['admins', 'members'])->findOrFail($workspace);
+        return view('theme.pages.workspaces.edit', compact('workspace', 'users'));
     }
 
     /**
@@ -84,9 +88,13 @@ class WorkspaceController extends Controller
         $workspace = Workspace::findOrFail($workspace);
         $workspace->title = $request->title;
         $workspace->description = $request->description;
-        $workspace->admins()->sync($request->input('admins'));
-        $workspace->members()->sync($request->input('members'));
+        $workspace->avatar_pic = $request->avatar_pic ?: '';
+        $members = $request->input('members') ?: [];
+        $members = collect($members)->diff($request->input('admins'));
         $workspace->save();
+        $workspace->admins()->sync($request->input('admins'));
+        $workspace->members()->sync($members);
+        return redirect()->to(route('task-manager.workspaces.edit', ['workspace' => $workspace->id]));
     }
 
     /**

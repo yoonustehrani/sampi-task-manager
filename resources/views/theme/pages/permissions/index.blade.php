@@ -1,5 +1,9 @@
 @extends('theme.panel')
 
+@section('title')
+لیست مجوز ها
+@endsection
+
 @section('page-content')
     @component('theme.tools.title', ['title' => 'لیست مجوز ها', 'create' => route('task-manager.permissions.create')])
         

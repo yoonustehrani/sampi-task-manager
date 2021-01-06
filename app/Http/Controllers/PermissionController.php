@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 class PermissionController extends Controller
 {
+    public $route_prefix = parent::TASKROUTE . "permissions";
     /**
      * Display a listing of the resource.
      *
@@ -37,10 +38,10 @@ class PermissionController extends Controller
     public function store(Request $request)
     {
         $permission = new Permission();
-        $permission->key = $request->key; // unique
+        $permission->key = $request->key;
         $permission->label = $request->label;
         $permission->save();
-        // redirect()->to(route());
+        return redirect()->to(route("{$this->route_prefix}.index"));
     }
 
     /**
@@ -63,6 +64,7 @@ class PermissionController extends Controller
     public function edit($permission)
     {
         $permission = Permission::findOrFail($permission);
+        return view('theme.pages.permissions.edit', compact('permission'));
     }
 
     /**
@@ -78,7 +80,7 @@ class PermissionController extends Controller
         $permission->key = $request->key; // unique
         $permission->label = $request->label;
         $permission->save();
-        // return redirect()->to(route());
+        return redirect()->to(route("{$this->route_prefix}.edit", ['permission' => $permission->id]));
     }
 
     /**

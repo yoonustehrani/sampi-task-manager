@@ -38,11 +38,20 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        $role = new Role();
-        $role->name = $request->name;
-        $role->label = $request->label;
-        $role->permissions()->attach($request->input('permissions'));
-        $role->save();
+        try {
+            \DB::beginTransaction();
+            $role = new Role();
+            $role->name = $request->name;
+            $role->label = $request->label;
+            $role->save();
+            $permissions = (in_array('0', $request->input('permissions'))) ? Permission::all() : $request->input('permissions');
+            $role->permissions()->attach($permissions);
+            \DB::commit();
+            return redirect()->to(route('task-manager.roles.index'));
+        } catch(\Exception $e) {
+            \DB::rollBack();
+            return back();
+        }
     }
 
     /**
@@ -65,7 +74,7 @@ class RoleController extends Controller
     public function edit($role)
     {
         $role = Role::findOrFail($role);
-        //
+        return view('theme.pages.roles.edit', compact('role'));
     }
 
     /**
@@ -78,10 +87,20 @@ class RoleController extends Controller
     public function update(Request $request, $role)
     {
         $role = Role::findOrFail($role);
-        $role->name = $request->name;
-        $role->label = $request->label;
-        $role->permissions()->sync($request->input('permissions'));
-        $role->save();
+        try {
+            \DB::beginTransaction();
+            $role->name = $request->name;
+            $role->label = $request->label;
+            $role->save();
+            $selected = $request->input('permissions') ?: [];
+            $permissions = (in_array('0', $selected)) ? Permission::all() : $selected;
+            $role->permissions()->sync($permissions);
+            \DB::commit();
+            return redirect()->to(route('task-manager.roles.edit', ['role' => $role->id]));
+        } catch(\Exception $e) {
+            \DB::rollBack();
+            return back();
+        }
     }
 
     /**

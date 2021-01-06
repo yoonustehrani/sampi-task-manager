@@ -1,5 +1,9 @@
 @extends('theme.panel')
 
+@section('title')
+لیست اولویت ها
+@endsection
+
 @section('page-content')
     @component('theme.tools.title', ['title' => 'لیست اولویت ها', 'create' => route('task-manager.proiorities.create')])
         
