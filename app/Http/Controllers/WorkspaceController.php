@@ -8,10 +8,6 @@ use Illuminate\Http\Request;
 
 class WorkspaceController extends Controller
 {
-    public function __construct()
-    {
-        // $this->middleware('auth');
-    }
     /**
      * Display a listing of the resource.
      *
@@ -60,7 +56,16 @@ class WorkspaceController extends Controller
      */
     public function show($workspace)
     {
-        $workspace = Workspace::with(['users', 'tasks', 'demands'])->findOrFail($workspace);
+        $workspace = Workspace::with([
+            'users' => function($q) use($workspace) {
+                $q->withCount([
+                    'tasks'         => function($q) use($workspace) {$q->where('workspace_id', $workspace);},
+                    'demands'       => function($q) use($workspace) {$q->where('workspace_id', $workspace);},
+                    'asked_demands' => function($q) use($workspace) {$q->where('workspace_id', $workspace);}
+                ])->with('roles');
+            }
+        ])->withCount(['tasks', 'demands'])->findOrFail($workspace);
+        return view('theme.pages.workspaces.show', compact('workspace'));
     }
 
     /**

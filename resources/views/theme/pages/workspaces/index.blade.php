@@ -24,7 +24,7 @@
                     </th>
                     <td class="text-right">
                         <img src="{{ asset($workspace->avatar_pic ?: 'images/male-avatar.svg') }}" alt="" style="height: 30px; widh: 30px;">
-                        {{ $workspace->title }}
+                        <a href="{{ route('task-manager.workspaces.show', ['workspace' => $workspace->id]) }}">{{ $workspace->title }}</a>
                     </td>
                     <td>
                         @if ($workspace->users_count > 1)
