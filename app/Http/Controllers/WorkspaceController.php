@@ -59,8 +59,8 @@ class WorkspaceController extends Controller
         $workspace = Workspace::with([
             'users' => function($q) use($workspace) {
                 $q->withCount([
-                    'tasks'         => function($q) use($workspace) {$q->where('workspace_id', $workspace);},
-                    'demands'       => function($q) use($workspace) {$q->where('workspace_id', $workspace);},
+                    'tasks'   => function($q) use($workspace) {$q->where('workspace_id', $workspace);},
+                    'demands' => function($q) use($workspace) {$q->where('workspace_id', $workspace);},
                     'asked_demands' => function($q) use($workspace) {$q->where('workspace_id', $workspace);}
                 ])->with('roles');
             }
