@@ -1,5 +1,9 @@
 @extends('theme.panel')
 
+@section('title')
+داشبورد
+@endsection
+
 @section('page-content')
     <div class="analysis-boxes analysis-container">
         <div class="float-left col-md-3 col-12 projects">

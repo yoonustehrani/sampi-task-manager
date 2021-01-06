@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Role;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -36,14 +37,25 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $user = new User();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->telegram_chat_id = $request->telegram_chat_id;
-        $user->avatar_pic = $request->avatar_pic;
-        $user->password = bcrypt($request->password);
-        $user->roles()->sync($request->input('roles'));
-        $user->save();
+        try {
+            \DB::beginTransaction();
+            $user = new User();
+            $user->name = $request->name;
+            $user->first_name = $request->first_name;
+            $user->last_name = $request->last_name;
+            $user->email = $request->email;
+            $user->telegram_chat_id = $request->telegram_chat_id;
+            $user->avatar_pic = $request->avatar_pic;
+            $user->password = bcrypt($request->password);
+            $user->api_token = \Illuminate\Support\Str::uuid();
+            $user->save();
+            $user->roles()->sync($request->input('roles'));
+            \DB::commit();
+            return redirect()->to(route('task-manager.users.index'));
+        } catch(\Exception $e) {
+            \DB::rollBack();
+            return back();
+        }
     }
 
     /**
@@ -66,6 +78,7 @@ class UserController extends Controller
     public function edit($user)
     {
         $user = User::findOrFail($user);
+        return view('theme.pages.users.edit', compact('user'));
     }
 
     /**
@@ -78,13 +91,27 @@ class UserController extends Controller
     public function update(Request $request, $user)
     {
         $user = User::findOrFail($user);
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->telegram_chat_id = $request->telegram_chat_id;
-        $user->avatar_pic = $request->avatar_pic;
-        $user->password = bcrypt($request->password);
-        $user->roles()->sync($request->input('roles'));
-        $user->save();
+        try {
+            \DB::beginTransaction();
+            $user->name = $request->name;
+            $user->first_name = $request->first_name;
+            $user->last_name = $request->last_name;
+            $user->email = $request->email;
+            $user->telegram_chat_id = $request->telegram_chat_id;
+            $user->avatar_pic = $request->avatar_pic;
+            if ($request->password) {
+                $user->password = bcrypt($request->password);
+            }
+            $user->save();
+            $selected = $request->input('roles') ?: [];
+            $roles = (in_array('0', $selected)) ? Role::all() : $selected;
+            $user->roles()->sync($roles);
+            \DB::commit();
+            return redirect()->to(route('task-manager.users.index'));
+        } catch(\Exception $e) {
+            \DB::rollBack();
+            return back();
+        }
     }
 
     /**

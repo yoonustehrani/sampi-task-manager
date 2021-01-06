@@ -18,18 +18,18 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::group(['prefix' => 'task-manager', 'as' => 'task-manager.'], function () {
-    Route::get('premissions/all', function () {
+Route::group(['prefix' => 'task-manager', 'as' => 'api.task-manager.'], function () {
+    Route::get('permissions/all', function () {
         return \App\Permission::all();
-    })->name('premissions.index');
+    })->name('permissions.index');
     Route::get('roles/all', function () {
         return \App\Role::all();
     })->name('roles.index');
     Route::get('users/{user}/roles', function ($user) {
         return \App\User::findOrFail($user)->roles()->get();
-    });
+    })->name('user.roles');
     Route::get('roles/{role}/permissions', function ($role) {
         return \App\Role::findOrFail($role)->permissions()->get();
-    });
+    })->name('role.permissions');
 });
 
