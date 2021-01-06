@@ -20,7 +20,7 @@ class CreateTasksTable extends Migration
             $table->string('group');
             $table->longText('description')->nullable();
             $table->boolean('finished')->default(false);
-            $table->unsignedInteger('finisher_id');
+            $table->unsignedInteger('finisher_id')->nullable();
             $table->unsignedInteger('workspace_id');
             $table->unsignedInteger('priority_id');
             $table->timestamp('due_to')->nullable();

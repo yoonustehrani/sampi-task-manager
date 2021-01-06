@@ -111,5 +111,6 @@ class WorkspaceController extends Controller
     public function destroy($workspace)
     {
         Workspace::findOrFail($workspace)->delete();
+        return redirect()->to(route('task-manager.workspaces.index'));
     }
 }
