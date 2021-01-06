@@ -10,7 +10,7 @@ class Workspace extends Model
     use SoftDeletes;
     public function users()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class)->withPivot('is_admin');
     }
     public function admins()
     {
