@@ -36,7 +36,8 @@
         }
     }
     div.projects {
-        background-color: #203A43;
+        // background-color: #203A43;
+        background-color: #3A6073;
     }
     div.finished-tasks {
         background-color: #b92b27;
@@ -52,5 +53,38 @@
     }
     div.current-demands {
         background-color: #f46b45;
+    }
+}
+
+div.dashboard-tab-container {
+    margin-top: 30px;
+    .tab-title-bar {
+        display: flex;
+        flex-direction: row-reverse;
+        flex-wrap: nowrap;
+        justify-content: space-evenly;
+        a.tab-link {
+            direction: rtl;
+            font-size: 18px;
+            font-family: $iran-sans;
+            cursor: pointer;
+            transition: 0.2s;
+            color: #009FFF;
+            i {
+                margin-left: 5px;
+                font-size: 18px;
+            }
+        }
+        a.tab-link:hover {
+            color: #ec2F4B;
+        }
+        a.tab-link.active {
+            border-bottom: 2px solid #ec2F4B;
+            color: #ec2F4B;
+        }
+    }
+    div.result-container {
+        background-color: #E0EAFC;
+        box-shadow: 4px 4px 6px 0 #bdc3c7 ;
     }
 }

@@ -10956,7 +10956,7 @@ a.text-dark:focus {
 }
 
 .analysis-container div.projects {
-  background-color: #203A43;
+  background-color: #3A6073;
 }
 
 .analysis-container div.finished-tasks {
@@ -10979,6 +10979,45 @@ a.text-dark:focus {
   background-color: #f46b45;
 }
 
+div.dashboard-tab-container {
+  margin-top: 30px;
+}
+
+div.dashboard-tab-container .tab-title-bar {
+  display: flex;
+  flex-direction: row-reverse;
+  flex-wrap: nowrap;
+  justify-content: space-evenly;
+}
+
+div.dashboard-tab-container .tab-title-bar a.tab-link {
+  direction: rtl;
+  font-size: 18px;
+  font-family: "Iransans";
+  cursor: pointer;
+  transition: 0.2s;
+  color: #009FFF;
+}
+
+div.dashboard-tab-container .tab-title-bar a.tab-link i {
+  margin-left: 5px;
+  font-size: 18px;
+}
+
+div.dashboard-tab-container .tab-title-bar a.tab-link:hover {
+  color: #ec2F4B;
+}
+
+div.dashboard-tab-container .tab-title-bar a.tab-link.active {
+  border-bottom: 2px solid #ec2F4B;
+  color: #ec2F4B;
+}
+
+div.dashboard-tab-container div.result-container {
+  background-color: #E0EAFC;
+  box-shadow: 4px 4px 6px 0 #bdc3c7;
+}
+
 body,
 html {
   width: 100%;
@@ -10995,6 +11034,10 @@ h4,
 h5,
 h6 {
   direction: rtl;
+}
+
+a {
+  text-decoration: none;
 }
 
 .full-sc {
