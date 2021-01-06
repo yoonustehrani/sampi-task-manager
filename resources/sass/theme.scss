@@ -41,7 +41,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 .collapsed {
     transition: 2s;
-    left: -50% !important;
+    right: -100% !important;
 }
 .vertical-centerlize {
     position: relative;

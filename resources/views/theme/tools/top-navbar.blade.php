@@ -17,10 +17,10 @@
                 </div>
             </div>
         </div>
-        <button data-event="max" class="btn scr-controller float-right vertical-centerlize">
+        <button data-event="max" class="btn scr-controller float-right vertical-centerlize d-none">
             <i class="fas fa-expand-arrows-alt fa-compress"></i>
         </button>
-        <button id="collapser" class="btn btn-secondary float-right vertical-centerlize">
+        <button class="btn btn-secondary float-right vertical-centerlize collapser-btn">
             <i class="fas fa-angle-double-left"></i>
         </button>
     </div>

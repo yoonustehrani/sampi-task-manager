@@ -44,9 +44,9 @@ $('.scr-controller').click(function(){
     return closeFullscreen();
 });
 
-$('#collapser').click(function(){
+$('.collapser-btn').click(function(){
     $(' > i',this).toggleClass('fa-angle-double-right fa-angle-double-left');
-    $("#left-menu").toggleClass('collapsed');
+    $("#right-menu").toggleClass('collapsed');
     $("#mainpage").toggleClass('col-lg-10 col-md-9')
-    $("")
+
 });
