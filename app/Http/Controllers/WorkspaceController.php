@@ -45,7 +45,7 @@ class WorkspaceController extends Controller
         $workspace = new Workspace();
         $workspace->title = $request->title;
         $workspace->description = $request->description;
-        $workspace->avatar_pic = $request->avatar_pic ?: '';
+        $workspace->avatar_pic = $request->avatar_pic;
         $workspace->save();
         $workspace->admins()->attach([auth()->user()->id]);
         $workspace->members()->attach($request->input('members'));
@@ -88,7 +88,7 @@ class WorkspaceController extends Controller
         $workspace = Workspace::findOrFail($workspace);
         $workspace->title = $request->title;
         $workspace->description = $request->description;
-        $workspace->avatar_pic = $request->avatar_pic ?: '';
+        $workspace->avatar_pic = $request->avatar_pic;
         $members = $request->input('members') ?: [];
         $members = collect($members)->diff($request->input('admins'));
         $workspace->save();
