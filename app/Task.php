@@ -11,6 +11,7 @@ class Task extends Model
     protected $casts = [
         'due_to' => 'datetime',
     ];
+    protected $fillable = ['title', 'description', 'parent_id', 'group', 'finisher_id', 'priority_id', 'due_to', 'finished_at'];
     public function users()
     {
         return $this->belongsToMany(User::class);

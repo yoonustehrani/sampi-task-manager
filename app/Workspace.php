@@ -26,7 +26,7 @@ class Workspace extends Model
     }
     public function finished_tasks()
     {
-        return $this->hasMany(Task::class)->whereFinished(true);
+        return $this->hasMany(Task::class)->whereNotNull('finished_at');
     }
     public function demands()
     {
