@@ -15,8 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     // return "<a href='". route('task-manager.') ."'>Task Manager</a>";
-    $user = auth()->user() ?: \Auth::loginUsingId(2);
-    return view('index', compact('user'));
+    return view('index');
 });
 
 Route::group(['prefix' => 'task-manager', 'as' => 'task-manager.', 'middleware' => ['auth']], function () {
