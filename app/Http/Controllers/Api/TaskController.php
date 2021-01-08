@@ -11,7 +11,39 @@ class TaskController extends Controller
 {
     public function index(Request $request, $workspace)
     {
-        return $request->user()->tasks()->with('users')->withCount('demands')->where('workspace_id', $workspace)->latest()->paginate(10);
+        $request->validate([
+            'limit' => 'nullable|numeric',
+            'order' => 'nullable|string',
+            'order_by' => 'nullable|string'
+        ]);
+        $user_tasks = $request->user()->tasks()->with('users')->withCount('demands')->where('workspace_id', $workspace);
+        if ($request->order_by) {
+            $order = $request->order != 'desc' ? 'asc' : 'desc';
+            $user_tasks = $user_tasks->orderBy($request->order_by, $order);
+        }
+        if ($request->limit) {
+            return $user_tasks->limit((int) $request->limit)->get();
+        } else {
+            return $user_tasks->latest()->paginate(10);
+        }
+    }
+    public function mixed(Request $request)
+    {
+        $request->validate([
+            'limit' => 'nullable|numeric',
+            'order' => 'nullable|string',
+            'order_by' => 'nullable|string'
+        ]);
+        $user_tasks = $request->user()->tasks()->with('users')->withCount('demands');
+        if ($request->order_by) {
+            $order = $request->order != 'desc' ? 'asc' : 'desc';
+            $user_tasks = $user_tasks->orderBy($request->order_by, $order);
+        }
+        if ($request->limit) {
+            return $user_tasks->limit((int) $request->limit)->get();
+        } else {
+            return $user_tasks->paginate(10);
+        }
     }
     public function show(Request $request, $workspace, $task)
     {
