@@ -11,7 +11,15 @@ class TaskController extends Controller
 {
     public function index(Request $request, $workspace)
     {
-        return $request->user()->tasks()->with('users')->where('workspace_id', $workspace)->latest()->paginate();
+        return $request->user()->tasks()->with('users')->withCount('demands')->where('workspace_id', $workspace)->latest()->paginate(10);
+    }
+    public function show(Request $request, $workspace, $task)
+    {
+        $task = Task::where('workspace_id', $workspace)->with([
+            'demands' => function($q) { $q->with('from', 'to'); }
+        ])->findOrFail($task);
+        $task->load('users');
+        return $task;
     }
     public function store(Request $request, $workspace)
     {
