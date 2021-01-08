@@ -30,6 +30,7 @@ Route::group(['prefix' => 'task-manager', 'as' => 'task-manager.', 'middleware' 
     Route::resource('workspaces',  'WorkspaceController');
     Route::resource('demands',     'DemandController');
     Route::resource('tasks',       'TaskController');
+    // Route::get('workspaces/{workspace}/tasks/{}', 'TaskController@index');
 });
 
 Auth::routes(['register' => false]);

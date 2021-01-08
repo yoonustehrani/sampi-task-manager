@@ -12,11 +12,11 @@
         let list_tasks = "{{ route('api.task-manager.tasks.index', ['workspace' => 1, 'api_token' => auth()->user()->api_token]) }}";
         let add_task = "{{ route('api.task-manager.tasks.store', ['workspace' => 1, 'api_token' => auth()->user()->api_token]) }}";
         // List tasks -> works fine !
-        axios.get(list_tasks).then(res => {
-            console.log(res.data);
-        })
+        // axios.get(list_tasks).then(res => {
+        //     console.log(res.data);
+        // })
         // Add a task to the workspace -> works fine !
-        // axios.post(path, {
+        // axios.post(add_task, {
         //     title: 'Task number 1',
         //     priority: 1,
         //     group: 'fictional',
