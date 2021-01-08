@@ -84,7 +84,15 @@ div.dashboard-tab-container {
         }
     }
     div.result-container {
+        display: none;
         background-color: #E0EAFC;
-        box-shadow: 4px 4px 6px 0 #bdc3c7 ;
+        box-shadow: 4px 4px 6px 0 #bdc3c7;
+        img.workspace-img {
+            width: 30px;
+            height: 30px;
+        }
+    }
+    div.result-container.active {
+        display: block;
     }
 }
