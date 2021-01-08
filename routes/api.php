@@ -35,6 +35,7 @@ Route::group(['prefix' => 'task-manager', 'as' => 'api.task-manager.'], function
         $api_controllers = '\\App\\Http\\Controllers\\Api\\';
         Route::apiResource('workspaces', $api_controllers . 'WorkspaceController');
         Route::apiResource('workspaces/{workspace}/tasks', $api_controllers . 'TaskController');
+        Route::get('tasks', $api_controllers . 'TaskController@mixed')->name('tasks.mixed');
     });
 });
 
