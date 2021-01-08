@@ -12,7 +12,7 @@
             <th scope="col">عنوان پروژه</th>
             <th scope="col">کارمندان</th>
             <th scope="col">وضعیت وظایف</th>
-            <th scope="col">خواسته های جاری</th>
+            <th scope="col">نیاز های جاری</th>
             <th scope="col">ویرایش</th>
             <th scope="col">حذف</th>
         @endcomponent

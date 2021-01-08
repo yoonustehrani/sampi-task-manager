@@ -15,11 +15,10 @@ class CreateTasksTable extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('parent_id');
+            $table->integer('parent_id')->nullable();
             $table->string('title');
-            $table->string('group');
+            $table->string('group')->default('');
             $table->longText('description')->nullable();
-            $table->boolean('finished')->default(false);
             $table->unsignedInteger('finisher_id')->nullable();
             $table->unsignedInteger('workspace_id');
             $table->unsignedInteger('priority_id');
