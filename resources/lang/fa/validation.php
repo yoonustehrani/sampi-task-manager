@@ -26,6 +26,7 @@ return [
         'password' => 'رمز عبور',
         'country_code' => 'کد کشور',
         'phone_number' => 'تلفن همراه',
-        'name' => 'نام کاربری'
+        'name' => 'نام کاربری',
+        'group' => 'گروه'
     ]
 ];

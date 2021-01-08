@@ -2,7 +2,6 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -31,5 +30,11 @@ Route::group(['prefix' => 'task-manager', 'as' => 'api.task-manager.'], function
     Route::get('roles/{role}/permissions', function ($role) {
         return \App\Role::findOrFail($role)->permissions()->get();
     })->name('role.permissions');
+    // Route::get('workspaces/{workspace}/tasks', 'TaskManagerController@tasks');
+    Route::group(['middleware' => ['auth:api']], function () {
+        $api_controllers = '\\App\\Http\\Controllers\\Api\\';
+        Route::apiResource('workspaces', $api_controllers . 'WorkspaceController');
+        Route::apiResource('workspaces/{workspace}/tasks', $api_controllers . 'TaskController');
+    });
 });
 
