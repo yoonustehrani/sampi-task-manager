@@ -32,6 +32,7 @@ class TaskController extends Controller
                 $task->group = $request->group ?: 'دسته بندی نشده';
                 $task->priority_id = $request->priority;
                 $task->due_to = $request->due_to;
+                $task->creator_id = $request->user()->id;
                 $task = $workspace->tasks()->create($task->toArray());
                 $users = $request->input('users') ?: [];
                 $task->users()->attach(
@@ -73,5 +74,14 @@ class TaskController extends Controller
             \DB::rollback();
             throw $e;
         }   
+    }
+    public function destroy(Request $request, $workspace, $task)
+    {
+        $task = Task::where('workspace_id', $workspace)->findOrFail($task);
+        if ($request->user()->id === $task->creator_id) {
+            $task->delete();
+            return ['okay' => true];
+        }
+        abort(403);
     }
 }
