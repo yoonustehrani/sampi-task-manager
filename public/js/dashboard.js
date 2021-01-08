@@ -28720,7 +28720,7 @@ var Dashboard = /*#__PURE__*/function (_Component) {
         className: "result-container col-12 mt-3 active",
         ref: this.tabResultsRef[0]
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
-        className: "table table-striped table-bordered float-right"
+        className: "table table-striped table-bordered table-responsive-sm float-right"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", {
         className: "thead-dark"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
@@ -28753,7 +28753,7 @@ var Dashboard = /*#__PURE__*/function (_Component) {
         className: "result-container col-12 mt-3",
         ref: this.tabResultsRef[1]
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
-        className: "table table-striped table-bordered float-right"
+        className: "table table-striped table-bordered table-responsive-sm float-right"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", {
         className: "thead-dark"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
@@ -28788,7 +28788,7 @@ var Dashboard = /*#__PURE__*/function (_Component) {
         className: "result-container col-12 mt-3",
         ref: this.tabResultsRef[2]
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
-        className: "table table-striped table-bordered float-right"
+        className: "table table-striped table-bordered table-responsive-sm float-right"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", {
         className: "thead-dark"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
@@ -28825,7 +28825,7 @@ var Dashboard = /*#__PURE__*/function (_Component) {
         className: "result-container col-12 mt-3",
         ref: this.tabResultsRef[3]
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
-        className: "table table-striped table-bordered float-right"
+        className: "table table-striped table-bordered table-responsive-sm float-right"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", {
         className: "thead-dark"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {

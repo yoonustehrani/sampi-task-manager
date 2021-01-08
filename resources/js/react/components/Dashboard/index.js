@@ -56,7 +56,7 @@ export default class Dashboard extends Component {
                 </nav>
 
                 <div className="result-container col-12 mt-3 active" ref={this.tabResultsRef[0]}>
-                    <table className="table table-striped table-bordered float-right">
+                    <table className="table table-striped table-bordered table-responsive-sm float-right">
                         <thead className="thead-dark">
                             <tr>
                                 <th scope="col">#</th>
@@ -92,7 +92,7 @@ export default class Dashboard extends Component {
                 </div>
 
                 <div className="result-container col-12 mt-3" ref={this.tabResultsRef[1]}>
-                    <table className="table table-striped table-bordered float-right">
+                    <table className="table table-striped table-bordered table-responsive-sm float-right">
                         <thead className="thead-dark">
                             <tr>
                                 <th scope="col">#</th>
@@ -130,7 +130,7 @@ export default class Dashboard extends Component {
                 </div>
 
                 <div className="result-container col-12 mt-3" ref={this.tabResultsRef[2]}>
-                    <table className="table table-striped table-bordered float-right">
+                    <table className="table table-striped table-bordered table-responsive-sm float-right">
                         <thead className="thead-dark">
                             <tr>
                                 <th scope="col">#</th>
@@ -170,7 +170,7 @@ export default class Dashboard extends Component {
                 </div>
 
                 <div className="result-container col-12 mt-3" ref={this.tabResultsRef[3]}>
-                    <table className="table table-striped table-bordered float-right">
+                    <table className="table table-striped table-bordered table-responsive-sm float-right">
                         <thead className="thead-dark">
                             <tr>
                                 <th scope="col">#</th>
