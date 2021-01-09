@@ -13,9 +13,8 @@
         let add_task = "{{ route('api.task-manager.tasks.store', ['workspace' => 1, 'api_token' => auth()->user()->api_token]) }}";
         
         // Get tasks mixed
-        let mixed_tasks = "{{ route('api.task-manager.tasks.index', ['api_token' => auth()->user()->api_token]) }}";
+        let mixed_tasks = "{{ route('api.task-manager.tasks.mixed', ['api_token' => auth()->user()->api_token]) }}";
         mixed_tasks += "?limit=10" // &order_by=due_to&order=desc ----> works fine !
-        
         // List tasks -> works fine !
         // axios.get(list_tasks).then(res => {
         //     console.log(res.data);

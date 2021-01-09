@@ -85,14 +85,44 @@ div.dashboard-tab-container {
     }
     div.result-container {
         display: none;
-        background-color: #E0EAFC;
-        box-shadow: 4px 4px 6px 0 #bdc3c7;
+        // background-color: #E0EAFC;
+        // box-shadow: 4px 4px 6px 0 #bdc3c7;
         img.workspace-img {
             width: 30px;
             height: 30px;
+        }
+        div.filter-box {
+            float: right;
+            background-color: #E0EAFC;
+            box-shadow: 4px 4px 6px 0 #bdc3c7;
+            border: 2px solid #A7BFE8;
+            border-radius: 8px;         
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;   
+            div.filter-option {
+                direction: rtl;
+                text-align: right;
+                display: inline-block;
+                font-family: $iran-sans;
+                select {
+                    margin-right: 6px;
+                    option {
+                        text-align: right;
+                        font-family: $iran-sans;
+                    }
+                }
+            }
         }
     }
     div.result-container.active {
         display: block;
     }
+}
+table {
+    font-family: $iran-sans;
+}
+select {
+    font-family: 'Lato', 'Font Awesome 5 Free', 'Font Awesome 5 Brands';
+    font-weight: 900;
 }

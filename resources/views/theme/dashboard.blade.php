@@ -61,6 +61,9 @@
             </a>
         </div>
     </div>
-    <div id="react-dashboard"></div>
+    <div 
+        id="react-dashboard"
+        mixed_tasks="{{ route('api.task-manager.tasks.mixed', ['api_token' => auth()->user()->api_token]) }}"
+    ></div>
     <script src="{{ asset('/js/dashboard.js') }}"></script>
 @endsection
