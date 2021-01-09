@@ -36,9 +36,7 @@ class TaskController extends Controller
         ]);
         $user_tasks = $request->user()->tasks()->with([
             'users',
-            'workspace' => function($q) {
-                $q->select('title');
-            }
+            'workspace:id,title'
         ])->withCount('demands');
         if ($request->order_by) {
             $order = $request->order != 'desc' ? 'asc' : 'desc';
