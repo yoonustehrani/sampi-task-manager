@@ -29,7 +29,7 @@ class CounterController extends Controller
                 'href'  => '#'
             ],
             'expired' => [
-                'count' => $user->tasks()->whereNotNull('due_to')->where('due_to', '<', now('Asia/Tehran'))->count(),
+                'count' => $user->expired_tasks()->count(),
                 'href'  => '#'
             ]
         ];

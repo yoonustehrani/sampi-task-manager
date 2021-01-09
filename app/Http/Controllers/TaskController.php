@@ -14,7 +14,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        
+        return view('theme.pages.tasks.index');
     }
 
     /**

@@ -4,14 +4,23 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Nicolaslopezj\Searchable\SearchableTrait;
 
 class Task extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, SearchableTrait;
+    protected $fillable = ['title', 'description', 'parent_id', 'group', 'creator_id', 'finisher_id', 'priority_id', 'due_to', 'finished_at'];
     protected $casts = [
         'due_to' => 'datetime',
     ];
-    protected $fillable = ['title', 'description', 'parent_id', 'group', 'creator_id', 'finisher_id', 'priority_id', 'due_to', 'finished_at'];
+    protected $hidden = ['pivot'];
+    public $searchable = [
+        'columns' => [
+            'title' => 10,
+            'description' => 8,
+            'group' => 6
+        ]
+    ];
     public function users()
     {
         return $this->belongsToMany(User::class);
