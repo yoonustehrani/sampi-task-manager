@@ -34,7 +34,12 @@ class TaskController extends Controller
             'order' => 'nullable|string',
             'order_by' => 'nullable|string'
         ]);
-        $user_tasks = $request->user()->tasks()->with(['users', 'workspace'])->withCount('demands');
+        $user_tasks = $request->user()->tasks()->with([
+            'users',
+            'workspace' => function($q) {
+                $q->select('title');
+            }
+        ])->withCount('demands');
         if ($request->order_by) {
             $order = $request->order != 'desc' ? 'asc' : 'desc';
             $user_tasks = $user_tasks->orderBy($request->order_by, $order);
