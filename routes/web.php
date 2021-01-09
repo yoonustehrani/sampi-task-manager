@@ -18,7 +18,9 @@ Route::get('/', function () {
     return view('index');
 });
 
-Route::view('/chart', 'chart');
+Route::get('/chart', function() {
+    return view('chart');
+});
 
 Route::group(['prefix' => 'task-manager', 'as' => 'task-manager.', 'middleware' => ['auth']], function () {
     Route::get('/', function() {

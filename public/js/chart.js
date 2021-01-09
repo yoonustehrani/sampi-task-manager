@@ -37879,31 +37879,24 @@ module.exports = function(module) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
+// import 'moment';
+// require('moment/locale/fa')
+// moment.locale('fa');
+window.moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+moment.locale('fa');
 window.Chart = __webpack_require__(/*! chart.js */ "./node_modules/chart.js/dist/Chart.js");
 Chart.platform.disableCSSInjection = true;
 
 /***/ }),
 
-/***/ "./resources/sass/app.scss":
-/*!*********************************!*\
-  !*** ./resources/sass/app.scss ***!
-  \*********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
 /***/ 0:
-/*!***************************************************************!*\
-  !*** multi ./resources/js/chart.js ./resources/sass/app.scss ***!
-  \***************************************************************/
+/*!*************************************!*\
+  !*** multi ./resources/js/chart.js ***!
+  \*************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! W:\php\sampies\resources\js\chart.js */"./resources/js/chart.js");
-module.exports = __webpack_require__(/*! W:\php\sampies\resources\sass\app.scss */"./resources/sass/app.scss");
+module.exports = __webpack_require__(/*! W:\php\sampies\resources\js\chart.js */"./resources/js/chart.js");
 
 
 /***/ })
