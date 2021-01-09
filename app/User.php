@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Traits\RoleAndPermissionTrait;
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -57,9 +58,21 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Task::class)->whereNull('finished_at');
     }
+    public function expired_tasks()
+    {
+        return $this->belongsToMany(Task::class)->whereNotNull('due_to')->where('due_to', '<', Carbon::now('Asia/Tehran'));
+    }
     public function demands()
     {
         return $this->hasMany(Demand::class, 'from_id');
+    }
+    public function finished_demands()
+    {
+        return $this->hasMany(Demand::class, 'from_id')->whereNotNull('finished_at');
+    }
+    public function unfinished_demands()
+    {
+        return $this->hasMany(Demand::class, 'from_id')->whereNull('finished_at');
     }
     public function asked_demands()
     {
