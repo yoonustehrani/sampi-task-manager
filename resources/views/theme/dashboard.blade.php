@@ -64,6 +64,14 @@
     <div 
         id="react-dashboard"
         mixed_tasks="{{ route('api.task-manager.tasks.mixed', ['api_token' => auth()->user()->api_token]) }}"
+        workspace_route="{{ route('task-manager.workspaces.show', ['workspace' => 'workspaceId']) }}"
+        task_route="{{ route('task-manager.tasks.show', ['task' => 'taskId']) }}"
     ></div>
-    <script src="{{ asset('/js/dashboard.js') }}"></script>
 @endsection
+
+@push('scripts')
+    <script>
+        var APP_PATH = "{{ asset('/') }}";
+    </script>
+    <script src="{{ asset('/js/dashboard.js') }}"></script>
+@endpush
