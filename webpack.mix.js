@@ -25,7 +25,7 @@ const src = {
 mix.disableNotifications();
 
 var { res, pub } = src
-mix.react(res.js + 'app.js', pub.js)
+mix.js(res.js + 'chart.js', pub.js)
     .sass(res.sass + 'app.scss', pub.css)
-    .sass(res.sass + 'auth.scss', pub.css)
-    .react(res.react + 'dashboard.js', pub.js)
+    // .sass(res.sass + 'auth.scss', pub.css)
+    // .react(res.react + 'dashboard.js', pub.js)

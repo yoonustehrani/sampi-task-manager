@@ -57,6 +57,10 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Task::class)->whereNull('finished_at');
     }
+    public function expired_tasks()
+    {
+        return $this->belongsToMany(Task::class)->whereNotNull('due_to')->where('due_to', '<', now('Asia/Tehran'));
+    }
     public function demands()
     {
         return $this->hasMany(Demand::class, 'from_id');
