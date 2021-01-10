@@ -21,22 +21,22 @@ Route::get('/', function () {
 });
 
 Route::get('/chart', function() {
-    $user = User::first();
-    $dt_from = Carbon::createFromFormat('Y-m-d', '2021-01-01')->setTime(0,0);
-    $dt_to = Carbon::createFromFormat('Y-m-d', '2021-01-30')->setTime(0,0);
-    if (! $dt_from->isBefore($dt_to)) {
-        return [
-            'error' => true
-        ];
-    }
-    $tasks = $user->tasks()
-                ->where('created_at', '<', $dt_to)
-                ->where('created_at', '>=', $dt_from)
-                ->groupBy('date')
-                ->orderBy('date', 'asc')
-                ->get([
-                    \DB::raw("COUNT(*) tasks, DATE_FORMAT(created_at, '%Y-%m-%e') date")
-                ]);
+    // $user = User::first();
+    // $dt_from = Carbon::createFromFormat('Y-m-d', '2021-01-01')->setTime(0,0);
+    // $dt_to = Carbon::createFromFormat('Y-m-d', '2021-01-30')->setTime(0,0);
+    // if (! $dt_from->isBefore($dt_to)) {
+    //     return [
+    //         'error' => true
+    //     ];
+    // }
+    // $tasks = $user->tasks()
+    //             ->where('created_at', '<', $dt_to)
+    //             ->where('created_at', '>=', $dt_from)
+    //             ->groupBy('date')
+    //             ->orderBy('date', 'asc')
+    //             ->get([
+    //                 \DB::raw("COUNT(*) tasks, DATE_FORMAT(created_at, '%Y-%m-%e') date")
+    //             ]);
     // return $tasks;
     return view('chart');
 });
