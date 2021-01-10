@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Axios from 'axios'
-import axios from 'axios'
-import { take } from 'lodash'
+import moment from 'moment'
+moment.locale('fa')
 
 export default class Dashboard extends Component {
     constructor(props) {
@@ -15,7 +15,7 @@ export default class Dashboard extends Component {
             this.tabTitlesRef.push(React.createRef())
         }
         this.state = {
-
+            tasks: []
         }
     }
     
@@ -58,8 +58,39 @@ export default class Dashboard extends Component {
         }
     }
 
+    setPriority = (id) => {
+        switch(id) {
+            case 1:
+                return 'ضروری و فوری'
+                break
+            case 2:
+                return 'ضروری و غیر فوری'
+                break
+            case 3:
+                return 'غیرضروری و فوری'
+                break
+            case 4:
+                return 'غیر ضروری و غیرفوری'
+                break
+            default:
+                break
+        }
+    }
+
+    formatOption = (option) => {
+        if (option.element) {
+            let icon_name = option.element.attributes.icon_name.nodeValue
+            return $(`<div class="select-option">${option.text}<i class="${icon_name}"></i></div>`)
+        }
+    }
+
     render() {
         let { tasks } = this.state
+        $('#order_select, #order_by_select').select2({
+            templateResult: this.formatOption,
+            minimumResultsForSearch: Infinity,
+            width: 'element'
+        })
         return (
             <div className="col-12 dashboard-tab-container">
                 <nav className="tab-title-bar text-center">
@@ -118,23 +149,25 @@ export default class Dashboard extends Component {
                 </div>
 
                 <div className="result-container col-12 mt-3" ref={this.tabResultsRef[1]}>
-                    <div className="filter-box mt-2 mb-2 p-4 col-12">
-                        <button className="btn btn-outline-info" onClick={this.sortData.bind(this, 'tasks')}>مرتب سازی</button>
-                        <div className="filter-option mr-3">
-                            نحوه مرتب سازی:
-                            <select id="order_select" className="form-select" defaultValue="desc">
-                                <option value="desc">صعودی</option>
-                                <option value="asc">نزولی</option>
+                    <div className="filter-box mt-2 mb-2 p-3 col-12">
+                        <div className="filter-option col-12 col-md-4 mb-3 mb-md-0 text-center">
+                            <span>مرتب سازی بر اساس:</span>
+                            <select id="order_by_select" defaultValue="due_to">
+                                <option value="due_to" icon_name="fas fa-hourglass-start">تاریخ تحویل</option>
+                                <option value="created_at" icon_name="fas fa-calendar-plus">تاریخ ایجاد</option>
+                                <option value="updated_at" icon_name="fas fa-user-edit">تاریخ تغییرات</option>
+                                <option value="finished_at" icon_name="fas fa-calendar-check">تاریخ اتمام</option>
                             </select>
                         </div>
-                        <div className="filter-option">
-                            مرتب سازی بر اساس:
-                            <select id="order_by_select" className="form-select" defaultValue="due_to">
-                                <option value="due_to">موعد تحویل</option>
-                                <option value="created_at">تاریخ ایجاد</option>
-                                <option value="updated_at">اخرین تغییرات</option>
-                                <option value="finished_at">تاریخ اتمام</option>
+                        <div className="filter-option col-12 col-md-4 mb-3 mb-md-0 text-center">
+                            <span>نحوه مرتب سازی:</span>
+                            <select id="order_select" defaultValue="asc">
+                                <option value="desc" icon_name="fas fa-sort-amount-up">صعودی</option>
+                                <option value="asc" icon_name="fas fa-sort-amount-down">نزولی</option>
                             </select>
+                        </div>
+                        <div className="col-12 col-md-4 text-center">
+                            <button className="btn btn-outline-info" onClick={this.sortData.bind(this, 'tasks')}>مرتب سازی</button>
                         </div>
                     </div>
                     <table className="table table-striped table-bordered table-responsive-sm float-right">
@@ -151,46 +184,27 @@ export default class Dashboard extends Component {
                             </tr>
                         </thead>
                         <tbody>
-                            { tasks.map((task, i) => {
-                                let priority
-                                switch(task.priority_id) {
-                                    case 1:
-                                        priority = 'ضروری و فوری'
-                                    break
-                                    case 2:
-                                        priority = 'ضروری و غیر فوری'
-                                    break
-                                    case 3:
-                                        priority = 'غیرضروری و فوری'
-                                    break
-                                    case 4:
-                                        priority = 'غیر ضروری و غیرفوری'
-                                    break
-                                    default:
-                                        break
-                                }
+                            { tasks !== null ? tasks.map((task, i) => {
                                 return (
-                                    <tr>
+                                    <tr key={i}>
                                         <th scope="row">{ i + 1 }</th>
                                         <td>{task.title}</td>
                                         <td className="text-right">
-                                            <img src="workspace img link"/>
-                                            <a href="workspace link">{task.workspace_id}</a>
+                                            <img href="" />
+                                            <a href="">{task.workspace.title}</a>
                                         </td>
                                         <td>{task.group}</td>
-                                        <td>{}</td>
-                                        <td>۱۲ فروردین</td>
+                                        <td>{this.setPriority(task.priority_id)}</td>
+                                        <td>{moment(task.due_to).fromNow()}</td>
                                         <td>
-                                            <i className="fas fa-check-circle fa-3x"></i>
-                                            {/* <i className="fas fa-times-circle"></i> */}
+                                            {task.finished_at === null ? <i className="fas fa-times-circle fa-3x"></i> : <i className="fas fa-check-circle fa-3x"></i>}
                                         </td>
                                         <td>
-                                            {/* ۱۰ فروردین */}
-                                            <i className="fas fa-calendar-times fa-3x"></i>
+                                        {task.finished_at === null ? <i className="fas fa-calendar-times fa-3x"></i> : moment(task.finished_at).fromNow()}
                                         </td>
                                     </tr>
                                 )
-                            }) }
+                            }) : null}
                         </tbody>
                     </table> 
                 </div>

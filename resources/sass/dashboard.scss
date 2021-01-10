@@ -94,19 +94,31 @@ div.dashboard-tab-container {
         div.filter-box {
             float: right;
             background-color: #E0EAFC;
-            box-shadow: 4px 4px 6px 0 #bdc3c7;
+            box-shadow: 3px 3px 7px 0 #bdc3c7;
             border: 2px solid #A7BFE8;
             border-radius: 8px;         
             display: flex;
             flex-direction: row;
+            flex-wrap: wrap;
+            align-items: center;
             justify-content: space-around;   
+            direction: rtl;
             div.filter-option {
                 direction: rtl;
                 text-align: right;
-                display: inline-block;
                 font-family: $iran-sans;
+                width: max-content !important;
+                display: flex;
+                // flex-direction: column;
+                // align-items: center;
+                // justify-content: center;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                span {
+                    text-align: center;
+                }
                 select {
-                    margin-right: 6px;
                     option {
                         text-align: right;
                         font-family: $iran-sans;
@@ -122,7 +134,26 @@ div.dashboard-tab-container {
 table {
     font-family: $iran-sans;
 }
-select {
-    font-family: 'Lato', 'Font Awesome 5 Free', 'Font Awesome 5 Brands';
-    font-weight: 900;
+.select2-container {
+    float: left !important;
+    width: max-content !important;
+    height: 100% !important;
+    margin-right: 4px !important;
+    div.select-option {
+        i {
+            margin-left: 10px;
+            font-size: 20px;
+        }
+    }
+    span.select2-selection__rendered {
+        padding-right: 8px !important;
+        padding-left: 20px !important;
+    }
+    span.select2-selection__arrow {
+        left: 0 !important;
+    }
+    .select2-dropdown {
+        width: max-content !important;
+        font-family: $iran-sans;
+    }
 }
