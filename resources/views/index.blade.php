@@ -12,12 +12,9 @@
         // let list_tasks = "{{ route('api.task-manager.tasks.index', ['workspace' => 1, 'api_token' => auth()->user()->api_token]) }}";
         // let add_task = "{{ route('api.task-manager.tasks.store', ['workspace' => 1, 'api_token' => auth()->user()->api_token]) }}";
         
-        let workspace_counter = "{{ route('api.task-manager.counter.workspaces', ['api_token' => auth()->user()->api_token]) }}"
-        let task_counter = "{{ route('api.task-manager.counter.tasks', ['api_token' => auth()->user()->api_token]) }}"
-        let demand_counter = "{{ route('api.task-manager.counter.demands', ['api_token' => auth()->user()->api_token]) }}"
-        console.log(workspace_counter)
-        console.log(task_counter)
-        console.log(demand_counter)
+        // let workspace_counter = "{{ route('api.task-manager.counter.workspaces', ['api_token' => auth()->user()->api_token]) }}"
+        // let task_counter = "{{ route('api.task-manager.counter.tasks', ['api_token' => auth()->user()->api_token]) }}"
+        // let demand_counter = "{{ route('api.task-manager.counter.demands', ['api_token' => auth()->user()->api_token]) }}"
 
         // Get tasks mixed
         // let mixed_tasks = "{{ route('api.task-manager.tasks.mixed', ['api_token' => auth()->user()->api_token]) }}";

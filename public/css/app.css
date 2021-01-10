@@ -10912,6 +10912,10 @@ a.text-dark:focus {
   }
 }
 
+p {
+  font-family: "Iransans";
+}
+
 .analysis-container {
   display: flex;
   flex-direction: row-reverse;

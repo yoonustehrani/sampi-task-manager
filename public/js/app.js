@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -43558,38 +43558,14 @@ $('.collapser-btn').click(function () {
 
 /***/ }),
 
-/***/ "./resources/sass/app.scss":
-/*!*********************************!*\
-  !*** ./resources/sass/app.scss ***!
-  \*********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-throw new Error("Module build failed (from ./node_modules/css-loader/index.js):\nModuleNotFoundError: Module not found: SyntaxError: I:\\projects\\task-manager\\package.json (directory description file): SyntaxError: I:\\projects\\task-manager\\package.json (directory description file): SyntaxError: Unexpected token < in JSON at position 1349\n    at I:\\projects\\task-manager\\node_modules\\webpack\\lib\\Compilation.js:925:10\n    at I:\\projects\\task-manager\\node_modules\\webpack\\lib\\NormalModuleFactory.js:401:22\n    at I:\\projects\\task-manager\\node_modules\\webpack\\lib\\NormalModuleFactory.js:130:21\n    at I:\\projects\\task-manager\\node_modules\\webpack\\lib\\NormalModuleFactory.js:224:22\n    at I:\\projects\\task-manager\\node_modules\\neo-async\\async.js:2830:7\n    at I:\\projects\\task-manager\\node_modules\\neo-async\\async.js:6877:13\n    at I:\\projects\\task-manager\\node_modules\\webpack\\lib\\NormalModuleFactory.js:214:25\n    at I:\\projects\\task-manager\\node_modules\\enhanced-resolve\\lib\\Resolver.js:207:23\n    at I:\\projects\\task-manager\\node_modules\\enhanced-resolve\\lib\\Resolver.js:283:21\n    at eval (eval at create (I:\\projects\\task-manager\\node_modules\\tapable\\lib\\HookCodeFactory.js:33:10), <anonymous>:9:1)\n    at I:\\projects\\task-manager\\node_modules\\enhanced-resolve\\lib\\UnsafeCachePlugin.js:42:23\n    at I:\\projects\\task-manager\\node_modules\\enhanced-resolve\\lib\\Resolver.js:283:21\n    at eval (eval at create (I:\\projects\\task-manager\\node_modules\\tapable\\lib\\HookCodeFactory.js:33:10), <anonymous>:9:1)\n    at I:\\projects\\task-manager\\node_modules\\enhanced-resolve\\lib\\Resolver.js:283:21\n    at eval (eval at create (I:\\projects\\task-manager\\node_modules\\tapable\\lib\\HookCodeFactory.js:33:10), <anonymous>:24:1)\n    at I:\\projects\\task-manager\\node_modules\\enhanced-resolve\\lib\\DescriptionFilePlugin.js:30:24\n    at I:\\projects\\task-manager\\node_modules\\enhanced-resolve\\lib\\DescriptionFileUtils.js:61:21\n    at I:\\projects\\task-manager\\node_modules\\enhanced-resolve\\lib\\forEachBail.js:30:14\n    at onJson (I:\\projects\\task-manager\\node_modules\\enhanced-resolve\\lib\\DescriptionFileUtils.js:51:14)\n    at I:\\projects\\task-manager\\node_modules\\enhanced-resolve\\lib\\DescriptionFileUtils.js:25:15\n    at I:\\projects\\task-manager\\node_modules\\enhanced-resolve\\lib\\CachedInputFileSystem.js:85:15\n    at processTicksAndRejections (internal/process/task_queues.js:75:11)");
-
-/***/ }),
-
-/***/ "./resources/sass/auth.scss":
-/*!**********************************!*\
-  !*** ./resources/sass/auth.scss ***!
-  \**********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
-/***/ 0:
-/*!****************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/sass/app.scss ./resources/sass/auth.scss ***!
-  \****************************************************************************************/
+/***/ 2:
+/*!***********************************!*\
+  !*** multi ./resources/js/app.js ***!
+  \***********************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! I:\projects\task-manager\resources\js\app.js */"./resources/js/app.js");
-__webpack_require__(/*! I:\projects\task-manager\resources\sass\app.scss */"./resources/sass/app.scss");
-module.exports = __webpack_require__(/*! I:\projects\task-manager\resources\sass\auth.scss */"./resources/sass/auth.scss");
+module.exports = __webpack_require__(/*! I:\projects\task-manager\resources\js\app.js */"./resources/js/app.js");
 
 
 /***/ })

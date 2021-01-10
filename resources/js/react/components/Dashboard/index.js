@@ -184,29 +184,35 @@ export default class Dashboard extends Component {
                             </tr>
                         </thead>
                         <tbody>
-                            { tasks !== null ? tasks.map((task, i) => {
-                                return (
-                                    <tr key={i}>
-                                        <th scope="row">{ i + 1 }</th>
-                                        <td>{task.title}</td>
-                                        <td className="text-right">
-                                            <img href="" />
-                                            <a href="">{task.workspace.title}</a>
-                                        </td>
-                                        <td>{task.group}</td>
-                                        <td>{this.setPriority(task.priority_id)}</td>
-                                        <td>{moment(task.due_to).fromNow()}</td>
-                                        <td>
-                                            {task.finished_at === null ? <i className="fas fa-times-circle fa-3x"></i> : <i className="fas fa-check-circle fa-3x"></i>}
-                                        </td>
-                                        <td>
-                                        {task.finished_at === null ? <i className="fas fa-calendar-times fa-3x"></i> : moment(task.finished_at).fromNow()}
-                                        </td>
-                                    </tr>
-                                )
-                            }) : null}
+                            {
+                                tasks.length > 0 ? tasks.map((task, i) => {
+                                    return (
+                                        <tr key={i}>
+                                            <th scope="row">{ i + 1 }</th>
+                                            <td>{task.title}</td>
+                                            <td className="text-right">
+                                                <img href="" />
+                                                <a href="">{task.workspace.title}</a>
+                                            </td>
+                                            <td>{task.group}</td>
+                                            <td>{this.setPriority(task.priority_id)}</td>
+                                            <td>{moment(task.due_to).fromNow()}</td>
+                                            <td>
+                                                {task.finished_at === null ? <i className="fas fa-times-circle fa-3x"></i> : <i className="fas fa-check-circle fa-3x"></i>}
+                                            </td>
+                                            <td>
+                                            {task.finished_at === null ? <i className="fas fa-calendar-times fa-3x"></i> : moment(task.finished_at).fromNow()}
+                                            </td>
+                                        </tr>
+                                    )
+                                }) : null
+                            }
                         </tbody>
                     </table> 
+                    {
+                        tasks.length <= 0 &&
+                            <p className="text-center text-secondary">موردی برای نمایش وجود ندارد</p>
+                    }
                 </div>
 
                 <div className="result-container col-12 mt-3" ref={this.tabResultsRef[2]}>
