@@ -33,7 +33,7 @@ Route::get('/chart', function() {
                 ->where('created_at', '<', $dt_to)
                 ->where('created_at', '>=', $dt_from)
                 ->groupBy('date')
-                ->orderBy('date', 'desc')
+                ->orderBy('date', 'asc')
                 ->get([
                     \DB::raw("COUNT(*) tasks, DATE_FORMAT(created_at, '%Y-%m-%e') date")
                 ]);

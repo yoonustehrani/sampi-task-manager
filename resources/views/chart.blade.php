@@ -15,72 +15,142 @@
     <script src="{{ asset('js/chart.js') }}"></script>
     <script>
         let ctx = document.getElementById('myChart');
+        let data = [
+            {
+                y: 1,
+                t: moment("2021-01-1")
+            },
+            {
+                y: 1,
+                t: moment("2021-01-2")
+            },
+            {
+                y: 2,
+                t: moment("2021-01-3")
+            },
+            {
+                y: 3,
+                t: moment("2021-01-4")
+            },
+            {
+                y: 2,
+                t: moment("2021-01-5")
+            },
+            {
+                y: 2,
+                t: moment("2021-01-6")
+            },
+            {
+                y: 6,
+                t: moment("2021-01-8")
+            },
+            {
+                y: 1,
+                t: moment("2021-01-9")
+            }
+            // {
+            //     t: moment('2021-01-02'),
+            //     y: 0
+            // },
+            // {
+            //     t: moment('2021-01-03'),
+            //     y: 100
+            // },
+            // {
+            //     t: moment('2021-01-05'),
+            //     y: 100
+            // },
+            // {
+            //     t: moment('2021-01-06'),
+            //     y: 100
+            // },
+            // {
+            //     t: moment('2021-01-12'),
+            //     y: 50
+            // },
+            // {
+            //     t: moment('2021-01-14'),
+            //     y: 60
+            // },
+            // {
+            //     t: moment('2021-01-16'),
+            //     y: 40
+            // },
+            // {
+            //     t: moment('2021-01-17'),
+            //     y: 100
+            // },
+            // {
+            //     t: moment('2021-01-18'),
+            //     y: 100
+            // }
+        ];
         var myLineChart = new Chart(ctx, {
             type: 'line',
             data: {
                 datasets: [
                     {
-                        label: 'my first dataset',
-                        data: [
-                            {
-                                t: moment('2021-01-18'),
-                                y: 100
-                            },
-                            {
-                                t: moment('2021-01-16'),
-                                y: 40
-                            },
-                            {
-                                t: moment('2021-01-14'),
-                                y: 60
-                            },
-                            {
-                                t: moment('2021-01-12'),
-                                y: 50
-                            }
-                        ],
-                        fill: false,
+                        label: 'وظایف',
+                        // showLine: false,
+                        lineTension: 0,
+                        data: data,
+                        // fill: false,
                         borderColor: 'red',
-                        borderWidth: 1
+                        borderWidth: 1,
+                        backgroundColor: 'rgba(255,0,0,0.2)',
                     }
                 ]
             },
             options: {
+                tooltips: {
+                    mode: 'index',
+                    intersect: false,
+                    titleFontFamily: 'Iransans',
+                    bodyFontFamily: 'Iransans'
+                },
+                legend: {
+                    labels: {
+                        fontFamily: 'Iransans'
+                    }
+                },
                 scales: {
                     xAxes: [
                         {
                             ticks: {
-                                source: 'data'
+                                source: 'data',
+                                fontFamily: 'Iransans'
                             },
+                            distribution: 'series',
                             type: 'time',
                             time: {
                                 round: true,
                                 unit: 'day',
                                 minUnit: 'day',
-                                tooltipFormat: 'MMMM DD, YYYY',
+                                tooltipFormat: 'dddd، DD MMMM YYYY',
                                 displayFormats: {
-                                    'day': 'MMMM DD, YYYY'
-                                }
+                                    'day': 'YYYY-MM-DD'
+                                },
                             }
                         }
                     ],
                     yAxes: [{
                         stacked: false,
                         ticks: {
-                            beginAtZero: true
+                            beginAtZero: true,
+                            fontFamily: 'Iransans'
                         }
                     }]
                 },
-                // elements: {
-                //     // point: {
-                //     //     pointBackgroundColor: '',
-                //     //     pointBorderColor: '',
-                //     //     pointBorderWidth: '',
-                //     // },
-                //     // line: {
-
-                //     // }
-                // }
+                elements: {
+                    // point: {
+                    //     pointBackgroundColor: '',
+                    //     pointBorderColor: '',
+                    //     pointBorderWidth: '',
+                    // },
+                    // lines: {
+                    //     backgroundColor: 'red',
+                    // }
+                }
             }
         });
         // new Chart(document.getElementById("chartjs-0"),{"type":"line","data":{"labels":["January","February","March","April","May","June","July"],"datasets":[{"label":"My First Dataset","data":[65,59,80,81,56,55,40],"fill":false,"borderColor":"rgb(75, 192, 192)","lineTension":0.1}]},"options":{}});

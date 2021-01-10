@@ -37876,14 +37876,14 @@ module.exports = function(module) {
 /*!*******************************!*\
   !*** ./resources/js/chart.js ***!
   \*******************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-// import 'moment';
-// require('moment/locale/fa')
-// moment.locale('fa');
-window.moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
-moment.locale('fa');
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var moment_locale_fa__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! moment/locale/fa */ "./node_modules/moment/locale/fa.js");
+/* harmony import */ var moment_locale_fa__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment_locale_fa__WEBPACK_IMPORTED_MODULE_0__);
+
 window.Chart = __webpack_require__(/*! chart.js */ "./node_modules/chart.js/dist/Chart.js");
 Chart.platform.disableCSSInjection = true;
 
