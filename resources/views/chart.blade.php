@@ -92,7 +92,7 @@
                     {
                         label: 'وظایف',
                         // showLine: false,
-                        lineTension: 0,
+                        // lineTension: 0,
                         data: data,
                         // fill: false,
                         borderColor: 'red',
