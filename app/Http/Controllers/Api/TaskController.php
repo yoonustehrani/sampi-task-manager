@@ -34,10 +34,11 @@ class TaskController extends Controller
             'order' => 'nullable|string',
             'order_by' => 'nullable|string'
         ]);
+        $user = $request->user();
         $relationship = $request->relationship && method_exists($user, $request->relationship . '_tasks')
                         ? $request->relationship . '_tasks'
                         : 'tasks';
-        $user_tasks = $request->user()->{$relationship}()->with([
+        $user_tasks = $user->{$relationship}()->with([
             'users',
             'workspace:id,title,avatar_pic'
         ])->withCount('demands');
