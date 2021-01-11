@@ -10912,8 +10912,12 @@ a.text-dark:focus {
   }
 }
 
-p {
+p a {
   font-family: "Iransans";
+}
+
+a:hover {
+  text-decoration: none;
 }
 
 .analysis-container {
@@ -11068,6 +11072,17 @@ div.dashboard-tab-container div.result-container.active {
 
 table {
   font-family: "Iransans";
+}
+
+table img.workspace_avatar {
+  width: 30px;
+  height: 30px;
+  margin-left: 10px;
+}
+
+table a {
+  color: #000000;
+  transition: 0.3s;
 }
 
 .select2-container {

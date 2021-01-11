@@ -15,7 +15,8 @@ export default class Dashboard extends Component {
             this.tabTitlesRef.push(React.createRef())
         }
         this.state = {
-            tasks: []
+            tasks: [],
+            statistics: {}
         }
     }
     
@@ -25,7 +26,7 @@ export default class Dashboard extends Component {
             Axios.get(`${mixedTasksApi}&limit=15&order_by=due_to&order=desc`).then(res => {
                 let { data } = res
                 this.setState({
-                    
+                    tasks: data
                 })
             })
         }
@@ -47,9 +48,9 @@ export default class Dashboard extends Component {
 
     sortData = (tab) => {
         let { mixedTasksApi } = this.props
-        let order_by = $('#order_by_select').val(), order = $('#order_select').val()
+        let order_by = $('#order_by_select').val(), order = $('#order_select').val(), relation = $('#relation_select').val()
         if (tab === "tasks") {
-            Axios.get(`${mixedTasksApi}&limit=15&order_by=${order_by}&order=${order}`).then(res => {
+            Axios.get(`${mixedTasksApi}&limit=15&order_by=${order_by}&order=${order}&relationship=${relation}`).then(res => {
                 let { data } = res
                 this.setState({
                     tasks: data
@@ -84,215 +85,323 @@ export default class Dashboard extends Component {
         }
     }
 
+    redirectToTask = (taskId) => {
+        let { task_route } = this.props
+        window.location.href = task_route.replace("taskId", taskId)
+    }
+
+    componentDidMount() {
+        let { workspace_counter, task_counter, demand_counter } = this.props
+        let statisticApis = [workspace_counter, task_counter, demand_counter], statistics = {}
+        statisticApis.map((url, i) => {
+            Axios.get(url).then(res => {
+                let { data } = res
+                this.setState(preState => {
+                    let catagory
+                    switch (i) {
+                        case 0:
+                            catagory = "workspaceCounter"
+                            break;
+
+                        case 1:
+                            catagory = "taskCounter"
+                            break;
+
+                        case 2:
+                            catagory = "demandCounter"
+                            break;
+                    
+                        default:
+                            break;
+                    }
+                    statistics[catagory] = data
+                    return ({
+                        statistics: statistics
+                    })
+                })
+            })
+        })
+    }
+    
+
     render() {
-        let { tasks } = this.state
-        $('#order_select, #order_by_select').select2({
+        let { tasks, statistics } = this.state
+        let { workspace_route } = this.props
+        $('#order_select, #order_by_select, #relation_select').select2({
             templateResult: this.formatOption,
             minimumResultsForSearch: Infinity,
             width: 'element'
         })
+
         return (
-            <div className="col-12 dashboard-tab-container">
-                <nav className="tab-title-bar text-center">
-                    <a className="tab-link active" ref={this.tabTitlesRef[0]} onClick={this.changeTab.bind(this, 0)}>
-                        <i className="fas fa-project-diagram"></i>
-                        پروژه ها
-                    </a>
-                    <a className="tab-link" ref={this.tabTitlesRef[1]} onClick={this.changeTab.bind(this, 1)}>
-                        <i className="fas fa-tasks"></i>
-                        وظایف
-                    </a>
-                    <a className="tab-link" ref={this.tabTitlesRef[2]} onClick={this.changeTab.bind(this, 2)}>
-                        <i className="fas fa-comment-dots"></i>
-                        درخواست ها
-                    </a>
-                    <a className="tab-link" ref={this.tabTitlesRef[3]} onClick={this.changeTab.bind(this, 3)}>
-                        <i className="fas fa-clipboard-list"></i>
-                        نیاز ها
-                    </a>
-                </nav>
-
-                <div className="result-container col-12 mt-3 active" ref={this.tabResultsRef[0]}>
-                    <table className="table table-striped table-bordered table-responsive-sm float-right">
-                        <thead className="thead-dark">
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">عنوان پروژه</th>
-                                <th scope="col">کارمندان</th>
-                                <th scope="col">وضعیت وظایف</th>
-                                <th scope="col">خواسته های جاری</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">۱</th>
-                                <td className="text-right">
-                                    <img src="workspace img link"/>
-                                    <a href="workspace link">workspace title</a>
-                                </td>
-                                <td>
-                                    1 <i className="fas fa-user"></i>
-                                    {/* 7 <i className="fas fa-users"></i>
-                                    0 <i className="fas fa-user-slash"></i> */}
-                                </td>
-                                <td>
-                                    کل : <span className="badge badge-primary ml-1">3</span>
-                                    اتمام : <span className="badge badge-success ml-1">2</span>
-                                    باقی مانده : <span className="badge badge-danger ml-1">4</span>
-                                </td>
-                                <td>
-                                    2
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table> 
-                </div>
-
-                <div className="result-container col-12 mt-3" ref={this.tabResultsRef[1]}>
-                    <div className="filter-box mt-2 mb-2 p-3 col-12">
-                        <div className="filter-option col-12 col-md-4 mb-3 mb-md-0 text-center">
-                            <span>مرتب سازی بر اساس:</span>
-                            <select id="order_by_select" defaultValue="due_to">
-                                <option value="due_to" icon_name="fas fa-hourglass-start">تاریخ تحویل</option>
-                                <option value="created_at" icon_name="fas fa-calendar-plus">تاریخ ایجاد</option>
-                                <option value="updated_at" icon_name="fas fa-user-edit">تاریخ تغییرات</option>
-                                <option value="finished_at" icon_name="fas fa-calendar-check">تاریخ اتمام</option>
-                            </select>
-                        </div>
-                        <div className="filter-option col-12 col-md-4 mb-3 mb-md-0 text-center">
-                            <span>نحوه مرتب سازی:</span>
-                            <select id="order_select" defaultValue="asc">
-                                <option value="desc" icon_name="fas fa-sort-amount-up">صعودی</option>
-                                <option value="asc" icon_name="fas fa-sort-amount-down">نزولی</option>
-                            </select>
-                        </div>
-                        <div className="col-12 col-md-4 text-center">
-                            <button className="btn btn-outline-info" onClick={this.sortData.bind(this, 'tasks')}>مرتب سازی</button>
-                        </div>
+            <div>
+                <div className="analysis-boxes analysis-container">
+                    <div className="float-left col-md-3 col-12 projects">
+                        <a href={statistics.workspaceCounter ? statistics.workspaceCounter.all.href : "#"} className="item-link">
+                            <i className="float-right dashboard-item fas fa-project-diagram fa-3x"></i>
+                            <div>
+                                <span className="float-right dashboard-item">{ statistics.workspaceCounter ? statistics.workspaceCounter.all.count : 0 }</span>
+                                <span className="float-right dashboard-item">پروژه های من</span>
+                            </div>
+                        </a>
                     </div>
-                    <table className="table table-striped table-bordered table-responsive-sm float-right">
-                        <thead className="thead-dark">
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">عنوان</th>
-                                <th scope="col">پروژه</th>
-                                <th scope="col">دسته بندی</th>
-                                <th scope="col">اولویت</th>
-                                <th scope="col">موعد تحویل</th>
-                                <th scope="col">وضعیت اتمام</th>
-                                <th scope="col">تاریخ اتمام</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                tasks.length > 0 ? tasks.map((task, i) => {
-                                    return (
-                                        <tr key={i}>
-                                            <th scope="row">{ i + 1 }</th>
-                                            <td>{task.title}</td>
-                                            <td className="text-right">
-                                                <img href="" />
-                                                <a href="">{task.workspace.title}</a>
-                                            </td>
-                                            <td>{task.group}</td>
-                                            <td>{this.setPriority(task.priority_id)}</td>
-                                            <td>{moment(task.due_to).fromNow()}</td>
-                                            <td>
-                                                {task.finished_at === null ? <i className="fas fa-times-circle fa-3x"></i> : <i className="fas fa-check-circle fa-3x"></i>}
-                                            </td>
-                                            <td>
-                                            {task.finished_at === null ? <i className="fas fa-calendar-times fa-3x"></i> : moment(task.finished_at).fromNow()}
-                                            </td>
-                                        </tr>
-                                    )
-                                }) : null
-                            }
-                        </tbody>
-                    </table> 
-                    {
-                        tasks.length <= 0 &&
-                            <p className="text-center text-secondary">موردی برای نمایش وجود ندارد</p>
-                    }
+                    <div className="float-left col-md-3 col-12 finished-tasks">
+                        <a href={statistics.taskCounter ? statistics.taskCounter.finished.href : "#"} className="item-link">
+                            <i className="float-right dashboard-item fas fa-check-double fa-3x"></i>
+                            <div>
+                                <span className="float-right dashboard-item">{ statistics.taskCounter ? statistics.taskCounter.finished.count : 0 }</span>
+                                <span className="float-right dashboard-item">وظایف انجام شده</span>
+                            </div>
+                        </a>
+                    </div>
+                    <div className="float-left col-md-3 col-12 tickets finished-demands">
+                        <a href={statistics.demandCounter ? statistics.demandCounter.finished.href : "#"} className="item-link">
+                            <i className="float-right dashboard-item fas fa-check fa-3x"></i>
+                            <div>
+                                <span className="float-right dashboard-item">{ statistics.demandCounter ? statistics.demandCounter.finished.count : 0 }</span>
+                                <span className="float-right dashboard-item">خواسته های انجام شده</span>
+                            </div>
+                        </a>
+                    </div>
+                    <div className="float-left col-md-3 col-12 tickets delayed-tasks">
+                        <a href={statistics.taskCounter ? statistics.taskCounter.expired.href : "#"} className="item-link">
+                            <i className="float-right dashboard-item fas fa-hourglass-end fa-3x"></i>
+                            <div>
+                                <span className="float-right dashboard-item">{ statistics.taskCounter ? statistics.taskCounter.expired.count : 0 }</span>
+                                <span className="float-right dashboard-item">وظایف عقب افتاده</span>
+                            </div>
+                        </a>
+                    </div>
+                    <div className="float-left col-md-3 col-12 tickets current-tasks">
+                        <a href={statistics.taskCounter ? statistics.taskCounter.unfinished.href : "#"} className="item-link">
+                            <i className="float-right dashboard-item fas fa-tasks fa-3x"></i>
+                            <div>
+                                <span className="float-right dashboard-item">{ statistics.taskCounter ? statistics.taskCounter.unfinished.count : 0 }</span>
+                                <span className="float-right dashboard-item">وظایف جاری</span>
+                            </div>
+                        </a>
+                    </div>
+                    <div className="float-left col-md-3 col-12 tickets current-demands">
+                        <a href={statistics.demandCounter ? statistics.demandCounter.unfinished.href : "#"} className="item-link">
+                            <i className="float-right dashboard-item fas fa-list-alt fa-3x"></i>
+                            <div>
+                                <span className="float-right dashboard-item">{ statistics.demandCounter ? statistics.demandCounter.unfinished.count : 0 }</span>
+                                <span className="float-right dashboard-item">خواسته های جاری</span>
+                            </div>
+                        </a>
+                    </div>
                 </div>
+                <div className="col-12 dashboard-tab-container">
+                    <nav className="tab-title-bar text-center">
+                        <a className="tab-link active" ref={this.tabTitlesRef[0]} onClick={this.changeTab.bind(this, 0)}>
+                            <i className="fas fa-project-diagram"></i>
+                            پروژه ها
+                        </a>
+                        <a className="tab-link" ref={this.tabTitlesRef[1]} onClick={this.changeTab.bind(this, 1)}>
+                            <i className="fas fa-tasks"></i>
+                            وظایف
+                        </a>
+                        <a className="tab-link" ref={this.tabTitlesRef[2]} onClick={this.changeTab.bind(this, 2)}>
+                            <i className="fas fa-comment-dots"></i>
+                            درخواست ها
+                        </a>
+                        <a className="tab-link" ref={this.tabTitlesRef[3]} onClick={this.changeTab.bind(this, 3)}>
+                            <i className="fas fa-clipboard-list"></i>
+                            نیاز ها
+                        </a>
+                    </nav>
 
-                <div className="result-container col-12 mt-3" ref={this.tabResultsRef[2]}>
-                    <table className="table table-striped table-bordered table-responsive-sm float-right">
-                        <thead className="thead-dark">
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">عنوان</th>
-                                <th scope="col">پروژه</th>
-                                <th scope="col">درخواست کننده</th>
-                                <th scope="col">تسک مربوطه</th>
-                                <th scope="col">اولویت</th>
-                                <th scope="col">موعد تحویل</th>
-                                <th scope="col">وضعیت اتمام</th>
-                                <th scope="col">تاریخ اتمام</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">۱</th>
-                                <td>ارسال فرمت پی ان جی لوگو</td>
-                                <td className="text-right">
-                                    <img src="workspace img link"/>
-                                    <a href="workspace link">workspace title</a>
-                                </td>
-                                <td>امیررضا منصوریان</td>
-                                <td>طراحی صفحه اصلی اپ</td>
-                                <td>ضروری و مهم</td>
-                                <td>۱۲ فروردین</td>
-                                <td>
-                                    <i className="fas fa-check-circle fa-3x"></i>
-                                    {/* <i className="fas fa-times-circle"></i> */}
-                                </td>
-                                <td>
-                                    {/* ۱۰ فروردین */}
-                                    <i className="fas fa-calendar-times fa-3x"></i>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table> 
-                </div>
+                    <div className="result-container col-12 mt-3 active" ref={this.tabResultsRef[0]}>
+                        <table className="table table-striped table-bordered table-responsive-sm float-right">
+                            <thead className="thead-dark">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">عنوان پروژه</th>
+                                    <th scope="col">کارمندان</th>
+                                    <th scope="col">وضعیت وظایف</th>
+                                    <th scope="col">خواسته های جاری</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">۱</th>
+                                    <td className="text-right">
+                                        <img src="workspace img link"/>
+                                        <a href="workspace link">workspace title</a>
+                                    </td>
+                                    <td>
+                                        1 <i className="fas fa-user"></i>
+                                        {/* 7 <i className="fas fa-users"></i>
+                                        0 <i className="fas fa-user-slash"></i> */}
+                                    </td>
+                                    <td>
+                                        کل : <span className="badge badge-primary ml-1">3</span>
+                                        اتمام : <span className="badge badge-success ml-1">2</span>
+                                        باقی مانده : <span className="badge badge-danger ml-1">4</span>
+                                    </td>
+                                    <td>
+                                        2
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table> 
+                    </div>
 
-                <div className="result-container col-12 mt-3" ref={this.tabResultsRef[3]}>
-                    <table className="table table-striped table-bordered table-responsive-sm float-right">
-                        <thead className="thead-dark">
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">عنوان</th>
-                                <th scope="col">پروژه</th>
-                                <th scope="col">فرد مربوطه</th>
-                                <th scope="col">تسک مربوطه</th>
-                                <th scope="col">اولویت</th>
-                                <th scope="col">موعد تحویل</th>
-                                <th scope="col">وضعیت اتمام</th>
-                                <th scope="col">تاریخ اتمام</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">۱</th>
-                                <td>ارسال فرمت پی ان جی لوگو</td>
-                                <td className="text-right">
-                                    <img src="workspace img link"/>
-                                    <a href="workspace link">workspace title</a>
-                                </td>
-                                <td>امیررضا منصوریان</td>
-                                <td>طراحی صفحه اصلی اپ</td>
-                                <td>ضروری و مهم</td>
-                                <td>۱۲ فروردین</td>
-                                <td>
-                                    <i className="fas fa-check-circle fa-3x"></i>
-                                    {/* <i className="fas fa-times-circle"></i> */}
-                                </td>
-                                <td>
-                                    {/* ۱۰ فروردین */}
-                                    <i className="fas fa-calendar-times fa-3x"></i>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table> 
+                    <div className="result-container col-12 mt-3" ref={this.tabResultsRef[1]}>
+                        <div className="filter-box mt-2 mb-2 p-3 col-12">
+                            <div className="filter-option col-12 col-md-3 mb-3 mb-md-0 text-center">
+                                <span>جستجو در: </span>
+                                <select id="relation_select" defaultValue="all">
+                                    <option value="all" icon_name="fas fa-tasks">همه</option>
+                                    <option value="finished" icon_name="fas fa-check-square">انجام شده</option>
+                                    <option value="unfinished" icon_name="fas fa-times-circle">انجام نشده</option>
+                                    <option value="expired" icon_name="fas fa-calendar-minus">منقضی</option>
+                                </select>
+                            </div>
+                            <div className="filter-option col-12 col-md-3 mb-3 mb-md-0 text-center">
+                                <span>مرتب سازی بر اساس:</span>
+                                <select id="order_by_select" defaultValue="due_to">
+                                    <option value="due_to" icon_name="fas fa-hourglass-start">تاریخ تحویل</option>
+                                    <option value="created_at" icon_name="fas fa-calendar-plus">تاریخ ایجاد</option>
+                                    <option value="updated_at" icon_name="fas fa-user-edit">تاریخ تغییرات</option>
+                                    <option value="finished_at" icon_name="fas fa-calendar-check">تاریخ اتمام</option>
+                                </select>
+                            </div>
+                            <div className="filter-option col-12 col-md-3 mb-3 mb-md-0 text-center">
+                                <span>نحوه مرتب سازی:</span>
+                                <select id="order_select" defaultValue="asc">
+                                    <option value="desc" icon_name="fas fa-sort-amount-up">صعودی</option>
+                                    <option value="asc" icon_name="fas fa-sort-amount-down">نزولی</option>
+                                </select>
+                            </div>
+                            <div className="col-12 col-md-3 text-center">
+                                <button className="btn btn-outline-info" onClick={this.sortData.bind(this, 'tasks')}>مرتب سازی</button>
+                            </div>
+                        </div>
+                        <table className="table table-striped table-bordered table-hover table-responsive-sm float-right">
+                            <thead className="thead-dark">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">عنوان</th>
+                                    <th scope="col">پروژه</th>
+                                    <th scope="col">دسته بندی</th>
+                                    <th scope="col">اولویت</th>
+                                    <th scope="col">موعد تحویل</th>
+                                    <th scope="col">وضعیت اتمام</th>
+                                    <th scope="col">تاریخ اتمام</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {
+                                    tasks.length > 0 ? tasks.map((task, i) => {
+                                        return (
+                                            <tr key={i} onClick={this.redirectToTask.bind(this, task.id)}>
+                                                <th scope="row">{ i + 1 }</th>
+                                                <td>{task.title}</td>
+                                                <td className="text-right">
+                                                    <img className="workspace_avatar" src={APP_PATH + task.workspace.avatar_pic} />
+                                                    <a href={workspace_route.replace('workspaceId', task.workspace_id)}>{task.workspace.title}</a>
+                                                </td>
+                                                <td>{task.group}</td>
+                                                <td>{this.setPriority(task.priority_id)}</td>
+                                                <td>{moment(task.due_to).fromNow()}</td>
+                                                <td>
+                                                    {task.finished_at === null ? <i className="fas fa-times-circle fa-3x"></i> : <i className="fas fa-check-circle fa-3x"></i>}
+                                                </td>
+                                                <td>
+                                                {task.finished_at === null ? <i className="fas fa-calendar-times fa-3x"></i> : moment(task.finished_at).fromNow()}
+                                                </td>
+                                            </tr>
+                                        )
+                                    }) : null
+                                }
+                            </tbody>
+                        </table> 
+                        {
+                            tasks.length <= 0 &&
+                                <p className="text-center text-secondary">موردی برای نمایش وجود ندارد</p>
+                        }
+                    </div>
+
+                    <div className="result-container col-12 mt-3" ref={this.tabResultsRef[2]}>
+                        <table className="table table-striped table-bordered table-responsive-sm float-right">
+                            <thead className="thead-dark">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">عنوان</th>
+                                    <th scope="col">پروژه</th>
+                                    <th scope="col">درخواست کننده</th>
+                                    <th scope="col">تسک مربوطه</th>
+                                    <th scope="col">اولویت</th>
+                                    <th scope="col">موعد تحویل</th>
+                                    <th scope="col">وضعیت اتمام</th>
+                                    <th scope="col">تاریخ اتمام</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">۱</th>
+                                    <td>ارسال فرمت پی ان جی لوگو</td>
+                                    <td className="text-right">
+                                        <img src="workspace img link"/>
+                                        <a href="workspace link">workspace title</a>
+                                    </td>
+                                    <td>امیررضا منصوریان</td>
+                                    <td>طراحی صفحه اصلی اپ</td>
+                                    <td>ضروری و مهم</td>
+                                    <td>۱۲ فروردین</td>
+                                    <td>
+                                        <i className="fas fa-check-circle fa-3x"></i>
+                                        {/* <i className="fas fa-times-circle"></i> */}
+                                    </td>
+                                    <td>
+                                        {/* ۱۰ فروردین */}
+                                        <i className="fas fa-calendar-times fa-3x"></i>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table> 
+                    </div>
+
+                    <div className="result-container col-12 mt-3" ref={this.tabResultsRef[3]}>
+                        <table className="table table-striped table-bordered table-responsive-sm float-right">
+                            <thead className="thead-dark">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">عنوان</th>
+                                    <th scope="col">پروژه</th>
+                                    <th scope="col">فرد مربوطه</th>
+                                    <th scope="col">تسک مربوطه</th>
+                                    <th scope="col">اولویت</th>
+                                    <th scope="col">موعد تحویل</th>
+                                    <th scope="col">وضعیت اتمام</th>
+                                    <th scope="col">تاریخ اتمام</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">۱</th>
+                                    <td>ارسال فرمت پی ان جی لوگو</td>
+                                    <td className="text-right">
+                                        <img src="workspace img link"/>
+                                        <a href="workspace link">workspace title</a>
+                                    </td>
+                                    <td>امیررضا منصوریان</td>
+                                    <td>طراحی صفحه اصلی اپ</td>
+                                    <td>ضروری و مهم</td>
+                                    <td>۱۲ فروردین</td>
+                                    <td>
+                                        <i className="fas fa-check-circle fa-3x"></i>
+                                        {/* <i className="fas fa-times-circle"></i> */}
+                                    </td>
+                                    <td>
+                                        {/* ۱۰ فروردین */}
+                                        <i className="fas fa-calendar-times fa-3x"></i>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table> 
+                    </div>
                 </div>
             </div>
         )

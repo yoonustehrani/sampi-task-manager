@@ -1,5 +1,8 @@
-p {
+p a {
     font-family: $iran-sans;
+}
+a:hover {
+    text-decoration: none;
 }
 .analysis-container {
     display: flex;
@@ -136,6 +139,15 @@ div.dashboard-tab-container {
 }
 table {
     font-family: $iran-sans;
+    img.workspace_avatar {
+        width: 30px;
+        height: 30px;
+        margin-left: 10px;
+    }
+    a {
+        color: #000000;
+        transition: 0.3s;
+    }
 }
 .select2-container {
     float: left !important;
