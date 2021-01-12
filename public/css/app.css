@@ -11084,6 +11084,10 @@ table {
   font-family: "Iransans";
 }
 
+table tr {
+  cursor: pointer;
+}
+
 table img.workspace_avatar {
   width: 30px;
   height: 30px;
@@ -11104,6 +11108,7 @@ table div.employees-container {
   text-align: center;
   margin-left: auto;
   margin-right: auto;
+  cursor: auto !important;
 }
 
 table div.employees-container > span {

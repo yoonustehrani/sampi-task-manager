@@ -270,7 +270,7 @@ export default class Dashboard extends Component {
                                                             users.length > 1 &&
                                                                 <span>{ users.length }<i className="fas fa-users mr-2"></i></span>
                                                         }
-                                                        <div className="dropdown-users d-none">
+                                                        <div className="dropdown-users d-none" onClick={(e) => e.stopPropagation()}>
                                                             {
                                                                 users.length >= 1 &&
                                                                     users.map((user, i) => (

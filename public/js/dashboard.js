@@ -55341,7 +55341,10 @@ var Dashboard = /*#__PURE__*/function (_Component) {
         })), users.length > 1 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, users.length, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-users mr-2"
         })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "dropdown-users d-none"
+          className: "dropdown-users d-none",
+          onClick: function onClick(e) {
+            return e.stopPropagation();
+          }
         }, users.length >= 1 && users.map(function (user, i) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             key: i,
