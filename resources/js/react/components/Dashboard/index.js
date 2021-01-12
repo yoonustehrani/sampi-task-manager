@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import Axios from 'axios'
 import moment from 'moment'
 moment.locale('fa')
+import { Levels, Sentry, Windmill, Digital } from 'react-activity'
+import 'react-activity/dist/react-activity.css';
+
 
 export default class Dashboard extends Component {
     constructor(props) {
@@ -15,18 +18,24 @@ export default class Dashboard extends Component {
             this.tabTitlesRef.push(React.createRef())
         }
         this.state = {
-            tasks: [],
-            statistics: {}
+            mixedTasks: [],
+            statistics: {},
+            isGetting: true
         }
     }
     
     changeTab = (tab_index) => {
         let { mixedTasksApi } = this.props
-        if (tab_index === 1) {
+        let { mixedTasks } = this.state
+        if (tab_index === 1 && mixedTasks.length === 0) {
+            this.setState({
+                isGetting: true
+            })
             Axios.get(`${mixedTasksApi}&limit=15&order_by=due_to&order=desc`).then(res => {
                 let { data } = res
                 this.setState({
-                    tasks: data
+                    mixedTasks: data,
+                    isGetting: false
                 })
             })
         }
@@ -49,11 +58,15 @@ export default class Dashboard extends Component {
     sortData = (tab) => {
         let { mixedTasksApi } = this.props
         let order_by = $('#order_by_select').val(), order = $('#order_select').val(), relation = $('#relation_select').val()
+        this.setState({
+            isGetting: true
+        })
         if (tab === "tasks") {
             Axios.get(`${mixedTasksApi}&limit=15&order_by=${order_by}&order=${order}&relationship=${relation}`).then(res => {
                 let { data } = res
                 this.setState({
-                    tasks: data
+                    mixedTasks: data,
+                    isGetting: false
                 })
             })
         }
@@ -125,7 +138,7 @@ export default class Dashboard extends Component {
     
 
     render() {
-        let { tasks, statistics } = this.state
+        let { mixedTasks, statistics, isGetting } = this.state
         let { workspace_route } = this.props
         $('#order_select, #order_by_select, #relation_select').select2({
             templateResult: this.formatOption,
@@ -136,56 +149,56 @@ export default class Dashboard extends Component {
         return (
             <div>
                 <div className="analysis-boxes analysis-container">
-                    <div className="float-left col-md-3 col-12 projects">
+                    <div className="float-left animated pulse col-md-3 col-12 projects">
                         <a href={statistics.workspaceCounter ? statistics.workspaceCounter.all.href : "#"} className="item-link">
                             <i className="float-right dashboard-item fas fa-project-diagram fa-3x"></i>
                             <div>
-                                <span className="float-right dashboard-item">{ statistics.workspaceCounter ? statistics.workspaceCounter.all.count : 0 }</span>
+                                <span className="float-right dashboard-item">{ statistics.workspaceCounter ? statistics.workspaceCounter.all.count : <Levels color="#ffffff" /> }</span>
                                 <span className="float-right dashboard-item">پروژه های من</span>
                             </div>
                         </a>
                     </div>
-                    <div className="float-left col-md-3 col-12 finished-tasks">
+                    <div className="float-left animated pulse col-md-3 col-12 finished-tasks">
                         <a href={statistics.taskCounter ? statistics.taskCounter.finished.href : "#"} className="item-link">
                             <i className="float-right dashboard-item fas fa-check-double fa-3x"></i>
                             <div>
-                                <span className="float-right dashboard-item">{ statistics.taskCounter ? statistics.taskCounter.finished.count : 0 }</span>
+                                <span className="float-right dashboard-item">{ statistics.taskCounter ? statistics.taskCounter.finished.count : <Levels color="#ffffff" /> }</span>
                                 <span className="float-right dashboard-item">وظایف انجام شده</span>
                             </div>
                         </a>
                     </div>
-                    <div className="float-left col-md-3 col-12 tickets finished-demands">
+                    <div className="float-left animated pulse col-md-3 col-12 tickets finished-demands">
                         <a href={statistics.demandCounter ? statistics.demandCounter.finished.href : "#"} className="item-link">
                             <i className="float-right dashboard-item fas fa-check fa-3x"></i>
                             <div>
-                                <span className="float-right dashboard-item">{ statistics.demandCounter ? statistics.demandCounter.finished.count : 0 }</span>
+                                <span className="float-right dashboard-item">{ statistics.demandCounter ? statistics.demandCounter.finished.count : <Levels color="#ffffff" /> }</span>
                                 <span className="float-right dashboard-item">خواسته های انجام شده</span>
                             </div>
                         </a>
                     </div>
-                    <div className="float-left col-md-3 col-12 tickets delayed-tasks">
+                    <div className="float-left animated pulse col-md-3 col-12 tickets delayed-tasks">
                         <a href={statistics.taskCounter ? statistics.taskCounter.expired.href : "#"} className="item-link">
                             <i className="float-right dashboard-item fas fa-hourglass-end fa-3x"></i>
                             <div>
-                                <span className="float-right dashboard-item">{ statistics.taskCounter ? statistics.taskCounter.expired.count : 0 }</span>
+                                <span className="float-right dashboard-item">{ statistics.taskCounter ? statistics.taskCounter.expired.count : <Levels color="#ffffff" /> }</span>
                                 <span className="float-right dashboard-item">وظایف عقب افتاده</span>
                             </div>
                         </a>
                     </div>
-                    <div className="float-left col-md-3 col-12 tickets current-tasks">
+                    <div className="float-left animated pulse col-md-3 col-12 tickets current-tasks">
                         <a href={statistics.taskCounter ? statistics.taskCounter.unfinished.href : "#"} className="item-link">
                             <i className="float-right dashboard-item fas fa-tasks fa-3x"></i>
                             <div>
-                                <span className="float-right dashboard-item">{ statistics.taskCounter ? statistics.taskCounter.unfinished.count : 0 }</span>
+                                <span className="float-right dashboard-item">{ statistics.taskCounter ? statistics.taskCounter.unfinished.count : <Levels color="#ffffff" /> }</span>
                                 <span className="float-right dashboard-item">وظایف جاری</span>
                             </div>
                         </a>
                     </div>
-                    <div className="float-left col-md-3 col-12 tickets current-demands">
+                    <div className="float-left animated pulse col-md-3 col-12 tickets current-demands">
                         <a href={statistics.demandCounter ? statistics.demandCounter.unfinished.href : "#"} className="item-link">
                             <i className="float-right dashboard-item fas fa-list-alt fa-3x"></i>
                             <div>
-                                <span className="float-right dashboard-item">{ statistics.demandCounter ? statistics.demandCounter.unfinished.count : 0 }</span>
+                                <span className="float-right dashboard-item">{ statistics.demandCounter ? statistics.demandCounter.unfinished.count : <Levels color="#ffffff" /> }</span>
                                 <span className="float-right dashboard-item">خواسته های جاری</span>
                             </div>
                         </a>
@@ -248,7 +261,7 @@ export default class Dashboard extends Component {
                     </div>
 
                     <div className="result-container col-12 mt-3" ref={this.tabResultsRef[1]}>
-                        <div className="filter-box mt-2 mb-2 p-3 col-12">
+                        <div className="filter-box mt-2 mb-2 p-3 col-12 animated fadeIn">
                             <div className="filter-option col-12 col-md-3 mb-3 mb-md-0 text-center">
                                 <span>جستجو در: </span>
                                 <select id="relation_select" defaultValue="all">
@@ -278,7 +291,7 @@ export default class Dashboard extends Component {
                                 <button className="btn btn-outline-info" onClick={this.sortData.bind(this, 'tasks')}>مرتب سازی</button>
                             </div>
                         </div>
-                        <table className="table table-striped table-bordered table-hover table-responsive-sm float-right">
+                        <table className="table table-striped table-bordered table-hover table-responsive-sm float-right animated swing">
                             <thead className="thead-dark">
                                 <tr>
                                     <th scope="col">#</th>
@@ -293,7 +306,7 @@ export default class Dashboard extends Component {
                             </thead>
                             <tbody>
                                 {
-                                    tasks.length > 0 ? tasks.map((task, i) => {
+                                    mixedTasks.length > 0 && !isGetting ? mixedTasks.map((task, i) => {
                                         return (
                                             <tr key={i} onClick={this.redirectToTask.bind(this, task.id)}>
                                                 <th scope="row">{ i + 1 }</th>
@@ -318,8 +331,14 @@ export default class Dashboard extends Component {
                             </tbody>
                         </table> 
                         {
-                            tasks.length <= 0 &&
+                            mixedTasks.length <= 0 && !isGetting &&
                                 <p className="text-center text-secondary">موردی برای نمایش وجود ندارد</p>
+                        }
+                        {
+                            isGetting &&
+                                <div className="text-center">
+                                    <Digital color="#000000" size={24} />
+                                </div>
                         }
                     </div>
 
