@@ -9,6 +9,7 @@ const task_route = target.getAttribute("task_route")
 const workspace_counter = target.getAttribute("workspace_counter")
 const task_counter = target.getAttribute("task_counter")
 const demand_counter = target.getAttribute("demand_counter")
+const workspaces = target.getAttribute("workspaces")
 
 if (target) {
     ReactDom.render(
@@ -19,6 +20,7 @@ if (target) {
             workspace_counter={workspace_counter}
             task_counter={task_counter}
             demand_counter={demand_counter}
+            workspacesApi={workspaces}
         />
     ,target)
 }

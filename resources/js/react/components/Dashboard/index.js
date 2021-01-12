@@ -20,7 +20,8 @@ export default class Dashboard extends Component {
         this.state = {
             mixedTasks: [],
             statistics: {},
-            isGetting: true
+            isGetting: true,
+            workspaces: []
         }
     }
     
@@ -66,7 +67,7 @@ export default class Dashboard extends Component {
                 let { data } = res
                 this.setState({
                     mixedTasks: data,
-                    isGetting: false
+                    isGetting: false,
                 })
             })
         }
@@ -98,14 +99,16 @@ export default class Dashboard extends Component {
         }
     }
 
-    redirectToTask = (taskId) => {
-        let { task_route } = this.props
-        window.location.href = task_route.replace("taskId", taskId)
+    redirectTo = (url) => {
+        window.location.href = url
     }
 
     componentDidMount() {
-        let { workspace_counter, task_counter, demand_counter } = this.props
+        let { workspace_counter, task_counter, demand_counter, workspacesApi, workspace_route } = this.props
         let statisticApis = [workspace_counter, task_counter, demand_counter], statistics = {}
+        this.setState({
+            isGetting: true
+        })
         statisticApis.map((url, i) => {
             Axios.get(url).then(res => {
                 let { data } = res
@@ -134,12 +137,19 @@ export default class Dashboard extends Component {
                 })
             })
         })
+        Axios.get(workspacesApi).then(res => {
+            let { data } = res
+            this.setState({
+                workspaces: data,
+                isGetting: false
+            })
+        })
     }
     
 
     render() {
-        let { mixedTasks, statistics, isGetting } = this.state
-        let { workspace_route } = this.props
+        let { mixedTasks, statistics, isGetting, workspaces } = this.state
+        let { workspace_route, task_route } = this.props
         $('#order_select, #order_by_select, #relation_select').select2({
             templateResult: this.formatOption,
             minimumResultsForSearch: Infinity,
@@ -225,7 +235,7 @@ export default class Dashboard extends Component {
                     </nav>
 
                     <div className="result-container col-12 mt-3 active" ref={this.tabResultsRef[0]}>
-                        <table className="table table-striped table-bordered table-responsive-sm float-right">
+                        <table className="table table-striped table-bordered table-hover table-responsive-sm float-right animated bounceIn">
                             <thead className="thead-dark">
                                 <tr>
                                     <th scope="col">#</th>
@@ -236,28 +246,54 @@ export default class Dashboard extends Component {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <th scope="row">۱</th>
-                                    <td className="text-right">
-                                        <img src="workspace img link"/>
-                                        <a href="workspace link">workspace title</a>
-                                    </td>
-                                    <td>
-                                        1 <i className="fas fa-user"></i>
-                                        {/* 7 <i className="fas fa-users"></i>
-                                        0 <i className="fas fa-user-slash"></i> */}
-                                    </td>
-                                    <td>
-                                        کل : <span className="badge badge-primary ml-1">3</span>
-                                        اتمام : <span className="badge badge-success ml-1">2</span>
-                                        باقی مانده : <span className="badge badge-danger ml-1">4</span>
-                                    </td>
-                                    <td>
-                                        2
-                                    </td>
-                                </tr>
+                                {
+                                    workspaces.length > 0 ? workspaces.map((workspace, i) => {
+                                        let { id, avatar_pic, title, users, tasks_count, finished_tasks_count, demands_left_count } = workspace, workspace_url = workspace_route.replace("workspaceId", id)
+                                        return (
+                                            <tr key={i} onClick={this.redirectTo.bind(this, workspace_url)}>
+                                                <th scope="row">{ i + 1 }</th>
+                                                <td className="text-right">
+                                                    <img className="workspace_avatar" src={APP_PATH + avatar_pic} />
+                                                    <a href={workspace_url}>{ title }</a>
+                                                </td>
+                                                <td>
+                                                    {
+                                                        users.length === 0 &&
+                                                            <i className="fas fa-user-slash"></i>
+                                                    }
+                                                    {
+                                                        users.length === 1 &&
+                                                        <span>{ users.length }<i className="fas fa-user mr-2"></i></span>
+                                                    }
+                                                    {
+                                                        users.length > 1 &&
+                                                        <span>{ users.length }<i className="fas fa-user mr-2"></i></span>
+                                                    }
+                                                </td>
+                                                <td>
+                                                    کل : <span className="badge badge-primary ml-4">{ tasks_count }</span>
+                                                    اتمام : <span className="badge badge-success ml-4">{ finished_tasks_count }</span>
+                                                    باقی مانده : <span className="badge badge-danger ml-4">{ tasks_count - finished_tasks_count }</span>
+                                                </td>
+                                                <td>
+                                                    { demands_left_count }
+                                                </td>
+                                            </tr>
+                                        )
+                                    }) : null
+                                }
                             </tbody>
                         </table> 
+                        {
+                            workspaces.length <= 0 && !isGetting &&
+                                <p className="text-center text-secondary">موردی برای نمایش وجود ندارد</p>
+                        }
+                        {
+                            isGetting &&
+                                <div className="text-center">
+                                    <Digital color="#000000" size={24} />
+                                </div>
+                        }
                     </div>
 
                     <div className="result-container col-12 mt-3" ref={this.tabResultsRef[1]}>
@@ -307,22 +343,23 @@ export default class Dashboard extends Component {
                             <tbody>
                                 {
                                     mixedTasks.length > 0 && !isGetting ? mixedTasks.map((task, i) => {
+                                        let { id, title, group, finished_at, priority_id, due_to, workspace, workspace_id } = task
                                         return (
-                                            <tr key={i} onClick={this.redirectToTask.bind(this, task.id)}>
+                                            <tr key={i} onClick={this.redirectTo.bind(this, task_route.replace("taskId", id))}>
                                                 <th scope="row">{ i + 1 }</th>
-                                                <td>{task.title}</td>
+                                                <td>{title}</td>
                                                 <td className="text-right">
-                                                    <img className="workspace_avatar" src={APP_PATH + task.workspace.avatar_pic} />
-                                                    <a href={workspace_route.replace('workspaceId', task.workspace_id)}>{task.workspace.title}</a>
+                                                    <img className="workspace_avatar" src={APP_PATH + workspace.avatar_pic} />
+                                                    <a href={workspace_route.replace('workspaceId', workspace_id)}>{workspace.title}</a>
                                                 </td>
-                                                <td>{task.group}</td>
-                                                <td>{this.setPriority(task.priority_id)}</td>
-                                                <td>{moment(task.due_to).fromNow()}</td>
+                                                <td>{group}</td>
+                                                <td>{this.setPriority(priority_id)}</td>
+                                                <td>{moment(due_to).fromNow()}</td>
                                                 <td>
-                                                    {task.finished_at === null ? <i className="fas fa-times-circle fa-3x"></i> : <i className="fas fa-check-circle fa-3x"></i>}
+                                                    {finished_at === null ? <i className="fas fa-times-circle fa-3x"></i> : <i className="fas fa-check-circle fa-3x"></i>}
                                                 </td>
                                                 <td>
-                                                {task.finished_at === null ? <i className="fas fa-calendar-times fa-3x"></i> : moment(task.finished_at).fromNow()}
+                                                {finished_at === null ? <i className="fas fa-calendar-times fa-3x"></i> : moment(finished_at).fromNow()}
                                                 </td>
                                             </tr>
                                         )

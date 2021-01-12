@@ -55087,9 +55087,8 @@ var Dashboard = /*#__PURE__*/function (_Component) {
       }
     });
 
-    _defineProperty(_assertThisInitialized(_this), "redirectToTask", function (taskId) {
-      var task_route = _this.props.task_route;
-      window.location.href = task_route.replace("taskId", taskId);
+    _defineProperty(_assertThisInitialized(_this), "redirectTo", function (url) {
+      window.location.href = url;
     });
 
     _this.tabResultsRef = [];
@@ -55107,7 +55106,8 @@ var Dashboard = /*#__PURE__*/function (_Component) {
     _this.state = {
       mixedTasks: [],
       statistics: {},
-      isGetting: true
+      isGetting: true,
+      workspaces: []
     };
     return _this;
   }
@@ -55120,9 +55120,14 @@ var Dashboard = /*#__PURE__*/function (_Component) {
       var _this$props = this.props,
           workspace_counter = _this$props.workspace_counter,
           task_counter = _this$props.task_counter,
-          demand_counter = _this$props.demand_counter;
+          demand_counter = _this$props.demand_counter,
+          workspacesApi = _this$props.workspacesApi,
+          workspace_route = _this$props.workspace_route;
       var statisticApis = [workspace_counter, task_counter, demand_counter],
           statistics = {};
+      this.setState({
+        isGetting: true
+      });
       statisticApis.map(function (url, i) {
         axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(url).then(function (res) {
           var data = res.data;
@@ -55154,6 +55159,14 @@ var Dashboard = /*#__PURE__*/function (_Component) {
           });
         });
       });
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(workspacesApi).then(function (res) {
+        var data = res.data;
+
+        _this2.setState({
+          workspaces: data,
+          isGetting: false
+        });
+      });
     }
   }, {
     key: "render",
@@ -55163,8 +55176,11 @@ var Dashboard = /*#__PURE__*/function (_Component) {
       var _this$state = this.state,
           mixedTasks = _this$state.mixedTasks,
           statistics = _this$state.statistics,
-          isGetting = _this$state.isGetting;
-      var workspace_route = this.props.workspace_route;
+          isGetting = _this$state.isGetting,
+          workspaces = _this$state.workspaces;
+      var _this$props2 = this.props,
+          workspace_route = _this$props2.workspace_route,
+          task_route = _this$props2.task_route;
       $('#order_select, #order_by_select, #relation_select').select2({
         templateResult: this.formatOption,
         minimumResultsForSearch: Infinity,
@@ -55282,7 +55298,7 @@ var Dashboard = /*#__PURE__*/function (_Component) {
         className: "result-container col-12 mt-3 active",
         ref: this.tabResultsRef[0]
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
-        className: "table table-striped table-bordered table-responsive-sm float-right"
+        className: "table table-striped table-bordered table-hover table-responsive-sm float-right animated bounceIn"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", {
         className: "thead-dark"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
@@ -55295,23 +55311,48 @@ var Dashboard = /*#__PURE__*/function (_Component) {
         scope: "col"
       }, "\u0648\u0636\u0639\u06CC\u062A \u0648\u0638\u0627\u06CC\u0641"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
         scope: "col"
-      }, "\u062E\u0648\u0627\u0633\u062A\u0647 \u0647\u0627\u06CC \u062C\u0627\u0631\u06CC"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
-        scope: "row"
-      }, "\u06F1"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
-        className: "text-right"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        src: "workspace img link"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        href: "workspace link"
-      }, "workspace title")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "1 ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-user"
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "\u06A9\u0644 : ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "badge badge-primary ml-1"
-      }, "3"), "\u0627\u062A\u0645\u0627\u0645 : ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "badge badge-success ml-1"
-      }, "2"), "\u0628\u0627\u0642\u06CC \u0645\u0627\u0646\u062F\u0647 : ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "badge badge-danger ml-1"
-      }, "4")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "2"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "\u062E\u0648\u0627\u0633\u062A\u0647 \u0647\u0627\u06CC \u062C\u0627\u0631\u06CC"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, workspaces.length > 0 ? workspaces.map(function (workspace, i) {
+        var id = workspace.id,
+            avatar_pic = workspace.avatar_pic,
+            title = workspace.title,
+            users = workspace.users,
+            tasks_count = workspace.tasks_count,
+            finished_tasks_count = workspace.finished_tasks_count,
+            demands_left_count = workspace.demands_left_count,
+            workspace_url = workspace_route.replace("workspaceId", id);
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
+          key: i,
+          onClick: _this3.redirectTo.bind(_this3, workspace_url)
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+          scope: "row"
+        }, i + 1), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+          className: "text-right"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+          className: "workspace_avatar",
+          src: APP_PATH + avatar_pic
+        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+          href: workspace_url
+        }, title)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, users.length === 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fas fa-user-slash"
+        }), users.length === 1 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, users.length, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fas fa-user mr-2"
+        })), users.length > 1 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, users.length, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fas fa-user mr-2"
+        }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "\u06A9\u0644 : ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+          className: "badge badge-primary ml-4"
+        }, tasks_count), "\u0627\u062A\u0645\u0627\u0645 : ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+          className: "badge badge-success ml-4"
+        }, finished_tasks_count), "\u0628\u0627\u0642\u06CC \u0645\u0627\u0646\u062F\u0647 : ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+          className: "badge badge-danger ml-4"
+        }, tasks_count - finished_tasks_count)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, demands_left_count));
+      }) : null)), workspaces.length <= 0 && !isGetting && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "text-center text-secondary"
+      }, "\u0645\u0648\u0631\u062F\u06CC \u0628\u0631\u0627\u06CC \u0646\u0645\u0627\u06CC\u0634 \u0648\u062C\u0648\u062F \u0646\u062F\u0627\u0631\u062F"), isGetting && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "text-center"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_activity__WEBPACK_IMPORTED_MODULE_3__["Digital"], {
+        color: "#000000",
+        size: 24
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "result-container col-12 mt-3",
         ref: this.tabResultsRef[1]
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -55387,25 +55428,33 @@ var Dashboard = /*#__PURE__*/function (_Component) {
       }, "\u0648\u0636\u0639\u06CC\u062A \u0627\u062A\u0645\u0627\u0645"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
         scope: "col"
       }, "\u062A\u0627\u0631\u06CC\u062E \u0627\u062A\u0645\u0627\u0645"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, mixedTasks.length > 0 && !isGetting ? mixedTasks.map(function (task, i) {
+        var id = task.id,
+            title = task.title,
+            group = task.group,
+            finished_at = task.finished_at,
+            priority_id = task.priority_id,
+            due_to = task.due_to,
+            workspace = task.workspace,
+            workspace_id = task.workspace_id;
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
           key: i,
-          onClick: _this3.redirectToTask.bind(_this3, task.id)
+          onClick: _this3.redirectTo.bind(_this3, task_route.replace("taskId", id))
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
           scope: "row"
-        }, i + 1), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, task.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+        }, i + 1), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
           className: "text-right"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
           className: "workspace_avatar",
-          src: APP_PATH + task.workspace.avatar_pic
+          src: APP_PATH + workspace.avatar_pic
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-          href: workspace_route.replace('workspaceId', task.workspace_id)
-        }, task.workspace.title)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, task.group), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, _this3.setPriority(task.priority_id)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, moment__WEBPACK_IMPORTED_MODULE_2___default()(task.due_to).fromNow()), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, task.finished_at === null ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          href: workspace_route.replace('workspaceId', workspace_id)
+        }, workspace.title)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, group), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, _this3.setPriority(priority_id)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, moment__WEBPACK_IMPORTED_MODULE_2___default()(due_to).fromNow()), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, finished_at === null ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-times-circle fa-3x"
         }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-check-circle fa-3x"
-        })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, task.finished_at === null ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, finished_at === null ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-calendar-times fa-3x"
-        }) : moment__WEBPACK_IMPORTED_MODULE_2___default()(task.finished_at).fromNow()));
+        }) : moment__WEBPACK_IMPORTED_MODULE_2___default()(finished_at).fromNow()));
       }) : null)), mixedTasks.length <= 0 && !isGetting && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "text-center text-secondary"
       }, "\u0645\u0648\u0631\u062F\u06CC \u0628\u0631\u0627\u06CC \u0646\u0645\u0627\u06CC\u0634 \u0648\u062C\u0648\u062F \u0646\u062F\u0627\u0631\u062F"), isGetting && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -55522,6 +55571,7 @@ var task_route = target.getAttribute("task_route");
 var workspace_counter = target.getAttribute("workspace_counter");
 var task_counter = target.getAttribute("task_counter");
 var demand_counter = target.getAttribute("demand_counter");
+var workspaces = target.getAttribute("workspaces");
 
 if (target) {
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Dashboard___WEBPACK_IMPORTED_MODULE_2__["default"], {
@@ -55530,7 +55580,8 @@ if (target) {
     task_route: task_route,
     workspace_counter: workspace_counter,
     task_counter: task_counter,
-    demand_counter: demand_counter
+    demand_counter: demand_counter,
+    workspacesApi: workspaces
   }), target);
 }
 
