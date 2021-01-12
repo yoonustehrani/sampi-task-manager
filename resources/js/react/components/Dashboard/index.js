@@ -257,18 +257,44 @@ export default class Dashboard extends Component {
                                                     <a href={workspace_url}>{ title }</a>
                                                 </td>
                                                 <td>
-                                                    {
-                                                        users.length === 0 &&
-                                                            <i className="fas fa-user-slash"></i>
-                                                    }
-                                                    {
-                                                        users.length === 1 &&
-                                                        <span>{ users.length }<i className="fas fa-user mr-2"></i></span>
-                                                    }
-                                                    {
-                                                        users.length > 1 &&
-                                                        <span>{ users.length }<i className="fas fa-user mr-2"></i></span>
-                                                    }
+                                                    <div className="employees-container">
+                                                        {
+                                                            users.length === 0 &&
+                                                                <span><i className="fas fa-user-slash"></i></span>
+                                                        }
+                                                        {
+                                                            users.length === 1 &&
+                                                                <span>{ users.length }<i className="fas fa-user mr-2"></i></span>
+                                                        }
+                                                        {
+                                                            users.length > 1 &&
+                                                                <span>{ users.length }<i className="fas fa-users mr-2"></i></span>
+                                                        }
+                                                        <div className="dropdown-users d-none animated fadeIn">
+                                                            {
+                                                                users.length >= 1 &&
+                                                                    users.map((user, i) => (
+                                                                        <div key={i} className="user-dropdown-item">
+                                                                            <div className="user-right-flex">
+                                                                                <div className="user-img-container ml-2">
+                                                                                    <img src={user.avatar_pic !== null ? APP_PATH + user.avatar_pic : APP_PATH + 'images/male-avatar.svg'} />
+                                                                                </div>
+                                                                                <div className="user-info ml-2">
+                                                                                    <p>{ user.fullname }</p>
+                                                                                    <a href={"#user"}>@{user.name}</a>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div className="user-label-container">
+                                                                                    {
+                                                                                        user.pivot.is_admin === 1 ? <button className="btn btn-sm btn-success rtl admin"><span>ادمین<i className="fas fa-user-tie mr-1"></i></span></button>
+                                                                                        : <button className="btn btn-sm btn-primary rtl"><span>عضو<i className="fas fa-user mr-1"></i></span></button>
+                                                                                    }
+                                                                            </div>
+                                                                        </div>
+                                                                    ))
+                                                            }
+                                                        </div>
+                                                    </div>
                                                 </td>
                                                 <td>
                                                     کل : <span className="badge badge-primary ml-4">{ tasks_count }</span>

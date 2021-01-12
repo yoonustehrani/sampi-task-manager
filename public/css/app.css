@@ -11095,6 +11095,109 @@ table a {
   transition: 0.3s;
 }
 
+table div.employees-container {
+  position: relative;
+  z-index: 99;
+}
+
+table div.employees-container > span {
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+table div.employees-container > div.dropdown-users {
+  position: absolute;
+}
+
+table div.employees-container > div.dropdown-users > div.user-dropdown-item {
+  position: relative;
+  box-shadow: 3px 3px 8px 0 #8e9eab;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  background-color: #eef2f3;
+  border-bottom-right-radius: 30px;
+  border-top-right-radius: 30px;
+  border-top-left-radius: 20px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+}
+
+table div.employees-container > div.dropdown-users > div.user-dropdown-item div.user-right-flex {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: right;
+  align-items: flex-start;
+}
+
+table div.employees-container > div.dropdown-users > div.user-dropdown-item div.user-right-flex > div.user-img-container {
+  width: 50px;
+  height: 50px;
+}
+
+table div.employees-container > div.dropdown-users > div.user-dropdown-item div.user-right-flex > div.user-img-container > img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50px;
+  border: 2px solid #2c3e50;
+  padding: 1px;
+}
+
+table div.employees-container > div.dropdown-users > div.user-dropdown-item div.user-right-flex > div.user-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+table div.employees-container > div.dropdown-users > div.user-dropdown-item div.user-right-flex > div.user-info > a {
+  direction: ltr;
+  color: #000000;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+table div.employees-container > div.dropdown-users > div.user-dropdown-item div.user-right-flex > div.user-info > a:hover {
+  color: #009FFF;
+}
+
+table div.employees-container > div.dropdown-users > div.user-dropdown-item div.user-right-flex > div.user-info > p {
+  margin-bottom: 0;
+  color: #000000;
+}
+
+table div.employees-container > div.dropdown-users > div.user-dropdown-item > div.user-label-container button {
+  cursor: auto !important;
+  background-color: #0275d8 !important;
+  border-top-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+
+table div.employees-container > div.dropdown-users > div.user-dropdown-item > div.user-label-container button:hover {
+  background-color: #0275d8 !important;
+  border-color: #0275d8 !important;
+}
+
+table div.employees-container > div.dropdown-users > div.user-dropdown-item > div.user-label-container button.admin {
+  background-color: #38c172 !important;
+}
+
+table div.employees-container > div.dropdown-users > div.user-dropdown-item > div.user-label-container button.admin:hover {
+  background-color: #38c172 !important;
+  border-color: #38c172 !important;
+}
+
+table div.employees-container:hover > span {
+  color: #4286f4;
+}
+
+table div.employees-container:hover div.dropdown-users {
+  display: block !important;
+}
+
 .select2-container {
   float: left !important;
   width: -webkit-max-content !important;
