@@ -55395,12 +55395,12 @@ var Dashboard = /*#__PURE__*/function (_Component) {
         className: "filter-option col-12 col-md-3 mb-3 mb-md-0 text-center"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0646\u062D\u0648\u0647 \u0645\u0631\u062A\u0628 \u0633\u0627\u0632\u06CC:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
         id: "order_select",
-        defaultValue: "asc"
+        defaultValue: "desc"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        value: "desc",
+        value: "asc",
         icon_name: "fas fa-sort-amount-up"
       }, "\u0635\u0639\u0648\u062F\u06CC"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        value: "asc",
+        value: "desc",
         icon_name: "fas fa-sort-amount-down"
       }, "\u0646\u0632\u0648\u0644\u06CC"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-12 col-md-3 text-center"
@@ -55466,7 +55466,7 @@ var Dashboard = /*#__PURE__*/function (_Component) {
         className: "result-container col-12 mt-3",
         ref: this.tabResultsRef[2]
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
-        className: "table table-striped table-bordered table-responsive-sm float-right"
+        className: "table table-striped table-bordered table-hover table-responsive-sm float-right animated rubberBand"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", {
         className: "thead-dark"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
@@ -55499,11 +55499,16 @@ var Dashboard = /*#__PURE__*/function (_Component) {
         className: "fas fa-check-circle fa-3x"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-calendar-times fa-3x"
-      })))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }))))), isGetting && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "text-center"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_activity__WEBPACK_IMPORTED_MODULE_3__["Digital"], {
+        color: "#000000",
+        size: 24
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "result-container col-12 mt-3",
         ref: this.tabResultsRef[3]
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
-        className: "table table-striped table-bordered table-responsive-sm float-right"
+        className: "table table-striped table-bordered table-hover table-responsive-sm float-right animated tada"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", {
         className: "thead-dark"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
@@ -55536,7 +55541,12 @@ var Dashboard = /*#__PURE__*/function (_Component) {
         className: "fas fa-check-circle fa-3x"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-calendar-times fa-3x"
-      }))))))));
+      }))))), isGetting && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "text-center"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_activity__WEBPACK_IMPORTED_MODULE_3__["Digital"], {
+        color: "#000000",
+        size: 24
+      })))));
     }
   }]);
 

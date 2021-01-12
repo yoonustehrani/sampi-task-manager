@@ -318,9 +318,9 @@ export default class Dashboard extends Component {
                             </div>
                             <div className="filter-option col-12 col-md-3 mb-3 mb-md-0 text-center">
                                 <span>نحوه مرتب سازی:</span>
-                                <select id="order_select" defaultValue="asc">
-                                    <option value="desc" icon_name="fas fa-sort-amount-up">صعودی</option>
-                                    <option value="asc" icon_name="fas fa-sort-amount-down">نزولی</option>
+                                <select id="order_select" defaultValue="desc">
+                                    <option value="asc" icon_name="fas fa-sort-amount-up">صعودی</option>
+                                    <option value="desc" icon_name="fas fa-sort-amount-down">نزولی</option>
                                 </select>
                             </div>
                             <div className="col-12 col-md-3 text-center">
@@ -380,7 +380,7 @@ export default class Dashboard extends Component {
                     </div>
 
                     <div className="result-container col-12 mt-3" ref={this.tabResultsRef[2]}>
-                        <table className="table table-striped table-bordered table-responsive-sm float-right">
+                        <table className="table table-striped table-bordered table-hover table-responsive-sm float-right animated rubberBand">
                             <thead className="thead-dark">
                                 <tr>
                                     <th scope="col">#</th>
@@ -417,10 +417,20 @@ export default class Dashboard extends Component {
                                 </tr>
                             </tbody>
                         </table> 
+                        {/* {
+                            workspaces.length <= 0 && !isGetting &&
+                                <p className="text-center text-secondary">موردی برای نمایش وجود ندارد</p>
+                        } */}
+                        {
+                            isGetting &&
+                                <div className="text-center">
+                                    <Digital color="#000000" size={24} />
+                                </div>
+                        }
                     </div>
 
                     <div className="result-container col-12 mt-3" ref={this.tabResultsRef[3]}>
-                        <table className="table table-striped table-bordered table-responsive-sm float-right">
+                        <table className="table table-striped table-bordered table-hover table-responsive-sm float-right animated tada">
                             <thead className="thead-dark">
                                 <tr>
                                     <th scope="col">#</th>
@@ -457,6 +467,16 @@ export default class Dashboard extends Component {
                                 </tr>
                             </tbody>
                         </table> 
+                        {/* {
+                            workspaces.length <= 0 && !isGetting &&
+                                <p className="text-center text-secondary">موردی برای نمایش وجود ندارد</p>
+                        } */}
+                        {
+                            isGetting &&
+                                <div className="text-center">
+                                    <Digital color="#000000" size={24} />
+                                </div>
+                        }
                     </div>
                 </div>
             </div>
