@@ -380,7 +380,7 @@ export default class Dashboard extends Component {
                                                 </td>
                                                 <td>{group}</td>
                                                 <td>{this.setPriority(priority_id)}</td>
-                                                <td>{moment(due_to).fromNow()}</td>
+                                                <td>{due_to !== null ? moment(due_to).fromNow() : <i className="fas fa-calendar-minus  fa-3x"></i>}</td>
                                                 <td>
                                                     {finished_at === null ? <i className="fas fa-times-circle fa-3x"></i> : <i className="fas fa-check-circle fa-3x"></i>}
                                                 </td>

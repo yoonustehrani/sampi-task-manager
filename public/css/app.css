@@ -11076,6 +11076,36 @@ div.dashboard-tab-container div.result-container div.filter-box div.filter-optio
   font-family: "Iransans";
 }
 
+div.dashboard-tab-container div.result-container div.filter-box div.filter-option .select2-container {
+  float: left !important;
+  width: -webkit-max-content !important;
+  width: -moz-max-content !important;
+  width: max-content !important;
+  height: 100% !important;
+  margin-right: 4px !important;
+}
+
+div.dashboard-tab-container div.result-container div.filter-box div.filter-option .select2-container div.select-option i {
+  margin-left: 10px;
+  font-size: 20px;
+}
+
+div.dashboard-tab-container div.result-container div.filter-box div.filter-option .select2-container span.select2-selection__rendered {
+  padding-right: 8px !important;
+  padding-left: 20px !important;
+}
+
+div.dashboard-tab-container div.result-container div.filter-box div.filter-option .select2-container span.select2-selection__arrow {
+  left: 0 !important;
+}
+
+div.dashboard-tab-container div.result-container div.filter-box div.filter-option .select2-container .select2-dropdown {
+  width: -webkit-max-content !important;
+  width: -moz-max-content !important;
+  width: max-content !important;
+  font-family: "Iransans";
+}
+
 div.dashboard-tab-container div.result-container.active {
   display: block;
 }
@@ -11208,36 +11238,6 @@ table div.employees-container:hover > span {
 
 table div.employees-container:hover div.dropdown-users {
   display: block !important;
-}
-
-.select2-container {
-  float: left !important;
-  width: -webkit-max-content !important;
-  width: -moz-max-content !important;
-  width: max-content !important;
-  height: 100% !important;
-  margin-right: 4px !important;
-}
-
-.select2-container div.select-option i {
-  margin-left: 10px;
-  font-size: 20px;
-}
-
-.select2-container span.select2-selection__rendered {
-  padding-right: 8px !important;
-  padding-left: 20px !important;
-}
-
-.select2-container span.select2-selection__arrow {
-  left: 0 !important;
-}
-
-.select2-container .select2-dropdown {
-  width: -webkit-max-content !important;
-  width: -moz-max-content !important;
-  width: max-content !important;
-  font-family: "Iransans";
 }
 
 body,

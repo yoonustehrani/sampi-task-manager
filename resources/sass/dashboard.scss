@@ -130,6 +130,29 @@ div.dashboard-tab-container {
                         font-family: $iran-sans;
                     }
                 }
+                .select2-container {
+                    float: left !important;
+                    width: max-content !important;
+                    height: 100% !important;
+                    margin-right: 4px !important;
+                    div.select-option {
+                        i {
+                            margin-left: 10px;
+                            font-size: 20px;
+                        }
+                    }
+                    span.select2-selection__rendered {
+                        padding-right: 8px !important;
+                        padding-left: 20px !important;
+                    }
+                    span.select2-selection__arrow {
+                        left: 0 !important;
+                    }
+                    .select2-dropdown {
+                        width: max-content !important;
+                        font-family: $iran-sans;
+                    }
+                }
             }
         }
     }
@@ -245,28 +268,5 @@ table {
          div.dropdown-users {
             display: block !important;
         }
-    }
-}
-.select2-container {
-    float: left !important;
-    width: max-content !important;
-    height: 100% !important;
-    margin-right: 4px !important;
-    div.select-option {
-        i {
-            margin-left: 10px;
-            font-size: 20px;
-        }
-    }
-    span.select2-selection__rendered {
-        padding-right: 8px !important;
-        padding-left: 20px !important;
-    }
-    span.select2-selection__arrow {
-        left: 0 !important;
-    }
-    .select2-dropdown {
-        width: max-content !important;
-        font-family: $iran-sans;
     }
 }
