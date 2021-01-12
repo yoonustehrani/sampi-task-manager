@@ -270,11 +270,11 @@ export default class Dashboard extends Component {
                                                             users.length > 1 &&
                                                                 <span>{ users.length }<i className="fas fa-users mr-2"></i></span>
                                                         }
-                                                        <div className="dropdown-users d-none animated fadeIn">
+                                                        <div className="dropdown-users d-none">
                                                             {
                                                                 users.length >= 1 &&
                                                                     users.map((user, i) => (
-                                                                        <div key={i} className="user-dropdown-item">
+                                                                        <div key={i} className="user-dropdown-item animated jackInTheBox">
                                                                             <div className="user-right-flex">
                                                                                 <div className="user-img-container ml-2">
                                                                                     <img src={user.avatar_pic !== null ? APP_PATH + user.avatar_pic : APP_PATH + 'images/male-avatar.svg'} />

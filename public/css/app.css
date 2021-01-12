@@ -11098,11 +11098,17 @@ table a {
 table div.employees-container {
   position: relative;
   z-index: 99;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 table div.employees-container > span {
   cursor: pointer;
-  transition: 0.3s;
+  transition: 0.5s;
 }
 
 table div.employees-container > div.dropdown-users {
@@ -11111,11 +11117,12 @@ table div.employees-container > div.dropdown-users {
 
 table div.employees-container > div.dropdown-users > div.user-dropdown-item {
   position: relative;
-  box-shadow: 3px 3px 8px 0 #8e9eab;
+  box-shadow: 4px 4px 5px 0px #8e9eab;
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
-  background-color: #eef2f3;
+  background-color: #D7DDE8;
+  margin-bottom: 1px;
   border-bottom-right-radius: 30px;
   border-top-right-radius: 30px;
   border-top-left-radius: 20px;

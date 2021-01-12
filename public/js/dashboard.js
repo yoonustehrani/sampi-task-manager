@@ -55341,11 +55341,11 @@ var Dashboard = /*#__PURE__*/function (_Component) {
         })), users.length > 1 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, users.length, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-users mr-2"
         })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "dropdown-users d-none animated fadeIn"
+          className: "dropdown-users d-none"
         }, users.length >= 1 && users.map(function (user, i) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             key: i,
-            className: "user-dropdown-item"
+            className: "user-dropdown-item animated jackInTheBox"
           }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             className: "user-right-flex"
           }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
