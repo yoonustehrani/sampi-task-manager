@@ -11114,10 +11114,6 @@ table {
   font-family: "Iransans";
 }
 
-table tr {
-  cursor: pointer;
-}
-
 table img.workspace_avatar {
   width: 30px;
   height: 30px;
@@ -11232,6 +11228,10 @@ table div.employees-container > div.dropdown-users > div.user-dropdown-item > di
   border-color: #38c172 !important;
 }
 
+table table.table-hover tr {
+  cursor: pointer;
+}
+
 table div.employees-container:hover > span {
   color: #4286f4;
 }
@@ -11256,10 +11256,16 @@ h4,
 h5,
 h6 {
   direction: rtl;
+  font-family: "Iransans";
 }
 
 a {
   text-decoration: none;
+  font-family: "Iransans";
+}
+
+p {
+  font-family: "Iransans";
 }
 
 .full-sc {
@@ -11518,6 +11524,51 @@ div.drop-down-container div.dropdown-menu a {
 
 .badge-success {
   background-color: #0b9e3c !important;
+}
+
+div.workspace-sub-info {
+  display: flex;
+  flex-direction: row-reverse;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: flex-start;
+}
+
+div.workspace-sub-info > span {
+  direction: rtl;
+  font-family: "Iransans";
+}
+
+div.workspace-sub-info span.number {
+  font-weight: bold;
+}
+
+div.user-info-workspace {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: nowrap;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
+div.user-info-workspace > img {
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
+}
+
+div.name-row-user-workspace {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: flex-start;
 }
 
 .select2-container {

@@ -162,9 +162,6 @@ div.dashboard-tab-container {
 }
 table {
     font-family: $iran-sans;
-    tr {
-        cursor: pointer;
-    }
     img.workspace_avatar {
         width: 30px;
         height: 30px;
@@ -259,6 +256,11 @@ table {
                     }
                 }
             }
+        }
+    }
+    table.table-hover {
+        tr {
+            cursor: pointer;
         }
     }
     div.employees-container:hover {

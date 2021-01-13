@@ -288,7 +288,7 @@ export default class Dashboard extends Component {
                                                                                     {
                                                                                         user.pivot.is_admin === 1 ? <button className="btn btn-sm btn-success rtl admin"><span>ادمین<i className="fas fa-user-tie mr-1"></i></span></button>
                                                                                         : <button className="btn btn-sm btn-primary rtl"><span>عضو<i className="fas fa-user mr-1"></i></span></button>
-                                                                                    }
+                                                                                    } 
                                                                             </div>
                                                                         </div>
                                                                     ))
