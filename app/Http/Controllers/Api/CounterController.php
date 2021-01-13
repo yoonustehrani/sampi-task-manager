@@ -9,16 +9,17 @@ class CounterController extends Controller
 {
     public function workspaces(Request $request)
     {
+        $user = ($request->user_id) ? \App\User::find($request->user_id) : $request->user();
         return [
             'all' => [
-                'count' => $request->user()->workspaces()->count(),
+                'count' => $user->workspaces()->count(),
                 'href'  => route('task-manager.workspaces.index')
             ]
         ];
     }
     public function tasks(Request $request)
     {
-        $user = $request->user();
+        $user = ($request->user_id) ? \App\User::find($request->user_id) : $request->user();
         return [
             'finished' => [
                 'count' => $user->finished_tasks()->count(),
@@ -36,7 +37,7 @@ class CounterController extends Controller
     }
     public function demands(Request $request)
     {
-        $user = $request->user();
+        $user = ($request->user_id) ? \App\User::find($request->user_id) : $request->user();
         return [
             'finished'   => [
                 'count' => $user->demands()->whereNull('finished_at')->count(),
