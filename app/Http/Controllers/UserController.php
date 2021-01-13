@@ -8,6 +8,12 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    // public function before($user, $ability)
+    // {
+    //     // if ($user->isSuperAdmin()) {
+    //     //     return true;
+    //     // }
+    // }
     /**
      * Display a listing of the resource.
      *
@@ -15,6 +21,7 @@ class UserController extends Controller
      */
     public function index()
     {
+        // $this->authorize('viewAny', auth()->user());
         $users = User::with(['roles'])->paginate(15);
         return view('theme.pages.users.index', compact('users'));
     }
@@ -26,6 +33,7 @@ class UserController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', auth()->user());
         return view('theme.pages.users.create');
     }
 
@@ -37,6 +45,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create', auth()->user());
         try {
             \DB::beginTransaction();
             $user = new User();

@@ -5,6 +5,9 @@
 @endsection
 
 @section('page-content')
+    @can('update', Model::class)
+        
+    @endcan
     @component('theme.tools.title', ['title' => 'لیست کاربران', 'create' => route('task-manager.users.create')]) @endcomponent
     @component('theme.tools.table')
         @component('theme.tools.table-head')
@@ -45,7 +48,7 @@
                             <span class="text-secondary"><em>ندارد</em></span>
                         @endif
                         @foreach ($user->roles as $role)
-                            <span class="badge badge-{{ b4_random_color_class() }} p-2">{{ $role->label }}</span>
+                            <a target="_blank" href="{{ route('task-manager.roles.edit', ['role' => $role->id]) }}" class="badge badge-{{ b4_random_color_class() }} p-2">{{ $role->label }}</a>
                         @endforeach
                     </td>
                     <td>

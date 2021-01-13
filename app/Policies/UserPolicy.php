@@ -17,7 +17,7 @@ class UserPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return $user->hasPermission('can_view_any_users');
     }
 
     /**
@@ -29,7 +29,10 @@ class UserPolicy
      */
     public function view(User $user, User $model)
     {
-        //
+        if (! $user->id == $model->id) {
+            return $user->hasPermission('can_view_users');
+        }
+        return true;
     }
 
     /**
@@ -40,7 +43,7 @@ class UserPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->hasPermission('can_create_users');
     }
 
     /**
@@ -52,7 +55,7 @@ class UserPolicy
      */
     public function update(User $user, User $model)
     {
-        //
+        return $user->hasPermission('can_update_users');
     }
 
     /**
@@ -64,7 +67,7 @@ class UserPolicy
      */
     public function delete(User $user, User $model)
     {
-        //
+        return $user->hasPermission('can_delete_users');
     }
 
     /**
