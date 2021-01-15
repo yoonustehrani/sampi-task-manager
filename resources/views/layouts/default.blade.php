@@ -9,6 +9,7 @@
 <body>
     @yield('content')
     <script src="{{ asset('js/app.js') }}"></script>
+    @include('partials.error')
     @stack('scripts')
 </body>
 </html>

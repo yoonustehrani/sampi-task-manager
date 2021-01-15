@@ -46,6 +46,15 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $this->authorize('create', auth()->user());
+        $request->validate([
+            'name' => 'required|string|min:3|max:60|unique:users,name',
+            'email' => 'required|email|min:3|max:60|unique:users,email',
+            'first_name' => 'required|string|min:3|max:60',
+            'last_name' => 'nullable|string|min:3|max:60',
+            'telegram_chat_id' => 'nullable|numeric',
+            'avatar_pic' => 'nullable|string',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
         try {
             \DB::beginTransaction();
             $user = new User();
@@ -103,6 +112,15 @@ class UserController extends Controller
     {
         $user = User::findOrFail($user);
         $this->authorize('update', $user);
+        $request->validate([
+            'name' => 'required|string|min:3|max:60|unique:users,name,' . $user->id,
+            'email' => 'required|email|min:3|max:60|unique:users,email,' . $user->id,
+            'first_name' => 'required|string|min:3|max:60',
+            'last_name' => 'nullable|string|min:3|max:60',
+            'telegram_chat_id' => 'nullable|numeric',
+            'avatar_pic' => 'nullable|string',
+            'password' => 'nullable|string|min:8|confirmed',
+        ]);
         try {
             \DB::beginTransaction();
             $user->name = $request->name;
