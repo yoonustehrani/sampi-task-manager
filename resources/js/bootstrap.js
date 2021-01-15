@@ -1,3 +1,5 @@
+const { default: Swal } = require('sweetalert2');
+
 window._ = require('lodash');
 
 /**
@@ -31,6 +33,9 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.moment = require('moment')
 
 moment.locale('fa')
+
+
+window.Swal = require('../../node_modules/sweetalert2/src/sweetalert2');
 
 
 // import Echo from 'laravel-echo';

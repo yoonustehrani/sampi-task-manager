@@ -36,7 +36,7 @@ if (document.exitFullscreen) {
 }
 }
 
-$('.scr-controller').click(function(){
+$('.scr-controller').on('click', function(){
     $(' > i',this).toggleClass('fa-expand-arrows-alt');
     if ($(this).attr('data-event') == 'max') {
         $(this).attr('data-event','min');
@@ -46,7 +46,7 @@ $('.scr-controller').click(function(){
     return closeFullscreen();
 });
 
-$('.collapser-btn').click(function() {
+$('.collapser-btn').on('click', function() {
     $('.collapser-btn > i').toggleClass('fa-angle-double-right fa-angle-double-left');
     $("#right-menu").toggleClass('collapsed');
     $("#mainpage").toggleClass('col-lg-10 col-md-9')
