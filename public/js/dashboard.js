@@ -72485,7 +72485,7 @@ var Dashboard = /*#__PURE__*/function (_Component) {
         className: "result-container col-12 mt-3 active",
         ref: this.tabResultsRef[0]
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
-        className: "table table-striped table-bordered table-hover table-responsive-sm float-right animated bounceIn"
+        className: "table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right animated bounceIn"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", {
         className: "thead-dark"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
@@ -72627,7 +72627,7 @@ var Dashboard = /*#__PURE__*/function (_Component) {
         className: "btn btn-outline-info",
         onClick: this.sortData.bind(this, 'tasks')
       }, "\u0645\u0631\u062A\u0628 \u0633\u0627\u0632\u06CC"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
-        className: "table table-striped table-bordered table-hover table-responsive-sm float-right animated swing"
+        className: "table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right animated swing"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", {
         className: "thead-dark"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
@@ -72687,7 +72687,7 @@ var Dashboard = /*#__PURE__*/function (_Component) {
         className: "result-container col-12 mt-3",
         ref: this.tabResultsRef[2]
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
-        className: "table table-striped table-bordered table-hover table-responsive-sm float-right animated rubberBand"
+        className: "table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right animated rubberBand"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", {
         className: "thead-dark"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
@@ -72729,7 +72729,7 @@ var Dashboard = /*#__PURE__*/function (_Component) {
         className: "result-container col-12 mt-3",
         ref: this.tabResultsRef[3]
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
-        className: "table table-striped table-bordered table-hover table-responsive-sm float-right animated tada"
+        className: "table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right animated tada"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", {
         className: "thead-dark"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {

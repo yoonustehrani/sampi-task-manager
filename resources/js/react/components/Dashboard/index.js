@@ -223,7 +223,7 @@ export default class Dashboard extends Component {
                     </nav>
 
                     <div className="result-container col-12 mt-3 active" ref={this.tabResultsRef[0]}>
-                        <table className="table table-striped table-bordered table-hover table-responsive-sm float-right animated bounceIn">
+                        <table className="table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right animated bounceIn">
                             <thead className="thead-dark">
                                 <tr>
                                     <th scope="col">#</th>
@@ -341,7 +341,7 @@ export default class Dashboard extends Component {
                                 <button className="btn btn-outline-info" onClick={this.sortData.bind(this, 'tasks')}>مرتب سازی</button>
                             </div>
                         </div>
-                        <table className="table table-striped table-bordered table-hover table-responsive-sm float-right animated swing">
+                        <table className="table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right animated swing">
                             <thead className="thead-dark">
                                 <tr>
                                     <th scope="col">#</th>
@@ -394,7 +394,7 @@ export default class Dashboard extends Component {
                     </div>
 
                     <div className="result-container col-12 mt-3" ref={this.tabResultsRef[2]}>
-                        <table className="table table-striped table-bordered table-hover table-responsive-sm float-right animated rubberBand">
+                        <table className="table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right animated rubberBand">
                             <thead className="thead-dark">
                                 <tr>
                                     <th scope="col">#</th>
@@ -444,7 +444,7 @@ export default class Dashboard extends Component {
                     </div>
 
                     <div className="result-container col-12 mt-3" ref={this.tabResultsRef[3]}>
-                        <table className="table table-striped table-bordered table-hover table-responsive-sm float-right animated tada">
+                        <table className="table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right animated tada">
                             <thead className="thead-dark">
                                 <tr>
                                     <th scope="col">#</th>
