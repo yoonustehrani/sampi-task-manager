@@ -12,15 +12,18 @@
                 {{ $workspace->title }}
             </h4>
         </div>
-        <div class="workspace-sub-info float-right mr-1">
-            <span class="ml-4"><i class="far fa-user-circle ml-1"></i><span class="number ml-1">2</span>عضو</span>
-            <span class="ml-4"><i class="fas fa-thumbtack ml-1"></i><span class="number ml-1">24</span>وظیفه جاری</span>
-            <span class="ml-4"><i class="far fa-check-square ml-1"></i><span class="number ml-1">13</span>وظیفه انجام شده</span>
-            <span class="ml-4"><i class="far fa-comments ml-1"></i><span class="number ml-1">45</span>خواسته های جاری</span>
-            <span class="ml-4"><i class="far fa-check-circle ml-1"></i><span class="number ml-1">24</span>خواسته های انجام شده</span>
+        <div class="workspace-sub-info float-right col-12">
+            <span><i class="far fa-user-circle ml-1"></i><span class="number ml-1">2</span>عضو</span>
+            <span><i class="fas fa-thumbtack ml-1"></i><span class="number ml-1">24</span>وظیفه جاری</span>
+            <span><i class="far fa-check-square ml-1"></i><span class="number ml-1">13</span>وظیفه انجام شده</span>
+            <span><i class="far fa-comments ml-1"></i><span class="number ml-1">45</span>خواسته جاری</span>
+            <span><i class="far fa-check-circle ml-1"></i><span class="number ml-1">24</span>خواسته انجام شده</span>
         </div>
         <div class="col-12 float-right">
-            <h4 class="col-12 float-right text-right mt-3">اعضا : </h4>
+            <div class="workspace-title-section col-12 float-right text-right mt-3">
+                <i class="fas fa-user-secret"></i>
+                <h4 class="">اعضا :</h4>      
+            </div>    
             @component('theme.tools.table', ['class' => 'table-sm'])
                 @component('theme.tools.table-head')
                     <th scope="col">#</th>
@@ -41,7 +44,7 @@
                                         <a class="mr-2" href="{{ route('task-manager.users.show', ['user' => $user->id]) }}">{{ $user->fullname }}</a>
                                     </div>
                                     @if ($user->pivot->is_admin)
-                                        <span class="badge badge-dark">ادمین</span>
+                                        <span class="badge badge-success">ادمین</span>
                                     @endif
                                 </div>
                             </td>

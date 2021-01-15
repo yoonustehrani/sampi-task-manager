@@ -43,4 +43,26 @@
         }) --}}
     </script>
     <script src="{{ asset('/js/dashboard.js') }}"></script>
+    <script> // this script will add the custom select2 class to the desired select2s and prevent the overwrite select2 classes
+        let formatOption = (option) => {
+            if (option.element) {
+                let icon_name = option.element.attributes.icon_name.nodeValue
+                return $(`<div class="select-option">${option.text}<i class="${icon_name}"></i></div>`)
+            }
+        }
+        $('#order_select, #order_by_select, #relation_select').select2({
+            templateResult: formatOption,
+            minimumResultsForSearch: Infinity,
+            width: 'element',
+        })
+        let filter_select_ids = ["#order_select", "#order_by_select", "#relation_select"]
+        filter_select_ids.map((id, i) => {
+            $($(id).data('select2').$container).addClass("select2-dashboard")
+            $($(id).data('select2').$container).click(() => $.each($("span.select2-container"), (index, value) => {
+                if (index === $("span.select2-container").length - 1) {
+                    $(value).addClass("select2-dashboard")
+                }
+            }))
+        })
+    </script>
 @endpush

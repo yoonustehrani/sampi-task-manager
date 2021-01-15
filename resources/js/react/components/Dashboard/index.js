@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import Axios from 'axios'
 import moment from 'moment'
 moment.locale('fa')
-import { Levels, Sentry, Windmill, Digital } from 'react-activity'
+import { Levels, Digital } from 'react-activity'
 import 'react-activity/dist/react-activity.css';
+import { functions } from 'lodash'
 
 
 export default class Dashboard extends Component {
@@ -92,13 +93,6 @@ export default class Dashboard extends Component {
         }
     }
 
-    formatOption = (option) => {
-        if (option.element) {
-            let icon_name = option.element.attributes.icon_name.nodeValue
-            return $(`<div class="select-option">${option.text}<i class="${icon_name}"></i></div>`)
-        }
-    }
-
     redirectTo = (url) => {
         window.location.href = url
     }
@@ -150,12 +144,6 @@ export default class Dashboard extends Component {
     render() {
         let { mixedTasks, statistics, isGetting, workspaces } = this.state
         let { workspace_route, task_route } = this.props
-        $('#order_select, #order_by_select, #relation_select').select2({
-            templateResult: this.formatOption,
-            minimumResultsForSearch: Infinity,
-            width: 'element'
-        })
-
         return (
             <div>
                 <div className="analysis-boxes analysis-container">
