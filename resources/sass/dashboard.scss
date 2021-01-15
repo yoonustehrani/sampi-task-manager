@@ -115,14 +115,13 @@ div.dashboard-tab-container {
                 font-family: $iran-sans;
                 width: max-content !important;
                 display: flex;
-                // flex-direction: column;
-                // align-items: center;
-                // justify-content: center;
                 flex-direction: row;
                 justify-content: center;
                 align-items: center;
-                span {
+                > span {
                     text-align: center;
+                    white-space: nowrap;
+                    margin-left: 6px;
                 }
                 select {
                     option {
@@ -130,29 +129,6 @@ div.dashboard-tab-container {
                         font-family: $iran-sans;
                     }
                 }
-                // .select2-container {
-                //     float: left !important;
-                //     width: max-content !important;
-                //     height: 100% !important;
-                //     margin-right: 4px !important;
-                //     div.select-option {
-                //         i {
-                //             margin-left: 10px;
-                //             font-size: 20px;
-                //         }
-                //     }
-                //     span.select2-selection__rendered {
-                //         padding-right: 8px !important;
-                //         padding-left: 20px !important;
-                //     }
-                //     span.select2-selection__arrow {
-                //         left: 0 !important;
-                //     }
-                //     .select2-dropdown {
-                //         width: max-content !important;
-                //         font-family: $iran-sans;
-                //     }
-                // }
             }
         }
     }
@@ -273,26 +249,10 @@ table {
     }
 }
 
-.select2-container.select2-dashboard {
-    float: left !important;
-    width: max-content !important;
-    height: 100% !important;
-    margin-right: 4px !important;
-    div.select-option {
-        i {
-            margin-left: 10px;
-            font-size: 20px;
-        }
+div.select-option {
+    i {
+        margin-left: 10px;
+        font-size: 20px;
     }
-    span.select2-selection__rendered {
-        padding-right: 8px !important;
-        padding-left: 20px !important;
-    }
-    span.select2-selection__arrow {
-        left: 0 !important;
-    }
-    .select2-dropdown {
-        width: max-content !important;
-        font-family: $iran-sans;
-    }
+    font-family: $iran-sans;
 }

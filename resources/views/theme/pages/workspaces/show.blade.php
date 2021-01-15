@@ -20,7 +20,7 @@
             <span><i class="far fa-check-circle ml-1"></i><span class="number ml-1">24</span>خواسته انجام شده</span>
         </div>
         <div class="col-12 float-right">
-            <div class="workspace-title-section col-12 float-right text-right mt-3">
+            <div class="workspace-title-section col-12">
                 <i class="fas fa-user-secret"></i>
                 <h4 class="">اعضا :</h4>      
             </div>    
@@ -39,12 +39,12 @@
                             </th>
                             <td class="text-right">
                                 <div class="name-row-user-workspace">
-                                    <div class="user-info-workspace ml-2">
+                                    <div class="user-info-workspace ml-md-2">
                                         <img src="{{ asset($user->avatar_pic ?: 'images/male-avatar.svg') }}" alt="">
-                                        <a class="mr-2" href="{{ route('task-manager.users.show', ['user' => $user->id]) }}">{{ $user->fullname }}</a>
+                                        <a class="mr-md-2 mt-1 mt-md-0" href="{{ route('task-manager.users.show', ['user' => $user->id]) }}">{{ $user->fullname }}</a>
                                     </div>
                                     @if ($user->pivot->is_admin)
-                                        <span class="badge badge-success">ادمین</span>
+                                        <span class="badge badge-success mt-1 mt-md-0">ادمین</span>
                                     @endif
                                 </div>
                             </td>
@@ -75,4 +75,25 @@
 
 @section('scripts')
     <script src="{{ asset('js/workspace.js') }}"></script>    
+    <script>
+        let formatPriorityOption = (option) => {
+            if (option.element) {
+                let icon_name = option.element.attributes.icon_name.nodeValue
+                return $(`<div class="select-option"><i class="${icon_name}"></i>${option.text}</div>`)
+            }
+        }
+        $('#new-task-priority').select2({
+            templateResult: formatPriorityOption,
+            minimumResultsForSearch: Infinity,
+            width: '100%',
+            dir: "rtl",
+        })
+        $("#new-task-members").select2({
+            placeholder: "انجام دهندگان این کار",
+            width: "100%",
+            dir: 'rtl',
+            multiple: true,
+        })
+        $('.select2-search__field').css('width', '100%');
+    </script>
 @endsection

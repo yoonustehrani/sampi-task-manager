@@ -72259,19 +72259,19 @@ var Dashboard = /*#__PURE__*/function (_Component) {
     _defineProperty(_assertThisInitialized(_this), "setPriority", function (id) {
       switch (id) {
         case 1:
-          return 'ضروری و فوری';
+          return 'ضروری و مهم';
           break;
 
         case 2:
-          return 'ضروری و غیر فوری';
+          return 'ضروری و غیر مهم';
           break;
 
         case 3:
-          return 'غیرضروری و فوری';
+          return 'غیر ضروری و مهم';
           break;
 
         case 4:
-          return 'غیر ضروری و غیرفوری';
+          return 'غیر ضروری و غیر مهم';
           break;
 
         default:
@@ -72577,7 +72577,7 @@ var Dashboard = /*#__PURE__*/function (_Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "filter-box mt-2 mb-2 p-3 col-12 animated fadeIn"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "filter-option col-12 col-md-3 mb-3 mb-md-0 text-center"
+        className: "filter-option col-12 col-md-6 col-lg-3 mb-3 md-lg-0 text-center"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u062C\u0633\u062A\u062C\u0648 \u062F\u0631: "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
         id: "relation_select",
         defaultValue: "all"
@@ -72594,7 +72594,7 @@ var Dashboard = /*#__PURE__*/function (_Component) {
         value: "expired",
         icon_name: "fas fa-calendar-minus"
       }, "\u0645\u0646\u0642\u0636\u06CC"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "filter-option col-12 col-md-3 mb-3 mb-md-0 text-center"
+        className: "filter-option col-12 col-md-6 col-lg-3 mb-3 md-lg-0 text-center"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0645\u0631\u062A\u0628 \u0633\u0627\u0632\u06CC \u0628\u0631 \u0627\u0633\u0627\u0633:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
         id: "order_by_select",
         defaultValue: "due_to"
@@ -72611,7 +72611,7 @@ var Dashboard = /*#__PURE__*/function (_Component) {
         value: "finished_at",
         icon_name: "fas fa-calendar-check"
       }, "\u062A\u0627\u0631\u06CC\u062E \u0627\u062A\u0645\u0627\u0645"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "filter-option col-12 col-md-3 mb-3 mb-md-0 text-center"
+        className: "filter-option col-12 col-md-6 col-lg-3 mb-3 md-lg-0 text-center"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0646\u062D\u0648\u0647 \u0645\u0631\u062A\u0628 \u0633\u0627\u0632\u06CC:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
         id: "order_select",
         defaultValue: "desc"
@@ -72622,7 +72622,7 @@ var Dashboard = /*#__PURE__*/function (_Component) {
         value: "desc",
         icon_name: "fas fa-sort-amount-down"
       }, "\u0646\u0632\u0648\u0644\u06CC"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-12 col-md-3 text-center"
+        className: "text-center"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "btn btn-outline-info",
         onClick: this.sortData.bind(this, 'tasks')

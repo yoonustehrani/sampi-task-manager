@@ -77,16 +77,16 @@ export default class Dashboard extends Component {
     setPriority = (id) => {
         switch(id) {
             case 1:
-                return 'ضروری و فوری'
+                return 'ضروری و مهم'
                 break
             case 2:
-                return 'ضروری و غیر فوری'
+                return 'ضروری و غیر مهم'
                 break
             case 3:
-                return 'غیرضروری و فوری'
+                return 'غیر ضروری و مهم'
                 break
             case 4:
-                return 'غیر ضروری و غیرفوری'
+                return 'غیر ضروری و غیر مهم'
                 break
             default:
                 break
@@ -312,7 +312,7 @@ export default class Dashboard extends Component {
 
                     <div className="result-container col-12 mt-3" ref={this.tabResultsRef[1]}>
                         <div className="filter-box mt-2 mb-2 p-3 col-12 animated fadeIn">
-                            <div className="filter-option col-12 col-md-3 mb-3 mb-md-0 text-center">
+                            <div className="filter-option col-12 col-md-6 col-lg-3 mb-3 md-lg-0 text-center">
                                 <span>جستجو در: </span>
                                 <select id="relation_select" defaultValue="all">
                                     <option value="all" icon_name="fas fa-tasks">همه</option>
@@ -321,7 +321,7 @@ export default class Dashboard extends Component {
                                     <option value="expired" icon_name="fas fa-calendar-minus">منقضی</option>
                                 </select>
                             </div>
-                            <div className="filter-option col-12 col-md-3 mb-3 mb-md-0 text-center">
+                            <div className="filter-option col-12 col-md-6 col-lg-3 mb-3 md-lg-0 text-center">
                                 <span>مرتب سازی بر اساس:</span>
                                 <select id="order_by_select" defaultValue="due_to">
                                     <option value="due_to" icon_name="fas fa-hourglass-start">تاریخ تحویل</option>
@@ -330,14 +330,14 @@ export default class Dashboard extends Component {
                                     <option value="finished_at" icon_name="fas fa-calendar-check">تاریخ اتمام</option>
                                 </select>
                             </div>
-                            <div className="filter-option col-12 col-md-3 mb-3 mb-md-0 text-center">
+                            <div className="filter-option col-12 col-md-6 col-lg-3 mb-3 md-lg-0 text-center">
                                 <span>نحوه مرتب سازی:</span>
                                 <select id="order_select" defaultValue="desc">
                                     <option value="asc" icon_name="fas fa-sort-amount-up">صعودی</option>
                                     <option value="desc" icon_name="fas fa-sort-amount-down">نزولی</option>
                                 </select>
                             </div>
-                            <div className="col-12 col-md-3 text-center">
+                            <div className="text-center">
                                 <button className="btn btn-outline-info" onClick={this.sortData.bind(this, 'tasks')}>مرتب سازی</button>
                             </div>
                         </div>
