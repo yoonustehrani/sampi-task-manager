@@ -29,7 +29,7 @@ class UserPolicy
      */
     public function view(User $user, User $model)
     {
-        if (! $user->id == $model->id) {
+        if ($user->id != $model->id) {
             return $user->hasPermission('can_view_users');
         }
         return true;
@@ -55,7 +55,10 @@ class UserPolicy
      */
     public function update(User $user, User $model)
     {
-        return $user->hasPermission('can_update_users');
+        if ($user->id != $model->id) {
+            return $user->hasPermission('can_update_users');
+        }
+        return true;
     }
 
     /**
@@ -67,7 +70,7 @@ class UserPolicy
      */
     public function delete(User $user, User $model)
     {
-        return $user->hasPermission('can_delete_users');
+        return $user->id != $model->id && $user->hasPermission('can_delete_users');
     }
 
     /**
@@ -79,7 +82,7 @@ class UserPolicy
      */
     public function restore(User $user, User $model)
     {
-        //
+        return $user->id != $model->id && $user->hasPermission('can_restore_users');
     }
 
     /**
@@ -91,6 +94,6 @@ class UserPolicy
      */
     public function forceDelete(User $user, User $model)
     {
-        //
+        return $user->id != $model->id && $user->hasPermission('can_force_delete_users');
     }
 }
