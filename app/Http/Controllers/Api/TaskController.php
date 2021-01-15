@@ -16,7 +16,8 @@ class TaskController extends Controller
             'order' => 'nullable|string',
             'order_by' => 'nullable|string'
         ]);
-        $user_tasks = $request->user()->tasks()->with('users')->withCount('demands')->where('workspace_id', $workspace);
+        $user = ($request->user_id) ? \App\User::find($request->user_id) : $request->user();
+        $user_tasks = $user->tasks()->with('users')->withCount('demands')->where('workspace_id', $workspace);
         if ($request->order_by) {
             $order = $request->order != 'desc' ? 'asc' : 'desc';
             $user_tasks = $user_tasks->orderBy($request->order_by, $order);
@@ -34,7 +35,11 @@ class TaskController extends Controller
             'order' => 'nullable|string',
             'order_by' => 'nullable|string'
         ]);
-        $user_tasks = $request->user()->tasks()->with([
+        $user = ($request->user_id) ? \App\User::find($request->user_id) : $request->user();
+        $relationship = $request->relationship && method_exists($user, $request->relationship . '_tasks')
+                        ? $request->relationship . '_tasks'
+                        : 'tasks';
+        $user_tasks = $user->{$relationship}()->with([
             'users',
             'workspace:id,title,avatar_pic'
         ])->withCount('demands');
@@ -55,7 +60,7 @@ class TaskController extends Controller
             'order_by' => 'nullable|string|min:3',
             'limit' => 'required|integer|min:3|max:30'
         ]);
-        $user = $request->user();
+        $user = ($request->user_id) ? \App\User::find($request->user_id) : $request->user();
         $relationship = $request->relationship && method_exists($user, $request->relationship . '_tasks')
                         ? $request->relationship . '_tasks'
                         : 'tasks';
@@ -85,7 +90,8 @@ class TaskController extends Controller
             'priority' => 'required|numeric',
             'due_to' => 'nullable|numeric',
         ]);
-        $workspace = $request->user()->workspaces()->findOrFail($workspace);
+        $user = ($request->user_id) ? \App\User::find($request->user_id) : $request->user();
+        $workspace = $user->workspaces()->findOrFail($workspace);
         try {
             \DB::beginTransaction();
                 $task = new Task();

@@ -40,3 +40,7 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    @yield('scripts')
+@endpush

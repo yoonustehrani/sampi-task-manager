@@ -27,8 +27,10 @@
     },
     "dependencies": {
         "@fortawesome/fontawesome-free": "^5.15.1",
+        "animate.css": "^3.7.2",
         "chart.js": "^2.9.4",
         "moment": "^2.29.1",
+        "react-activity": "^1.2.2",
         "select2": "~4.0",
         "sweetalert2": "^10.13.0"
     }

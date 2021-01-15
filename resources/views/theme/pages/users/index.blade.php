@@ -5,7 +5,11 @@
 @endsection
 
 @section('page-content')
-    @component('theme.tools.title', ['title' => 'لیست کاربران', 'create' => route('task-manager.users.create')]) @endcomponent
+    @can('create', \App\User::class)
+        @component('theme.tools.title', ['title' => 'لیست کاربران', 'create' => route('task-manager.users.create')]) @endcomponent
+    @else
+        @component('theme.tools.title', ['title' => 'لیست کاربران']) @endcomponent
+    @endcan
     @component('theme.tools.table')
         @component('theme.tools.table-head')
             <th scope="col">#</th>
@@ -45,23 +49,27 @@
                             <span class="text-secondary"><em>ندارد</em></span>
                         @endif
                         @foreach ($user->roles as $role)
-                            <span class="badge badge-{{ b4_random_color_class() }} p-2">{{ $role->label }}</span>
+                            <a target="_blank" href="{{ route('task-manager.roles.edit', ['role' => $role->id]) }}" class="badge badge-{{ b4_random_color_class() }} p-2">{{ $role->label }}</a>
                         @endforeach
                     </td>
                     <td>
+                        @can('update', $user)
                         <a href="{{ route('task-manager.users.edit', ['user' => $user->id]) }}" class="btn btn-sm btn-primary">
                             <i class="fas fa-pencil-alt"></i>
                         </a>
+                        @endcan
                     </td>
                     <td>
                         @if (auth()->user()->id !== $user->id)
-                        <form action="{{ route('task-manager.users.destroy', ['user' => $user->id]) }}" method="post">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-sm btn-danger">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </form>
+                            @can('delete', $user)
+                            <form action="{{ route('task-manager.users.destroy', ['user' => $user->id]) }}" method="post">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-sm btn-danger">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </form>
+                            @endcan
                         @endif
                     </td>
                 </tr>

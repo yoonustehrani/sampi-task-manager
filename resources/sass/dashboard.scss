@@ -1,3 +1,9 @@
+p a {
+    font-family: $iran-sans;
+}
+a:hover {
+    text-decoration: none;
+}
 .analysis-container {
     display: flex;
     flex-direction: row-reverse;
@@ -68,7 +74,7 @@ div.dashboard-tab-container {
             font-size: 18px;
             font-family: $iran-sans;
             cursor: pointer;
-            transition: 0.2s;
+            transition: 0.3s;
             color: #009FFF;
             i {
                 margin-left: 5px;
@@ -94,21 +100,56 @@ div.dashboard-tab-container {
         div.filter-box {
             float: right;
             background-color: #E0EAFC;
-            box-shadow: 4px 4px 6px 0 #bdc3c7;
+            box-shadow: 3px 3px 7px 0 #bdc3c7;
             border: 2px solid #A7BFE8;
             border-radius: 8px;         
             display: flex;
             flex-direction: row;
+            flex-wrap: wrap;
+            align-items: center;
             justify-content: space-around;   
+            direction: rtl;
             div.filter-option {
                 direction: rtl;
                 text-align: right;
-                display: inline-block;
                 font-family: $iran-sans;
+                width: max-content !important;
+                display: flex;
+                // flex-direction: column;
+                // align-items: center;
+                // justify-content: center;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                span {
+                    text-align: center;
+                }
                 select {
-                    margin-right: 6px;
                     option {
                         text-align: right;
+                        font-family: $iran-sans;
+                    }
+                }
+                .select2-container {
+                    float: left !important;
+                    width: max-content !important;
+                    height: 100% !important;
+                    margin-right: 4px !important;
+                    div.select-option {
+                        i {
+                            margin-left: 10px;
+                            font-size: 20px;
+                        }
+                    }
+                    span.select2-selection__rendered {
+                        padding-right: 8px !important;
+                        padding-left: 20px !important;
+                    }
+                    span.select2-selection__arrow {
+                        left: 0 !important;
+                    }
+                    .select2-dropdown {
+                        width: max-content !important;
                         font-family: $iran-sans;
                     }
                 }
@@ -121,8 +162,113 @@ div.dashboard-tab-container {
 }
 table {
     font-family: $iran-sans;
-}
-select {
-    font-family: 'Lato', 'Font Awesome 5 Free', 'Font Awesome 5 Brands';
-    font-weight: 900;
+    img.workspace_avatar {
+        width: 30px;
+        height: 30px;
+        margin-left: 10px;
+    }
+    a {
+        color: #000000;
+        transition: 0.3s;
+    }
+    div.employees-container {
+        position: relative;
+        z-index: 99;
+        width: fit-content;
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+        cursor: auto !important;
+        > span {
+            cursor: pointer;
+            transition: 0.5s;
+        }
+        > div.dropdown-users {
+            position: absolute;
+            // box-shadow: 4px 4px 5px 0px #8e9eab;
+            > div.user-dropdown-item {
+                position: relative;
+                box-shadow: 4px 4px 5px 0px #8e9eab;
+                width: max-content;
+                background-color: #D7DDE8;
+                margin-bottom: 1px;
+                border-bottom-right-radius: 30px;
+                border-top-right-radius: 30px;
+                border-top-left-radius: 20px;
+                display: flex;
+                flex-direction: row;
+                flex-wrap: nowrap;
+                justify-content: space-between;
+                div.user-right-flex {
+                    display: flex;
+                    flex-direction: row;
+                    flex-wrap: nowrap;
+                    justify-content: right;
+                    align-items: flex-start;
+                    > div.user-img-container {
+                        width: 50px;
+                        height: 50px;
+                        > img {
+                            width: 100%;
+                            height: 100%;
+                            border-radius: 50px;
+                            border: 2px solid #2c3e50;
+                            padding: 1px;
+                        }
+                    }
+                    > div.user-info {
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: flex-start;
+                        align-items: flex-start;
+                        > a {
+                            direction: ltr;
+                            color: #000000;
+                            cursor: pointer;
+                            transition: 0.3s;
+                        }
+                        > a:hover {
+                            color: #009FFF;
+                        }
+                        > p {
+                            margin-bottom: 0;
+                            color: #000000;
+                        }
+                    }
+                }
+                > div.user-label-container {
+                    button {
+                        cursor: auto !important;
+                        background-color: #0275d8 !important;
+                        border-top-left-radius: 15px;
+                        border-bottom-right-radius: 15px;
+                    }
+                    button:hover {
+                        background-color: #0275d8 !important;
+                        border-color: #0275d8 !important;
+                    }
+                    button.admin {
+                        background-color: #38c172 !important;
+                    }
+                    button.admin:hover {
+                        background-color: #38c172 !important;
+                        border-color: #38c172 !important;
+                    }
+                }
+            }
+        }
+    }
+    table.table-hover {
+        tr {
+            cursor: pointer;
+        }
+    }
+    div.employees-container:hover {
+        > span {
+            color: #4286f4;
+        }
+         div.dropdown-users {
+            display: block !important;
+        }
+    }
 }

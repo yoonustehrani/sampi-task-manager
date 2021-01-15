@@ -10,9 +10,14 @@ body,html {
 }
 h1, h2, h3, h4, h5, h6 {
     direction: rtl;
+    font-family: $iran-sans;
 }
 a {
     text-decoration: none;
+    font-family: $iran-sans;
+}
+p {
+    font-family: $iran-sans;
 }
 .full-sc {
     height: 100%;
@@ -242,4 +247,42 @@ div.drop-down-container {
 }
 .badge-success {
     background-color: #0b9e3c !important;
+}
+
+div.workspace-sub-info {
+    display: flex;
+    flex-direction: row-reverse;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    > span {
+        direction: rtl;
+        font-family: $iran-sans;
+    }
+    span.number {
+        font-weight: bold;
+    }
+}
+
+div.user-info-workspace {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: nowrap;
+    width: max-content;
+    > img {
+        width: 50px;
+        height: 50px;
+        border-radius: 10px;
+    }
+}
+
+div.name-row-user-workspace {
+    width: max-content;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: flex-start;
 }

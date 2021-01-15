@@ -1,4 +1,6 @@
 {
     "/js/app.js": "/js/app.js",
-    "/js/chart.js": "/js/chart.js"
+    "/js/chart.js": "/js/chart.js",
+    "/js/dashboard.js": "/js/dashboard.js",
+    "/js/workspace.js": "/js/workspace.js"
 }
