@@ -21,14 +21,18 @@ class TinymcEditor extends Component {
                 initialValue=""
                 tinymceScriptSrc="http://localhost/js/tinymce.js"
                 init={{
+                    skin: 'oxide',
                     skin_url: '/css',
+                    content_css : '/css/tinytheme.css',
+                    // theme: 'silver',
+                    // theme_url: '/css/kir',
                     height: 250,
                     menubar: false, // make true for more options like image insert
-                    // plugins: [
+                    plugins: [
                     // 'advlist autolink lists link image charmap print preview anchor',
                     // 'searchreplace visualblocks code fullscreen',
                     // 'insertdatetime media table paste code help wordcount'
-                    // ],
+                    ],
                     // toolbar:
                     // 'undo redo | formatselect | bold italic backcolor | \
                     // alignleft aligncenter alignright alignjustify | \

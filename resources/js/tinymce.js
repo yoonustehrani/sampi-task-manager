@@ -5,6 +5,7 @@ require('tinymce/icons/default');
 
 // A theme is also required
 require('tinymce/themes/silver');
+// import 'tinymce/skins/ui/oxide/content.min.css';
 
 // Any plugins you want to use has to be imported
 require('tinymce/plugins/paste');
