@@ -19,7 +19,6 @@
 
 @push('scripts')
     <script>
-        var APP_PATH = "{{ asset('/') }}";
         var list_tasks = "{{ route('api.task-manager.tasks.index', ['workspace' => "workspaceId", 'api_token' => auth()->user()->api_token]) }}";
         var add_task = "{{ route('api.task-manager.tasks.store', ['workspace' => "workspaceId", 'api_token' => auth()->user()->api_token]) }}";
         {{-- axios.post(add_task, {

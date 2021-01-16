@@ -58,15 +58,15 @@ export default class Workspace extends Component {
                                     <span className="input-group-text">مسئولین</span>
                                 </div>
                                 <select id="new-task-members" className="form-control text-right" multiple>
-                                    <option value="0">امیررضا منصوریان</option>
-                                    <option value="1">یونس طهرانیم</option>
-                                    <option value="2">باران نخعی</option>
-                                    <option value="2">2باران نخعی</option>
-                                    <option value="2">3باران نخعی</option>
-                                    <option value="2">4باران نخعی</option>
-                                    <option value="2">5باران نخعی</option>
-                                    <option value="2">6باران نخعی</option>
-                                    <option value="2">7باران نخعی</option>
+                                    <option value="0" img_address={APP_PATH + "images/yosef.jpg"}>امیررضا منصوریان</option>
+                                    <option value="1" img_address={APP_PATH + "images/yosef.jpg"}>یونس طهرانیم</option>
+                                    <option value="2" img_address={APP_PATH + "images/yosef.jpg"}>باران نخعی</option>
+                                    <option value="2" img_address={APP_PATH + "images/yosef.jpg"}>2باران نخعی</option>
+                                    <option value="2" img_address={APP_PATH + "images/yosef.jpg"}>3باران نخعی</option>
+                                    <option value="2" img_address={APP_PATH + "images/yosef.jpg"}>4باران نخعی</option>
+                                    <option value="2" img_address={APP_PATH + "images/yosef.jpg"}>5باران نخعی</option>
+                                    <option value="2" img_address={APP_PATH + "images/yosef.jpg"}>6باران نخعی</option>
+                                    <option value="2" img_address={APP_PATH + "images/yosef.jpg"}>7باران نخعی</option>
                                 </select>
                             </div>
                             <div className="input-group col-12">

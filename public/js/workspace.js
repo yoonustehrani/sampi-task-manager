@@ -28847,23 +28847,32 @@ var Workspace = /*#__PURE__*/function (_Component) {
         className: "form-control text-right",
         multiple: true
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        value: "0"
+        value: "0",
+        img_address: APP_PATH + "images/yosef.jpg"
       }, "\u0627\u0645\u06CC\u0631\u0631\u0636\u0627 \u0645\u0646\u0635\u0648\u0631\u06CC\u0627\u0646"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        value: "1"
+        value: "1",
+        img_address: APP_PATH + "images/yosef.jpg"
       }, "\u06CC\u0648\u0646\u0633 \u0637\u0647\u0631\u0627\u0646\u06CC\u0645"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        value: "2"
+        value: "2",
+        img_address: APP_PATH + "images/yosef.jpg"
       }, "\u0628\u0627\u0631\u0627\u0646 \u0646\u062E\u0639\u06CC"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        value: "2"
+        value: "2",
+        img_address: APP_PATH + "images/yosef.jpg"
       }, "2\u0628\u0627\u0631\u0627\u0646 \u0646\u062E\u0639\u06CC"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        value: "2"
+        value: "2",
+        img_address: APP_PATH + "images/yosef.jpg"
       }, "3\u0628\u0627\u0631\u0627\u0646 \u0646\u062E\u0639\u06CC"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        value: "2"
+        value: "2",
+        img_address: APP_PATH + "images/yosef.jpg"
       }, "4\u0628\u0627\u0631\u0627\u0646 \u0646\u062E\u0639\u06CC"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        value: "2"
+        value: "2",
+        img_address: APP_PATH + "images/yosef.jpg"
       }, "5\u0628\u0627\u0631\u0627\u0646 \u0646\u062E\u0639\u06CC"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        value: "2"
+        value: "2",
+        img_address: APP_PATH + "images/yosef.jpg"
       }, "6\u0628\u0627\u0631\u0627\u0646 \u0646\u062E\u0639\u06CC"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        value: "2"
+        value: "2",
+        img_address: APP_PATH + "images/yosef.jpg"
       }, "7\u0628\u0627\u0631\u0627\u0646 \u0646\u062E\u0639\u06CC"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "input-group col-12"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {

@@ -11689,6 +11689,13 @@ div.workspace-add-task div.add-task-section textarea {
   }
 }
 
+div.select-option img.member-img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50px;
+  margin-left: 5px;
+}
+
 .select2-container {
   box-sizing: border-box;
   display: inline-block;

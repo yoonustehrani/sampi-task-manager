@@ -76,10 +76,17 @@
 @section('scripts')
     <script src="{{ asset('js/workspace.js') }}"></script>    
     <script>
+        var APP_PATH = "{{ asset('/') }}";
         let formatPriorityOption = (option) => {
             if (option.element) {
                 let icon_name = option.element.attributes.icon_name.nodeValue
                 return $(`<div class="select-option"><i class="${icon_name}"></i>${option.text}</div>`)
+            }
+        }
+        let formatMemberOption = (option) => {
+            if (option.element) {
+                let img_src = option.element.attributes.img_address.nodeValue
+                return $(`<div class="select-option"><img src="${img_src}" class="member-img" />${option.text}</div>`)
             }
         }
         $('#new-task-priority').select2({
@@ -93,6 +100,7 @@
             width: "100%",
             dir: 'rtl',
             multiple: true,
+            templateResult: formatMemberOption
         })
         $('.select2-search__field').css('width', '100%');
     </script>
