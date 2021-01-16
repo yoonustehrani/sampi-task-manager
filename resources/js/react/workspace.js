@@ -7,7 +7,7 @@ const target = document.getElementById('workspace-react')
 if (target) {
     ReactDOM.render(
         <Workspace 
-
+            
         />,
     target)
 }

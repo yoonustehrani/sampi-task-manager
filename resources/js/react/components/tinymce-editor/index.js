@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 
 export default class TinymcEditor extends React.Component {
@@ -11,6 +11,7 @@ export default class TinymcEditor extends React.Component {
         return (
             <Editor
                 initialValue=""
+                tinymceScriptSrc="http://localhost/js/tinymce.js"
                 init={{
                     height: 250,
                     menubar: false, // make true for more options like image insert
@@ -27,3 +28,6 @@ export default class TinymcEditor extends React.Component {
         );
     }
 }
+
+export default TinymcEditor;
+
