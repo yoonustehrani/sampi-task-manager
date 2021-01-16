@@ -36,7 +36,8 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "app/"
+            "App\\": "app/",
+            "SampiLogger\\": "packages/SampiLogger/src/"
         },
         "classmap": [
             "database/seeds",
