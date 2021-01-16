@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import TinymcEditor from '../tinymce-editor'
 
 export default class Workspace extends Component {
     constructor(props) {
@@ -6,7 +7,7 @@ export default class Workspace extends Component {
         this.addTaskRef = React.createRef()
         this.addIconRef = React.createRef()
         this.state = {
-             
+             description: ""
         }
     }
 
@@ -14,6 +15,12 @@ export default class Workspace extends Component {
         this.addIconRef.current.classList.toggle("fa-plus")
         this.addIconRef.current.classList.toggle("fa-minus")
         this.addTaskRef.current.classList.toggle("d-none")
+    }
+
+    onDescriptionChange = (content) => {
+        this.setState({
+            description: content
+        })
     }
 
     render() {
@@ -24,12 +31,12 @@ export default class Workspace extends Component {
                         <i className="fas fa-clipboard-list"></i>
                         <h4 className="">وظایف :</h4>      
                     </div>  
-                    <div className="workspace-add-task mb-4">
+                    <div className="workspace-add-task mb-4 col-12">
                         <div className="workspace-title-section" onClick={this.toggleAddBox}>
                             <i className="fas fa-plus animated jello" ref={this.addIconRef}></i>
                             <h5>افزودن کار</h5>
                         </div>
-                        <div className="add-task-section d-none animated zoomIn col-12 p-3" ref={this.addTaskRef}>
+                        <div className="add-task-section d-none animated zoomIn p-3" ref={this.addTaskRef}>
                             <div className="input-group col-12 col-md-6 mb-0 mb-md-0">
                                 <div className="input-group-prepend">
                                     <span className="input-group-text">عنوان</span>
@@ -69,14 +76,17 @@ export default class Workspace extends Component {
                                     <option value="2" img_address={APP_PATH + "images/yosef.jpg"}>7باران نخعی</option>
                                 </select>
                             </div>
-                            <div className="input-group col-12">
+                            <div className="input-group col-12 input-group-single-line">
                                 <div className="input-group-prepend">
                                     <span className="input-group-text">توضیحات</span>
                                 </div>
-                                <textarea className="form-control h-100 " placeholder="توضیحات تکمیلی در رابطه با این کار"></textarea>
+                                <div className="tinymc-container">
+                                    <TinymcEditor apiKey="fk57zibefc3ou71t16y5nju0ytj12vzjs04weh2p4w2iael6" changeContent={this.onDescriptionChange}/>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    
                 </div>
             </div>
         )

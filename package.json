@@ -27,6 +27,7 @@
     },
     "dependencies": {
         "@fortawesome/fontawesome-free": "^5.15.1",
+        "@tinymce/tinymce-react": "^3.9.0",
         "animate.css": "^3.7.2",
         "chart.js": "^2.9.4",
         "moment": "^2.29.1",

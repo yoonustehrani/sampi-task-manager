@@ -11696,6 +11696,10 @@ div.select-option img.member-img {
   margin-left: 5px;
 }
 
+div.tinymc-container {
+  width: 100%;
+}
+
 .select2-container {
   box-sizing: border-box;
   display: inline-block;

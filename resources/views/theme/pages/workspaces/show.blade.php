@@ -74,7 +74,7 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('js/workspace.js') }}"></script>    
+    <script src="{{ asset('js/workspace.js') }}"></script>   
     <script>
         var APP_PATH = "{{ asset('/') }}";
         let formatPriorityOption = (option) => {
