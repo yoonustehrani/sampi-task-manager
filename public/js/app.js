@@ -43560,7 +43560,7 @@ $('.collapser-btn').click(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! I:\projects\task-manager\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! W:\php\sampies\resources\js\app.js */"./resources/js/app.js");
 
 
 /***/ })

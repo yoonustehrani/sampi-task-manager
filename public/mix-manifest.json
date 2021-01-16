@@ -1,7 +1,6 @@
 {
-    "/js/app.js": "/js/app.js",
-    "/js/chart.js": "/js/chart.js",
-    "/css/app.css": "/css/app.css",
     "/js/dashboard.js": "/js/dashboard.js",
+    "/js/tinymce.js": "/js/tinymce.js",
+    "/css/app.css": "/css/app.css",
     "/js/workspace.js": "/js/workspace.js"
 }

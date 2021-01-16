@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -30304,7 +30304,6 @@ var Workspace = /*#__PURE__*/function (_Component) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return TinymcEditor; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _tinymce_tinymce_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @tinymce/tinymce-react */ "./node_modules/@tinymce/tinymce-react/lib/es2015/main/ts/index.js");
@@ -30443,8 +30442,8 @@ function _defineProperty(obj, key, value) {
 
 
 
-var TinymcEditor = /*#__PURE__*/function (_React$Component) {
-  _inherits(TinymcEditor, _React$Component);
+var TinymcEditor = /*#__PURE__*/function (_Component) {
+  _inherits(TinymcEditor, _Component);
 
   var _super = _createSuper(TinymcEditor);
 
@@ -30470,14 +30469,20 @@ var TinymcEditor = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_tinymce_tinymce_react__WEBPACK_IMPORTED_MODULE_1__["Editor"], {
         initialValue: "",
+        tinymceScriptSrc: "http://localhost/js/tinymce.js",
         init: {
           height: 250,
-          menubar: false,
-          // make true for more options like image insert
-          plugins: ['advlist autolink lists link image charmap print preview anchor', 'searchreplace visualblocks code fullscreen', 'insertdatetime media table paste code help wordcount'],
-          toolbar: 'undo redo | formatselect | bold italic backcolor | \
-                    alignleft aligncenter alignright alignjustify | \
-                    bullist numlist outdent indent | removeformat | help'
+          menubar: false // make true for more options like image insert
+          // plugins: [
+          // 'advlist autolink lists link image charmap print preview anchor',
+          // 'searchreplace visualblocks code fullscreen',
+          // 'insertdatetime media table paste code help wordcount'
+          // ],
+          // toolbar:
+          // 'undo redo | formatselect | bold italic backcolor | \
+          // alignleft aligncenter alignright alignjustify | \
+          // bullist numlist outdent indent | removeformat | help'
+
         },
         onEditorChange: this.handleEditorChange
       });
@@ -30485,9 +30490,9 @@ var TinymcEditor = /*#__PURE__*/function (_React$Component) {
   }]);
 
   return TinymcEditor;
-}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
-
+/* harmony default export */ __webpack_exports__["default"] = (TinymcEditor);
 
 /***/ }),
 
@@ -30516,14 +30521,14 @@ if (target) {
 
 /***/ }),
 
-/***/ 3:
+/***/ 2:
 /*!***********************************************!*\
   !*** multi ./resources/js/react/workspace.js ***!
   \***********************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! I:\projects\task-manager\resources\js\react\workspace.js */"./resources/js/react/workspace.js");
+module.exports = __webpack_require__(/*! W:\php\sampies\resources\js\react\workspace.js */"./resources/js/react/workspace.js");
 
 
 /***/ })
