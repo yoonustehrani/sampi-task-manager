@@ -2,14 +2,6 @@ import React from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 
 export default class TinymcEditor extends React.Component {
-    constructor(props) {
-        super(props)
-    
-        this.state = {
-             content: ""
-        }
-    }
-    
 
     handleEditorChange = (content, editor) => {
         this.props.changeContent(content)
@@ -23,14 +15,12 @@ export default class TinymcEditor extends React.Component {
                     height: 250,
                     menubar: false, // make true for more options like image insert
                     plugins: [
-                    'advlist autolink lists link image charmap print preview anchor',
-                    'searchreplace visualblocks code fullscreen',
-                    'insertdatetime media table paste code help wordcount'
+                        'advlist autolink lists link preview wordcount paste help code',
                     ],
                     toolbar:
                     'undo redo | formatselect | bold italic backcolor | \
                     alignleft aligncenter alignright alignjustify | \
-                    bullist numlist outdent indent | removeformat | help'
+                    bullist numlist outdent indent | removeformat | code | help'
                 }}
                 onEditorChange={this.handleEditorChange}
             />

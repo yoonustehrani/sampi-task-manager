@@ -77,11 +77,11 @@ export default class Workspace extends Component {
                                 </select>
                             </div>
                             <div className="input-group col-12 input-group-single-line">
-                                <div className="input-group-prepend">
+                                {/* <div className="input-group-prepend">
                                     <span className="input-group-text">توضیحات</span>
-                                </div>
+                                </div> */}
                                 <div className="tinymc-container">
-                                    <TinymcEditor apiKey="fk57zibefc3ou71t16y5nju0ytj12vzjs04weh2p4w2iael6" changeContent={this.onDescriptionChange}/>
+                                    <TinymcEditor changeContent={this.onDescriptionChange} />
                                 </div>
                             </div>
                         </div>

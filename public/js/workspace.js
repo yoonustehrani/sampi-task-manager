@@ -30276,13 +30276,8 @@ var Workspace = /*#__PURE__*/function (_Component) {
       }, "7\u0628\u0627\u0631\u0627\u0646 \u0646\u062E\u0639\u06CC"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "input-group col-12 input-group-single-line"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "input-group-prepend"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "input-group-text"
-      }, "\u062A\u0648\u0636\u06CC\u062D\u0627\u062A")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "tinymc-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_tinymce_editor__WEBPACK_IMPORTED_MODULE_1__["default"], {
-        apiKey: "fk57zibefc3ou71t16y5nju0ytj12vzjs04weh2p4w2iael6",
         changeContent: this.onDescriptionChange
       })))))));
     }
@@ -30448,20 +30443,21 @@ var TinymcEditor = /*#__PURE__*/function (_React$Component) {
 
   var _super = _createSuper(TinymcEditor);
 
-  function TinymcEditor(props) {
+  function TinymcEditor() {
     var _this;
 
     _classCallCheck(this, TinymcEditor);
 
-    _this = _super.call(this, props);
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _super.call.apply(_super, [this].concat(args));
 
     _defineProperty(_assertThisInitialized(_this), "handleEditorChange", function (content, editor) {
       _this.props.changeContent(content);
     });
 
-    _this.state = {
-      content: ""
-    };
     return _this;
   }
 
@@ -30474,10 +30470,10 @@ var TinymcEditor = /*#__PURE__*/function (_React$Component) {
           height: 250,
           menubar: false,
           // make true for more options like image insert
-          plugins: ['advlist autolink lists link image charmap print preview anchor', 'searchreplace visualblocks code fullscreen', 'insertdatetime media table paste code help wordcount'],
+          plugins: ['advlist autolink lists link preview wordcount paste help code'],
           toolbar: 'undo redo | formatselect | bold italic backcolor | \
                     alignleft aligncenter alignright alignjustify | \
-                    bullist numlist outdent indent | removeformat | help'
+                    bullist numlist outdent indent | removeformat | code | help'
         },
         onEditorChange: this.handleEditorChange
       });
