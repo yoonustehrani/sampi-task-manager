@@ -24,19 +24,19 @@ export default class Workspace extends Component {
                         <i className="fas fa-clipboard-list"></i>
                         <h4 className="">وظایف :</h4>      
                     </div>  
-                    <div className="workspace-add-task">
+                    <div className="workspace-add-task mb-4">
                         <div className="workspace-title-section" onClick={this.toggleAddBox}>
                             <i className="fas fa-plus animated jello" ref={this.addIconRef}></i>
                             <h5>افزودن کار</h5>
                         </div>
-                        <div className="add-task-section d-none animated heartBeat col-12 p-3" ref={this.addTaskRef}>
-                            <div className="input-group">
+                        <div className="add-task-section d-none animated zoomIn col-12 p-3" ref={this.addTaskRef}>
+                            <div className="input-group col-12 col-md-6 mb-0 mb-md-0">
                                 <div className="input-group-prepend">
                                     <span className="input-group-text">عنوان</span>
                                 </div>
                                 <input type="text" className="form-control" placeholder="عنوان کار را در این قسمت وارد کنید"/>
                             </div>
-                            <div className="input-group input-group-single-line">
+                            <div className="input-group col-12 col-md-6 mb-0 mb-md-0 input-group-single-line">
                                 <div className="input-group-prepend">
                                     <span className="input-group-text">اولویت</span>
                                 </div>
@@ -47,13 +47,13 @@ export default class Workspace extends Component {
                                     <option value="3" icon_name="fas fa-hourglass">غیر ضروری و غیر مهم</option>
                                 </select>
                             </div>
-                            <div className="input-group">
+                            <div className="input-group col-12 col-md-6 mb-0 mb-md-0">
                                 <div className="input-group-prepend">
                                     <span className="input-group-text">دسته بندی</span>
                                 </div>
                                 <input type="text" className="form-control" placeholder="این کار در چه گروهی قرار میگیرد؟" />
                             </div>
-                            <div className="input-group input-group-single-line">
+                            <div className="input-group col-12 col-md-6 mb-0 mb-md-0 input-group-single-line">
                                 <div className="input-group-prepend">
                                     <span className="input-group-text">مسئولین</span>
                                 </div>
@@ -69,11 +69,11 @@ export default class Workspace extends Component {
                                     <option value="2">7باران نخعی</option>
                                 </select>
                             </div>
-                            <div className="input-group">
+                            <div className="input-group col-12">
                                 <div className="input-group-prepend">
                                     <span className="input-group-text">توضیحات</span>
                                 </div>
-                                <textarea className="form-control" placeholder="توضیحات تکمیلی در رابطه با این کار"></textarea>
+                                <textarea className="form-control h-100 " placeholder="توضیحات تکمیلی در رابطه با این کار"></textarea>
                             </div>
                         </div>
                     </div>

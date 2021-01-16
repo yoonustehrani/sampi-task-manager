@@ -11679,6 +11679,16 @@ div.workspace-add-task div.add-task-section div.input-group-single-line {
   flex-wrap: nowrap !important;
 }
 
+div.workspace-add-task div.add-task-section textarea {
+  min-height: 100px;
+}
+
+@media (min-width: 768px) {
+  div.workspace-add-task div.add-task-section textarea {
+    min-height: auto !important;
+  }
+}
+
 .select2-container {
   box-sizing: border-box;
   display: inline-block;
