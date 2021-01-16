@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -28614,6 +28614,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _tinymce_editor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../tinymce-editor */ "./resources/js/react/components/tinymce-editor/index.js");
+/* harmony import */ var _tinymce_editor__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_tinymce_editor__WEBPACK_IMPORTED_MODULE_1__);
 function _typeof(obj) {
   "@babel/helpers - typeof";
 
@@ -28887,7 +28888,7 @@ var Workspace = /*#__PURE__*/function (_Component) {
         className: "input-group col-12 input-group-single-line"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "tinymc-container"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_tinymce_editor__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_tinymce_editor__WEBPACK_IMPORTED_MODULE_1___default.a, {
         changeContent: this.onDescriptionChange
       })))))));
     }
@@ -28904,10 +28905,10 @@ var Workspace = /*#__PURE__*/function (_Component) {
 /*!***************************************************************!*\
   !*** ./resources/js/react/components/tinymce-editor/index.js ***!
   \***************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, exports) {
 
-throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: I:\\projects\\task-manager\\resources\\js\\react\\components\\tinymce-editor\\index.js: Only one default export allowed per module. (32:0)\n\n\u001b[0m \u001b[90m 30 | \u001b[39m}\u001b[0m\n\u001b[0m \u001b[90m 31 | \u001b[39m\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 32 | \u001b[39m\u001b[36mexport\u001b[39m \u001b[36mdefault\u001b[39m \u001b[33mTinymcEditor\u001b[39m\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m    | \u001b[39m\u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 33 | \u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 34 | \u001b[39m\u001b[0m\n    at Object._raise (I:\\projects\\task-manager\\node_modules\\@babel\\parser\\lib\\index.js:748:17)\n    at Object.raiseWithData (I:\\projects\\task-manager\\node_modules\\@babel\\parser\\lib\\index.js:741:17)\n    at Object.raise (I:\\projects\\task-manager\\node_modules\\@babel\\parser\\lib\\index.js:735:17)\n    at Object.checkDuplicateExports (I:\\projects\\task-manager\\node_modules\\@babel\\parser\\lib\\index.js:13050:12)\n    at Object.checkExport (I:\\projects\\task-manager\\node_modules\\@babel\\parser\\lib\\index.js:12969:14)\n    at Object.parseExport (I:\\projects\\task-manager\\node_modules\\@babel\\parser\\lib\\index.js:12796:12)\n    at Object.parseStatementContent (I:\\projects\\task-manager\\node_modules\\@babel\\parser\\lib\\index.js:11782:27)\n    at Object.parseStatement (I:\\projects\\task-manager\\node_modules\\@babel\\parser\\lib\\index.js:11676:17)\n    at Object.parseBlockOrModuleBlockBody (I:\\projects\\task-manager\\node_modules\\@babel\\parser\\lib\\index.js:12258:25)\n    at Object.parseBlockBody (I:\\projects\\task-manager\\node_modules\\@babel\\parser\\lib\\index.js:12249:10)\n    at Object.parseTopLevel (I:\\projects\\task-manager\\node_modules\\@babel\\parser\\lib\\index.js:11607:10)\n    at Object.parse (I:\\projects\\task-manager\\node_modules\\@babel\\parser\\lib\\index.js:13415:10)\n    at parse (I:\\projects\\task-manager\\node_modules\\@babel\\parser\\lib\\index.js:13468:38)\n    at parser (I:\\projects\\task-manager\\node_modules\\@babel\\core\\lib\\parser\\index.js:54:34)\n    at parser.next (<anonymous>)\n    at normalizeFile (I:\\projects\\task-manager\\node_modules\\@babel\\core\\lib\\transformation\\normalize-file.js:99:38)\n    at normalizeFile.next (<anonymous>)\n    at run (I:\\projects\\task-manager\\node_modules\\@babel\\core\\lib\\transformation\\index.js:31:50)\n    at run.next (<anonymous>)\n    at Function.transform (I:\\projects\\task-manager\\node_modules\\@babel\\core\\lib\\transform.js:27:41)\n    at transform.next (<anonymous>)\n    at step (I:\\projects\\task-manager\\node_modules\\gensync\\index.js:261:32)\n    at I:\\projects\\task-manager\\node_modules\\gensync\\index.js:273:13\n    at async.call.result.err.err (I:\\projects\\task-manager\\node_modules\\gensync\\index.js:223:11)");
+throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: I:\\projects\\task-manager\\resources\\js\\react\\components\\tinymce-editor\\index.js: Only one default export allowed per module. (33:0)\n\n\u001b[0m \u001b[90m 31 | \u001b[39m}\u001b[0m\n\u001b[0m \u001b[90m 32 | \u001b[39m\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 33 | \u001b[39m\u001b[36mexport\u001b[39m \u001b[36mdefault\u001b[39m \u001b[33mTinymcEditor\u001b[39m\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m    | \u001b[39m\u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 34 | \u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 35 | \u001b[39m\u001b[0m\n    at Object._raise (I:\\projects\\task-manager\\node_modules\\@babel\\parser\\lib\\index.js:748:17)\n    at Object.raiseWithData (I:\\projects\\task-manager\\node_modules\\@babel\\parser\\lib\\index.js:741:17)\n    at Object.raise (I:\\projects\\task-manager\\node_modules\\@babel\\parser\\lib\\index.js:735:17)\n    at Object.checkDuplicateExports (I:\\projects\\task-manager\\node_modules\\@babel\\parser\\lib\\index.js:13050:12)\n    at Object.checkExport (I:\\projects\\task-manager\\node_modules\\@babel\\parser\\lib\\index.js:12969:14)\n    at Object.parseExport (I:\\projects\\task-manager\\node_modules\\@babel\\parser\\lib\\index.js:12796:12)\n    at Object.parseStatementContent (I:\\projects\\task-manager\\node_modules\\@babel\\parser\\lib\\index.js:11782:27)\n    at Object.parseStatement (I:\\projects\\task-manager\\node_modules\\@babel\\parser\\lib\\index.js:11676:17)\n    at Object.parseBlockOrModuleBlockBody (I:\\projects\\task-manager\\node_modules\\@babel\\parser\\lib\\index.js:12258:25)\n    at Object.parseBlockBody (I:\\projects\\task-manager\\node_modules\\@babel\\parser\\lib\\index.js:12249:10)\n    at Object.parseTopLevel (I:\\projects\\task-manager\\node_modules\\@babel\\parser\\lib\\index.js:11607:10)\n    at Object.parse (I:\\projects\\task-manager\\node_modules\\@babel\\parser\\lib\\index.js:13415:10)\n    at parse (I:\\projects\\task-manager\\node_modules\\@babel\\parser\\lib\\index.js:13468:38)\n    at parser (I:\\projects\\task-manager\\node_modules\\@babel\\core\\lib\\parser\\index.js:54:34)\n    at parser.next (<anonymous>)\n    at normalizeFile (I:\\projects\\task-manager\\node_modules\\@babel\\core\\lib\\transformation\\normalize-file.js:99:38)\n    at normalizeFile.next (<anonymous>)\n    at run (I:\\projects\\task-manager\\node_modules\\@babel\\core\\lib\\transformation\\index.js:31:50)\n    at run.next (<anonymous>)\n    at Function.transform (I:\\projects\\task-manager\\node_modules\\@babel\\core\\lib\\transform.js:27:41)\n    at transform.next (<anonymous>)\n    at step (I:\\projects\\task-manager\\node_modules\\gensync\\index.js:261:32)\n    at I:\\projects\\task-manager\\node_modules\\gensync\\index.js:273:13\n    at async.call.result.err.err (I:\\projects\\task-manager\\node_modules\\gensync\\index.js:223:11)");
 
 /***/ }),
 
@@ -28936,7 +28937,7 @@ if (target) {
 
 /***/ }),
 
-/***/ 3:
+/***/ 2:
 /*!***********************************************!*\
   !*** multi ./resources/js/react/workspace.js ***!
   \***********************************************/

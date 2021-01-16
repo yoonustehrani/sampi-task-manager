@@ -22,10 +22,14 @@ const src = {
  |
  */
 
+
 mix.disableNotifications();
 
 var { res, pub } = src
+
 mix.js(res.js + 'tinymce.js', pub.js)
+    
+    // .sass(res.sass + 'tinymce-skins.scss', pub.css)
     .sass(res.sass + 'app.scss', pub.css)
     // .sass(res.sass + 'auth.scss', pub.css)
     .react(res.react + 'dashboard.js', pub.js)

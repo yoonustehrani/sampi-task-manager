@@ -66191,8 +66191,7 @@ window.tinymce = __webpack_require__(/*! tinymce/tinymce */ "./node_modules/tiny
 __webpack_require__(/*! tinymce/icons/default */ "./node_modules/tinymce/icons/default/index.js"); // A theme is also required
 
 
-__webpack_require__(/*! tinymce/themes/silver */ "./node_modules/tinymce/themes/silver/index.js"); // require('tinymce/skins/content/default/')
-// Any plugins you want to use has to be imported
+__webpack_require__(/*! tinymce/themes/silver */ "./node_modules/tinymce/themes/silver/index.js"); // Any plugins you want to use has to be imported
 
 
 __webpack_require__(/*! tinymce/plugins/paste */ "./node_modules/tinymce/plugins/paste/index.js");
@@ -66219,8 +66218,8 @@ __webpack_require__(/*! tinymce/plugins/link */ "./node_modules/tinymce/plugins/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! W:\php\sampies\resources\js\tinymce.js */"./resources/js/tinymce.js");
-module.exports = __webpack_require__(/*! W:\php\sampies\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! I:\projects\task-manager\resources\js\tinymce.js */"./resources/js/tinymce.js");
+module.exports = __webpack_require__(/*! I:\projects\task-manager\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

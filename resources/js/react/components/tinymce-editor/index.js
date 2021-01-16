@@ -13,6 +13,7 @@ export default class TinymcEditor extends React.Component {
                 initialValue=""
                 tinymceScriptSrc="http://localhost/js/tinymce.js"
                 init={{
+                    skin_url: '/css',
                     height: 250,
                     menubar: false, // make true for more options like image insert
                     plugins: [
