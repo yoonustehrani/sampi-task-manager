@@ -66191,7 +66191,8 @@ window.tinymce = __webpack_require__(/*! tinymce/tinymce */ "./node_modules/tiny
 __webpack_require__(/*! tinymce/icons/default */ "./node_modules/tinymce/icons/default/index.js"); // A theme is also required
 
 
-__webpack_require__(/*! tinymce/themes/silver */ "./node_modules/tinymce/themes/silver/index.js"); // Any plugins you want to use has to be imported
+__webpack_require__(/*! tinymce/themes/silver */ "./node_modules/tinymce/themes/silver/index.js"); // import 'tinymce/skins/ui/oxide/content.min.css';
+// Any plugins you want to use has to be imported
 
 
 __webpack_require__(/*! tinymce/plugins/paste */ "./node_modules/tinymce/plugins/paste/index.js");
@@ -66211,14 +66212,26 @@ __webpack_require__(/*! tinymce/plugins/link */ "./node_modules/tinymce/plugins/
 
 /***/ }),
 
+/***/ "./resources/sass/tinytheme.scss":
+/*!***************************************!*\
+  !*** ./resources/sass/tinytheme.scss ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
 /***/ 0:
-/*!*****************************************************************!*\
-  !*** multi ./resources/js/tinymce.js ./resources/sass/app.scss ***!
-  \*****************************************************************/
+/*!*************************************************************************************************!*\
+  !*** multi ./resources/js/tinymce.js ./resources/sass/tinytheme.scss ./resources/sass/app.scss ***!
+  \*************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! I:\projects\task-manager\resources\js\tinymce.js */"./resources/js/tinymce.js");
+__webpack_require__(/*! I:\projects\task-manager\resources\sass\tinytheme.scss */"./resources/sass/tinytheme.scss");
 module.exports = __webpack_require__(/*! I:\projects\task-manager\resources\sass\app.scss */"./resources/sass/app.scss");
 
 

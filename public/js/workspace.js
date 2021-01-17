@@ -30468,10 +30468,14 @@ var TinymcEditor = /*#__PURE__*/function (_React$Component) {
         initialValue: "",
         tinymceScriptSrc: "http://localhost/js/tinymce.js",
         init: {
+          skin: 'oxide',
           skin_url: '/css',
+          content_css: '/css/tinytheme.css',
+          // theme: 'silver',
+          // theme_url: '/css/kir',
           height: 250,
           menubar: false // make true for more options like image insert
-          // plugins: [
+          // plugins: [`
           //     'advlist autolink lists link preview wordcount paste help code',
           // ],
           // toolbar:
