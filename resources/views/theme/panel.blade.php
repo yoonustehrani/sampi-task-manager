@@ -42,8 +42,5 @@
 @endsection
 
 @push('scripts')
-    <script>
-        var APP_PATH = "{{ asset('/') }}";
-    </script>
     @yield('scripts')
 @endpush

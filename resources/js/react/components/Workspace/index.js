@@ -36,14 +36,14 @@ export default class Workspace extends Component {
                             <i className="fas fa-plus animated jello" ref={this.addIconRef}></i>
                             <h5>افزودن کار</h5>
                         </div>
-                        <div className="add-task-section d-none animated zoomIn p-3" ref={this.addTaskRef}>
-                            <div className="input-group col-12 col-md-6 mb-0 mb-md-0">
+                        <div className="add-task-section d-none animated zoomIn p-1 pt-2 pb-2 p-md-3" ref={this.addTaskRef}>
+                            <div className="input-group col-12 col-md-6 mb-0 mb-md-0 pl-2 pr-2 pr-lg-3 pl-lg-3">
                                 <div className="input-group-prepend">
                                     <span className="input-group-text">عنوان</span>
                                 </div>
                                 <input type="text" className="form-control" placeholder="عنوان کار را در این قسمت وارد کنید"/>
                             </div>
-                            <div className="input-group col-12 col-md-6 mb-0 mb-md-0 input-group-single-line">
+                            <div className="input-group col-12 col-md-6 mb-0 mb-md-0 pl-2 pr-2 pr-lg-3 pl-lg-3 input-group-single-line">
                                 <div className="input-group-prepend">
                                     <span className="input-group-text">اولویت</span>
                                 </div>
@@ -54,13 +54,13 @@ export default class Workspace extends Component {
                                     <option value="3" icon_name="fas fa-hourglass">غیر ضروری و غیر مهم</option>
                                 </select>
                             </div>
-                            <div className="input-group col-12 col-md-6 mb-0 mb-md-0">
+                            <div className="input-group col-12 col-md-6 mb-0 mb-md-0 pl-2 pr-2 pr-lg-3 pl-lg-3">
                                 <div className="input-group-prepend">
                                     <span className="input-group-text">دسته بندی</span>
                                 </div>
                                 <input type="text" className="form-control" placeholder="این کار در چه گروهی قرار میگیرد؟" />
                             </div>
-                            <div className="input-group col-12 col-md-6 mb-0 mb-md-0 input-group-single-line">
+                            <div className="input-group col-12 col-md-6 mb-0 mb-md-0 pl-2 pr-2 pr-lg-3 pl-lg-3 input-group-single-line">
                                 <div className="input-group-prepend">
                                     <span className="input-group-text">مسئولین</span>
                                 </div>
@@ -76,7 +76,7 @@ export default class Workspace extends Component {
                                     <option value="2" img_address={APP_PATH + "images/yosef.jpg"}>7باران نخعی</option>
                                 </select>
                             </div>
-                            <div className="input-group col-12 input-group-single-line">
+                            <div className="input-group col-12 input-group-single-line pl-2 pr-2 pr-lg-3 pl-lg-3">
                                 {/* <div className="input-group-prepend">
                                     <span className="input-group-text">توضیحات</span>
                                 </div> */}

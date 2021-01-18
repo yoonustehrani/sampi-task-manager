@@ -76,7 +76,6 @@
 @section('scripts')
     <script src="{{ asset('js/workspace.js') }}"></script>   
     <script>
-        var APP_PATH = "{{ asset('/') }}";
         let formatPriorityOption = (option) => {
             if (option.element) {
                 let icon_name = option.element.attributes.icon_name.nodeValue

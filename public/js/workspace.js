@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -30193,10 +30193,10 @@ var Workspace = /*#__PURE__*/function (_Component) {
         className: "fas fa-plus animated jello",
         ref: this.addIconRef
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, "\u0627\u0641\u0632\u0648\u062F\u0646 \u06A9\u0627\u0631")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "add-task-section d-none animated zoomIn p-3",
+        className: "add-task-section d-none animated zoomIn p-1 pt-2 pb-2 p-md-3",
         ref: this.addTaskRef
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "input-group col-12 col-md-6 mb-0 mb-md-0"
+        className: "input-group col-12 col-md-6 mb-0 mb-md-0 pl-2 pr-2 pr-lg-3 pl-lg-3"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "input-group-prepend"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
@@ -30206,7 +30206,7 @@ var Workspace = /*#__PURE__*/function (_Component) {
         className: "form-control",
         placeholder: "\u0639\u0646\u0648\u0627\u0646 \u06A9\u0627\u0631 \u0631\u0627 \u062F\u0631 \u0627\u06CC\u0646 \u0642\u0633\u0645\u062A \u0648\u0627\u0631\u062F \u06A9\u0646\u06CC\u062F"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "input-group col-12 col-md-6 mb-0 mb-md-0 input-group-single-line"
+        className: "input-group col-12 col-md-6 mb-0 mb-md-0 pl-2 pr-2 pr-lg-3 pl-lg-3 input-group-single-line"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "input-group-prepend"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
@@ -30227,7 +30227,7 @@ var Workspace = /*#__PURE__*/function (_Component) {
         value: "3",
         icon_name: "fas fa-hourglass"
       }, "\u063A\u06CC\u0631 \u0636\u0631\u0648\u0631\u06CC \u0648 \u063A\u06CC\u0631 \u0645\u0647\u0645"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "input-group col-12 col-md-6 mb-0 mb-md-0"
+        className: "input-group col-12 col-md-6 mb-0 mb-md-0 pl-2 pr-2 pr-lg-3 pl-lg-3"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "input-group-prepend"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
@@ -30237,7 +30237,7 @@ var Workspace = /*#__PURE__*/function (_Component) {
         className: "form-control",
         placeholder: "\u0627\u06CC\u0646 \u06A9\u0627\u0631 \u062F\u0631 \u0686\u0647 \u06AF\u0631\u0648\u0647\u06CC \u0642\u0631\u0627\u0631 \u0645\u06CC\u06AF\u06CC\u0631\u062F\u061F"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "input-group col-12 col-md-6 mb-0 mb-md-0 input-group-single-line"
+        className: "input-group col-12 col-md-6 mb-0 mb-md-0 pl-2 pr-2 pr-lg-3 pl-lg-3 input-group-single-line"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "input-group-prepend"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
@@ -30274,7 +30274,7 @@ var Workspace = /*#__PURE__*/function (_Component) {
         value: "2",
         img_address: APP_PATH + "images/yosef.jpg"
       }, "7\u0628\u0627\u0631\u0627\u0646 \u0646\u062E\u0639\u06CC"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "input-group col-12 input-group-single-line"
+        className: "input-group col-12 input-group-single-line pl-2 pr-2 pr-lg-3 pl-lg-3"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "tinymc-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_tinymce_editor__WEBPACK_IMPORTED_MODULE_1__["default"], {
@@ -30466,23 +30466,46 @@ var TinymcEditor = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_tinymce_tinymce_react__WEBPACK_IMPORTED_MODULE_1__["Editor"], {
         initialValue: "",
-        tinymceScriptSrc: "http://localhost/js/tinymce.js",
+        tinymceScriptSrc: "".concat(APP_PATH, "js/tinymce/tinymce.js"),
         init: {
           skin: 'oxide',
           skin_url: '/css',
           content_css: '/css/tinytheme.css',
-          // theme: 'silver',
-          // theme_url: '/css/kir',
-          height: 250,
-          menubar: false // make true for more options like image insert
-          // plugins: [`
-          //     'advlist autolink lists link preview wordcount paste help code',
-          // ],
-          // toolbar:
-          // 'undo redo | formatselect | bold italic backcolor | \
-          // alignleft aligncenter alignright alignjustify | \
-          // bullist numlist outdent indent | removeformat | code | help'
-
+          height: 350,
+          menubar: false,
+          branding: false,
+          placeholder: "توضیحات تکمیلی کار را در این قسمت وارد نمایید",
+          directionality: 'rtl',
+          language: "fa",
+          language_url: APP_PATH + "js/tinymce/langs/fa.js",
+          plugins: ['advlist autolink lists link preview wordcount paste help directionality table'],
+          fontsize_formats: '8pt 10pt 12pt 14pt 16pt 18pt 24pt 36pt 48pt',
+          toolbar: [{
+            name: 'history',
+            items: ['undo', 'redo']
+          }, {
+            name: 'font',
+            items: ['fontselect', 'fontsizeselect']
+          }, {
+            name: 'formatting',
+            items: ['bold', 'italic', 'forecolor', 'backcolor']
+          }, {
+            name: 'alignment',
+            items: ['alignleft', 'aligncenter', 'alignright', 'alignjustify']
+          }, {
+            name: 'direction',
+            items: ['ltr', 'rtl']
+          }, {
+            name: 'indentation',
+            items: ['outdent', 'indent']
+          }, {
+            name: 'table',
+            items: ['table']
+          }, {
+            name: 'other',
+            items: ['removeformat', 'help']
+          }],
+          toolbar_mode: 'sliding'
         },
         onEditorChange: this.handleEditorChange
       });
@@ -30521,7 +30544,7 @@ if (target) {
 
 /***/ }),
 
-/***/ 2:
+/***/ 1:
 /*!***********************************************!*\
   !*** multi ./resources/js/react/workspace.js ***!
   \***********************************************/

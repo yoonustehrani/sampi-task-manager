@@ -1,7 +1,5 @@
 {
-    "/js/dashboard.js": "/js/dashboard.js",
-    "/js/tinymce.js": "/js/tinymce.js",
-    "/css/tinytheme.css": "/css/tinytheme.css",
+    "/js/tinymce/tinymce.js": "/js/tinymce/tinymce.js",
     "/css/app.css": "/css/app.css",
     "/js/workspace.js": "/js/workspace.js"
 }
