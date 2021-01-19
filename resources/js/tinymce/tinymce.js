@@ -10,3 +10,11 @@ require('tinymce/themes/silver');
 // Any plugins you want to use has to be imported
 require('tinymce/plugins/paste');
 require('tinymce/plugins/link');
+require('tinymce/plugins/advlist')
+require('tinymce/plugins/autolink')
+require('tinymce/plugins/lists')
+require('tinymce/plugins/preview')
+require('tinymce/plugins/wordcount')
+require('tinymce/plugins/help')
+require('tinymce/plugins/directionality')
+require('tinymce/plugins/table')
