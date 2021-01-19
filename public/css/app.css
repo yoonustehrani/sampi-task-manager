@@ -11071,6 +11071,7 @@ div.result-container div.filter-box div.filter-option > span {
   text-align: center;
   margin-left: 6px;
   font-size: 15px;
+  width: 100%;
 }
 
 div.result-container div.filter-box div.filter-option select option {

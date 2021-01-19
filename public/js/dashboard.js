@@ -55155,25 +55155,25 @@ var Dashboard = /*#__PURE__*/function (_Component) {
         ref: this.tabTitlesRef[0],
         onClick: this.changeTab.bind(this, 0)
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-project-diagram"
+        className: "fas fa-project-diagram d-block d-md-inline"
       }), "\u067E\u0631\u0648\u0698\u0647 \u0647\u0627"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         className: "tab-link",
         ref: this.tabTitlesRef[1],
         onClick: this.changeTab.bind(this, 1)
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-tasks"
+        className: "fas fa-tasks d-block d-md-inline"
       }), "\u0648\u0638\u0627\u06CC\u0641"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         className: "tab-link",
         ref: this.tabTitlesRef[2],
         onClick: this.changeTab.bind(this, 2)
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-comment-dots"
+        className: "fas fa-comment-dots d-block d-md-inline"
       }), "\u062F\u0631\u062E\u0648\u0627\u0633\u062A \u0647\u0627"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         className: "tab-link",
         ref: this.tabTitlesRef[3],
         onClick: this.changeTab.bind(this, 3)
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-clipboard-list"
+        className: "fas fa-clipboard-list d-block d-md-inline"
       }), "\u0646\u06CC\u0627\u0632 \u0647\u0627")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "result-container col-12 mt-3 active",
         ref: this.tabResultsRef[0]
@@ -55252,11 +55252,11 @@ var Dashboard = /*#__PURE__*/function (_Component) {
             className: "fas fa-user mr-1"
           })))));
         })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "\u06A9\u0644 : ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-          className: "badge badge-primary ml-4"
+          className: "badge badge-primary ml-md-4 d-block d-md-inline"
         }, tasks_count), "\u0627\u062A\u0645\u0627\u0645 : ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-          className: "badge badge-success ml-4"
+          className: "badge badge-success ml-md-4 d-block d-md-inline"
         }, finished_tasks_count), "\u0628\u0627\u0642\u06CC \u0645\u0627\u0646\u062F\u0647 : ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-          className: "badge badge-danger ml-4"
+          className: "badge badge-danger ml-md-4 d-block d-md-inline"
         }, tasks_count - finished_tasks_count)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, demands_left_count));
       }) : null)), workspaces.length <= 0 && !isGetting && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "text-center text-secondary"
@@ -55269,7 +55269,7 @@ var Dashboard = /*#__PURE__*/function (_Component) {
         className: "result-container col-12 mt-3",
         ref: this.tabResultsRef[1]
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "filter-box mt-2 mb-2 p-3 col-12 animated fadeIn"
+        className: "filter-box mt-2 mb-2 p-2 p-md-3 col-12 animated fadeIn"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "filter-option col-12 col-md-6 col-lg-3 mb-3 mb-lg-0 text-center"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u062C\u0633\u062A\u062C\u0648 \u062F\u0631: "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {

@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -56432,7 +56432,7 @@ var Workspace = /*#__PURE__*/function (_Component) {
           roles = _this$state.roles;
       var taskRoute = this.props.taskRoute;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "float-right col-12"
+        className: "float-right col-12 pr-0 pl-0 pr-md-3 pl-md-3"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "workspace-title-section col-12"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
@@ -56448,7 +56448,7 @@ var Workspace = /*#__PURE__*/function (_Component) {
         className: "fas fa-plus",
         ref: this.addIconRef
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, "\u0627\u0641\u0632\u0648\u062F\u0646 \u06A9\u0627\u0631")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "add-task-section d-none animated fadeIn p-1 pt-2 pb-2 p-md-3",
+        className: "add-task-section d-none col-12 p-1 pt-2 pb-2 p-md-3 animated fadeIn",
         ref: this.addTaskRef
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "input-group col-12 col-md-6 mb-0 mb-md-0 pl-2 pr-2 pr-lg-3 pl-lg-3"
@@ -56537,7 +56537,7 @@ var Workspace = /*#__PURE__*/function (_Component) {
       }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "result-container col-12 mt-3 active"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "filter-box mt-2 mb-2 p-3 col-12"
+        className: "filter-box mt-2 mb-2 p-2 p-md-3 col-12"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "filter-option col-12 col-md-6 col-lg-3 mb-3 mb-lg-0 text-center"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u062C\u0633\u062A\u062C\u0648 \u062F\u0631: "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
@@ -56599,7 +56599,7 @@ var Workspace = /*#__PURE__*/function (_Component) {
         className: "btn btn-outline-info",
         onClick: this.handleMore.bind(this, "tasks", true)
       }, "\u0645\u0631\u062A\u0628 \u0633\u0627\u0632\u06CC"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-12 float-right"
+        className: "col-12 float-right pr-0 pl-0 pr-md-3 pl-md-3"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
         className: "table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", {
@@ -56861,7 +56861,7 @@ if (target) {
 
 /***/ }),
 
-/***/ 1:
+/***/ 2:
 /*!***********************************************!*\
   !*** multi ./resources/js/react/workspace.js ***!
   \***********************************************/

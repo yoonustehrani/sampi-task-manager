@@ -6,7 +6,7 @@
 
 @section('page-content')
     <div class="col-md-10 offset-md-1 col-12 animated flipInX">
-        <div class="col-12 float-right mb-3 animated flipInY">
+        <div class="col-12 float-right mb-3 pr-0 pl-0 pr-md-3 pl-md-3 animated flipInY">
             <img class="float-right" src="{{ asset($workspace->avatar_pic) }}" style="height: 50px; widht: 50px;" alt="">
             <h4 class="text-right mt-3">
                 {{ $workspace->title }}
@@ -19,7 +19,7 @@
             <span><i class="far fa-comments ml-1 animated heartBeat delay-2s"></i><span class="number ml-1">45</span>خواسته جاری</span>
             <span><i class="far fa-check-circle ml-1 animated heartBeat delay-2s"></i><span class="number ml-1">24</span>خواسته انجام شده</span>
         </div>
-        <div class="col-12 float-right">
+        <div class="col-12 float-right pr-0 pl-0 pr-md-3 pl-md-3">
             <div class="workspace-title-section col-12">
                 <i class="fas fa-user-secret"></i>
                 <h4 class="">اعضا :</h4>      

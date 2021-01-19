@@ -204,19 +204,19 @@ export default class Dashboard extends Component {
                 <div className="col-12 dashboard-tab-container">
                     <nav className="tab-title-bar text-center">
                         <a className="tab-link active" ref={this.tabTitlesRef[0]} onClick={this.changeTab.bind(this, 0)}>
-                            <i className="fas fa-project-diagram"></i>
+                            <i className="fas fa-project-diagram d-block d-md-inline"></i>
                             پروژه ها
                         </a>
                         <a className="tab-link" ref={this.tabTitlesRef[1]} onClick={this.changeTab.bind(this, 1)}>
-                            <i className="fas fa-tasks"></i>
+                            <i className="fas fa-tasks d-block d-md-inline"></i>
                             وظایف
                         </a>
                         <a className="tab-link" ref={this.tabTitlesRef[2]} onClick={this.changeTab.bind(this, 2)}>
-                            <i className="fas fa-comment-dots"></i>
+                            <i className="fas fa-comment-dots d-block d-md-inline"></i>
                             درخواست ها
                         </a>
                         <a className="tab-link" ref={this.tabTitlesRef[3]} onClick={this.changeTab.bind(this, 3)}>
-                            <i className="fas fa-clipboard-list"></i>
+                            <i className="fas fa-clipboard-list d-block d-md-inline"></i>
                             نیاز ها
                         </a>
                     </nav>
@@ -284,9 +284,9 @@ export default class Dashboard extends Component {
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    کل : <span className="badge badge-primary ml-4">{ tasks_count }</span>
-                                                    اتمام : <span className="badge badge-success ml-4">{ finished_tasks_count }</span>
-                                                    باقی مانده : <span className="badge badge-danger ml-4">{ tasks_count - finished_tasks_count }</span>
+                                                    کل : <span className="badge badge-primary ml-md-4 d-block d-md-inline">{ tasks_count }</span>
+                                                    اتمام : <span className="badge badge-success ml-md-4 d-block d-md-inline">{ finished_tasks_count }</span>
+                                                    باقی مانده : <span className="badge badge-danger ml-md-4 d-block d-md-inline">{ tasks_count - finished_tasks_count }</span>
                                                 </td>
                                                 <td>
                                                     { demands_left_count }
@@ -310,7 +310,7 @@ export default class Dashboard extends Component {
                     </div>
 
                     <div className="result-container col-12 mt-3" ref={this.tabResultsRef[1]}>
-                        <div className="filter-box mt-2 mb-2 p-3 col-12 animated fadeIn">
+                        <div className="filter-box mt-2 mb-2 p-2 p-md-3 col-12 animated fadeIn">
                             <div className="filter-option col-12 col-md-6 col-lg-3 mb-3 mb-lg-0 text-center">
                                 <span>جستجو در: </span>
                                 <select id="mixed_tasks_relation_select" defaultValue="all">

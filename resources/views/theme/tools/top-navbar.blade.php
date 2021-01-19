@@ -21,7 +21,7 @@
             <i class="fas fa-expand-arrows-alt fa-compress"></i>
         </button>
         <button class="btn btn-secondary float-right vertical-centerlize collapser-btn">
-            <i class="fas fa-angle-double-right"></i>
+            <i class="fas fa-angle-double-left"></i>
         </button>
     </div>
 </div>

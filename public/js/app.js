@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -43488,8 +43488,13 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /*!**********************************!*\
   !*** ./resources/js/userarea.js ***!
   \**********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_0__);
 
 $('#logout-dropdown, #toggle-logout').on('click', function (e) {
   e.preventDefault();
@@ -43545,22 +43550,29 @@ $('.scr-controller').click(function () {
   $(this).attr('data-event', 'max');
   return closeFullscreen();
 });
-$('.collapser-btn').click(function () {
+
+function toggleCollapser() {
   $('.collapser-btn > i').toggleClass('fa-angle-double-right fa-angle-double-left');
   $("#right-menu").toggleClass('collapsed');
   $("#mainpage").toggleClass('col-lg-10 col-md-9');
-});
+}
+
+$('.collapser-btn').click(toggleCollapser);
+
+if ($(window).width() > 576) {
+  toggleCollapser();
+}
 
 /***/ }),
 
-/***/ 2:
+/***/ 1:
 /*!***********************************!*\
   !*** multi ./resources/js/app.js ***!
   \***********************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! W:\php\sampies\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! I:\projects\task-manager\resources\js\app.js */"./resources/js/app.js");
 
 
 /***/ })
