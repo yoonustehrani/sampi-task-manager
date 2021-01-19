@@ -16,6 +16,7 @@ class RoleController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny', Role::class);
         $roles = Role::withCount(['permissions', 'users'])->get();
         return view('theme.pages.roles.index', compact('roles'));
     }
@@ -27,6 +28,7 @@ class RoleController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Role::class);
         return view('theme.pages.roles.create');
     }
 
@@ -38,6 +40,7 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create', Role::class);
         try {
             \DB::beginTransaction();
             $role = new Role();
@@ -62,6 +65,7 @@ class RoleController extends Controller
      */
     public function show($role)
     {
+        $this->authorize('view', Role::class);
         $role = Role::with(['permissions', 'users'])->findOrFail($role);
     }
 
@@ -74,6 +78,7 @@ class RoleController extends Controller
     public function edit($role)
     {
         $role = Role::findOrFail($role);
+        $this->authorize('update', $role);
         return view('theme.pages.roles.edit', compact('role'));
     }
 
@@ -87,6 +92,7 @@ class RoleController extends Controller
     public function update(Request $request, $role)
     {
         $role = Role::findOrFail($role);
+        $this->authorize('update', $role);
         try {
             \DB::beginTransaction();
             $role->name = $request->name;
@@ -109,9 +115,10 @@ class RoleController extends Controller
      * @param  int  $role
      * @return \Illuminate\Http\Response
      */
-    public function destroy($role)
+    public function destroy(Role $role)
     {
-        Role::findOrFail($role)->delete();
+        $this->authorize('delete', $role);
+        $role->delete();
         return back();
     }
 }

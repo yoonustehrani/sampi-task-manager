@@ -10,6 +10,12 @@ class RolePolicy
 {
     use HandlesAuthorization;
 
+    public function before($user, $ability)
+    {
+        if ($user->hasRole('developer')) {
+            return true;
+        }
+    }
     /**
      * Determine whether the user can view any models.
      *
@@ -18,7 +24,7 @@ class RolePolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return $user->hasPermission('can_view_any_roles');
     }
 
     /**
@@ -30,7 +36,7 @@ class RolePolicy
      */
     public function view(User $user, Role $role)
     {
-        //
+        return $user->hasPermission('can_view_roles');
     }
 
     /**
@@ -41,7 +47,7 @@ class RolePolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->hasPermission('can_create_roles');
     }
 
     /**
@@ -53,7 +59,16 @@ class RolePolicy
      */
     public function update(User $user, Role $role)
     {
-        //
+        if ($user->hasPermission('can_update_roles')) {
+            $permer = $role->permissions->filter(function($permission) {
+                return $permission->key == 'can_update_roles';
+            });
+            if ($permer->count() > 0) {
+                return false;
+            }
+            return ! $user->hasRole($role->name);
+        }
+        return false;
     }
 
     /**
@@ -65,7 +80,16 @@ class RolePolicy
      */
     public function delete(User $user, Role $role)
     {
-        //
+        if ($user->hasPermission('can_delete_roles')) {
+            $permer = $role->permissions->filter(function($permission) {
+                return $permission->key == 'can_delete_roles';
+            });
+            if ($permer->count() > 0) {
+                return false;
+            }
+            return ! $user->hasRole($role->name);
+        }
+        return false;
     }
 
     /**

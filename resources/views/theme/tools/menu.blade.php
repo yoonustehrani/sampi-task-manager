@@ -14,18 +14,26 @@
                 <i class="opener fa fa-angle-left"></i>
             </p>
             <ul>
+                @can('viewAny', \App\User::class)
                 <li class="sub">
                     <a href="{{ route('task-manager.users.index') }}">کاربران <i class="fas fa-users"></i></a>
                 </li>
+                @endcan
+                @can('viewAny', \App\Role::class)
                 <li class="sub">
                     <a href="{{ route('task-manager.roles.index') }}">سمت ها <i class="fas fa-user-tag"></i></a>
                 </li>
+                @endcan
+                {{-- @can('viewAny', \App\Permission::class)
                 <li class="sub">
                     <a href="{{ route('task-manager.permissions.index') }}">مجوز ها <i class="far fa-address-card"></i></a>
                 </li>
+                @endcan
+                @can('viewAny', \App\Proiority::class)
                 <li class="sub">
                     <a href="{{ route('task-manager.proiorities.index') }}">اولویت ها <i class="fas fa-list-ol"></i></a>
                 </li>
+                @endcan --}}
             </ul>
         </li>
         <li class="has_sub">

@@ -10,6 +10,13 @@ class TaskPolicy
 {
     use HandlesAuthorization;
 
+    public function before($user, $ability)
+    {
+        if ($user->hasRole('developer')) {
+            return true;
+        }
+    }
+
     /**
      * Determine whether the user can view any models.
      *
@@ -18,7 +25,7 @@ class TaskPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        
     }
 
     /**
