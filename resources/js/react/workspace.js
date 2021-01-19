@@ -11,7 +11,7 @@ const workspaceApi = target.getAttribute("workspace_api")
 if (target) {
     ReactDOM.render(
         <Workspace 
-            addTaskApi = {addTaskApi}
+            add_task_api = {addTaskApi}
             list_tasks_api = {listTasksApi}
             taskRoute = {taskRoute}
             workspace_api = {workspaceApi}

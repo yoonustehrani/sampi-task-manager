@@ -54828,6 +54828,45 @@ module.exports = function(module) {
 
 /***/ }),
 
+/***/ "./resources/js/helpers/index.js":
+/*!***************************************!*\
+  !*** ./resources/js/helpers/index.js ***!
+  \***************************************/
+/*! exports provided: setPriority, redirectTo */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setPriority", function() { return setPriority; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "redirectTo", function() { return redirectTo; });
+var setPriority = function setPriority(id) {
+  switch (id) {
+    case 1:
+      return 'ضروری و مهم';
+      break;
+
+    case 2:
+      return 'ضروری و غیر مهم';
+      break;
+
+    case 3:
+      return 'غیر ضروری و مهم';
+      break;
+
+    case 4:
+      return 'غیر ضروری و غیر مهم';
+      break;
+
+    default:
+      break;
+  }
+};
+var redirectTo = function redirectTo(url) {
+  window.location.href = url;
+};
+
+/***/ }),
+
 /***/ "./resources/js/react/components/Dashboard/index.js":
 /*!**********************************************************!*\
   !*** ./resources/js/react/components/Dashboard/index.js ***!
@@ -54848,6 +54887,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_activity__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_activity__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var react_activity_dist_react_activity_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-activity/dist/react-activity.css */ "./node_modules/react-activity/dist/react-activity.css");
 /* harmony import */ var react_activity_dist_react_activity_css__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_activity_dist_react_activity_css__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../helpers */ "./resources/js/helpers/index.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -54876,6 +54916,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 moment__WEBPACK_IMPORTED_MODULE_2___default.a.locale('fa');
+
 
 
 
@@ -54947,33 +54988,6 @@ var Dashboard = /*#__PURE__*/function (_Component) {
           });
         });
       }
-    });
-
-    _defineProperty(_assertThisInitialized(_this), "setPriority", function (id) {
-      switch (id) {
-        case 1:
-          return 'ضروری و مهم';
-          break;
-
-        case 2:
-          return 'ضروری و غیر مهم';
-          break;
-
-        case 3:
-          return 'غیر ضروری و مهم';
-          break;
-
-        case 4:
-          return 'غیر ضروری و غیر مهم';
-          break;
-
-        default:
-          break;
-      }
-    });
-
-    _defineProperty(_assertThisInitialized(_this), "redirectTo", function (url) {
-      window.location.href = url;
     });
 
     _this.tabResultsRef = [];
@@ -55056,8 +55070,6 @@ var Dashboard = /*#__PURE__*/function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
-
       var _this$state = this.state,
           mixedTasks = _this$state.mixedTasks,
           statistics = _this$state.statistics,
@@ -55203,7 +55215,9 @@ var Dashboard = /*#__PURE__*/function (_Component) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
           className: "animated fadeIn",
           key: i,
-          onClick: _this3.redirectTo.bind(_this3, workspace_url)
+          onClick: function onClick() {
+            return Object(_helpers__WEBPACK_IMPORTED_MODULE_5__["redirectTo"])(workspace_url);
+          }
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
           scope: "row"
         }, i + 1), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
@@ -55269,7 +55283,7 @@ var Dashboard = /*#__PURE__*/function (_Component) {
         className: "result-container col-12 mt-3",
         ref: this.tabResultsRef[1]
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "filter-box mt-2 mb-2 p-2 p-md-3 col-12 animated fadeIn"
+        className: "filter-box mt-2 mb-2 p-3 col-12 animated fadeIn"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "filter-option col-12 col-md-6 col-lg-3 mb-3 mb-lg-0 text-center"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u062C\u0633\u062A\u062C\u0648 \u062F\u0631: "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
@@ -55352,7 +55366,9 @@ var Dashboard = /*#__PURE__*/function (_Component) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
           className: "animated fadeIn",
           key: i,
-          onClick: _this3.redirectTo.bind(_this3, task_route.replace("taskId", id))
+          onClick: function onClick() {
+            return Object(_helpers__WEBPACK_IMPORTED_MODULE_5__["redirectTo"])(task_route.replace("taskId", id));
+          }
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
           scope: "row"
         }, i + 1), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
@@ -55362,7 +55378,7 @@ var Dashboard = /*#__PURE__*/function (_Component) {
           src: APP_PATH + workspace.avatar_pic
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
           href: workspace_route.replace('workspaceId', workspace_id)
-        }, workspace.title)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, group), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, _this3.setPriority(priority_id)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, due_to !== null ? moment__WEBPACK_IMPORTED_MODULE_2___default()(due_to).fromNow() : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        }, workspace.title)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, group), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, Object(_helpers__WEBPACK_IMPORTED_MODULE_5__["setPriority"])(priority_id)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, due_to !== null ? moment__WEBPACK_IMPORTED_MODULE_2___default()(due_to).fromNow() : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-calendar-minus  fa-3x"
         })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, finished_at === null ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-times-circle fa-3x"

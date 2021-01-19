@@ -5,6 +5,8 @@ import moment from 'moment'
 moment.locale('fa')
 import { Squares  } from 'react-activity'
 import 'react-activity/dist/react-activity.css'
+import Swal from 'sweetalert2'
+import { setPriority, redirectTo } from '../../../helpers'
 
 export default class Workspace extends Component {
     constructor(props) {
@@ -12,7 +14,7 @@ export default class Workspace extends Component {
         this.addTaskRef = React.createRef()
         this.addIconRef = React.createRef()
         this.state = {
-            description: "",
+            new_task_description: "",
             isGetting: true,
             tasks: {
                 data: [],
@@ -30,7 +32,7 @@ export default class Workspace extends Component {
 
     onDescriptionChange = (content) => {
         this.setState({
-            description: content
+            new_task_description: content
         })
     }
 
@@ -63,27 +65,70 @@ export default class Workspace extends Component {
         }
     }
 
-    setPriority = (id) => {
-        switch(id) {
-            case 1:
-                return 'ضروری و مهم'
-                break
-            case 2:
-                return 'ضروری و غیر مهم'
-                break
-            case 3:
-                return 'غیر ضروری و مهم'
-                break
-            case 4:
-                return 'غیر ضروری و غیر مهم'
-                break
-            default:
-                break
+    addTask = () => {
+        let { add_task_api } = this.props, { new_task_description, workspace_users } = this.state
+        console.log(add_task_api)
+        let title = $("#new-task-title").val(), group = $("#new-task-group").val(), priority = parseInt($("#new-task-priority").val()), users = $("#new-task-members").val(), description = new_task_description
+        if (title.length === 0 || group.length === 0 || priority === null || users.length <= 0) {
+            Swal.fire({
+                title: 'خطا',
+                text: "فیلد های مورد نیاز به درستی پر نشدند",
+                icon: 'error',
+                confirmButtonText: 'بستن',
+                customClass: {
+                    content: 'persian-text'
+                }
+            })
+        } else {
+            Axios.post(add_task_api, {
+                title: title,
+                priority: priority,
+                group: group,
+                users: users,
+                description: new_task_description
+            }).then(res => {
+                this.setState(prevState => {
+                    let new_task_users = users.map((userId, i) => {
+                        return ({
+                            id: userId,
+                            fullname: workspace_users[userId].fullname,
+                            name: workspace_users[userId].name,
+                        })
+                    })
+                    return ({
+                        tasks: Object.assign({}, prevState.tasks, {
+                            data: [{...res.data, users: new_task_users, finished_at: null, finisher_id: null}, ...prevState.tasks.data]
+                        })
+                    })
+                })
+                Swal.fire({
+                    icon: 'success',
+                    title: "موفقیت",
+                    text: "کار شما به لیست افزوده شد",
+                    showConfirmButton: true,
+                    customClass: {
+                        content: "persian-text"
+                    }
+                })
+            }).catch(err => {
+                let {status, data} = err.response
+                if (status === 422) {
+                    let {errors} = data, err_html = ""
+                    Object.entries(errors).map(([param, message]) => {
+                        err_html += `<p class="float-right text-center col-12">${message}</p><br>`
+                    })
+                    Swal.fire({
+                        title: 'خطا',
+                        text: err_htlm,
+                        icon: 'error',
+                        confirmButtonText: 'تایید',
+                        customClass: {
+                            content: 'persian-text'
+                        }
+                    })
+                }
+            })
         }
-    }
-
-    redirectTo = (url) => {
-        window.location.href = url
     }
 
     componentDidMount() {
@@ -94,8 +139,13 @@ export default class Workspace extends Component {
             this.setState({workspace: data}, () => {
                 this.state.workspace.users.map((user, i) => {
                     this.setState(prevState => ({
-                        roles: Object.assign({}, prevState.roles, {
-                            [user.id]: user.pivot.is_admin // we have a clear object in our states that tells us which users are admin and which are not
+                        workspace_users: Object.assign({}, prevState.workspace_users, {
+                            [user.id]: {
+                                is_admin: user.pivot.is_admin,
+                                fullname: user.fullname,
+                                name: user.name,
+                                avatar_pic: user.avatar_pic
+                            } // we have a clear object in our states that tells us all the informations that we need about users
                         })
                     }))
                 })
@@ -105,7 +155,7 @@ export default class Workspace extends Component {
     
 
     render() {
-        let { isGetting, tasks, roles } = this.state
+        let { isGetting, tasks, workspace_users, workspace } = this.state
         let { taskRoute } = this.props
 
         return (
@@ -125,7 +175,7 @@ export default class Workspace extends Component {
                                 <div className="input-group-prepend">
                                     <span className="input-group-text">عنوان</span>
                                 </div>
-                                <input type="text" className="form-control" placeholder="عنوان کار را در این قسمت وارد کنید" />
+                                <input type="text" id="new-task-title" className="form-control" placeholder="عنوان کار را در این قسمت وارد کنید" />
                             </div>
                             <div className="input-group col-12 col-md-6 mb-0 mb-md-0 pl-2 pr-2 pr-lg-3 pl-lg-3 input-group-single-line">
                                 <div className="input-group-prepend">
@@ -142,22 +192,16 @@ export default class Workspace extends Component {
                                 <div className="input-group-prepend">
                                     <span className="input-group-text">دسته بندی</span>
                                 </div>
-                                <input type="text" className="form-control" placeholder="این کار در چه گروهی قرار میگیرد؟" />
+                                <input type="text" id="new-task-group" className="form-control" placeholder="این کار در چه گروهی قرار میگیرد؟" />
                             </div>
                             <div className="input-group col-12 col-md-6 mb-0 mb-md-0 pl-2 pr-2 pr-lg-3 pl-lg-3 input-group-single-line">
                                 <div className="input-group-prepend">
                                     <span className="input-group-text">مسئولین</span>
                                 </div>
                                 <select id="new-task-members" className="form-control text-right" multiple>
-                                    <option value="0" img_address={APP_PATH + "images/yosef.jpg"}>امیررضا منصوریان</option>
-                                    <option value="1" img_address={APP_PATH + "images/yosef.jpg"}>یونس طهرانیم</option>
-                                    <option value="2" img_address={APP_PATH + "images/yosef.jpg"}>باران نخعی</option>
-                                    <option value="2" img_address={APP_PATH + "images/yosef.jpg"}>2باران نخعی</option>
-                                    <option value="2" img_address={APP_PATH + "images/yosef.jpg"}>3باران نخعی</option>
-                                    <option value="2" img_address={APP_PATH + "images/yosef.jpg"}>4باران نخعی</option>
-                                    <option value="2" img_address={APP_PATH + "images/yosef.jpg"}>5باران نخعی</option>
-                                    <option value="2" img_address={APP_PATH + "images/yosef.jpg"}>6باران نخعی</option>
-                                    <option value="2" img_address={APP_PATH + "images/yosef.jpg"}>7باران نخعی</option>
+                                    { workspace ? workspace.users.map((user, i) => (
+                                        <option key={i} value={user.id} img_address={APP_PATH + user.avatar_pic}>{user.fullname}</option>
+                                    )) : null }
                                 </select>
                             </div>
                             <div className="input-group col-12 input-group-single-line pl-2 pr-2 pr-lg-3 pl-lg-3">
@@ -168,10 +212,13 @@ export default class Workspace extends Component {
                                     <TinymcEditor changeContent={this.onDescriptionChange} />
                                 </div>
                             </div>
+                            <div className="text-center mt-2">
+                                <button type="button" className="btn btn-outline-primary" onClick={this.addTask}>افزودن <i className="fas fa-check"></i></button>
+                            </div>
                         </div>
                     </div>
                     <div className="result-container col-12 mt-3 active">
-                        <div className="filter-box mt-2 mb-2 p-2 p-md-3 col-12">
+                        <div className="filter-box mt-2 mb-2 p-3 col-12">
                             <div className="filter-option col-12 col-md-6 col-lg-3 mb-3 mb-lg-0 text-center">
                                 <span>جستجو در: </span>
                                 <select id="tasks_relation_select" defaultValue="all">
@@ -220,11 +267,11 @@ export default class Workspace extends Component {
                                         tasks.data.length > 0 ? tasks.data.map((task, i) => {
                                             let { id, title, group, finished_at, priority_id, due_to, workspace, workspace_id, users } = task
                                             return (
-                                                <tr key={i} onClick={this.redirectTo.bind(this, taskRoute.replace("taskId", id))} className="animated fadeIn">
+                                                <tr key={i} onClick={() => redirectTo(taskRoute.replace("taskId", id))} className="animated fadeIn">
                                                     <th scope="row">{ i + 1 }</th>
                                                     <td>{title}</td>
                                                     <td>{group}</td>
-                                                    <td>{this.setPriority(priority_id)}</td>
+                                                    <td>{setPriority(priority_id)}</td>
                                                     <td>
                                                         <div className="employees-container">
                                                             {
@@ -246,7 +293,7 @@ export default class Workspace extends Component {
                                                                             <div key={i} className="user-dropdown-item border-sharp animated jackInTheBox">
                                                                                 <div className="user-right-flex">
                                                                                     <div className="user-img-container ml-2">
-                                                                                        <img src={user.avatar_pic !== null ? APP_PATH + user.avatar_pic : APP_PATH + 'images/male-avatar.svg'} />
+                                                                                        <img src={typeof workspace_users !== 'undefined' && workspace_users[user.id].avatar_pic !== null ? APP_PATH + workspace_users[user.id].avatar_pic : APP_PATH + 'images/male-avatar.svg'} />
                                                                                     </div>
                                                                                     <div className="user-info ml-2">
                                                                                         <p>{ user.fullname }</p>
@@ -256,7 +303,7 @@ export default class Workspace extends Component {
                                                                                 <div className="user-label-container">
                                                                                     {
 
-                                                                                        typeof roles !== 'undefined' && roles[user.id] === 1 ? <button className="btn btn-sm btn-success rtl admin"><span>ادمین<i className="fas fa-user-tie mr-1"></i></span></button>
+                                                                                        typeof workspace_users !== 'undefined' && workspace_users[user.id].is_admin === 1 ? <button className="btn btn-sm btn-success rtl admin"><span>ادمین<i className="fas fa-user-tie mr-1"></i></span></button>
                                                                                         : <button className="btn btn-sm btn-primary rtl"><span>عضو<i className="fas fa-user mr-1"></i></span></button>
                                                                                     } 
                                                                                 </div>

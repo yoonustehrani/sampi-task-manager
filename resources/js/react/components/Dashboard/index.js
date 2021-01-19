@@ -4,6 +4,7 @@ import moment from 'moment'
 moment.locale('fa')
 import { Levels, Digital } from 'react-activity'
 import 'react-activity/dist/react-activity.css'
+import { setPriority, redirectTo } from '../../../helpers'
 
 
 export default class Dashboard extends Component {
@@ -71,29 +72,6 @@ export default class Dashboard extends Component {
                 })
             })
         }
-    }
-
-    setPriority = (id) => {
-        switch(id) {
-            case 1:
-                return 'ضروری و مهم'
-                break
-            case 2:
-                return 'ضروری و غیر مهم'
-                break
-            case 3:
-                return 'غیر ضروری و مهم'
-                break
-            case 4:
-                return 'غیر ضروری و غیر مهم'
-                break
-            default:
-                break
-        }
-    }
-
-    redirectTo = (url) => {
-        window.location.href = url
     }
 
     componentDidMount() {
@@ -237,7 +215,7 @@ export default class Dashboard extends Component {
                                     workspaces.length > 0 ? workspaces.map((workspace, i) => {
                                         let { id, avatar_pic, title, users, tasks_count, finished_tasks_count, demands_left_count } = workspace, workspace_url = workspace_route.replace("workspaceId", id)
                                         return (
-                                            <tr className="animated fadeIn" key={i} onClick={this.redirectTo.bind(this, workspace_url)}>
+                                            <tr className="animated fadeIn" key={i} onClick={() => redirectTo(workspace_url)}>
                                                 <th scope="row">{ i + 1 }</th>
                                                 <td className="text-right">
                                                     <img className="workspace_avatar" src={APP_PATH + avatar_pic} />
@@ -310,7 +288,7 @@ export default class Dashboard extends Component {
                     </div>
 
                     <div className="result-container col-12 mt-3" ref={this.tabResultsRef[1]}>
-                        <div className="filter-box mt-2 mb-2 p-2 p-md-3 col-12 animated fadeIn">
+                        <div className="filter-box mt-2 mb-2 p-3 col-12 animated fadeIn">
                             <div className="filter-option col-12 col-md-6 col-lg-3 mb-3 mb-lg-0 text-center">
                                 <span>جستجو در: </span>
                                 <select id="mixed_tasks_relation_select" defaultValue="all">
@@ -358,7 +336,7 @@ export default class Dashboard extends Component {
                                     mixedTasks.length > 0 && !isGetting ? mixedTasks.map((task, i) => {
                                         let { id, title, group, finished_at, priority_id, due_to, workspace, workspace_id } = task
                                         return (
-                                            <tr className="animated fadeIn" key={i} onClick={this.redirectTo.bind(this, task_route.replace("taskId", id))}>
+                                            <tr className="animated fadeIn" key={i} onClick={() => redirectTo(task_route.replace("taskId", id))}>
                                                 <th scope="row">{ i + 1 }</th>
                                                 <td>{title}</td>
                                                 <td className="text-right">
@@ -366,7 +344,7 @@ export default class Dashboard extends Component {
                                                     <a href={workspace_route.replace('workspaceId', workspace_id)}>{workspace.title}</a>
                                                 </td>
                                                 <td>{group}</td>
-                                                <td>{this.setPriority(priority_id)}</td>
+                                                <td>{setPriority(priority_id)}</td>
                                                 <td>{due_to !== null ? moment(due_to).fromNow() : <i className="fas fa-calendar-minus  fa-3x"></i>}</td>
                                                 <td>
                                                     {finished_at === null ? <i className="fas fa-times-circle fa-3x"></i> : <i className="fas fa-check-circle fa-3x"></i>}
