@@ -37,6 +37,7 @@ Route::group(['prefix' => 'task-manager', 'as' => 'api.task-manager.'], function
         Route::apiResource('workspaces/{workspace}/tasks', $api_controllers . 'TaskController');
         Route::get('tasks', $api_controllers . 'TaskController@mixed')->name('tasks.mixed');
         Route::get('tasks/search', $api_controllers . 'TaskController@search')->name('tasks.search');
+        Route::put('tasks/{task}/toggle_state', $api_controllers . 'TaskController@toggle')->name('tasks.toggle_state');
         Route::group(['prefix' => 'count', 'as' => 'counter.'], function() use($api_controllers) {
             Route::get('workspaces', $api_controllers . 'CounterController@workspaces')->name('workspaces');
             Route::get('tasks', $api_controllers . 'CounterController@tasks')->name('tasks');

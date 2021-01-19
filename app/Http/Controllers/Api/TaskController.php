@@ -156,4 +156,14 @@ class TaskController extends Controller
         }
         abort(403);
     }
+
+    public function toggle(Request $request, $task)
+    {
+        $user = ($request->user_id) ? \App\User::find($request->user_id) : $request->user();
+        $task = $user->tasks()->findOrFail($task);
+        $task->finished_at = $task->finished_at ? null : now();
+        if ($task->save()) {
+            return $task;
+        }
+    }
 }
