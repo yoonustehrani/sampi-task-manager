@@ -8,12 +8,6 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    // public function before($user, $ability)
-    // {
-    //     // if ($user->isSuperAdmin()) {
-    //     //     return true;
-    //     // }
-    // }
     /**
      * Display a listing of the resource.
      *

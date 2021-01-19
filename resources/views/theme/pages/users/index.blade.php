@@ -19,7 +19,9 @@
             <th scope="col">chat id تلگرام</th>
             <th scope="col">سمت ها</th>
             <th scope="col">ویرایش</th>
+            @if (auth()->user()->hasPermission('can_delete_users'))
             <th scope="col">حذف</th>
+            @endif
         @endcomponent
         @component('theme.tools.table-body')
             @foreach ($users as $user)
@@ -59,6 +61,7 @@
                         </a>
                         @endcan
                     </td>
+                    @if (auth()->user()->hasPermission('can_delete_users'))
                     <td>
                         @if (auth()->user()->id !== $user->id)
                             @can('delete', $user)
@@ -72,6 +75,7 @@
                             @endcan
                         @endif
                     </td>
+                    @endif
                 </tr>
             @endforeach
         @endcomponent

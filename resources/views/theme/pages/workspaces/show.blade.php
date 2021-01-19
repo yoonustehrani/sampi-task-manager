@@ -24,7 +24,7 @@
             @component('theme.tools.table', ['class' => 'table-sm'])
                 @component('theme.tools.table-head')
                     <th scope="col">#</th>
-                    <th scope="col">نام</th>
+                    <th scope="col" colspan="2">نام</th>
                     <th scope="col">وضعیت</th>
                     <th scope="col">سمت سازمانی</th>
                 @endcomponent
@@ -40,10 +40,12 @@
                                         <img src="{{ asset($user->avatar_pic ?: 'images/male-avatar.svg') }}" alt="">
                                         <a class="mr-2" href="{{ route('task-manager.users.show', ['user' => $user->id]) }}">{{ $user->fullname }}</a>
                                     </div>
-                                    @if ($user->pivot->is_admin)
-                                        <span class="badge badge-dark">ادمین</span>
-                                    @endif
                                 </div>
+                            </td>
+                            <td>
+                                @if ($user->pivot->is_admin)
+                                    <span class="badge badge-dark">ادمین</span>
+                                @endif
                             </td>
                             <td>
                                 وظیفه : <span class="badge badge-warning">{{ $user->tasks_count }} <i class="fas fa-briefcase"></i></span>

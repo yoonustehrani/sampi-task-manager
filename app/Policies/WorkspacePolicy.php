@@ -10,6 +10,13 @@ class WorkspacePolicy
 {
     use HandlesAuthorization;
 
+    public function before($user, $ability)
+    {
+        if ($user->hasRole('developer')) {
+            return true;
+        }
+    }
+
     /**
      * Determine whether the user can view any models.
      *
@@ -18,7 +25,7 @@ class WorkspacePolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return $user->hasPermission('can_view_any_workspaces');
     }
 
     /**
@@ -30,7 +37,10 @@ class WorkspacePolicy
      */
     public function view(User $user, Workspace $workspace)
     {
-        //
+        $user_can_view = $workspace->users->filter(function($workspace_user) use($user) {
+            return $user->id == $workspace_user->id;
+        })->first();
+        return (!! $user_can_view) ?: $user->hasPermission('can_view_any_workspaces');
     }
 
     /**
@@ -41,7 +51,7 @@ class WorkspacePolicy
      */
     public function create(User $user)
     {
-        //
+        return !! $user->hasPermission('can_create_workspaces');
     }
 
     /**
@@ -53,7 +63,10 @@ class WorkspacePolicy
      */
     public function update(User $user, Workspace $workspace)
     {
-        //
+        $user_can_view = $workspace->admins->filter(function($workspace_user) use($user) {
+            return $user->id == $workspace_user->id;
+        })->first();
+        return (!! $user_can_view) ?: $user->hasPermission('can_update_any_workspaces');
     }
 
     /**
@@ -65,7 +78,10 @@ class WorkspacePolicy
      */
     public function delete(User $user, Workspace $workspace)
     {
-        //
+        $user_can_view = $workspace->admins->filter(function($workspace_user) use($user) {
+            return $user->id == $workspace_user->id;
+        })->first();
+        return (!! $user_can_view) ?: $user->hasPermission('can_delete_any_workspaces');
     }
 
     /**
