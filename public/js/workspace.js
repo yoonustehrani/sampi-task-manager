@@ -56321,7 +56321,7 @@ var Workspace = /*#__PURE__*/function (_Component) {
       });
 
       var getList = function getList(table) {
-        axios__WEBPACK_IMPORTED_MODULE_2___default.a.get("".concat(eval("list_" + table + "_api"), "&order_by=").concat(eval(table + "_order_by"), "&order=").concat(eval(table + "_order"), "&relation=").concat(eval(table + "_relation"), "&page=").concat(_this.state.tasks.nextPage)).then(function (res) {
+        axios__WEBPACK_IMPORTED_MODULE_2___default.a.get("".concat(eval("list_" + table + "_api"), "&order_by=").concat(eval(table + "_order_by"), "&order=").concat(eval(table + "_order"), "&relationship=").concat(eval(table + "_relation"), "&page=").concat(_this.state.tasks.nextPage)).then(function (res) {
           var _res$data = res.data,
               data = _res$data.data,
               current_page = _res$data.current_page,
@@ -56413,7 +56413,7 @@ var Workspace = /*#__PURE__*/function (_Component) {
           tasks = _this$state.tasks;
       var taskRoute = this.props.taskRoute;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "float-right col-12"
+        className: "float-right col-12 animated zoomIn"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "workspace-title-section col-12"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
@@ -56421,15 +56421,15 @@ var Workspace = /*#__PURE__*/function (_Component) {
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", {
         className: ""
       }, "\u0648\u0638\u0627\u06CC\u0641 :")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "workspace-add-task mb-4 col-12"
+        className: "workspace-add-task mb-2 col-12"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "workspace-title-section",
         onClick: this.toggleAddBox
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-plus animated jello",
+        className: "fas fa-plus",
         ref: this.addIconRef
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, "\u0627\u0641\u0632\u0648\u062F\u0646 \u06A9\u0627\u0631")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "add-task-section d-none animated zoomIn p-1 pt-2 pb-2 p-md-3",
+        className: "add-task-section d-none animated fadeIn p-1 pt-2 pb-2 p-md-3",
         ref: this.addTaskRef
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "input-group col-12 col-md-6 mb-0 mb-md-0 pl-2 pr-2 pr-lg-3 pl-lg-3"
@@ -56518,7 +56518,7 @@ var Workspace = /*#__PURE__*/function (_Component) {
       }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "result-container col-12 mt-3 active"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "filter-box mt-2 mb-2 p-3 col-12 animated fadeIn"
+        className: "filter-box mt-2 mb-2 p-3 col-12"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "filter-option col-12 col-md-6 col-lg-3 mb-3 mb-lg-0 text-center"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u062C\u0633\u062A\u062C\u0648 \u062F\u0631: "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
@@ -56582,7 +56582,7 @@ var Workspace = /*#__PURE__*/function (_Component) {
       }, "\u0645\u0631\u062A\u0628 \u0633\u0627\u0632\u06CC"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-12 float-right"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
-        className: "table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right animated swing"
+        className: "table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", {
         className: "thead-dark"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
@@ -56632,7 +56632,7 @@ var Workspace = /*#__PURE__*/function (_Component) {
         }, users.length >= 1 && users.map(function (user, i) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             key: i,
-            className: "user-dropdown-item no-roll animated jackInTheBox"
+            className: "user-dropdown-item border-sharp animated jackInTheBox"
           }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             className: "user-right-flex"
           }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -56643,7 +56643,17 @@ var Workspace = /*#__PURE__*/function (_Component) {
             className: "user-info ml-2"
           }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, user.fullname), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
             href: "#user"
-          }, "@", user.name))));
+          }, "@", user.name))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: "user-label-container"
+          }, user.pivot.is_admin === 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+            className: "btn btn-sm btn-success rtl admin"
+          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0627\u062F\u0645\u06CC\u0646", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+            className: "fas fa-user-tie mr-1"
+          }))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+            className: "btn btn-sm btn-primary rtl"
+          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0639\u0636\u0648", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+            className: "fas fa-user mr-1"
+          })))));
         })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, due_to !== null ? moment__WEBPACK_IMPORTED_MODULE_3___default()(due_to).fromNow() : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-calendar-minus  fa-3x"
         })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, finished_at === null ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {

@@ -40,7 +40,7 @@ export default class Workspace extends Component {
         let tasks_order_by = $('#tasks_order_by_select').val(), tasks_order = $('#tasks_order_select').val(), tasks_relation = $('#tasks_relation_select').val()
         this.setState({ isGetting: true })
         const getList = (table) => {            
-            Axios.get(`${eval("list_" + table + "_api")}&order_by=${eval(table + "_order_by")}&order=${eval(table + "_order")}&relation=${eval(table + "_relation")}&page=${this.state.tasks.nextPage}`).then(res => {
+            Axios.get(`${eval("list_" + table + "_api")}&order_by=${eval(table + "_order_by")}&order=${eval(table + "_order")}&relationship=${eval(table + "_relation")}&page=${this.state.tasks.nextPage}`).then(res => {
                 let { data, current_page, last_page } = res.data
                 this.setState(prevState => {
                 return ({
@@ -97,17 +97,17 @@ export default class Workspace extends Component {
 
         return (
             <div>
-                <div className="float-right col-12">
+                <div className="float-right col-12 animated zoomIn">
                     <div className="workspace-title-section col-12">
                         <i className="fas fa-clipboard-list"></i>
                         <h4 className="">وظایف :</h4>      
                     </div>  
-                    <div className="workspace-add-task mb-4 col-12">
+                    <div className="workspace-add-task mb-2 col-12">
                         <div className="workspace-title-section" onClick={this.toggleAddBox}>
-                            <i className="fas fa-plus animated jello" ref={this.addIconRef}></i>
+                            <i className="fas fa-plus" ref={this.addIconRef}></i>
                             <h5>افزودن کار</h5>
                         </div>
-                        <div className="add-task-section d-none animated zoomIn p-1 pt-2 pb-2 p-md-3" ref={this.addTaskRef}>
+                        <div className="add-task-section d-none animated fadeIn p-1 pt-2 pb-2 p-md-3" ref={this.addTaskRef}>
                             <div className="input-group col-12 col-md-6 mb-0 mb-md-0 pl-2 pr-2 pr-lg-3 pl-lg-3">
                                 <div className="input-group-prepend">
                                     <span className="input-group-text">عنوان</span>
@@ -158,7 +158,7 @@ export default class Workspace extends Component {
                         </div>
                     </div>
                     <div className="result-container col-12 mt-3 active">
-                        <div className="filter-box mt-2 mb-2 p-3 col-12 animated fadeIn">
+                        <div className="filter-box mt-2 mb-2 p-3 col-12">
                             <div className="filter-option col-12 col-md-6 col-lg-3 mb-3 mb-lg-0 text-center">
                                 <span>جستجو در: </span>
                                 <select id="tasks_relation_select" defaultValue="all">
@@ -189,7 +189,7 @@ export default class Workspace extends Component {
                             </div>
                         </div>
                         <div className="col-12 float-right">
-                            <table className="table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right animated swing">
+                            <table className="table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right">
                                 <thead className="thead-dark">
                                     <tr>
                                         <th scope="col">#</th>
@@ -230,7 +230,7 @@ export default class Workspace extends Component {
                                                                 {
                                                                     users.length >= 1 &&
                                                                         users.map((user, i) => (
-                                                                            <div key={i} className="user-dropdown-item no-roll animated jackInTheBox">
+                                                                            <div key={i} className="user-dropdown-item border-sharp animated jackInTheBox">
                                                                                 <div className="user-right-flex">
                                                                                     <div className="user-img-container ml-2">
                                                                                         <img src={user.avatar_pic !== null ? APP_PATH + user.avatar_pic : APP_PATH + 'images/male-avatar.svg'} />
@@ -239,6 +239,12 @@ export default class Workspace extends Component {
                                                                                         <p>{ user.fullname }</p>
                                                                                         <a href={"#user"}>@{user.name}</a>
                                                                                     </div>
+                                                                                </div>
+                                                                                <div className="user-label-container">
+                                                                                    {
+                                                                                        user.pivot.is_admin === 1 ? <button className="btn btn-sm btn-success rtl admin"><span>ادمین<i className="fas fa-user-tie mr-1"></i></span></button>
+                                                                                        : <button className="btn btn-sm btn-primary rtl"><span>عضو<i className="fas fa-user mr-1"></i></span></button>
+                                                                                    } 
                                                                                 </div>
                                                                             </div>
                                                                         ))

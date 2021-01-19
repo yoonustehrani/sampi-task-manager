@@ -140,6 +140,9 @@ div.result-container.active {
 
 table {
     font-family: $iran-sans;
+    td, th {
+        vertical-align: middle !important;
+    }
     img.workspace_avatar {
         width: 30px;
         height: 30px;

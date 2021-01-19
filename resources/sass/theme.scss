@@ -427,7 +427,12 @@ div.select-option.small {
     font-size: 12px !important;
 }
 
-div.user-dropdown-item.no-roll {
-    border-top-left-radius: 4px !important;
-    border-bottom-left-radius: 4px !important;
+div.user-dropdown-item.border-sharp {
+    border-top-left-radius: 0px !important;
+    border-bottom-left-radius: 0px !important;
+    div.user-label-container {
+        > button {
+            border-radius: 0px !important;
+        }
+    }
 }
