@@ -87,17 +87,30 @@ export default class Workspace extends Component {
     }
 
     componentDidMount() {
+        let { workspace_api } = this.props
         this.handleMore("tasks", false)
+        Axios.get(workspace_api).then(res => {
+            let { data } = res
+            this.setState({workspace: data}, () => {
+                this.state.workspace.users.map((user, i) => {
+                    this.setState(prevState => ({
+                        roles: Object.assign({}, prevState.roles, {
+                            [user.id]: user.pivot.is_admin // we have a clear object in our states that tells us which users are admin and which are not
+                        })
+                    }))
+                })
+            })
+        })
     }
     
 
     render() {
-        let { isGetting, tasks } = this.state
+        let { isGetting, tasks, roles } = this.state
         let { taskRoute } = this.props
 
         return (
             <div>
-                <div className="float-right col-12 animated zoomIn">
+                <div className="float-right col-12">
                     <div className="workspace-title-section col-12">
                         <i className="fas fa-clipboard-list"></i>
                         <h4 className="">وظایف :</h4>      
@@ -207,7 +220,7 @@ export default class Workspace extends Component {
                                         tasks.data.length > 0 ? tasks.data.map((task, i) => {
                                             let { id, title, group, finished_at, priority_id, due_to, workspace, workspace_id, users } = task
                                             return (
-                                                <tr key={i} onClick={this.redirectTo.bind(this, taskRoute.replace("taskId", id))}>
+                                                <tr key={i} onClick={this.redirectTo.bind(this, taskRoute.replace("taskId", id))} className="animated fadeIn">
                                                     <th scope="row">{ i + 1 }</th>
                                                     <td>{title}</td>
                                                     <td>{group}</td>
@@ -242,7 +255,8 @@ export default class Workspace extends Component {
                                                                                 </div>
                                                                                 <div className="user-label-container">
                                                                                     {
-                                                                                        user.pivot.is_admin === 1 ? <button className="btn btn-sm btn-success rtl admin"><span>ادمین<i className="fas fa-user-tie mr-1"></i></span></button>
+
+                                                                                        typeof roles !== 'undefined' && roles[user.id] === 1 ? <button className="btn btn-sm btn-success rtl admin"><span>ادمین<i className="fas fa-user-tie mr-1"></i></span></button>
                                                                                         : <button className="btn btn-sm btn-primary rtl"><span>عضو<i className="fas fa-user mr-1"></i></span></button>
                                                                                     } 
                                                                                 </div>

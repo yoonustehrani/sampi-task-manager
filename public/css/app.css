@@ -11215,6 +11215,8 @@ table div.employees-container:hover div.dropdown-users {
 
 table.table-hover tr {
   cursor: pointer;
+  -webkit-animation-fill-mode: initial !important;
+  animation-fill-mode: initial !important;
 }
 
 div.select-option {

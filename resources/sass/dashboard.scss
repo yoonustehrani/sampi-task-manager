@@ -251,6 +251,8 @@ table {
 table.table-hover {
     tr {
         cursor: pointer;
+        -webkit-animation-fill-mode: initial !important; //Changed from both to initial 
+        animation-fill-mode: initial !important; //Changed from both to initial    
     }
 }
 

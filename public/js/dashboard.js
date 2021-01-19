@@ -55201,6 +55201,7 @@ var Dashboard = /*#__PURE__*/function (_Component) {
             demands_left_count = workspace.demands_left_count,
             workspace_url = workspace_route.replace("workspaceId", id);
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
+          className: "animated fadeIn",
           key: i,
           onClick: _this3.redirectTo.bind(_this3, workspace_url)
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
@@ -55349,6 +55350,7 @@ var Dashboard = /*#__PURE__*/function (_Component) {
             workspace = task.workspace,
             workspace_id = task.workspace_id;
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
+          className: "animated fadeIn",
           key: i,
           onClick: _this3.redirectTo.bind(_this3, task_route.replace("taskId", id))
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
@@ -55401,7 +55403,9 @@ var Dashboard = /*#__PURE__*/function (_Component) {
         scope: "col"
       }, "\u0648\u0636\u0639\u06CC\u062A \u0627\u062A\u0645\u0627\u0645"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
         scope: "col"
-      }, "\u062A\u0627\u0631\u06CC\u062E \u0627\u062A\u0645\u0627\u0645"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+      }, "\u062A\u0627\u0631\u06CC\u062E \u0627\u062A\u0645\u0627\u0645"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
+        className: "animated fadeIn"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
         scope: "row"
       }, "\u06F1"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "\u0627\u0631\u0633\u0627\u0644 \u0641\u0631\u0645\u062A \u067E\u06CC \u0627\u0646 \u062C\u06CC \u0644\u0648\u06AF\u0648"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
         className: "text-right"
@@ -55443,7 +55447,9 @@ var Dashboard = /*#__PURE__*/function (_Component) {
         scope: "col"
       }, "\u0648\u0636\u0639\u06CC\u062A \u0627\u062A\u0645\u0627\u0645"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
         scope: "col"
-      }, "\u062A\u0627\u0631\u06CC\u062E \u0627\u062A\u0645\u0627\u0645"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+      }, "\u062A\u0627\u0631\u06CC\u062E \u0627\u062A\u0645\u0627\u0645"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
+        className: "animated fadeIn"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
         scope: "row"
       }, "\u06F1"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "\u0627\u0631\u0633\u0627\u0644 \u0641\u0631\u0645\u062A \u067E\u06CC \u0627\u0646 \u062C\u06CC \u0644\u0648\u06AF\u0648"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
         className: "text-right"

@@ -237,7 +237,7 @@ export default class Dashboard extends Component {
                                     workspaces.length > 0 ? workspaces.map((workspace, i) => {
                                         let { id, avatar_pic, title, users, tasks_count, finished_tasks_count, demands_left_count } = workspace, workspace_url = workspace_route.replace("workspaceId", id)
                                         return (
-                                            <tr key={i} onClick={this.redirectTo.bind(this, workspace_url)}>
+                                            <tr className="animated fadeIn" key={i} onClick={this.redirectTo.bind(this, workspace_url)}>
                                                 <th scope="row">{ i + 1 }</th>
                                                 <td className="text-right">
                                                     <img className="workspace_avatar" src={APP_PATH + avatar_pic} />
@@ -358,7 +358,7 @@ export default class Dashboard extends Component {
                                     mixedTasks.length > 0 && !isGetting ? mixedTasks.map((task, i) => {
                                         let { id, title, group, finished_at, priority_id, due_to, workspace, workspace_id } = task
                                         return (
-                                            <tr key={i} onClick={this.redirectTo.bind(this, task_route.replace("taskId", id))}>
+                                            <tr className="animated fadeIn" key={i} onClick={this.redirectTo.bind(this, task_route.replace("taskId", id))}>
                                                 <th scope="row">{ i + 1 }</th>
                                                 <td>{title}</td>
                                                 <td className="text-right">
@@ -408,7 +408,7 @@ export default class Dashboard extends Component {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
+                                <tr className="animated fadeIn">
                                     <th scope="row">۱</th>
                                     <td>ارسال فرمت پی ان جی لوگو</td>
                                     <td className="text-right">
@@ -458,7 +458,7 @@ export default class Dashboard extends Component {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
+                                <tr className="animated fadeIn">
                                     <th scope="row">۱</th>
                                     <td>ارسال فرمت پی ان جی لوگو</td>
                                     <td className="text-right">

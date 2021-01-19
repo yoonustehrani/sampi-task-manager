@@ -56401,19 +56401,38 @@ var Workspace = /*#__PURE__*/function (_Component) {
   _createClass(Workspace, [{
     key: "componentDidMount",
     value: function componentDidMount() {
+      var _this2 = this;
+
+      var workspace_api = this.props.workspace_api;
       this.handleMore("tasks", false);
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(workspace_api).then(function (res) {
+        var data = res.data;
+
+        _this2.setState({
+          workspace: data
+        }, function () {
+          _this2.state.workspace.users.map(function (user, i) {
+            _this2.setState(function (prevState) {
+              return {
+                roles: Object.assign({}, prevState.roles, _defineProperty({}, user.id, user.pivot.is_admin))
+              };
+            });
+          });
+        });
+      });
     }
   }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
       var _this$state = this.state,
           isGetting = _this$state.isGetting,
-          tasks = _this$state.tasks;
+          tasks = _this$state.tasks,
+          roles = _this$state.roles;
       var taskRoute = this.props.taskRoute;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "float-right col-12 animated zoomIn"
+        className: "float-right col-12"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "workspace-title-section col-12"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
@@ -56613,10 +56632,11 @@ var Workspace = /*#__PURE__*/function (_Component) {
             users = task.users;
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
           key: i,
-          onClick: _this2.redirectTo.bind(_this2, taskRoute.replace("taskId", id))
+          onClick: _this3.redirectTo.bind(_this3, taskRoute.replace("taskId", id)),
+          className: "animated fadeIn"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
           scope: "row"
-        }, i + 1), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, group), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, _this2.setPriority(priority_id)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }, i + 1), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, group), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, _this3.setPriority(priority_id)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "employees-container"
         }, users.length === 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-user-slash"
@@ -56645,7 +56665,7 @@ var Workspace = /*#__PURE__*/function (_Component) {
             href: "#user"
           }, "@", user.name))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             className: "user-label-container"
-          }, user.pivot.is_admin === 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          }, typeof roles !== 'undefined' && roles[user.id] === 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
             className: "btn btn-sm btn-success rtl admin"
           }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0627\u062F\u0645\u06CC\u0646", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
             className: "fas fa-user-tie mr-1"
@@ -56828,12 +56848,14 @@ var target = document.getElementById('workspace-react');
 var addTaskApi = target.getAttribute("add_task_api");
 var listTasksApi = target.getAttribute("list_tasks_api");
 var taskRoute = target.getAttribute("task_route");
+var workspaceApi = target.getAttribute("workspace_api");
 
 if (target) {
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Workspace__WEBPACK_IMPORTED_MODULE_2__["default"], {
     addTaskApi: addTaskApi,
     list_tasks_api: listTasksApi,
-    taskRoute: taskRoute
+    taskRoute: taskRoute,
+    workspace_api: workspaceApi
   }), target);
 }
 
