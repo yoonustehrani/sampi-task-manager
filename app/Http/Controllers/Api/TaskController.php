@@ -17,7 +17,10 @@ class TaskController extends Controller
             'order_by' => 'nullable|string'
         ]);
         $user = ($request->user_id) ? \App\User::find($request->user_id) : $request->user();
-        $user_tasks = $user->tasks()->with('users')->withCount('demands')->where('workspace_id', $workspace);
+        $relationship = $request->relationship && method_exists($user, $request->relationship . '_tasks')
+                        ? $request->relationship . '_tasks'
+                        : 'tasks';
+        $user_tasks = $user->{$relationship}()->with('users')->withCount('demands')->where('workspace_id', $workspace);
         if ($request->order_by) {
             $order = $request->order != 'desc' ? 'asc' : 'desc';
             $user_tasks = $user_tasks->orderBy($request->order_by, $order);
