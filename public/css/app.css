@@ -11031,16 +11031,16 @@ div.dashboard-tab-container .tab-title-bar a.tab-link.active {
   color: #ec2F4B;
 }
 
-div.dashboard-tab-container div.result-container {
+div.result-container {
   display: none;
 }
 
-div.dashboard-tab-container div.result-container img.workspace-img {
+div.result-container img.workspace-img {
   width: 30px;
   height: 30px;
 }
 
-div.dashboard-tab-container div.result-container div.filter-box {
+div.result-container div.filter-box {
   float: right;
   background-color: #E0EAFC;
   box-shadow: 3px 3px 7px 0 #bdc3c7;
@@ -11054,7 +11054,7 @@ div.dashboard-tab-container div.result-container div.filter-box {
   direction: rtl;
 }
 
-div.dashboard-tab-container div.result-container div.filter-box div.filter-option {
+div.result-container div.filter-box div.filter-option {
   direction: rtl;
   text-align: right;
   font-family: "Iransans";
@@ -11067,18 +11067,18 @@ div.dashboard-tab-container div.result-container div.filter-box div.filter-optio
   align-items: center;
 }
 
-div.dashboard-tab-container div.result-container div.filter-box div.filter-option > span {
+div.result-container div.filter-box div.filter-option > span {
   text-align: center;
-  white-space: nowrap;
   margin-left: 6px;
+  font-size: 15px;
 }
 
-div.dashboard-tab-container div.result-container div.filter-box div.filter-option select option {
+div.result-container div.filter-box div.filter-option select option {
   text-align: right;
   font-family: "Iransans";
 }
 
-div.dashboard-tab-container div.result-container.active {
+div.result-container.active {
   display: block;
 }
 
@@ -11099,7 +11099,6 @@ table a {
 
 table div.employees-container {
   position: relative;
-  z-index: 99;
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
@@ -11120,6 +11119,7 @@ table div.employees-container > div.dropdown-users {
 
 table div.employees-container > div.dropdown-users > div.user-dropdown-item {
   position: relative;
+  z-index: 99;
   box-shadow: 4px 4px 5px 0px #8e9eab;
   width: -webkit-max-content;
   width: -moz-max-content;
@@ -11200,16 +11200,16 @@ table div.employees-container > div.dropdown-users > div.user-dropdown-item > di
   border-color: #38c172 !important;
 }
 
-table table.table-hover tr {
-  cursor: pointer;
-}
-
 table div.employees-container:hover > span {
   color: #4286f4;
 }
 
 table div.employees-container:hover div.dropdown-users {
   display: block !important;
+}
+
+table.table-hover tr {
+  cursor: pointer;
 }
 
 div.select-option {
@@ -11237,16 +11237,23 @@ h4,
 h5,
 h6 {
   direction: rtl;
+}
+
+button,
+input,
+p,
+a,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: "Iransans";
 }
 
 a {
   text-decoration: none;
-  font-family: "Iransans";
-}
-
-p {
-  font-family: "Iransans";
 }
 
 .full-sc {
@@ -11314,6 +11321,7 @@ p {
 .contentbar {
   overflow-y: auto;
   height: 100%;
+  padding-bottom: 100px !important;
 }
 
 nav a:hover {
@@ -11595,6 +11603,10 @@ div.workspace-title-section {
   align-items: baseline;
   text-align: right;
   margin-top: 15px;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  float: right;
 }
 
 div.workspace-title-section > i {
@@ -11698,6 +11710,20 @@ div.select-option img.member-img {
 
 div.tinymc-container {
   width: 100%;
+}
+
+div.select-option.small {
+  font-size: 12px !important;
+}
+
+div.select-option.small i {
+  margin-left: 4px !important;
+  font-size: 14px !important;
+}
+
+div.user-dropdown-item.no-roll {
+  border-top-left-radius: 4px !important;
+  border-bottom-left-radius: 4px !important;
 }
 
 .select2-container {

@@ -3,8 +3,7 @@ import Axios from 'axios'
 import moment from 'moment'
 moment.locale('fa')
 import { Levels, Digital } from 'react-activity'
-import 'react-activity/dist/react-activity.css';
-import { functions } from 'lodash'
+import 'react-activity/dist/react-activity.css'
 
 
 export default class Dashboard extends Component {
@@ -59,12 +58,12 @@ export default class Dashboard extends Component {
 
     sortData = (tab) => {
         let { mixedTasksApi } = this.props
-        let order_by = $('#order_by_select').val(), order = $('#order_select').val(), relation = $('#relation_select').val()
         this.setState({
             isGetting: true
         })
         if (tab === "tasks") {
-            Axios.get(`${mixedTasksApi}&limit=15&order_by=${order_by}&order=${order}&relationship=${relation}`).then(res => {
+            let mixed_tasks_order_by = $('#mixed_tasks_order_by_select').val(), mixed_tasks_order = $('#mixed_tasks_order_select').val(), mixed_tasks_relation = $('#mixed_tasks_relation_select').val()
+            Axios.get(`${mixedTasksApi}&limit=15&order_by=${mixed_tasks_order_by}&order=${mixed_tasks_order}&relationship=${mixed_tasks_relation}`).then(res => {
                 let { data } = res
                 this.setState({
                     mixedTasks: data,
@@ -314,7 +313,7 @@ export default class Dashboard extends Component {
                         <div className="filter-box mt-2 mb-2 p-3 col-12 animated fadeIn">
                             <div className="filter-option col-12 col-md-6 col-lg-3 mb-3 mb-lg-0 text-center">
                                 <span>جستجو در: </span>
-                                <select id="relation_select" defaultValue="all">
+                                <select id="mixed_tasks_relation_select" defaultValue="all">
                                     <option value="all" icon_name="fas fa-tasks">همه</option>
                                     <option value="finished" icon_name="fas fa-check-square">انجام شده</option>
                                     <option value="unfinished" icon_name="fas fa-times-circle">انجام نشده</option>
@@ -323,7 +322,7 @@ export default class Dashboard extends Component {
                             </div>
                             <div className="filter-option col-12 col-md-6 col-lg-3 mb-3 mb-lg-0 text-center">
                                 <span>مرتب سازی بر اساس:</span>
-                                <select id="order_by_select" defaultValue="due_to">
+                                <select id="mixed_tasks_order_by_select" defaultValue="due_to">
                                     <option value="due_to" icon_name="fas fa-hourglass-start">تاریخ تحویل</option>
                                     <option value="created_at" icon_name="fas fa-calendar-plus">تاریخ ایجاد</option>
                                     <option value="updated_at" icon_name="fas fa-user-edit">تاریخ تغییرات</option>
@@ -332,7 +331,7 @@ export default class Dashboard extends Component {
                             </div>
                             <div className="filter-option col-12 col-md-6 col-lg-3 mb-3 mb-lg-0 text-center">
                                 <span>نحوه مرتب سازی:</span>
-                                <select id="order_select" defaultValue="desc">
+                                <select id="mixed_tasks_order_select" defaultValue="desc">
                                     <option value="asc" icon_name="fas fa-sort-amount-up">صعودی</option>
                                     <option value="desc" icon_name="fas fa-sort-amount-down">نزولی</option>
                                 </select>

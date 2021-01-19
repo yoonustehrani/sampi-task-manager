@@ -34,7 +34,7 @@
         </div>
         <div class="col-lg-10 col-md-9 col-12 h-12" id="mainpage">
             @include('theme.tools.top-navbar')
-            <div class="col-12 p-3 pb-5 contentbar float-left">
+            <div class="col-12 p-3 contentbar float-left">
                 @yield('page-content')
             </div>
         </div>
