@@ -67,7 +67,6 @@ export default class Workspace extends Component {
 
     addTask = () => {
         let { add_task_api } = this.props, { new_task_description, workspace_users } = this.state
-        console.log(add_task_api)
         let title = $("#new-task-title").val(), group = $("#new-task-group").val(), priority = parseInt($("#new-task-priority").val()), users = $("#new-task-members").val(), description = new_task_description
         if (title.length === 0 || group.length === 0 || priority === null || users.length <= 0) {
             Swal.fire({
@@ -156,7 +155,7 @@ export default class Workspace extends Component {
 
     render() {
         let { isGetting, tasks, workspace_users, workspace } = this.state
-        let { taskRoute } = this.props
+        let { taskRoute, logged_in_api_token } = this.props
 
         return (
             <div>
@@ -199,9 +198,13 @@ export default class Workspace extends Component {
                                     <span className="input-group-text">مسئولین</span>
                                 </div>
                                 <select id="new-task-members" className="form-control text-right" multiple>
-                                    { workspace ? workspace.users.map((user, i) => (
-                                        <option key={i} value={user.id} img_address={APP_PATH + user.avatar_pic}>{user.fullname}</option>
-                                    )) : null }
+                                    { workspace ? workspace.users.map((user, i) => {
+                                        if (user.api_token !== logged_in_api_token) {
+                                            return (
+                                                <option key={i} value={user.id} img_address={APP_PATH + user.avatar_pic}>{user.fullname}</option>
+                                            )                                            
+                                        }
+                                    }) : null }
                                 </select>
                             </div>
                             <div className="input-group col-12 input-group-single-line pl-2 pr-2 pr-lg-3 pl-lg-3">

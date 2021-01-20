@@ -60057,7 +60057,6 @@ var Workspace = /*#__PURE__*/function (_Component) {
           _this$state = _this.state,
           new_task_description = _this$state.new_task_description,
           workspace_users = _this$state.workspace_users;
-      console.log(add_task_api);
       var title = $("#new-task-title").val(),
           group = $("#new-task-group").val(),
           priority = parseInt($("#new-task-priority").val()),
@@ -60189,7 +60188,9 @@ var Workspace = /*#__PURE__*/function (_Component) {
           tasks = _this$state2.tasks,
           workspace_users = _this$state2.workspace_users,
           workspace = _this$state2.workspace;
-      var taskRoute = this.props.taskRoute;
+      var _this$props = this.props,
+          taskRoute = _this$props.taskRoute,
+          logged_in_api_token = _this$props.logged_in_api_token;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "float-right col-12 pr-0 pl-0 pr-md-3 pl-md-3"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -60263,11 +60264,13 @@ var Workspace = /*#__PURE__*/function (_Component) {
         className: "form-control text-right",
         multiple: true
       }, workspace ? workspace.users.map(function (user, i) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-          key: i,
-          value: user.id,
-          img_address: APP_PATH + user.avatar_pic
-        }, user.fullname);
+        if (user.api_token !== logged_in_api_token) {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+            key: i,
+            value: user.id,
+            img_address: APP_PATH + user.avatar_pic
+          }, user.fullname);
+        }
       }) : null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "input-group col-12 input-group-single-line pl-2 pr-2 pr-lg-3 pl-lg-3"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -60599,13 +60602,15 @@ var addTaskApi = target.getAttribute("add_task_api");
 var listTasksApi = target.getAttribute("list_tasks_api");
 var taskRoute = target.getAttribute("task_route");
 var workspaceApi = target.getAttribute("workspace_api");
+var loggedInApiToken = target.getAttribute("logged_in_api_token");
 
 if (target) {
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Workspace__WEBPACK_IMPORTED_MODULE_2__["default"], {
     add_task_api: addTaskApi,
     list_tasks_api: listTasksApi,
     taskRoute: taskRoute,
-    workspace_api: workspaceApi
+    workspace_api: workspaceApi,
+    logged_in_api_token: loggedInApiToken
   }), target);
 }
 

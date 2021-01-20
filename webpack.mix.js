@@ -34,4 +34,5 @@ mix.sass(res.sass + 'app.scss', pub.css)
     .react(res.react + 'dashboard.js', pub.js)
     .react(res.js + "app.js", pub.js)
     .react(res.react + 'workspace.js', pub.js)
+    .react(res.react + "task.js", pub.js)
     // .js(res.js + 'tinymce/langs/fa.js', pub.js + 'tinymce/langs')`

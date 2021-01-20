@@ -11222,11 +11222,12 @@ table.table-hover tr {
 
 div.select-option {
   font-family: "Iransans";
+  font-size: 12px;
 }
 
 div.select-option i {
-  margin-left: 10px;
-  font-size: 20px;
+  margin-left: 6px;
+  font-size: 14px;
 }
 
 body,
@@ -11523,6 +11524,8 @@ div.drop-down-container div.dropdown-menu a {
   background-color: #0b9e3c !important;
 }
 
+/** WORKSPACE **/
+
 div.workspace-sub-info > span {
   direction: rtl;
   font-family: "Iransans";
@@ -11737,6 +11740,8 @@ div.user-dropdown-item.border-sharp {
 div.user-dropdown-item.border-sharp div.user-label-container > button {
   border-radius: 0px !important;
 }
+
+/** TASK **/
 
 .select2-container {
   box-sizing: border-box;
