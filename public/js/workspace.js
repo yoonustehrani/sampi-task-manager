@@ -60053,17 +60053,20 @@ var Workspace = /*#__PURE__*/function (_Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "addTask", function () {
-      var add_task_api = _this.props.add_task_api,
+      var _this$props = _this.props,
+          add_task_api = _this$props.add_task_api,
+          logged_in_api_token = _this$props.logged_in_api_token,
           _this$state = _this.state,
           new_task_description = _this$state.new_task_description,
-          workspace_users = _this$state.workspace_users;
+          workspace_users = _this$state.workspace_users,
+          creater_id = _this$state.creater_id;
       var title = $("#new-task-title").val(),
           group = $("#new-task-group").val(),
           priority = parseInt($("#new-task-priority").val()),
           users = $("#new-task-members").val(),
           description = new_task_description;
 
-      if (title.length === 0 || group.length === 0 || priority === null || users.length <= 0) {
+      if (title.length === 0 || group.length === 0 || priority === null) {
         sweetalert2__WEBPACK_IMPORTED_MODULE_6___default.a.fire({
           title: 'خطا',
           text: "فیلد های مورد نیاز به درستی پر نشدند",
@@ -60088,6 +60091,11 @@ var Workspace = /*#__PURE__*/function (_Component) {
                 fullname: workspace_users[userId].fullname,
                 name: workspace_users[userId].name
               };
+            });
+            new_task_users.unshift({
+              id: creater_id,
+              fullname: workspace_users[creater_id].fullname,
+              name: workspace_users[creater_id].name
             });
             return {
               tasks: Object.assign({}, prevState.tasks, {
@@ -60157,7 +60165,9 @@ var Workspace = /*#__PURE__*/function (_Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      var workspace_api = this.props.workspace_api;
+      var _this$props2 = this.props,
+          workspace_api = _this$props2.workspace_api,
+          logged_in_api_token = _this$props2.logged_in_api_token;
       this.handleMore("tasks", false);
       axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(workspace_api).then(function (res) {
         var data = res.data;
@@ -60166,6 +60176,8 @@ var Workspace = /*#__PURE__*/function (_Component) {
           workspace: data
         }, function () {
           _this2.state.workspace.users.map(function (user, i) {
+            if (user.api_token === logged_in_api_token) {}
+
             _this2.setState(function (prevState) {
               return {
                 workspace_users: Object.assign({}, prevState.workspace_users, _defineProperty({}, user.id, {
@@ -60173,7 +60185,8 @@ var Workspace = /*#__PURE__*/function (_Component) {
                   fullname: user.fullname,
                   name: user.name,
                   avatar_pic: user.avatar_pic
-                }))
+                })),
+                creater_id: user.api_token === logged_in_api_token ? user.id : prevState.creater_id
               };
             });
           });
@@ -60188,9 +60201,9 @@ var Workspace = /*#__PURE__*/function (_Component) {
           tasks = _this$state2.tasks,
           workspace_users = _this$state2.workspace_users,
           workspace = _this$state2.workspace;
-      var _this$props = this.props,
-          taskRoute = _this$props.taskRoute,
-          logged_in_api_token = _this$props.logged_in_api_token;
+      var _this$props3 = this.props,
+          taskRoute = _this$props3.taskRoute,
+          logged_in_api_token = _this$props3.logged_in_api_token;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "float-right col-12 pr-0 pl-0 pr-md-3 pl-md-3"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {

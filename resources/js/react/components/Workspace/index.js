@@ -66,9 +66,9 @@ export default class Workspace extends Component {
     }
 
     addTask = () => {
-        let { add_task_api } = this.props, { new_task_description, workspace_users } = this.state
+        let { add_task_api, logged_in_api_token } = this.props, { new_task_description, workspace_users, creater_id } = this.state
         let title = $("#new-task-title").val(), group = $("#new-task-group").val(), priority = parseInt($("#new-task-priority").val()), users = $("#new-task-members").val(), description = new_task_description
-        if (title.length === 0 || group.length === 0 || priority === null || users.length <= 0) {
+        if (title.length === 0 || group.length === 0 || priority === null) {
             Swal.fire({
                 title: 'خطا',
                 text: "فیلد های مورد نیاز به درستی پر نشدند",
@@ -94,6 +94,7 @@ export default class Workspace extends Component {
                             name: workspace_users[userId].name,
                         })
                     })
+                    new_task_users.unshift({id: creater_id, fullname: workspace_users[creater_id].fullname, name: workspace_users[creater_id].name})
                     return ({
                         tasks: Object.assign({}, prevState.tasks, {
                             data: [{...res.data, users: new_task_users, finished_at: null, finisher_id: null}, ...prevState.tasks.data]
@@ -131,12 +132,15 @@ export default class Workspace extends Component {
     }
 
     componentDidMount() {
-        let { workspace_api } = this.props
+        let { workspace_api, logged_in_api_token } = this.props
         this.handleMore("tasks", false)
         Axios.get(workspace_api).then(res => {
             let { data } = res
             this.setState({workspace: data}, () => {
                 this.state.workspace.users.map((user, i) => {
+                    if(user.api_token === logged_in_api_token) {
+
+                    }
                     this.setState(prevState => ({
                         workspace_users: Object.assign({}, prevState.workspace_users, {
                             [user.id]: {
@@ -145,7 +149,8 @@ export default class Workspace extends Component {
                                 name: user.name,
                                 avatar_pic: user.avatar_pic
                             } // we have a clear object in our states that tells us all the informations that we need about users
-                        })
+                        }),
+                        creater_id: user.api_token === logged_in_api_token ? user.id : prevState.creater_id
                     }))
                 })
             })
