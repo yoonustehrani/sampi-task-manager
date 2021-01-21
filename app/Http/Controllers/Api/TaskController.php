@@ -2,59 +2,39 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use App\Task;
 use App\Workspace;
 use Illuminate\Http\Request;
 
-class TaskController extends Controller
+class TaskController extends BaseController
 {
     public function index(Request $request, $workspace)
     {
         $request->validate([
             'limit' => 'nullable|numeric',
             'order' => 'nullable|string',
-            'order_by' => 'nullable|string'
+            'order_by' => 'nullable|string|min:3'
         ]);
         $user = ($request->user_id) ? \App\User::find($request->user_id) : $request->user();
-        $relationship = $request->relationship && method_exists($user, $request->relationship . '_tasks')
-                        ? $request->relationship . '_tasks'
-                        : 'tasks';
+        $relationship = $this->model_relationship($request->relationship, $user, '_tasks', 'tasks');
         $user_tasks = $user->{$relationship}()->with('users')->withCount('demands')->where('workspace_id', $workspace);
-        if ($request->order_by) {
-            $order = $request->order != 'desc' ? 'asc' : 'desc';
-            $user_tasks = $user_tasks->orderBy($request->order_by, $order);
-        }
-        if ($request->limit) {
-            return $user_tasks->limit((int) $request->limit)->get();
-        } else {
-            return $user_tasks->latest()->paginate(10);
-        }
+        return $request->limit
+                ? $this->decide_ordered($request, $user_tasks)->limit((int) $request->limit)->get()
+                : $this->decide_ordered($request, $user_tasks)->latest()->paginate(10);
     }
     public function mixed(Request $request)
     {
         $request->validate([
             'limit' => 'nullable|numeric',
             'order' => 'nullable|string',
-            'order_by' => 'nullable|string'
+            'order_by' => 'nullable|string|min:3'
         ]);
         $user = ($request->user_id) ? \App\User::find($request->user_id) : $request->user();
-        $relationship = $request->relationship && method_exists($user, $request->relationship . '_tasks')
-                        ? $request->relationship . '_tasks'
-                        : 'tasks';
-        $user_tasks = $user->{$relationship}()->with([
-            'users',
-            'workspace:id,title,avatar_pic'
-        ])->withCount('demands');
-        if ($request->order_by) {
-            $order = $request->order != 'desc' ? 'asc' : 'desc';
-            $user_tasks = $user_tasks->orderBy($request->order_by, $order);
-        }
-        if ($request->limit) {
-            return $user_tasks->limit((int) $request->limit)->get();
-        } else {
-            return $user_tasks->paginate(10);
-        }
+        $relationship = $this->model_relationship($request->relationship, $user, '_tasks', 'tasks');
+        $user_tasks = $user->{$relationship}()->with(['users','workspace:id,title,avatar_pic'])->withCount('demands');
+        return $request->limit
+            ? $this->decide_ordered($request, $user_tasks)->limit((int) $request->limit)->get()
+            : $this->decide_ordered($request, $user_tasks)->paginate(10);
     }
     public function search(Request $request)
     {
@@ -64,17 +44,9 @@ class TaskController extends Controller
             'limit' => 'required|integer|min:3|max:30'
         ]);
         $user = ($request->user_id) ? \App\User::find($request->user_id) : $request->user();
-        $relationship = $request->relationship && method_exists($user, $request->relationship . '_tasks')
-                        ? $request->relationship . '_tasks'
-                        : 'tasks';
+        $relationship = $this->model_relationship($request->relationship, $user, '_tasks', 'tasks');
         $tasks = $user->{$relationship}()->with(['workspace:id,title,avatar_pic'])->withCount('users');
-        if ($request->order_by) {
-            $order = $request->order && $request->order != 'desc' ? 'asc' : 'desc';
-            $tasks = $tasks->orderBy($request->order_by, $order);
-        }
-        return $tasks->search($request->q, null, true)
-                     ->limit((int) $request->limit)
-                     ->get();
+        return $this->decide_ordered($request, $tasks)->search($request->q, null, true)->limit((int) $request->limit)->get();
     }
     public function show(Request $request, $workspace, $task)
     {
