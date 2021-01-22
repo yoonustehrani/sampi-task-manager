@@ -9,7 +9,7 @@ class BaseController extends Controller
 {
     public function model_relationship($requested, $model, $suffix, $default)
     {
-        return $requested && method_exists($model, $requested) ? $requested . $suffix : $default;
+        return $requested && method_exists($model, $requested . $suffix) ? $requested . $suffix : $default;
     }
     public function decide_ordered(Request $request, $model)
     {
