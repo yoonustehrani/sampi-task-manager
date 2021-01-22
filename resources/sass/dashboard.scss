@@ -89,55 +89,61 @@ div.dashboard-tab-container {
             color: #ec2F4B;
         }
     }
-    div.result-container {
-        display: none;
-        // background-color: #E0EAFC;
-        // box-shadow: 4px 4px 6px 0 #bdc3c7;
-        img.workspace-img {
-            width: 30px;
-            height: 30px;
-        }
-        div.filter-box {
-            float: right;
-            background-color: #E0EAFC;
-            box-shadow: 3px 3px 7px 0 #bdc3c7;
-            border: 2px solid #A7BFE8;
-            border-radius: 8px;         
+}
+div.result-container {
+    display: none;
+    // background-color: #E0EAFC;
+    // box-shadow: 4px 4px 6px 0 #bdc3c7;
+    img.workspace-img {
+        width: 30px;
+        height: 30px;
+    }
+    div.filter-box {
+        float: right;
+        background-color: #E0EAFC;
+        box-shadow: 3px 3px 7px 0 #bdc3c7;
+        border: 2px solid #A7BFE8;
+        border-radius: 8px;         
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-around;   
+        direction: rtl;
+        div.filter-option {
+            direction: rtl;
+            text-align: right;
+            font-family: $iran-sans;
+            width: max-content !important;
             display: flex;
             flex-direction: row;
-            flex-wrap: wrap;
+            justify-content: center;
             align-items: center;
-            justify-content: space-around;   
-            direction: rtl;
-            div.filter-option {
-                direction: rtl;
-                text-align: right;
-                font-family: $iran-sans;
-                width: max-content !important;
-                display: flex;
-                flex-direction: row;
-                justify-content: center;
-                align-items: center;
-                > span {
-                    text-align: center;
-                    white-space: nowrap;
-                    margin-left: 6px;
-                }
-                select {
-                    option {
-                        text-align: right;
-                        font-family: $iran-sans;
-                    }
+            > span {
+                text-align: center;
+                // white-space: nowrap;
+                margin-left: 6px;
+                font-size: 15px;
+                width: 100%;
+            }
+            select {
+                option {
+                    text-align: right;
+                    font-family: $iran-sans;
                 }
             }
         }
     }
-    div.result-container.active {
-        display: block;
-    }
 }
+div.result-container.active {
+    display: block;
+}
+
 table {
     font-family: $iran-sans;
+    td, th {
+        vertical-align: middle !important;
+    }
     img.workspace_avatar {
         width: 30px;
         height: 30px;
@@ -149,7 +155,6 @@ table {
     }
     div.employees-container {
         position: relative;
-        z-index: 99;
         width: fit-content;
         text-align: center;
         margin-left: auto;
@@ -164,6 +169,7 @@ table {
             // box-shadow: 4px 4px 5px 0px #8e9eab;
             > div.user-dropdown-item {
                 position: relative;
+                z-index: 99;
                 box-shadow: 4px 4px 5px 0px #8e9eab;
                 width: max-content;
                 background-color: #D7DDE8;
@@ -234,11 +240,6 @@ table {
             }
         }
     }
-    table.table-hover {
-        tr {
-            cursor: pointer;
-        }
-    }
     div.employees-container:hover {
         > span {
             color: #4286f4;
@@ -248,11 +249,19 @@ table {
         }
     }
 }
+table.table-hover {
+    tr {
+        cursor: pointer;
+        -webkit-animation-fill-mode: initial !important; //Changed from both to initial 
+        animation-fill-mode: initial !important; //Changed from both to initial    
+    }
+}
 
 div.select-option {
     i {
-        margin-left: 10px;
-        font-size: 20px;
+        margin-left: 6px;
+        font-size: 14px;
     }
     font-family: $iran-sans;
+    font-size: 12px;
 }

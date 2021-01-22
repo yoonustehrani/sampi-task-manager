@@ -18,29 +18,6 @@
 @endsection
 
 @push('scripts')
-    <script>
-        var list_tasks = "{{ route('api.task-manager.tasks.index', ['workspace' => "workspaceId", 'api_token' => auth()->user()->api_token]) }}";
-        var add_task = "{{ route('api.task-manager.tasks.store', ['workspace' => "workspaceId", 'api_token' => auth()->user()->api_token]) }}";
-        {{-- axios.post(add_task, {
-            title: 'Task number 1',
-            priority: 1,
-            group: 'fictional',
-            users: [
-                '100',
-                '500'
-            ]
-        }).then(res => {
-            console.log(res.data);
-        }).catch(e => {
-            let {status, data} = e.response;
-            if (status === 422) {
-                let {errors} = data;
-                Object.entries(errors).map(([param, message]) => {
-                    console.log(message);
-                })
-            }
-        }) --}}
-    </script>
     <script src="{{ asset('/js/dashboard.js') }}"></script>
     <script>
         let formatOption = (option) => {
@@ -49,7 +26,7 @@
                 return $(`<div class="select-option"><i class="${icon_name}"></i>${option.text}</div>`)
             }
         }
-        $('#order_select, #order_by_select, #relation_select').select2({
+        $('#mixed_tasks_order_select, #mixed_tasks_order_by_select, #mixed_tasks_relation_select').select2({
             templateResult: formatOption,
             minimumResultsForSearch: Infinity,
             width: '100%',

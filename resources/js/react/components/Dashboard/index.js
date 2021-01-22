@@ -3,8 +3,8 @@ import Axios from 'axios'
 import moment from 'moment'
 moment.locale('fa')
 import { Levels, Digital } from 'react-activity'
-import 'react-activity/dist/react-activity.css';
-import { functions } from 'lodash'
+import 'react-activity/dist/react-activity.css'
+import { setPriority, redirectTo } from '../../../helpers'
 
 
 export default class Dashboard extends Component {
@@ -59,12 +59,12 @@ export default class Dashboard extends Component {
 
     sortData = (tab) => {
         let { mixedTasksApi } = this.props
-        let order_by = $('#order_by_select').val(), order = $('#order_select').val(), relation = $('#relation_select').val()
         this.setState({
             isGetting: true
         })
         if (tab === "tasks") {
-            Axios.get(`${mixedTasksApi}&limit=15&order_by=${order_by}&order=${order}&relationship=${relation}`).then(res => {
+            let mixed_tasks_order_by = $('#mixed_tasks_order_by_select').val(), mixed_tasks_order = $('#mixed_tasks_order_select').val(), mixed_tasks_relation = $('#mixed_tasks_relation_select').val()
+            Axios.get(`${mixedTasksApi}&limit=15&order_by=${mixed_tasks_order_by}&order=${mixed_tasks_order}&relationship=${mixed_tasks_relation}`).then(res => {
                 let { data } = res
                 this.setState({
                     mixedTasks: data,
@@ -72,29 +72,6 @@ export default class Dashboard extends Component {
                 })
             })
         }
-    }
-
-    setPriority = (id) => {
-        switch(id) {
-            case 1:
-                return 'ضروری و مهم'
-                break
-            case 2:
-                return 'ضروری و غیر مهم'
-                break
-            case 3:
-                return 'غیر ضروری و مهم'
-                break
-            case 4:
-                return 'غیر ضروری و غیر مهم'
-                break
-            default:
-                break
-        }
-    }
-
-    redirectTo = (url) => {
-        window.location.href = url
     }
 
     componentDidMount() {
@@ -205,19 +182,19 @@ export default class Dashboard extends Component {
                 <div className="col-12 dashboard-tab-container">
                     <nav className="tab-title-bar text-center">
                         <a className="tab-link active" ref={this.tabTitlesRef[0]} onClick={this.changeTab.bind(this, 0)}>
-                            <i className="fas fa-project-diagram"></i>
+                            <i className="fas fa-project-diagram d-block d-md-inline"></i>
                             پروژه ها
                         </a>
                         <a className="tab-link" ref={this.tabTitlesRef[1]} onClick={this.changeTab.bind(this, 1)}>
-                            <i className="fas fa-tasks"></i>
+                            <i className="fas fa-tasks d-block d-md-inline"></i>
                             وظایف
                         </a>
                         <a className="tab-link" ref={this.tabTitlesRef[2]} onClick={this.changeTab.bind(this, 2)}>
-                            <i className="fas fa-comment-dots"></i>
+                            <i className="fas fa-comment-dots d-block d-md-inline"></i>
                             درخواست ها
                         </a>
                         <a className="tab-link" ref={this.tabTitlesRef[3]} onClick={this.changeTab.bind(this, 3)}>
-                            <i className="fas fa-clipboard-list"></i>
+                            <i className="fas fa-clipboard-list d-block d-md-inline"></i>
                             نیاز ها
                         </a>
                     </nav>
@@ -238,7 +215,7 @@ export default class Dashboard extends Component {
                                     workspaces.length > 0 ? workspaces.map((workspace, i) => {
                                         let { id, avatar_pic, title, users, tasks_count, finished_tasks_count, demands_left_count } = workspace, workspace_url = workspace_route.replace("workspaceId", id)
                                         return (
-                                            <tr key={i} onClick={this.redirectTo.bind(this, workspace_url)}>
+                                            <tr className="animated fadeIn" key={i} onClick={() => redirectTo(workspace_url)}>
                                                 <th scope="row">{ i + 1 }</th>
                                                 <td className="text-right">
                                                     <img className="workspace_avatar" src={APP_PATH + avatar_pic} />
@@ -285,9 +262,9 @@ export default class Dashboard extends Component {
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    کل : <span className="badge badge-primary ml-4">{ tasks_count }</span>
-                                                    اتمام : <span className="badge badge-success ml-4">{ finished_tasks_count }</span>
-                                                    باقی مانده : <span className="badge badge-danger ml-4">{ tasks_count - finished_tasks_count }</span>
+                                                    کل : <span className="badge badge-primary ml-md-4 d-block d-md-inline">{ tasks_count }</span>
+                                                    اتمام : <span className="badge badge-success ml-md-4 d-block d-md-inline">{ finished_tasks_count }</span>
+                                                    باقی مانده : <span className="badge badge-danger ml-md-4 d-block d-md-inline">{ tasks_count - finished_tasks_count }</span>
                                                 </td>
                                                 <td>
                                                     { demands_left_count }
@@ -314,7 +291,7 @@ export default class Dashboard extends Component {
                         <div className="filter-box mt-2 mb-2 p-3 col-12 animated fadeIn">
                             <div className="filter-option col-12 col-md-6 col-lg-3 mb-3 mb-lg-0 text-center">
                                 <span>جستجو در: </span>
-                                <select id="relation_select" defaultValue="all">
+                                <select id="mixed_tasks_relation_select" defaultValue="all">
                                     <option value="all" icon_name="fas fa-tasks">همه</option>
                                     <option value="finished" icon_name="fas fa-check-square">انجام شده</option>
                                     <option value="unfinished" icon_name="fas fa-times-circle">انجام نشده</option>
@@ -323,7 +300,7 @@ export default class Dashboard extends Component {
                             </div>
                             <div className="filter-option col-12 col-md-6 col-lg-3 mb-3 mb-lg-0 text-center">
                                 <span>مرتب سازی بر اساس:</span>
-                                <select id="order_by_select" defaultValue="due_to">
+                                <select id="mixed_tasks_order_by_select" defaultValue="due_to">
                                     <option value="due_to" icon_name="fas fa-hourglass-start">تاریخ تحویل</option>
                                     <option value="created_at" icon_name="fas fa-calendar-plus">تاریخ ایجاد</option>
                                     <option value="updated_at" icon_name="fas fa-user-edit">تاریخ تغییرات</option>
@@ -332,7 +309,7 @@ export default class Dashboard extends Component {
                             </div>
                             <div className="filter-option col-12 col-md-6 col-lg-3 mb-3 mb-lg-0 text-center">
                                 <span>نحوه مرتب سازی:</span>
-                                <select id="order_select" defaultValue="desc">
+                                <select id="mixed_tasks_order_select" defaultValue="desc">
                                     <option value="asc" icon_name="fas fa-sort-amount-up">صعودی</option>
                                     <option value="desc" icon_name="fas fa-sort-amount-down">نزولی</option>
                                 </select>
@@ -359,7 +336,7 @@ export default class Dashboard extends Component {
                                     mixedTasks.length > 0 && !isGetting ? mixedTasks.map((task, i) => {
                                         let { id, title, group, finished_at, priority_id, due_to, workspace, workspace_id } = task
                                         return (
-                                            <tr key={i} onClick={this.redirectTo.bind(this, task_route.replace("taskId", id))}>
+                                            <tr className="animated fadeIn" key={i} onClick={() => redirectTo(task_route.replace("taskId", id))}>
                                                 <th scope="row">{ i + 1 }</th>
                                                 <td>{title}</td>
                                                 <td className="text-right">
@@ -367,7 +344,7 @@ export default class Dashboard extends Component {
                                                     <a href={workspace_route.replace('workspaceId', workspace_id)}>{workspace.title}</a>
                                                 </td>
                                                 <td>{group}</td>
-                                                <td>{this.setPriority(priority_id)}</td>
+                                                <td>{setPriority(priority_id)}</td>
                                                 <td>{due_to !== null ? moment(due_to).fromNow() : <i className="fas fa-calendar-minus  fa-3x"></i>}</td>
                                                 <td>
                                                     {finished_at === null ? <i className="fas fa-times-circle fa-3x"></i> : <i className="fas fa-check-circle fa-3x"></i>}
@@ -409,7 +386,7 @@ export default class Dashboard extends Component {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
+                                <tr className="animated fadeIn">
                                     <th scope="row">۱</th>
                                     <td>ارسال فرمت پی ان جی لوگو</td>
                                     <td className="text-right">
@@ -459,7 +436,7 @@ export default class Dashboard extends Component {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
+                                <tr className="animated fadeIn">
                                     <th scope="row">۱</th>
                                     <td>ارسال فرمت پی ان جی لوگو</td>
                                     <td className="text-right">

@@ -12,6 +12,7 @@ export default class TinymcEditor extends React.Component {
             <Editor
                 initialValue=""
                 tinymceScriptSrc={`${APP_PATH}js/tinymce/tinymce.js`}
+                onEditorChange={this.handleEditorChange}
                 init={{
                     skin: 'oxide',
                     skin_url: '/css',
@@ -55,7 +56,6 @@ export default class TinymcEditor extends React.Component {
                     ],
                     toolbar_mode: 'sliding'
                 }}
-                onEditorChange={this.handleEditorChange}
             />
         );
     }
