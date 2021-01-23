@@ -76,6 +76,9 @@ class UserPolicy
      */
     public function delete(User $user, User $model)
     {
+        if ($model->hasRole('developer') || $model->hasPermission('can_delete_users')) {
+            return false;
+        }
         return $user->id != $model->id && $user->hasPermission('can_delete_users');
     }
 
