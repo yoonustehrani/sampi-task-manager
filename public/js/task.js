@@ -53821,6 +53821,10 @@ var ShowTask = /*#__PURE__*/function (_Component) {
 
     _this = _super.call.apply(_super, [this].concat(args));
 
+    _defineProperty(_assertThisInitialized(_this), "state", {
+      mode: "show"
+    });
+
     _defineProperty(_assertThisInitialized(_this), "editInfo", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "col-12 col-md-10 offset-md-1 float-left"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -53920,7 +53924,9 @@ var ShowTask = /*#__PURE__*/function (_Component) {
     })))));
 
     _defineProperty(_assertThisInitialized(_this), "showInfo", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "col-12 col-md-8 offset-md-4 float-left show-tasks-container"
+      className: "col-12 col-md-8 offset-md-4 float-left mt-3"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "show-tasks-container"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "mt-3 col-12 col-md-5"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -54017,17 +54023,17 @@ var ShowTask = /*#__PURE__*/function (_Component) {
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "user-right-flex"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "user-img-container ml-2"
+      className: "user-img-container ml-md-2 ml-1"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
       src: typeof workspace_users !== 'undefined' && workspace_users[user.id].avatar_pic !== null ? APP_PATH + workspace_users[user.id].avatar_pic : APP_PATH + 'images/male-avatar.svg'
     })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "user-info ml-2"
+      className: "user-info ml-md-2 ml-1"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "\u0627\u0645\u06CC\u0631\u0631\u0636\u0627 \u0645\u0646\u0635\u0648\u0631\u06CC\u0627\u0646"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
       href: "#user"
     }, "@amirmns"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "user-label-container"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-      className: "btn btn-sm btn-success rtl admin"
+      className: "btn btn-sm btn-success rtl admin p-1"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
       className: "fas fa-star ml-1"
     }), "\u0627\u062F\u0645\u06CC\u0646", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
@@ -54052,7 +54058,13 @@ var ShowTask = /*#__PURE__*/function (_Component) {
       className: "task-detail next-line"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
       className: "text-right"
-    }, "\u06A9\u06CC\u0631 \u062E\u0631")))));
+    }, "\u06A9\u06CC\u0631 \u062E\u0631")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "text-center mt-4"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      className: "btn btn-outline-info"
+    }, "\u0648\u06CC\u0631\u0627\u06CC\u0634 ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+      className: "fas fa-pen-alt"
+    })))));
 
     return _this;
   }
@@ -54066,6 +54078,7 @@ var ShowTask = /*#__PURE__*/function (_Component) {
   }, {
     key: "render",
     value: function render() {
+      var mode = this.state.mode;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-12 float-right task-info-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -54083,7 +54096,7 @@ var ShowTask = /*#__PURE__*/function (_Component) {
         className: "fas fa-arrow-circle-left"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         className: "float-right hoverable"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, "\u0637\u0631\u0627\u062D\u06CC api"))), this.showInfo));
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, "\u0637\u0631\u0627\u062D\u06CC api"))), mode === "show" ? this.showInfo : this.editInfo));
     }
   }]);
 

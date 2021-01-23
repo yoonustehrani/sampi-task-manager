@@ -10103,6 +10103,7 @@ div.show-tasks-container div.task-detail a.task-finisher:hover img {
 div.show-tasks-container div.task-detail.next-line {
   float: initial !important;
   margin-top: 35px;
+  margin-right: 0px !important;
 }
 
 .select2-container {
