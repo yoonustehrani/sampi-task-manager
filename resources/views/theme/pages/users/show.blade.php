@@ -41,26 +41,26 @@
                             @endif
                         </td>
                         <td>
-                        @if ($workspace->pivot->is_admin)
-                            <a href="{{ route('task-manager.workspaces.edit', ['workspace' => $workspace->id]) }}" class="btn btn-sm btn-primary">
-                                <i class="fas fa-pencil-alt"></i>
-                            </a>
+                        @can('update', $workspace)
+                        <a href="{{ route('task-manager.workspaces.edit', ['workspace' => $workspace->id]) }}" class="btn btn-sm btn-primary">
+                            <i class="fas fa-pencil-alt"></i>
+                        </a>
                         @else
                         مجاز نیست
-                        @endif
+                        @endcan
                         </td>
                         <td>
-                        @if ($workspace->creator_id == auth()->user()->id)
-                            <form action="{{ route('task-manager.workspaces.destroy', ['workspace' => $workspace->id]) }}" method="post">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-danger">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </form>
+                        @can('delete', $workspace)
+                        <form action="{{ route('task-manager.workspaces.destroy', ['workspace' => $workspace->id]) }}" method="post">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-sm btn-danger">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </form>
                         @else
                         مجاز نیست
-                        @endif
+                        @endcan
                         </td>
                     </tr>
                 @endforeach

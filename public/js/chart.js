@@ -37876,34 +37876,32 @@ module.exports = function(module) {
 /*!*******************************!*\
   !*** ./resources/js/chart.js ***!
   \*******************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var moment_locale_fa__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! moment/locale/fa */ "./node_modules/moment/locale/fa.js");
+/* harmony import */ var moment_locale_fa__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment_locale_fa__WEBPACK_IMPORTED_MODULE_0__);
 
 window.Chart = __webpack_require__(/*! chart.js */ "./node_modules/chart.js/dist/Chart.js");
 Chart.platform.disableCSSInjection = true;
 
 /***/ }),
 
-/***/ "./resources/sass/app.scss":
-/*!*********************************!*\
-  !*** ./resources/sass/app.scss ***!
-  \*********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
 /***/ 0:
-/*!***************************************************************!*\
-  !*** multi ./resources/js/chart.js ./resources/sass/app.scss ***!
-  \***************************************************************/
+/*!*************************************!*\
+  !*** multi ./resources/js/chart.js ***!
+  \*************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
+<<<<<<< HEAD
 __webpack_require__(/*! W:\php\sampies\resources\js\chart.js */"./resources/js/chart.js");
 module.exports = __webpack_require__(/*! W:\php\sampies\resources\sass\app.scss */"./resources/sass/app.scss");
+=======
+module.exports = __webpack_require__(/*! W:\php\sampies\resources\js\chart.js */"./resources/js/chart.js");
+>>>>>>> chart
 
 
 /***/ })

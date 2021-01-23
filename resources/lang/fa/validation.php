@@ -32,6 +32,8 @@ return [
         'target_user' => 'کاربر هدف',
         'priority' => 'فوریت',
         'task' => 'وظیفه',
-        'text' => 'متن'
+        'text' => 'متن',
+        'icon_class' => 'آیکون',
+        'color_class' => 'رنگ',
     ]
 ];

@@ -5,7 +5,12 @@
 @endsection
 
 @section('page-content')
+    @can('create', \App\Workspace::class)
     @component('theme.tools.title', ['title' => 'لیست پروژه ها', 'create' => route('task-manager.workspaces.create')]) @endcomponent
+    @else
+        @component('theme.tools.title', ['title' => 'لیست پروژه ها']) @endcomponent
+    @endcan
+    
     @component('theme.tools.table')
         @component('theme.tools.table-head')
             <th scope="col">#</th>
@@ -13,8 +18,12 @@
             <th scope="col">کارمندان</th>
             <th scope="col">وضعیت وظایف</th>
             <th scope="col">نیاز های جاری</th>
+            @if (auth()->user()->hasPermission('can_update_workspaces'))
             <th scope="col">ویرایش</th>
+            @endif
+            @if (auth()->user()->hasPermission('can_delete_workspaces'))
             <th scope="col">حذف</th>
+            @endif
         @endcomponent
         @component('theme.tools.table-body')
             @foreach ($workspaces as $workspace)
@@ -43,12 +52,18 @@
                     <td>
                         {{ $workspace->demands_left_count }}
                     </td>
+                    @if (auth()->user()->hasPermission('can_update_workspaces'))
                     <td>
+                        @can('update', $workspace)
                         <a href="{{ route('task-manager.workspaces.edit', ['workspace' => $workspace->id]) }}" class="btn btn-sm btn-primary">
                             <i class="fas fa-pencil-alt"></i>
                         </a>
+                        @endcan
                     </td>
+                    @endif
+                    @if (auth()->user()->hasPermission('can_delete_workspaces'))
                     <td>
+                        @can('delete', $workspace)
                         <form action="{{ route('task-manager.workspaces.destroy', ['workspace' => $workspace->id]) }}" method="post">
                             @csrf
                             @method('DELETE')
@@ -56,7 +71,9 @@
                                 <i class="fas fa-trash"></i>
                             </button>
                         </form>
+                        @endcan
                     </td>
+                    @endif
                 </tr>
             @endforeach
         @endcomponent

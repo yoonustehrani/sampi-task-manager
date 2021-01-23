@@ -51,9 +51,10 @@ class TaskController extends BaseController
     public function show(Request $request, $workspace, $task)
     {
         $task = Task::where('workspace_id', $workspace)->with([
-            'demands' => function($q) { $q->with('from', 'to'); }
+            'users'
         ])->findOrFail($task);
-        $task->load('users');
+        $this->authorize('view', $task);
+        $task->load(['demands' => function($q) { $q->with('from', 'to'); }]);
         return $task;
     }
     public function store(Request $request, $workspace)
@@ -65,6 +66,7 @@ class TaskController extends BaseController
             'priority' => 'required|numeric',
             'due_to' => 'nullable|numeric',
         ]);
+        $this->authorize('create', Task::class);
         $user = ($request->user_id) ? \App\User::find($request->user_id) : $request->user();
         $workspace = $user->workspaces()->findOrFail($workspace);
         try {
@@ -99,6 +101,7 @@ class TaskController extends BaseController
             'due_to' => 'nullable|numeric',
         ]);
         $task = Task::where('workspace_id', $workspace)->findOrFail($task);
+        $this->authorize('update', $task);
         try {
             \DB::beginTransaction();
                 $task->title = $request->title;
@@ -108,6 +111,7 @@ class TaskController extends BaseController
                 $task->proiority_id = $request->proiority;
                 $task->due_to = $request->due_to;
                 $task->save();
+                
                 $users = $request->input('users') ?: [];
                 $task->users()->sync(
                     array_merge($users, [(string) $request->user()->id])
@@ -122,11 +126,9 @@ class TaskController extends BaseController
     public function destroy(Request $request, $workspace, $task)
     {
         $task = Task::where('workspace_id', $workspace)->findOrFail($task);
-        if ($request->user()->id === $task->creator_id) {
-            $task->delete();
-            return ['okay' => true];
-        }
-        abort(403);
+        $this->authorize('delete', $task);
+        $task->delete();
+        return ['okay' => true];
     }
 
     public function toggle(Request $request, $task)

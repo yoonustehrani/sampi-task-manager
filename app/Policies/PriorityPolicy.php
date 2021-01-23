@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Permission;
-use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use App\Priority;
+use App\User;
 
-class PermissionPolicy
+class PriorityPolicy
 {
     use HandlesAuthorization;
 
@@ -16,7 +16,6 @@ class PermissionPolicy
             return true;
         }
     }
-
     /**
      * Determine whether the user can view any models.
      *
@@ -25,17 +24,17 @@ class PermissionPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->hasPermission('can_view_any_permissions');
+        //
     }
 
     /**
      * Determine whether the user can view the model.
      *
      * @param  \App\User  $user
-     * @param  \App\Permission  $permission
+     * @param  \App\Priority  $Priority
      * @return mixed
      */
-    public function view(User $user, Permission $permission)
+    public function view(User $user, Priority $Priority)
     {
         //
     }
@@ -55,10 +54,10 @@ class PermissionPolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\User  $user
-     * @param  \App\Permission  $permission
+     * @param  \App\Priority  $Priority
      * @return mixed
      */
-    public function update(User $user, Permission $permission)
+    public function update(User $user, Priority $Priority)
     {
         //
     }
@@ -67,10 +66,10 @@ class PermissionPolicy
      * Determine whether the user can delete the model.
      *
      * @param  \App\User  $user
-     * @param  \App\Permission  $permission
+     * @param  \App\Priority  $Priority
      * @return mixed
      */
-    public function delete(User $user, Permission $permission)
+    public function delete(User $user, Priority $Priority)
     {
         //
     }
@@ -79,10 +78,10 @@ class PermissionPolicy
      * Determine whether the user can restore the model.
      *
      * @param  \App\User  $user
-     * @param  \App\Permission  $permission
+     * @param  \App\Priority  $Priority
      * @return mixed
      */
-    public function restore(User $user, Permission $permission)
+    public function restore(User $user, Priority $Priority)
     {
         //
     }
@@ -91,10 +90,10 @@ class PermissionPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\User  $user
-     * @param  \App\Permission  $permission
+     * @param  \App\Priority  $Priority
      * @return mixed
      */
-    public function forceDelete(User $user, Permission $permission)
+    public function forceDelete(User $user, Priority $Priority)
     {
         //
     }

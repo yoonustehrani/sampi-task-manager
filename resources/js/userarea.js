@@ -36,7 +36,7 @@ function closeFullscreen() {
     }
 }
 
-$('.scr-controller').click(function(){
+$('.scr-controller').on('click', function(){
     $(' > i',this).toggleClass('fa-expand-arrows-alt');
     if ($(this).attr('data-event') == 'max') {
         $(this).attr('data-event','min');

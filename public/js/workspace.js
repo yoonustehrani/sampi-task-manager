@@ -60936,7 +60936,7 @@ if (target) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! I:\projects\task-manager\resources\js\react\workspace.js */"./resources/js/react/workspace.js");
+module.exports = __webpack_require__(/*! W:\php\sampies\resources\js\react\workspace.js */"./resources/js/react/workspace.js");
 
 
 /***/ })

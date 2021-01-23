@@ -9,7 +9,7 @@ use Nicolaslopezj\Searchable\SearchableTrait;
 class Task extends Model
 {
     use SoftDeletes, SearchableTrait;
-    protected $fillable = ['title', 'description', 'parent_id', 'group', 'creator_id', 'finisher_id', 'priority_id', 'due_to', 'finished_at'];
+    protected $fillable = ['title', 'description', 'parent_id', 'group', 'workspace_id', 'creator_id', 'finisher_id', 'priority_id', 'due_to', 'finished_at'];
     protected $casts = [
         'due_to' => 'datetime',
     ];
@@ -32,5 +32,9 @@ class Task extends Model
     public function demands()
     {
         return $this->hasMany(Demand::class);
+    }
+    public function priority()
+    {
+        return $this->belongsTo(Priority::class);
     }
 }
