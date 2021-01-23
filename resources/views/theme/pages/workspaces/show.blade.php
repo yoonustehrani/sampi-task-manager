@@ -70,14 +70,6 @@
                 @endcomponent
             @endcomponent
             </div>
-            <div
-                id="workspace-react"
-                list_tasks_api = "{{ route('api.task-manager.tasks.index', ['workspace' => $workspace->id, 'api_token' => auth()->user()->api_token]) }}"
-                add_task_api = "{{ route('api.task-manager.tasks.store', ['workspace' => $workspace->id, 'api_token' => auth()->user()->api_token]) }}"
-                task_route = "{{ route('task-manager.tasks.show', ['task' => 'taskId']) }}"
-                workspace_api = "{{ route('api.task-manager.workspaces.show', ['workspace' => $workspace->id, 'api_token' => auth()->user()->api_token]) }}"
-                logged_in_api_token = "{{ auth()->user()->api_token }}"
-            ></div>
         </div>
         <div
             id="workspace-react"
@@ -90,7 +82,7 @@
     </div>
 @endsection
 
-@section('scripts')
+@push('scripts')
     <script src="{{ asset('js/workspace.js') }}"></script>   
     <script src="{{ asset('js/select2.js') }}"></script>
-@endsection
+@endpush
