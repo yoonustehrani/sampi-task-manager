@@ -69,6 +69,9 @@ class TaskPolicy
      */
     public function update(User $user, Task $task)
     {
+        if ($task->creator_id == $user->id || $user->hasPermission('can_update_any_tasks')) {
+            return true;
+        }
         $user_can_view = $task->users->filter(function($task_user) use($user) {
             return $user->id == $task_user->id;
         })->first();
@@ -78,7 +81,18 @@ class TaskPolicy
                 return $user->id == $workspace_admin->id;
             })->first();
         }
-        return (!! $user_can_view) ?: $user->hasPermission('can_update_any_tasks');
+        return !! $user_can_view;
+    }
+
+    public function update_users(User $user, Task $task)
+    {
+        if ($task->creator_id == $user->id || $user->hasPermission('can_update_any_tasks')) {
+            return true;
+        }
+        $user_can_view = $task->workspace->admins->filter(function($workspace_admin) use($user) {
+            return $user->id == $workspace_admin->id;
+        })->first();
+        return !! $user_can_view;
     }
 
     /**

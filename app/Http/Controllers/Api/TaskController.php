@@ -136,6 +136,7 @@ class TaskController extends Controller
                 $task->proiority_id = $request->proiority;
                 $task->due_to = $request->due_to;
                 $task->save();
+                
                 $users = $request->input('users') ?: [];
                 $task->users()->sync(
                     array_merge($users, [(string) $request->user()->id])
