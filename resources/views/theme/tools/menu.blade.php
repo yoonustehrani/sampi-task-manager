@@ -6,6 +6,7 @@
         <li>
             <a href="{{ route('task-manager.workspaces.index') }}">پروژه ها <i class="fas fa-briefcase"></i></a>
         </li>
+        @if (auth()->user()->hasPermission('can_manage_system'))
         <li class="has_sub">
             <p>
                 <a href="#demands">
@@ -29,28 +30,14 @@
                     <a href="{{ route('task-manager.permissions.index') }}">مجوز ها <i class="far fa-address-card"></i></a>
                 </li>
                 @endcan
-                {{-- 
-                @can('viewAny', \App\Proiority::class)
+                @if (auth()->user()->hasRole('developer'))
                 <li class="sub">
-                    <a href="{{ route('task-manager.proiorities.index') }}">اولویت ها <i class="fas fa-list-ol"></i></a>
+                    <a href="{{ route('task-manager.priorities.index') }}">اولویت ها <i class="fas fa-list-ol"></i></a>
                 </li>
-                @endcan --}}
+                @endif
             </ul>
         </li>
-        <li class="has_sub">
-            <p>
-                <a href="#demands">
-                    نیاز ها<i class="fab fa-stack-exchange"></i>
-                </a>
-                <i class="opener fa fa-angle-left"></i>
-            </p>
-            <ul>
-                <li class="sub"><a href="">ضروری و مهم<i class="fas fa-hourglass-end"></i></a></li>
-                <li class="sub"><a href="">ضروری و غیر مهم<i class="fas fa-hourglass-half"></i></a></li>
-                <li class="sub"><a href="">غیر ضروری و مهم<i class="fas fa-hourglass-start"></i></a></li>
-                <li class="sub"><a href="">غیر ضروری و غیر مهم<i class="fas fa-hourglass"></i></a></li>
-            </ul>
-        </li>
+        @endif
         <li>
             <a href="#" id="toggle-logout">خروج <i class="fas fa-power-off"></i></a>
         </li>

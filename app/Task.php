@@ -33,4 +33,8 @@ class Task extends Model
     {
         return $this->hasMany(Demand::class);
     }
+    public function priority()
+    {
+        return $this->belongsTo(Priority::class);
+    }
 }
