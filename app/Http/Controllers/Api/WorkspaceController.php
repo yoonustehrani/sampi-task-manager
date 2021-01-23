@@ -15,6 +15,7 @@ class WorkspaceController extends Controller
     }
     public function show(Request $request, Workspace $workspace)
     {
+        $this->authorize('view', $workspace);
         return $workspace->load('users');
     }
 }
