@@ -7,10 +7,12 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Activitylog\Traits\CausesActivity;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class User extends Authenticatable
 {
-    use Notifiable, RoleAndPermissionTrait, SoftDeletes;
+    use Notifiable, RoleAndPermissionTrait, SoftDeletes, LogsActivity, CausesActivity;
 
     /**
      * The attributes that are mass assignable.
@@ -18,8 +20,12 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'first_name', 'last_name', 'avatar_pic', 'telegram_chat_id'
     ];
+    protected static $logFillable = true;
+    protected static $logName = 'task-manager-activities';
+    protected static $logOnlyDirty = true;
+    protected static $submitEmptyLogs = false;
 
     /**
      * The attributes that should be hidden for arrays.

@@ -10,6 +10,13 @@ class TaskPolicy
 {
     use HandlesAuthorization;
 
+    public function before($user, $ability)
+    {
+        if ($user->hasRole('developer')) {
+            return true;
+        }
+    }
+
     /**
      * Determine whether the user can view any models.
      *
@@ -18,7 +25,7 @@ class TaskPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return $user->hasPermission('can_view_any_tasks');
     }
 
     /**
@@ -30,7 +37,16 @@ class TaskPolicy
      */
     public function view(User $user, Task $task)
     {
-        //
+        $user_can_view = $task->users->filter(function($task_user) use($user) {
+            return $user->id == $task_user->id;
+        })->first();
+        if (! $user_can_view) {
+            $task->workspace->load('admins');
+            $user_can_view = $task->workspace->admins->filter(function($workspace_admin) use($user) {
+                return $user->id == $workspace_admin->id;
+            })->first();
+        }
+        return (!! $user_can_view) ?: $user->hasPermission('can_view_any_tasks');
     }
 
     /**
@@ -41,7 +57,7 @@ class TaskPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->hasPermission('can_create_tasks');
     }
 
     /**
@@ -53,7 +69,30 @@ class TaskPolicy
      */
     public function update(User $user, Task $task)
     {
-        //
+        if ($task->creator_id == $user->id || $user->hasPermission('can_update_any_tasks')) {
+            return true;
+        }
+        $user_can_view = $task->users->filter(function($task_user) use($user) {
+            return $user->id == $task_user->id;
+        })->first();
+        if (! $user_can_view) {
+            $task->workspace->load('admins');
+            $user_can_view = $task->workspace->admins->filter(function($workspace_admin) use($user) {
+                return $user->id == $workspace_admin->id;
+            })->first();
+        }
+        return !! $user_can_view;
+    }
+
+    public function update_users(User $user, Task $task)
+    {
+        if ($task->creator_id == $user->id || $user->hasPermission('can_update_any_tasks')) {
+            return true;
+        }
+        $user_can_view = $task->workspace->admins->filter(function($workspace_admin) use($user) {
+            return $user->id == $workspace_admin->id;
+        })->first();
+        return !! $user_can_view;
     }
 
     /**
@@ -65,7 +104,7 @@ class TaskPolicy
      */
     public function delete(User $user, Task $task)
     {
-        //
+        return $user->id == $task->creator_id || $user->hasPermission('can_delete_tasks');
     }
 
     /**
@@ -77,7 +116,7 @@ class TaskPolicy
      */
     public function restore(User $user, Task $task)
     {
-        //
+        return $user->hasPermission('can_restore_tasks');
     }
 
     /**
@@ -89,6 +128,6 @@ class TaskPolicy
      */
     public function forceDelete(User $user, Task $task)
     {
-        //
+        return $user->hasPermission('can_force_delete_tasks');
     }
 }

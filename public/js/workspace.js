@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -7790,7 +7790,7 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
             sameElse: 'L',
         },
         relativeTime: {
-            future: '%s دیگر',
+            future: 'در %s',
             past: '%s پیش',
             s: 'چند ثانیه',
             ss: '%d ثانیه',
@@ -60926,14 +60926,14 @@ if (target) {
 
 /***/ }),
 
-/***/ 3:
+/***/ 2:
 /*!***********************************************!*\
   !*** multi ./resources/js/react/workspace.js ***!
   \***********************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! I:\projects\task-manager\resources\js\react\workspace.js */"./resources/js/react/workspace.js");
+module.exports = __webpack_require__(/*! W:\php\sampies\resources\js\react\workspace.js */"./resources/js/react/workspace.js");
 
 
 /***/ })

@@ -14,43 +14,145 @@
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/chart.js') }}"></script>
     <script>
-        var ctx = document.getElementById('myChart');
-        var myChart = new Chart(ctx, {
-            type: 'bar',
+        let ctx = document.getElementById('myChart');
+        let data = [
+            {
+                y: 1,
+                t: moment("2021-01-1")
+            },
+            {
+                y: 1,
+                t: moment("2021-01-2")
+            },
+            {
+                y: 2,
+                t: moment("2021-01-3")
+            },
+            {
+                y: 3,
+                t: moment("2021-01-4")
+            },
+            {
+                y: 2,
+                t: moment("2021-01-5")
+            },
+            {
+                y: 2,
+                t: moment("2021-01-6")
+            },
+            {
+                y: 6,
+                t: moment("2021-01-8")
+            },
+            {
+                y: 1,
+                t: moment("2021-01-9")
+            }
+            // {
+            //     t: moment('2021-01-02'),
+            //     y: 0
+            // },
+            // {
+            //     t: moment('2021-01-03'),
+            //     y: 100
+            // },
+            // {
+            //     t: moment('2021-01-05'),
+            //     y: 100
+            // },
+            // {
+            //     t: moment('2021-01-06'),
+            //     y: 100
+            // },
+            // {
+            //     t: moment('2021-01-12'),
+            //     y: 50
+            // },
+            // {
+            //     t: moment('2021-01-14'),
+            //     y: 60
+            // },
+            // {
+            //     t: moment('2021-01-16'),
+            //     y: 40
+            // },
+            // {
+            //     t: moment('2021-01-17'),
+            //     y: 100
+            // },
+            // {
+            //     t: moment('2021-01-18'),
+            //     y: 100
+            // }
+        ];
+        var myLineChart = new Chart(ctx, {
+            type: 'line',
             data: {
-                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-                datasets: [{
-                    label: '# of Votes',
-                    data: [12, 19, 3, 5, 2, 3],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1
-                }]
+                datasets: [
+                    {
+                        label: 'وظایف',
+                        // showLine: false,
+                        // lineTension: 0,
+                        data: data,
+                        // fill: false,
+                        borderColor: 'red',
+                        borderWidth: 1,
+                        backgroundColor: 'rgba(255,0,0,0.2)',
+                    }
+                ]
             },
             options: {
+                tooltips: {
+                    mode: 'index',
+                    intersect: false,
+                    titleFontFamily: 'Iransans',
+                    bodyFontFamily: 'Iransans'
+                },
+                legend: {
+                    labels: {
+                        fontFamily: 'Iransans'
+                    }
+                },
                 scales: {
+                    xAxes: [
+                        {
+                            ticks: {
+                                source: 'data',
+                                fontFamily: 'Iransans'
+                            },
+                            distribution: 'series',
+                            type: 'time',
+                            time: {
+                                round: true,
+                                unit: 'day',
+                                minUnit: 'day',
+                                tooltipFormat: 'dddd، DD MMMM YYYY',
+                                displayFormats: {
+                                    'day': 'YYYY-MM-DD'
+                                },
+                            }
+                        }
+                    ],
                     yAxes: [{
+                        stacked: false,
                         ticks: {
-                            beginAtZero: true
+                            beginAtZero: true,
+                            fontFamily: 'Iransans'
                         }
                     }]
                 },
+                elements: {
+                    // point: {
+                    //     pointBackgroundColor: '',
+                    //     pointBorderColor: '',
+                    //     pointBorderWidth: '',
+                    // },
+                    // lines: {
+                    //     backgroundColor: 'red',
+                    // }
+                }
             }
-});
+        });
     </script>
 </body>
 </html>
