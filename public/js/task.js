@@ -55156,9 +55156,11 @@ var ShowTask = /*#__PURE__*/function (_Component) {
       var _this$state = _this.state,
           task = _this$state.task,
           finished_at_check = _this$state.finished_at_check,
+          workspace = _this$state.workspace,
+          task_active_users = _this$state.task_active_users,
           logged_in_user_id = _this.props.logged_in_user_id;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-12 col-md-8 offset-md-2 float-left mt-3 animated flash"
+        className: "col-12 col-md-10 offset-md-1 float-left mt-3 animated flash"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "edit-tasks-container col-12"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -55211,8 +55213,9 @@ var ShowTask = /*#__PURE__*/function (_Component) {
       }, "\u0627\u0646\u062C\u0627\u0645 \u062F\u0647\u0646\u062F\u06AF\u0627\u0646")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
         id: "edit-task-members",
         className: "form-control text-right",
+        defaultValue: task_active_users,
         multiple: true
-      }, task.users.map(function (user, i) {
+      }, workspace.users.map(function (user, i) {
         if (user.id !== logged_in_user_id) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
             key: i,
@@ -55269,7 +55272,7 @@ var ShowTask = /*#__PURE__*/function (_Component) {
           task = _this$state2.task,
           workspace_users = _this$state2.workspace_users;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-12 col-md-8 offset-md-2 float-left mt-3 animated fadeIn"
+        className: "col-12 col-md-10 offset-md-1 float-left mt-3 animated fadeIn"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "show-tasks-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -55365,8 +55368,9 @@ var ShowTask = /*#__PURE__*/function (_Component) {
         className: "fas fa-users"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0627\u0646\u062C\u0627\u0645 \u062F\u0647\u0646\u062F\u06AF\u0627\u0646:")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "employees-container task-detail next-line"
-      }, task && task.users >= 1 && task.user.map(function (user, i) {
+      }, task && workspace_users && task.users.map(function (user, i) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          key: i,
           className: "user-dropdown-item border-sharp animated jackInTheBox permanent-visible"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "user-right-flex"
@@ -55378,9 +55382,21 @@ var ShowTask = /*#__PURE__*/function (_Component) {
           className: "user-info ml-md-2 ml-1"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, user.fullname), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
           href: "#user"
-        }, user.name))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }, "@", user.name))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "user-label-container"
-        }));
+        }, workspace_users[user.id].is_admin === 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          className: "btn btn-sm btn-success rtl admin p-1"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, user.id === task.creator_id ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fas fa-star ml-1"
+        }) : "", "\u0627\u062F\u0645\u06CC\u0646", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fas fa-user-tie mr-1"
+        }))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          className: "btn btn-sm btn-primary rtl"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, user.id === task.creator_id ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fas fa-star ml-1"
+        }) : "", "\u0639\u0636\u0648", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fas fa-user mr-1"
+        })))));
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "mt-3 col-12 col-md-5"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -55412,7 +55428,8 @@ var ShowTask = /*#__PURE__*/function (_Component) {
     });
 
     _this.state = {
-      mode: "show"
+      mode: "show",
+      task_active_users: []
     };
     return _this;
   }
@@ -55431,6 +55448,12 @@ var ShowTask = /*#__PURE__*/function (_Component) {
         _this2.setState({
           task: data,
           finished_at_check: data.finished_at !== null ? true : false
+        }, function () {
+          _this2.state.task.users.map(function (user, i) {
+            _this2.setState(function (prevState) {
+              task_active_users: prevState.task_active_users.push(user.id);
+            });
+          });
         });
       });
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(workspace_api).then(function (res) {

@@ -11,6 +11,7 @@ export default class ShowTask extends Component {
         super(props)
         this.state = {
             mode: "show",
+            task_active_users: []
         }
     }
 
@@ -33,6 +34,12 @@ export default class ShowTask extends Component {
             this.setState({
                 task: data,
                 finished_at_check: data.finished_at !== null ? true : false
+            }, () => {
+                this.state.task.users.map((user, i) => {
+                    this.setState(prevState => {
+                        task_active_users: prevState.task_active_users.push(user.id)
+                    })
+                })
             })
         })
         Axios.get(workspace_api).then(res => {
@@ -43,7 +50,7 @@ export default class ShowTask extends Component {
                         workspace_users: Object.assign({}, prevState.workspace_users, {
                             [user.id]: {
                                 is_admin: user.pivot.is_admin,
-                                fullname: user.fullname
+                                fullname: user.fullname,
                             }
                         }),
                     }))
@@ -84,9 +91,9 @@ export default class ShowTask extends Component {
     }
 
     editInfo = () => {
-        let { task, finished_at_check } = this.state, { logged_in_user_id } = this.props
+        let { task, finished_at_check, workspace, task_active_users } = this.state, { logged_in_user_id } = this.props
         return (
-            <div className="col-12 col-md-8 offset-md-2 float-left mt-3 animated flash">
+            <div className="col-12 col-md-10 offset-md-1 float-left mt-3 animated flash">
                 <div className="edit-tasks-container col-12">
                     <div className="input-group col-12 col-md-6 float-right mt-3">
                         <div className="input-group-prepend">
@@ -115,8 +122,8 @@ export default class ShowTask extends Component {
                         <div className="input-group-prepend">
                             <span className="input-group-text">انجام دهندگان</span>
                         </div>
-                        <select id="edit-task-members" className="form-control text-right" multiple>
-                            { task.users.map((user, i) => {
+                        <select id="edit-task-members" className="form-control text-right" defaultValue={task_active_users} multiple>
+                            { workspace.users.map((user, i) => {
                                 if (user.id !== logged_in_user_id) {
                                     return (
                                         <option key={i} value={user.id} img_address={APP_PATH + user.avatar_pic}>{user.fullname}</option>
@@ -157,7 +164,7 @@ export default class ShowTask extends Component {
     showInfo = () => {
         let { task, workspace_users } = this.state
         return (
-            <div className="col-12 col-md-8 offset-md-2 float-left mt-3 animated fadeIn">
+            <div className="col-12 col-md-10 offset-md-1 float-left mt-3 animated fadeIn">
                 <div className="show-tasks-container">
                     <div className="mt-3 col-12 col-md-5">
                         <div className="task-title-section title-section">
@@ -257,23 +264,22 @@ export default class ShowTask extends Component {
                             <span>انجام دهندگان:</span>
                         </div>
                         <div className="employees-container task-detail next-line">
-                            { task && task.users >= 1 &&
-                                task.user.map((user, i) => (
-                                    <div className="user-dropdown-item border-sharp animated jackInTheBox permanent-visible">
+                            { task && workspace_users &&
+                                task.users.map((user, i) => (
+                                    <div key={i} className="user-dropdown-item border-sharp animated jackInTheBox permanent-visible">
                                         <div className="user-right-flex">
                                             <div className="user-img-container ml-md-2 ml-1">
                                                 <img src={APP_PATH + user.avatar_pic} />
                                             </div>
                                             <div className="user-info ml-md-2 ml-1">
                                                 <p>{user.fullname}</p>
-                                                <a href={"#user"}>{user.name}</a>
+                                                <a href={"#user"}>@{user.name}</a>
                                             </div>
                                         </div>
                                         <div className="user-label-container">
                                             {
-                                                // workspace_users && workspace_users[user.id].is_admin === 1 ? <button className="btn btn-sm btn-success rtl admin p-1"><span>{user.id === task.creator_id ? <i className="fas fa-star ml-1"></i> : ""}ادمین<i className="fas fa-user-tie mr-1"></i></span></button>
-                                                // : <button className="btn btn-sm btn-primary rtl"><span>{user.id === task.creator_id ? <i className="fas fa-star ml-1"></i> : ""}عضو<i className="fas fa-user mr-1"></i></span></button>
-                                                // workspace_users && workspace_users[user.id].is_admin === 1 ? console.log('1') : console.log("2")
+                                                workspace_users[user.id].is_admin === 1 ? <button className="btn btn-sm btn-success rtl admin p-1"><span>{user.id === task.creator_id ? <i className="fas fa-star ml-1"></i> : ""}ادمین<i className="fas fa-user-tie mr-1"></i></span></button>
+                                                : <button className="btn btn-sm btn-primary rtl"><span>{user.id === task.creator_id ? <i className="fas fa-star ml-1"></i> : ""}عضو<i className="fas fa-user mr-1"></i></span></button>
                                             }
                                         </div>
                                     </div>
