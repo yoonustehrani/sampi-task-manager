@@ -24,5 +24,17 @@ class PermissionSeeder extends Seeder
                 $permission->save();
             }
         }
+        (new Permission())->insert([
+            [
+                'key' => 'can_edit_user_role',
+                'label' => 'ویرایش سمت کاربران'
+            ],
+            [
+                'key' => 'can_manage_system',
+                'label' => 'مدیریت سیستم'
+            ]
+        ]);
+        $role = \App\Role::whereName('developer')->first();
+        $role->Permissions()->sync(Permission::all());
     }
 }
