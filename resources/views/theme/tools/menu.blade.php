@@ -24,11 +24,12 @@
                     <a href="{{ route('task-manager.roles.index') }}">سمت ها <i class="fas fa-user-tag"></i></a>
                 </li>
                 @endcan
-                {{-- @can('viewAny', \App\Permission::class)
+                @can('viewAny', \App\Permission::class)
                 <li class="sub">
                     <a href="{{ route('task-manager.permissions.index') }}">مجوز ها <i class="far fa-address-card"></i></a>
                 </li>
                 @endcan
+                {{-- 
                 @can('viewAny', \App\Proiority::class)
                 <li class="sub">
                     <a href="{{ route('task-manager.proiorities.index') }}">اولویت ها <i class="fas fa-list-ol"></i></a>

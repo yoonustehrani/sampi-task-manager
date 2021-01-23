@@ -106,7 +106,8 @@ class WorkspaceController extends Controller
         $members = $request->input('members') ?: [];
         $members = collect($members)->diff($request->input('admins'));
         $workspace->save();
-        $workspace->admins()->sync($request->input('admins'));
+        $admins = $request->input('admins') ? array_merge([auth()->user()->id], $request->input('admins')) : [auth()->user()->id];
+        $workspace->admins()->sync($admins);
         $workspace->members()->sync($members);
         return redirect()->to(route('task-manager.workspaces.edit', ['workspace' => $workspace->id]));
     }

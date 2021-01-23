@@ -93,7 +93,7 @@ class WorkspacePolicy
      */
     public function restore(User $user, Workspace $workspace)
     {
-        //
+        return $user->hasPermission('can_restore_workspaces');
     }
 
     /**
@@ -105,6 +105,6 @@ class WorkspacePolicy
      */
     public function forceDelete(User $user, Workspace $workspace)
     {
-        //
+        return $user->hasPermission('can_force_delete_workspaces');
     }
 }
