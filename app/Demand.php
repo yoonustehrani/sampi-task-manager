@@ -28,4 +28,8 @@ class Demand extends Model
     {
         return $this->belongsTo(Workspace::class);
     }
+    public function messages()
+    {
+        return $this->hasMany(DemandMessage::class);
+    }
 }
