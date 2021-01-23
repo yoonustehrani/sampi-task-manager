@@ -55160,7 +55160,7 @@ var ShowTask = /*#__PURE__*/function (_Component) {
           task_active_users = _this$state.task_active_users,
           logged_in_user_id = _this.props.logged_in_user_id;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-12 col-md-10 offset-md-1 float-left mt-3 animated flash"
+        className: "col-12 col-md-10 offset-md-2 float-left mt-3 animated flash"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "edit-tasks-container col-12"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -55272,7 +55272,7 @@ var ShowTask = /*#__PURE__*/function (_Component) {
           task = _this$state2.task,
           workspace_users = _this$state2.workspace_users;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-12 col-md-10 offset-md-1 float-left mt-3 animated fadeIn"
+        className: "col-12 col-md-10 offset-md-2 float-left mt-3 animated fadeIn"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "show-tasks-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -55371,7 +55371,7 @@ var ShowTask = /*#__PURE__*/function (_Component) {
       }, task && workspace_users && task.users.map(function (user, i) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           key: i,
-          className: "user-dropdown-item border-sharp animated jackInTheBox permanent-visible"
+          className: "user-dropdown-item border-sharp animated flipInX permanent-visible"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "user-right-flex"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {

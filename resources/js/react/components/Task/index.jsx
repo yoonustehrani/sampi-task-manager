@@ -93,7 +93,7 @@ export default class ShowTask extends Component {
     editInfo = () => {
         let { task, finished_at_check, workspace, task_active_users } = this.state, { logged_in_user_id } = this.props
         return (
-            <div className="col-12 col-md-10 offset-md-1 float-left mt-3 animated flash">
+            <div className="col-12 col-md-10 offset-md-2 float-left mt-3 animated flash">
                 <div className="edit-tasks-container col-12">
                     <div className="input-group col-12 col-md-6 float-right mt-3">
                         <div className="input-group-prepend">
@@ -164,7 +164,7 @@ export default class ShowTask extends Component {
     showInfo = () => {
         let { task, workspace_users } = this.state
         return (
-            <div className="col-12 col-md-10 offset-md-1 float-left mt-3 animated fadeIn">
+            <div className="col-12 col-md-10 offset-md-2 float-left mt-3 animated fadeIn">
                 <div className="show-tasks-container">
                     <div className="mt-3 col-12 col-md-5">
                         <div className="task-title-section title-section">
@@ -266,7 +266,7 @@ export default class ShowTask extends Component {
                         <div className="employees-container task-detail next-line">
                             { task && workspace_users &&
                                 task.users.map((user, i) => (
-                                    <div key={i} className="user-dropdown-item border-sharp animated jackInTheBox permanent-visible">
+                                    <div key={i} className="user-dropdown-item border-sharp animated flipInX permanent-visible">
                                         <div className="user-right-flex">
                                             <div className="user-img-container ml-md-2 ml-1">
                                                 <img src={APP_PATH + user.avatar_pic} />
