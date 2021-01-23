@@ -222,7 +222,7 @@ export default class Dashboard extends Component {
                                                     <a href={workspace_url}>{ title }</a>
                                                 </td>
                                                 <td>
-                                                    <div className="employees-container">
+                                                    <div className="employees-container horizontal-centerlize">
                                                         {
                                                             users.length === 0 &&
                                                                 <span><i className="fas fa-user-slash"></i></span>

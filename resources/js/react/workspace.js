@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import Workspace from './components/Workspace'
+import Workspace from './components/Workspace/index'
 
 const target = document.getElementById('workspace-react')
 const addTaskApi = target.getAttribute("add_task_api")

@@ -11,7 +11,7 @@ body,html {
 h1, h2, h3, h4, h5, h6 {
     direction: rtl;
 }
-button, input, p, a, h1, h2, h3, h4, h5, h6 {
+button, input, p, a, h1, h2, h3, h4, h5, h6, span, li, div {
     font-family: $iran-sans;
 }
 a {
@@ -320,14 +320,8 @@ div.workspace-sub-info {
 }
 
 div.workspace-title-section {
-    display: flex;
-    flex-direction: row-reverse;
-    justify-content: flex-start;
-    align-items: baseline;
-    text-align: right;
     margin-top: 15px;
     width: fit-content;
-    float: right;
     > i {
         margin-left: 6px;
         font-size: 20px;
@@ -383,20 +377,6 @@ div.workspace-add-task {
                 font-family: $iran-sans;
             }
         }
-        span {
-            text-align: right;
-        }
-        .select2-selection {
-            height: 100%;
-            display: flex;
-            align-items: center;
-            .select2-selection__arrow {
-                top: auto;
-            }
-        }
-        div.input-group-single-line {
-            flex-wrap: nowrap !important;
-        }
         textarea {
             min-height: 100px;
         }
@@ -407,6 +387,25 @@ div.workspace-add-task {
         }
     }
 }
+
+div.add-task-section, div.task-info-container {
+    span {
+        text-align: right;
+    }
+    .select2-selection {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        .select2-selection__arrow {
+            top: auto;
+        }
+    }
+}
+
+div.input-group-single-line {
+    flex-wrap: nowrap !important;
+}
+
 div.select-option {
     img.member-img {
         width: 30px;
@@ -439,3 +438,135 @@ div.user-dropdown-item.border-sharp {
 }
 
 /** TASK **/
+div.task-info-container {
+    direction: rtl;
+}
+div.breadcrumb {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: right;
+    align-items: center;
+    border-bottom: 1px solid #859398;
+    > div, a, i {
+        direction: rtl;
+        margin-right: 10px;
+        color: #859398;
+    }
+    > i {
+        font-size: 15px;
+    }
+    img {
+        width: 30px;
+        height: 30px;
+        border: 1px solid #859398;
+        border-radius: 50px;
+        margin-left: 5px;
+        transition: 0.5s;
+    }
+    h6 {
+        display: inline;
+        color: #859398;
+        transition: 0.5s;
+    }
+    .hoverable {
+        cursor: pointer;
+    }
+    .hoverable:hover {
+        h6 {
+            color: #2C5364;
+        }
+        img {
+            border: 1px solid #2C5364;
+        }
+    }
+}
+
+.c-p {
+    cursor: pointer;
+}
+
+div.title-section {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-start;
+    align-items: baseline;
+    text-align: right;
+    float: right;
+    > i {
+        margin-left: 6px;
+
+    }
+}
+
+div.show-tasks-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    box-shadow: 5px 5px 14px 0 #2c3e50;
+    div.task-title-section {
+        flex-direction: row !important;
+        float: right;
+        display: flex;
+        align-items: center;
+        i {
+            font-size: 25px;
+            color: #2c3e50;
+        }
+        span {
+            font-size: 16px;
+            color: #000000;
+        }
+    }
+    div.task-detail {
+        float: right;
+        margin-right: 8px;
+        span {
+            font-size: 15px;
+            color: #000000;
+        }
+        ul.child-tasks {
+            li {
+                color: #000000;
+                cursor: pointer;
+                transition: 0.5s;
+                text-align: right;
+            }
+            li:hover {
+                color: #3498db;
+            }
+        }
+        a {
+            cursor: pointer;
+            font-size: 15px;
+            transition: 0.3s;
+            color: #000000;
+        }
+        a:hover {
+            color: #3490dc;
+        }
+        a.task-finisher {
+            // padding: 10px;
+            // border-radius: 5px;
+            img {
+                width: 35px;
+                height: 35px;
+                border-radius: 50px;
+                margin-left: 5px;
+                transition: 0.5s;
+                border: 0px solid white;
+            }
+        }
+        a.task-finisher:hover {
+            img {
+                border: 1px solid #3490dc; 
+            }
+        }
+    }
+    div.task-detail.next-line {
+        float: initial !important;
+        margin-top: 35px;
+    }
+}

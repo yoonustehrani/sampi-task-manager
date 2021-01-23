@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDom from 'react-dom'
-import Dashboard from './components/Dashboard/'
+import Dashboard from './components/Dashboard/index'
 
 const target = document.getElementById('react-dashboard')
 const mixedTasks = target.getAttribute("mixed_tasks")

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import TinymcEditor from '../tinymce-editor'
+import TinymcEditor from '../tinymce-editor/index'
 import Axios from 'axios'
 import moment from 'moment'
 moment.locale('fa')
@@ -165,12 +165,12 @@ export default class Workspace extends Component {
         return (
             <div>
                 <div className="float-right col-12 pr-0 pl-0 pr-md-3 pl-md-3">
-                    <div className="workspace-title-section col-12">
+                    <div className="workspace-title-section title-section col-12">
                         <i className="fas fa-clipboard-list"></i>
                         <h4 className="">وظایف :</h4>      
                     </div>  
                     <div className="workspace-add-task mb-2 col-12">
-                        <div className="workspace-title-section" onClick={this.toggleAddBox}>
+                        <div className="workspace-title-section title-section" onClick={this.toggleAddBox}>
                             <i className="fas fa-plus" ref={this.addIconRef}></i>
                             <h5>افزودن کار</h5>
                         </div>
@@ -185,11 +185,11 @@ export default class Workspace extends Component {
                                 <div className="input-group-prepend">
                                     <span className="input-group-text">اولویت</span>
                                 </div>
-                                <select id="new-task-priority" defaultValue="0">
-                                    <option value="0" icon_name="fas fa-hourglass-end">ضروری و مهم</option>
-                                    <option value="1" icon_name="fas fa-hourglass-half">ضروری و غیر مهم</option>
-                                    <option value="2" icon_name="fas fa-hourglass-start">غیر ضروری و غیر مهم</option>
-                                    <option value="3" icon_name="fas fa-hourglass">غیر ضروری و غیر مهم</option>
+                                <select id="new-task-priority" defaultValue="1">
+                                    <option value="1" icon_name="fas fa-hourglass-end">ضروری و مهم</option>
+                                    <option value="2" icon_name="fas fa-hourglass-half">ضروری و غیر مهم</option>
+                                    <option value="3" icon_name="fas fa-hourglass-start">غیر ضروری و غیر مهم</option>
+                                    <option value="4" icon_name="fas fa-hourglass">غیر ضروری و غیر مهم</option>
                                 </select>
                             </div>
                             <div className="input-group col-12 col-md-6 mb-0 mb-md-0 pl-2 pr-2 pr-lg-3 pl-lg-3">
@@ -281,7 +281,7 @@ export default class Workspace extends Component {
                                                     <td>{group}</td>
                                                     <td>{setPriority(priority_id)}</td>
                                                     <td>
-                                                        <div className="employees-container">
+                                                        <div className="employees-container horizontal-centerlize">
                                                             {
                                                                 users.length === 0 &&
                                                                     <span><i className="fas fa-user-slash"></i></span>
