@@ -61,6 +61,9 @@ class UserPolicy
      */
     public function update(User $user, User $model)
     {
+        if ($model->hasPermission('can_update_any_users')) {
+            return false;
+        }
         if ($user->id != $model->id) {
             return $user->hasPermission('can_update_users');
         }
