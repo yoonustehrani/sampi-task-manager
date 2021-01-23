@@ -502,6 +502,7 @@ div.title-section {
 div.show-tasks-container {
     display: flex;
     flex-direction: row;
+    // justify-content: flex-end;
     justify-content: space-evenly;
     align-items: flex-start;
     flex-wrap: wrap;
@@ -570,4 +571,9 @@ div.show-tasks-container {
         margin-top: 35px;
         margin-right: 0px !important;
     }
+}
+
+div.edit-tasks-container {
+    box-shadow: 5px 5px 14px 0 #2c3e50;
+    float: right;
 }

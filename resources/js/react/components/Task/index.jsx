@@ -3,6 +3,7 @@ import Axios from 'axios'
 import moment from 'moment'
 moment.locale('fa')
 import TinymcEditor from '../tinymce-editor/index'
+import { formatOption, formatMemberOption } from '../../../select2'
 
 export default class ShowTask extends Component {
 
@@ -15,77 +16,106 @@ export default class ShowTask extends Component {
         console.log(task_api)
     }
 
+    changeMode = (mode) => {
+        this.setState({
+            mode: mode
+        }, () => {
+            if (this.state.mode === "edit") {
+                $('#edit-task-priority').select2({
+                    templateResult: formatOption,
+                    minimumResultsForSearch: Infinity,
+                    width: '100%',
+                    dir: "rtl",
+                })
+                $("#edit-task-members").select2({
+                    placeholder: "انجام دهندگان این کار",
+                    width: "100%",
+                    dir: 'rtl',
+                    multiple: true,
+                    templateResult: formatMemberOption
+                })
+                $('.select2-search__field').css('width', '100%')
+            } else {
+                $.each($(".select2"), (i, item) => {
+                    item.remove()
+                })
+            }
+        })
+    }
+
     editInfo = (
-        <div className="col-12 col-md-10 offset-md-1 float-left">
-            <div className="input-group col-12 col-md-6 float-right mt-3">
-                <div className="input-group-prepend">
-                    <span className="input-group-text">عنوان کار</span>
+        <div className="col-12 col-md-8 offset-md-2 float-left mt-3 animated flash">
+            <div className="edit-tasks-container col-12">
+                <div className="input-group col-12 col-md-6 float-right mt-3">
+                    <div className="input-group-prepend">
+                        <span className="input-group-text">عنوان کار</span>
+                    </div>
+                    <input type="text" className="form-control" />
                 </div>
-                <input type="text" className="form-control" />
+                <div className="input-group col-12 col-md-6 float-right mt-3">
+                    <div className="input-group-prepend">
+                        <span className="input-group-text">دسته بندی</span>
+                    </div>
+                    <input type="text" className="form-control" />
+                </div>
+                <div className="input-group col-12 col-md-6 float-right mt-3 input-group-single-line">
+                    <div className="input-group-prepend">
+                        <span className="input-group-text">اولویت</span>
+                    </div>
+                    <select id="edit-task-priority" defaultValue="1">
+                        <option value="1" icon_name="fas fa-hourglass-end">ضروری و مهم</option>
+                        <option value="2" icon_name="fas fa-hourglass-half">ضروری و غیر مهم</option>
+                        <option value="3" icon_name="fas fa-hourglass-start">غیر ضروری و غیر مهم</option>
+                        <option value="4" icon_name="fas fa-hourglass">غیر ضروری و غیر مهم</option>
+                    </select>                    
+                </div>
+                <div className="input-group col-12 col-md-6 float-right mt-3 input-group-single-line">
+                    <div className="input-group-prepend">
+                        <span className="input-group-text">انجام دهندگان</span>
+                    </div>
+                    <select id="edit-task-members" className="form-control text-right" multiple>
+                        {/* { workspace ? workspace.users.map((user, i) => {
+                            if (user.api_token !== logged_in_api_token) {
+                                return (
+                                    <option key={i} value={user.id} img_address={APP_PATH + user.avatar_pic}>{user.fullname}</option>
+                                )                                            
+                            }
+                        }) : null } */}
+                        <option value="1" img_address={APP_PATH + "images/male-avatar.svg"}>"ترانه نخعی"</option>
+                        <option value="2" img_address={APP_PATH + "images/male-avatar.svg"}>"ترانه نخعی"</option>
+                        <option value="3" img_address={APP_PATH + "images/male-avatar.svg"}>"ترانه نخعی"</option>
+                    </select>
+                </div>
+                <div className="input-group col-12 col-md-6 float-right mt-3">
+                    <div className="input-group-prepend">
+                        <span className="input-group-text">موعد تحویل</span>
+                    </div>
+                    {<input value={moment("2020-12-16 07:36:59").fromNow()} />}
+                </div>
+                <div className="input-group col-12 col-md-6 float-right mt-3">
+                    <div className="input-group-prepend">
+                        <span className="input-group-text">وضعیت اتمام</span>
+                    </div>
+                    <input className="form-control" type="text" name="" id=""/>
+                    <div className="input-group-text">
+                        <input className="c-p" type="checkbox" value="" />
+                    </div>
+                </div>
+                <div className="input-group col-12 float-right mt-3 mb-3">
+                    <div className="w-100">
+                        <TinymcEditor />
+                    </div>
+                </div>
             </div>
-            <div className="input-group col-12 col-md-6 float-right mt-3">
-                <div className="input-group-prepend">
-                    <span className="input-group-text">دسته بندی</span>
-                </div>
-                <input type="text" className="form-control" />
-            </div>
-            <div className="input-group col-12 col-md-6 float-right mt-3 input-group-single-line">
-                <div className="input-group-prepend">
-                    <span className="input-group-text">اولویت</span>
-                </div>
-                <select id="new-task-priority" defaultValue="1">
-                    <option value="1" icon_name="fas fa-hourglass-end">ضروری و مهم</option>
-                    <option value="2" icon_name="fas fa-hourglass-half">ضروری و غیر مهم</option>
-                    <option value="3" icon_name="fas fa-hourglass-start">غیر ضروری و غیر مهم</option>
-                    <option value="4" icon_name="fas fa-hourglass">غیر ضروری و غیر مهم</option>
-                </select>                    
-            </div>
-            <div className="input-group col-12 col-md-6 float-right mt-3 input-group-single-line">
-                <div className="input-group-prepend">
-                    <span className="input-group-text">انجام دهندگان</span>
-                </div>
-                <select id="new-task-members" className="form-control text-right" multiple>
-                    {/* { workspace ? workspace.users.map((user, i) => {
-                        if (user.api_token !== logged_in_api_token) {
-                            return (
-                                <option key={i} value={user.id} img_address={APP_PATH + user.avatar_pic}>{user.fullname}</option>
-                            )                                            
-                        }
-                    }) : null } */}
-                    <option value="1" img_address={APP_PATH + "images/male-avatar.svg"}>"ترانه نخعی"</option>
-                    <option value="2" img_address={APP_PATH + "images/male-avatar.svg"}>"ترانه نخعی"</option>
-                    <option value="3" img_address={APP_PATH + "images/male-avatar.svg"}>"ترانه نخعی"</option>
-                </select>
-            </div>
-            <div className="input-group col-12 col-md-6 float-right mt-3">
-                <div className="input-group-prepend">
-                    <span className="input-group-text">موعد تحویل</span>
-                </div>
-                {<input value={moment("2020-12-16 07:36:59").fromNow()} />}
-            </div>
-            <div className="input-group col-12 col-md-6 float-right mt-3">
-                <div className="input-group-prepend">
-                    <span className="input-group-text">وضعیت اتمام</span>
-                </div>
-                <input className="form-control" type="text" name="" id=""/>
-                <div class="input-group-text">
-                    <input className="c-p" type="checkbox" value="" />
-                </div>
-            </div>
-            <div className="input-group col-12 float-right mt-3">
-                <div className="w-100">
-                    <TinymcEditor />
-                </div>
-            </div>
-            <div className="text-center mt-2 float-right col-12">
-                <button type="button" className="btn btn-outline-primary">ذخیره <i className="fas fa-check"></i></button>
+            <div className="text-center mt-4 float-right col-12">
+                <button type="button" className="btn btn-outline-primary" onClick={this.changeMode.bind(this, "show")}>ذخیره <i className="fas fa-check"></i></button>
             </div>
         </div>
     )
 
     showInfo = (
-        <div className="col-12 col-md-8 offset-md-4 float-left mt-3">
-            <div className="show-tasks-container">
+        <div className="col-12 col-md-8 offset-md-2 float-left mt-3 animated fadeIn">
+            <div className="show-tasks-container col-12">
                 <div className="mt-3 col-12 col-md-5">
                     <div className="task-title-section title-section">
                         <i className="fas fa-hand-point-left"></i>
@@ -224,12 +254,13 @@ export default class ShowTask extends Component {
                     </div>
                 </div>
             </div>
-            <div className="text-center mt-4"><button className="btn btn-outline-info">ویرایش <i className="fas fa-pen-alt"></i></button></div>
+            <div className="text-center mt-4"><button className="btn btn-outline-info" onClick={this.changeMode.bind(this, "edit")}>ویرایش <i className="fas fa-pen-alt"></i></button></div>
         </div>
     )
     
     render() {
         let { mode } = this.state
+
         return (
             <div>
                 <div className="col-12 float-right task-info-container">

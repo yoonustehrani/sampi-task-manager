@@ -10106,6 +10106,11 @@ div.show-tasks-container div.task-detail.next-line {
   margin-right: 0px !important;
 }
 
+div.edit-tasks-container {
+  box-shadow: 5px 5px 14px 0 #2c3e50;
+  float: right;
+}
+
 .select2-container {
   box-sizing: border-box;
   display: inline-block;

@@ -53667,6 +53667,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _tinymce_editor_index__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../tinymce-editor/index */ "./resources/js/react/components/tinymce-editor/index.jsx");
+/* harmony import */ var _select2__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../select2 */ "./resources/js/select2.js");
 function _typeof(obj) {
   "@babel/helpers - typeof";
 
@@ -53805,6 +53806,7 @@ function _defineProperty(obj, key, value) {
 moment__WEBPACK_IMPORTED_MODULE_2___default.a.locale('fa');
 
 
+
 var ShowTask = /*#__PURE__*/function (_Component) {
   _inherits(ShowTask, _Component);
 
@@ -53825,8 +53827,37 @@ var ShowTask = /*#__PURE__*/function (_Component) {
       mode: "show"
     });
 
+    _defineProperty(_assertThisInitialized(_this), "changeMode", function (mode) {
+      _this.setState({
+        mode: mode
+      }, function () {
+        if (_this.state.mode === "edit") {
+          $('#edit-task-priority').select2({
+            templateResult: _select2__WEBPACK_IMPORTED_MODULE_4__["formatOption"],
+            minimumResultsForSearch: Infinity,
+            width: '100%',
+            dir: "rtl"
+          });
+          $("#edit-task-members").select2({
+            placeholder: "انجام دهندگان این کار",
+            width: "100%",
+            dir: 'rtl',
+            multiple: true,
+            templateResult: _select2__WEBPACK_IMPORTED_MODULE_4__["formatMemberOption"]
+          });
+          $('.select2-search__field').css('width', '100%');
+        } else {
+          $.each($(".select2"), function (i, item) {
+            item.remove();
+          });
+        }
+      });
+    });
+
     _defineProperty(_assertThisInitialized(_this), "editInfo", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "col-12 col-md-10 offset-md-1 float-left"
+      className: "col-12 col-md-8 offset-md-2 float-left mt-3 animated flash"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "edit-tasks-container col-12"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "input-group col-12 col-md-6 float-right mt-3"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -53852,7 +53883,7 @@ var ShowTask = /*#__PURE__*/function (_Component) {
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
       className: "input-group-text"
     }, "\u0627\u0648\u0644\u0648\u06CC\u062A")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
-      id: "new-task-priority",
+      id: "edit-task-priority",
       defaultValue: "1"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
       value: "1",
@@ -53873,7 +53904,7 @@ var ShowTask = /*#__PURE__*/function (_Component) {
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
       className: "input-group-text"
     }, "\u0627\u0646\u062C\u0627\u0645 \u062F\u0647\u0646\u062F\u06AF\u0627\u0646")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
-      id: "new-task-members",
+      id: "edit-task-members",
       className: "form-control text-right",
       multiple: true
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
@@ -53905,28 +53936,29 @@ var ShowTask = /*#__PURE__*/function (_Component) {
       name: "",
       id: ""
     }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      "class": "input-group-text"
+      className: "input-group-text"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       className: "c-p",
       type: "checkbox",
       value: ""
     }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "input-group col-12 float-right mt-3"
+      className: "input-group col-12 float-right mt-3 mb-3"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "w-100"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_tinymce_editor_index__WEBPACK_IMPORTED_MODULE_3__["default"], null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "text-center mt-2 float-right col-12"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_tinymce_editor_index__WEBPACK_IMPORTED_MODULE_3__["default"], null)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "text-center mt-4 float-right col-12"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
       type: "button",
-      className: "btn btn-outline-primary"
+      className: "btn btn-outline-primary",
+      onClick: _this.changeMode.bind(_assertThisInitialized(_this), "show")
     }, "\u0630\u062E\u06CC\u0631\u0647 ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
       className: "fas fa-check"
     })))));
 
     _defineProperty(_assertThisInitialized(_this), "showInfo", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "col-12 col-md-8 offset-md-4 float-left mt-3"
+      className: "col-12 col-md-8 offset-md-2 float-left mt-3 animated fadeIn"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "show-tasks-container"
+      className: "show-tasks-container col-12"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "mt-3 col-12 col-md-5"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -54061,7 +54093,8 @@ var ShowTask = /*#__PURE__*/function (_Component) {
     }, "\u06A9\u06CC\u0631 \u062E\u0631")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "text-center mt-4"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-      className: "btn btn-outline-info"
+      className: "btn btn-outline-info",
+      onClick: _this.changeMode.bind(_assertThisInitialized(_this), "edit")
     }, "\u0648\u06CC\u0631\u0627\u06CC\u0634 ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
       className: "fas fa-pen-alt"
     })))));
@@ -54361,6 +54394,47 @@ if (target) {
     task_api: taskApi
   }), target);
 }
+
+/***/ }),
+
+/***/ "./resources/js/select2.js":
+/*!*********************************!*\
+  !*** ./resources/js/select2.js ***!
+  \*********************************/
+/*! exports provided: formatOption, formatMemberOption */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "formatOption", function() { return formatOption; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "formatMemberOption", function() { return formatMemberOption; });
+var formatOption = function formatOption(option) {
+  if (option.element) {
+    var icon_name = option.element.attributes.icon_name.nodeValue;
+    var containerClass = option.element.attributes.container_class ? option.element.attributes.container_class.nodeValue : null;
+    return $("<div class=\"select-option ".concat(containerClass !== null ? containerClass : "", "\"><i class=\"").concat(icon_name, "\"></i>").concat(option.text, "</div>"));
+  }
+};
+var formatMemberOption = function formatMemberOption(option) {
+  if (option.element) {
+    var img_src = option.element.attributes.img_address.nodeValue;
+    return $("<div class=\"select-option\"><img src=\"".concat(img_src, "\" class=\"member-img\" />").concat(option.text, "</div>"));
+  }
+};
+$('#new-task-priority, #tasks_order_select, #tasks_order_by_select, #tasks_relation_select').select2({
+  templateResult: formatOption,
+  minimumResultsForSearch: Infinity,
+  width: '100%',
+  dir: "rtl"
+});
+$("#new-task-members").select2({
+  placeholder: "انجام دهندگان این کار",
+  width: "100%",
+  dir: 'rtl',
+  multiple: true,
+  templateResult: formatMemberOption
+});
+$('.select2-search__field').css('width', '100%');
 
 /***/ }),
 
