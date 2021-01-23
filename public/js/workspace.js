@@ -60247,11 +60247,10 @@ var Workspace = /*#__PURE__*/function (_Component) {
     _defineProperty(_assertThisInitialized(_this), "addTask", function () {
       var _this$props = _this.props,
           add_task_api = _this$props.add_task_api,
-          logged_in_api_token = _this$props.logged_in_api_token,
+          logged_in_user_id = _this$props.logged_in_user_id,
           _this$state = _this.state,
           new_task_description = _this$state.new_task_description,
-          workspace_users = _this$state.workspace_users,
-          creater_id = _this$state.creater_id;
+          workspace_users = _this$state.workspace_users;
       var title = $("#new-task-title").val(),
           group = $("#new-task-group").val(),
           priority = parseInt($("#new-task-priority").val()),
@@ -60285,9 +60284,9 @@ var Workspace = /*#__PURE__*/function (_Component) {
               };
             });
             new_task_users.unshift({
-              id: creater_id,
-              fullname: workspace_users[creater_id].fullname,
-              name: workspace_users[creater_id].name
+              id: logged_in_user_id,
+              fullname: workspace_users[logged_in_user_id].fullname,
+              name: workspace_users[logged_in_user_id].name
             });
             return {
               tasks: Object.assign({}, prevState.tasks, {
@@ -60359,7 +60358,7 @@ var Workspace = /*#__PURE__*/function (_Component) {
 
       var _this$props2 = this.props,
           workspace_api = _this$props2.workspace_api,
-          logged_in_api_token = _this$props2.logged_in_api_token;
+          logged_in_user_id = _this$props2.logged_in_user_id;
       this.handleMore("tasks", false);
       axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(workspace_api).then(function (res) {
         var data = res.data;
@@ -60368,8 +60367,6 @@ var Workspace = /*#__PURE__*/function (_Component) {
           workspace: data
         }, function () {
           _this2.state.workspace.users.map(function (user, i) {
-            if (user.api_token === logged_in_api_token) {}
-
             _this2.setState(function (prevState) {
               return {
                 workspace_users: Object.assign({}, prevState.workspace_users, _defineProperty({}, user.id, {
@@ -60377,8 +60374,7 @@ var Workspace = /*#__PURE__*/function (_Component) {
                   fullname: user.fullname,
                   name: user.name,
                   avatar_pic: user.avatar_pic
-                })),
-                creater_id: user.api_token === logged_in_api_token ? user.id : prevState.creater_id
+                }))
               };
             });
           });
@@ -60395,7 +60391,7 @@ var Workspace = /*#__PURE__*/function (_Component) {
           workspace = _this$state2.workspace;
       var _this$props3 = this.props,
           taskRoute = _this$props3.taskRoute,
-          logged_in_api_token = _this$props3.logged_in_api_token;
+          logged_in_user_id = _this$props3.logged_in_user_id;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "float-right col-12 pr-0 pl-0 pr-md-3 pl-md-3"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -60469,7 +60465,7 @@ var Workspace = /*#__PURE__*/function (_Component) {
         className: "form-control text-right",
         multiple: true
       }, workspace ? workspace.users.map(function (user, i) {
-        if (user.api_token !== logged_in_api_token) {
+        if (user.id !== logged_in_user_id) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
             key: i,
             value: user.id,
@@ -60616,7 +60612,7 @@ var Workspace = /*#__PURE__*/function (_Component) {
           }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             className: "user-img-container ml-2"
           }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-            src: typeof workspace_users !== 'undefined' && workspace_users[user.id].avatar_pic !== null ? APP_PATH + workspace_users[user.id].avatar_pic : APP_PATH + 'images/male-avatar.svg'
+            src: typeof workspace_users !== 'undefined' ? APP_PATH + workspace_users[user.id].avatar_pic : APP_PATH + 'images/male-avatar.svg'
           })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             className: "user-info ml-2"
           }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, user.fullname), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
@@ -60838,8 +60834,9 @@ var TinymcEditor = /*#__PURE__*/function (_React$Component) {
   _createClass(TinymcEditor, [{
     key: "render",
     value: function render() {
+      var initialValue = this.props.initialValue;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_tinymce_tinymce_react__WEBPACK_IMPORTED_MODULE_1__["Editor"], {
-        initialValue: "",
+        initialValue: initialValue ? initialValue : "",
         tinymceScriptSrc: "".concat(APP_PATH, "js/tinymce/tinymce.js"),
         onEditorChange: this.handleEditorChange,
         init: {
@@ -60915,7 +60912,7 @@ var addTaskApi = target.getAttribute("add_task_api");
 var listTasksApi = target.getAttribute("list_tasks_api");
 var taskRoute = target.getAttribute("task_route");
 var workspaceApi = target.getAttribute("workspace_api");
-var loggedInApiToken = target.getAttribute("logged_in_api_token");
+var loggedInUserId = parseInt(target.getAttribute("logged_in_user_id"));
 
 if (target) {
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Workspace_index__WEBPACK_IMPORTED_MODULE_2__["default"], {
@@ -60923,7 +60920,7 @@ if (target) {
     list_tasks_api: listTasksApi,
     taskRoute: taskRoute,
     workspace_api: workspaceApi,
-    logged_in_api_token: loggedInApiToken
+    logged_in_user_id: loggedInUserId
   }), target);
 }
 

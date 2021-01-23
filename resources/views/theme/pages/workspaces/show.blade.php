@@ -20,7 +20,7 @@
             <span><i class="far fa-check-circle ml-1 animated heartBeat delay-2s"></i><span class="number ml-1">24</span>خواسته انجام شده</span>
         </div>
         <div class="col-12 float-right pr-0 pl-0 pr-md-3 pl-md-3 animated flipInX">
-            <div class="workspace-title-section col-12">
+            <div class="title-section workspace-title-section col-12">
                 <i class="fas fa-user-secret"></i>
                 <h4 class="">اعضا :</h4>      
             </div>    
@@ -75,7 +75,7 @@
             add_task_api = "{{ route('api.task-manager.tasks.store', ['workspace' => $workspace->id, 'api_token' => auth()->user()->api_token]) }}"
             task_route = "{{ route('task-manager.tasks.show', ['task' => 'taskId']) }}"
             workspace_api = "{{ route('api.task-manager.workspaces.show', ['workspace' => $workspace->id, 'api_token' => auth()->user()->api_token]) }}"
-            logged_in_api_token = "{{ auth()->user()->api_token }}"
+            logged_in_user_id = "{{ auth()->user()->id }}"
         ></div>
     </div>
 @endsection

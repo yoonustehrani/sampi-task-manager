@@ -9979,6 +9979,7 @@ div.breadcrumb i {
   direction: rtl;
   margin-right: 10px;
   color: #859398;
+  text-align: center;
 }
 
 div.breadcrumb > i {

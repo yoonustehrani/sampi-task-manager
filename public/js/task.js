@@ -2466,6 +2466,1253 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./node_modules/jalaali-js/index.js":
+/*!******************************************!*\
+  !*** ./node_modules/jalaali-js/index.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/*
+  Expose functions.
+*/
+module.exports =
+  { toJalaali: toJalaali
+  , toGregorian: toGregorian
+  , isValidJalaaliDate: isValidJalaaliDate
+  , isLeapJalaaliYear: isLeapJalaaliYear
+  , jalaaliMonthLength: jalaaliMonthLength
+  , jalCal: jalCal
+  , j2d: j2d
+  , d2j: d2j
+  , g2d: g2d
+  , d2g: d2g
+  }
+
+/*
+  Jalaali years starting the 33-year rule.
+*/
+var breaks =  [ -61, 9, 38, 199, 426, 686, 756, 818, 1111, 1181, 1210
+  , 1635, 2060, 2097, 2192, 2262, 2324, 2394, 2456, 3178
+  ]
+
+/*
+  Converts a Gregorian date to Jalaali.
+*/
+function toJalaali(gy, gm, gd) {
+  if (Object.prototype.toString.call(gy) === '[object Date]') {
+    gd = gy.getDate()
+    gm = gy.getMonth() + 1
+    gy = gy.getFullYear()
+  }
+  return d2j(g2d(gy, gm, gd))
+}
+
+/*
+  Converts a Jalaali date to Gregorian.
+*/
+function toGregorian(jy, jm, jd) {
+  return d2g(j2d(jy, jm, jd))
+}
+
+/*
+  Checks whether a Jalaali date is valid or not.
+*/
+function isValidJalaaliDate(jy, jm, jd) {
+  return  jy >= -61 && jy <= 3177 &&
+          jm >= 1 && jm <= 12 &&
+          jd >= 1 && jd <= jalaaliMonthLength(jy, jm)
+}
+
+/*
+  Is this a leap year or not?
+*/
+function isLeapJalaaliYear(jy) {
+  return jalCalLeap(jy) === 0
+}
+
+/*
+  Number of days in a given month in a Jalaali year.
+*/
+function jalaaliMonthLength(jy, jm) {
+  if (jm <= 6) return 31
+  if (jm <= 11) return 30
+  if (isLeapJalaaliYear(jy)) return 30
+  return 29
+}
+
+/*
+    This function determines if the Jalaali (Persian) year is
+    leap (366-day long) or is the common year (365 days)
+
+    @param jy Jalaali calendar year (-61 to 3177)
+    @returns number of years since the last leap year (0 to 4)
+ */
+function jalCalLeap(jy) {  
+  var bl = breaks.length        
+    , jp = breaks[0]
+    , jm
+    , jump
+    , leap    
+    , n
+    , i
+
+  if (jy < jp || jy >= breaks[bl - 1])
+    throw new Error('Invalid Jalaali year ' + jy)
+    
+  for (i = 1; i < bl; i += 1) {
+    jm = breaks[i]
+    jump = jm - jp
+    if (jy < jm)
+      break    
+    jp = jm
+  }
+  n = jy - jp
+  
+  if (jump - n < 6)
+    n = n - jump + div(jump + 4, 33) * 33
+  leap = mod(mod(n + 1, 33) - 1, 4)
+  if (leap === -1) {
+    leap = 4
+  }  
+ 
+  return leap
+}
+
+/*
+  This function determines if the Jalaali (Persian) year is
+  leap (366-day long) or is the common year (365 days), and
+  finds the day in March (Gregorian calendar) of the first
+  day of the Jalaali year (jy).
+
+  @param jy Jalaali calendar year (-61 to 3177)
+  @param withoutLeap when don't need leap (true or false) default is false
+  @return
+    leap: number of years since the last leap year (0 to 4)
+    gy: Gregorian year of the beginning of Jalaali year
+    march: the March day of Farvardin the 1st (1st day of jy)
+  @see: http://www.astro.uni.torun.pl/~kb/Papers/EMP/PersianC-EMP.htm
+  @see: http://www.fourmilab.ch/documents/calendar/
+*/
+function jalCal(jy, withoutLeap) {  
+  var bl = breaks.length
+    , gy = jy + 621
+    , leapJ = -14
+    , jp = breaks[0]
+    , jm
+    , jump
+    , leap
+    , leapG
+    , march
+    , n
+    , i
+
+  if (jy < jp || jy >= breaks[bl - 1])
+    throw new Error('Invalid Jalaali year ' + jy)
+
+  // Find the limiting years for the Jalaali year jy.
+  for (i = 1; i < bl; i += 1) {
+    jm = breaks[i]
+    jump = jm - jp
+    if (jy < jm)
+      break
+    leapJ = leapJ + div(jump, 33) * 8 + div(mod(jump, 33), 4)
+    jp = jm
+  }
+  n = jy - jp
+
+  // Find the number of leap years from AD 621 to the beginning
+  // of the current Jalaali year in the Persian calendar.
+  leapJ = leapJ + div(n, 33) * 8 + div(mod(n, 33) + 3, 4)
+  if (mod(jump, 33) === 4 && jump - n === 4)
+    leapJ += 1
+
+  // And the same in the Gregorian calendar (until the year gy).
+  leapG = div(gy, 4) - div((div(gy, 100) + 1) * 3, 4) - 150
+
+  // Determine the Gregorian date of Farvardin the 1st.
+  march = 20 + leapJ - leapG
+
+  // return with gy and march when we don't need leap
+  if (withoutLeap) return { gy: gy, march: march };
+
+
+  // Find how many years have passed since the last leap year.
+  if (jump - n < 6)
+    n = n - jump + div(jump + 4, 33) * 33
+  leap = mod(mod(n + 1, 33) - 1, 4)
+  if (leap === -1) {
+    leap = 4
+  }  
+
+  return  { leap: leap
+          , gy: gy
+          , march: march
+          }
+}
+
+/*
+  Converts a date of the Jalaali calendar to the Julian Day number.
+
+  @param jy Jalaali year (1 to 3100)
+  @param jm Jalaali month (1 to 12)
+  @param jd Jalaali day (1 to 29/31)
+  @return Julian Day number
+*/
+function j2d(jy, jm, jd) {
+  var r = jalCal(jy, true)
+  return g2d(r.gy, 3, r.march) + (jm - 1) * 31 - div(jm, 7) * (jm - 7) + jd - 1
+}
+
+/*
+  Converts the Julian Day number to a date in the Jalaali calendar.
+
+  @param jdn Julian Day number
+  @return
+    jy: Jalaali year (1 to 3100)
+    jm: Jalaali month (1 to 12)
+    jd: Jalaali day (1 to 29/31)
+*/
+function d2j(jdn) {
+  var gy = d2g(jdn).gy // Calculate Gregorian year (gy).
+    , jy = gy - 621
+    , r = jalCal(jy, false)
+    , jdn1f = g2d(gy, 3, r.march)
+    , jd
+    , jm
+    , k
+
+  // Find number of days that passed since 1 Farvardin.
+  k = jdn - jdn1f
+  if (k >= 0) {
+    if (k <= 185) {
+      // The first 6 months.
+      jm = 1 + div(k, 31)
+      jd = mod(k, 31) + 1
+      return  { jy: jy
+              , jm: jm
+              , jd: jd
+              }
+    } else {
+      // The remaining months.
+      k -= 186
+    }
+  } else {
+    // Previous Jalaali year.
+    jy -= 1
+    k += 179
+    if (r.leap === 1)
+      k += 1
+  }
+  jm = 7 + div(k, 30)
+  jd = mod(k, 30) + 1
+  return  { jy: jy
+          , jm: jm
+          , jd: jd
+          }
+}
+
+/*
+  Calculates the Julian Day number from Gregorian or Julian
+  calendar dates. This integer number corresponds to the noon of
+  the date (i.e. 12 hours of Universal Time).
+  The procedure was tested to be good since 1 March, -100100 (of both
+  calendars) up to a few million years into the future.
+
+  @param gy Calendar year (years BC numbered 0, -1, -2, ...)
+  @param gm Calendar month (1 to 12)
+  @param gd Calendar day of the month (1 to 28/29/30/31)
+  @return Julian Day number
+*/
+function g2d(gy, gm, gd) {
+  var d = div((gy + div(gm - 8, 6) + 100100) * 1461, 4)
+      + div(153 * mod(gm + 9, 12) + 2, 5)
+      + gd - 34840408
+  d = d - div(div(gy + 100100 + div(gm - 8, 6), 100) * 3, 4) + 752
+  return d
+}
+
+/*
+  Calculates Gregorian and Julian calendar dates from the Julian Day number
+  (jdn) for the period since jdn=-34839655 (i.e. the year -100100 of both
+  calendars) to some millions years ahead of the present.
+
+  @param jdn Julian Day number
+  @return
+    gy: Calendar year (years BC numbered 0, -1, -2, ...)
+    gm: Calendar month (1 to 12)
+    gd: Calendar day of the month M (1 to 28/29/30/31)
+*/
+function d2g(jdn) {
+  var j
+    , i
+    , gd
+    , gm
+    , gy
+  j = 4 * jdn + 139361631
+  j = j + div(div(4 * jdn + 183187720, 146097) * 3, 4) * 4 - 3908
+  i = div(mod(j, 1461), 4) * 5 + 308
+  gd = div(mod(i, 153), 5) + 1
+  gm = mod(div(i, 153), 12) + 1
+  gy = div(j, 1461) - 100100 + div(8 - gm, 6)
+  return  { gy: gy
+          , gm: gm
+          , gd: gd
+          }
+}
+
+/*
+  Utility helper functions.
+*/
+
+function div(a, b) {
+  return ~~(a / b)
+}
+
+function mod(a, b) {
+  return a - ~~(a / b) * b
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/moment-jalaali/index.js":
+/*!**********************************************!*\
+  !*** ./node_modules/moment-jalaali/index.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+module.exports = jMoment
+
+var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js")
+  , jalaali = __webpack_require__(/*! jalaali-js */ "./node_modules/jalaali-js/index.js")
+
+/************************************
+    Constants
+************************************/
+
+var formattingTokens = /(\[[^\[]*\])|(\\)?j(Mo|MM?M?M?|Do|DDDo|DD?D?D?|w[o|w]?|YYYYY|YYYY|YY|gg(ggg?)?|)|(\\)?(Mo|MM?M?M?|Do|DDDo|DD?D?D?|ddd?d?|do?|w[o|w]?|W[o|W]?|YYYYY|YYYY|YY|gg(ggg?)?|GG(GGG?)?|e|E|a|A|hh?|HH?|mm?|ss?|SS?S?|X|zz?|ZZ?|.)/g
+  , localFormattingTokens = /(\[[^\[]*\])|(\\)?(LTS?|LL?L?L?|l{1,4})/g
+
+  , parseTokenOneOrTwoDigits = /\d\d?/
+  , parseTokenOneToThreeDigits = /\d{1,3}/
+  , parseTokenThreeDigits = /\d{3}/
+  , parseTokenFourDigits = /\d{1,4}/
+  , parseTokenSixDigits = /[+\-]?\d{1,6}/
+  , parseTokenWord = /[0-9]*['a-z\u00A0-\u05FF\u0700-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+|[\u0600-\u06FF\/]+(\s*?[\u0600-\u06FF]+){1,2}/i
+  , parseTokenTimezone = /Z|[\+\-]\d\d:?\d\d/i
+  , parseTokenT = /T/i
+  , parseTokenTimestampMs = /[\+\-]?\d+(\.\d{1,3})?/
+  , symbolMap = {
+    '1': '۱',
+    '2': '۲',
+    '3': '۳',
+    '4': '۴',
+    '5': '۵',
+    '6': '۶',
+    '7': '۷',
+    '8': '۸',
+    '9': '۹',
+    '0': '۰'
+  }
+  , numberMap = {
+    '۱': '1',
+    '۲': '2',
+    '۳': '3',
+    '۴': '4',
+    '۵': '5',
+    '۶': '6',
+    '۷': '7',
+    '۸': '8',
+    '۹': '9',
+    '۰': '0'
+  }
+
+
+  , unitAliases =
+    { jm: 'jmonth'
+    , jmonths: 'jmonth'
+    , jy: 'jyear'
+    , jyears: 'jyear'
+    }
+
+  , formatFunctions = {}
+
+  , ordinalizeTokens = 'DDD w M D'.split(' ')
+  , paddedTokens = 'M D w'.split(' ')
+
+  , formatTokenFunctions =
+    { jM: function () {
+        return this.jMonth() + 1
+      }
+    , jMMM: function (format) {
+        return this.localeData().jMonthsShort(this, format)
+      }
+    , jMMMM: function (format) {
+        return this.localeData().jMonths(this, format)
+      }
+    , jD: function () {
+        return this.jDate()
+      }
+    , jDDD: function () {
+        return this.jDayOfYear()
+      }
+    , jw: function () {
+        return this.jWeek()
+      }
+    , jYY: function () {
+        return leftZeroFill(this.jYear() % 100, 2)
+      }
+    , jYYYY: function () {
+        return leftZeroFill(this.jYear(), 4)
+      }
+    , jYYYYY: function () {
+        return leftZeroFill(this.jYear(), 5)
+      }
+    , jgg: function () {
+        return leftZeroFill(this.jWeekYear() % 100, 2)
+      }
+    , jgggg: function () {
+        return this.jWeekYear()
+      }
+    , jggggg: function () {
+        return leftZeroFill(this.jWeekYear(), 5)
+      }
+    }
+
+function padToken(func, count) {
+  return function (a) {
+    return leftZeroFill(func.call(this, a), count)
+  }
+}
+function ordinalizeToken(func, period) {
+  return function (a) {
+    return this.localeData().ordinal(func.call(this, a), period)
+  }
+}
+
+(function () {
+  var i
+  while (ordinalizeTokens.length) {
+    i = ordinalizeTokens.pop()
+    formatTokenFunctions['j' + i + 'o'] = ordinalizeToken(formatTokenFunctions['j' + i], i)
+  }
+  while (paddedTokens.length) {
+    i = paddedTokens.pop()
+    formatTokenFunctions['j' + i + i] = padToken(formatTokenFunctions['j' + i], 2)
+  }
+  formatTokenFunctions.jDDDD = padToken(formatTokenFunctions.jDDD, 3)
+}())
+
+/************************************
+    Helpers
+************************************/
+
+function extend(a, b) {
+  var key
+  for (key in b)
+    if (b.hasOwnProperty(key))
+      a[key] = b[key]
+  return a
+}
+
+function leftZeroFill(number, targetLength) {
+  var output = number + ''
+  while (output.length < targetLength)
+    output = '0' + output
+  return output
+}
+
+function isArray(input) {
+  return Object.prototype.toString.call(input) === '[object Array]'
+}
+
+// function compareArrays(array1, array2) {
+//   var len = Math.min(array1.length, array2.length)
+//     , lengthDiff = Math.abs(array1.length - array2.length)
+//     , diffs = 0
+//     , i
+//   for (i = 0; i < len; i += 1)
+//     if (~~array1[i] !== ~~array2[i])
+//       diffs += 1
+//   return diffs + lengthDiff
+// }
+
+function normalizeUnits(units) {
+  if (units) {
+    var lowered = units.toLowerCase()
+    units = unitAliases[lowered] || lowered
+  }
+  return units
+}
+
+function setDate(m, year, month, date) {
+  var d = m._d
+  if (isNaN(year)) {
+    m._isValid = false
+  }
+  if (m._isUTC) {
+    /*eslint-disable new-cap*/
+    m._d = new Date(Date.UTC(year, month, date,
+        d.getUTCHours(), d.getUTCMinutes(), d.getUTCSeconds(), d.getUTCMilliseconds()))
+    /*eslint-enable new-cap*/
+  } else {
+    m._d = new Date(year, month, date,
+        d.getHours(), d.getMinutes(), d.getSeconds(), d.getMilliseconds())
+  }
+}
+
+function objectCreate(parent) {
+  function F() {}
+  F.prototype = parent
+  return new F()
+}
+
+function getPrototypeOf(object) {
+  if (Object.getPrototypeOf)
+    return Object.getPrototypeOf(object)
+  else if (''.__proto__)
+    return object.__proto__
+  else
+    return object.constructor.prototype
+}
+
+/************************************
+    Languages
+************************************/
+extend(getPrototypeOf(moment.localeData()),
+  { _jMonths: [ 'Farvardin'
+              , 'Ordibehesht'
+              , 'Khordaad'
+              , 'Tir'
+              , 'Amordaad'
+              , 'Shahrivar'
+              , 'Mehr'
+              , 'Aabaan'
+              , 'Aazar'
+              , 'Dey'
+              , 'Bahman'
+              , 'Esfand'
+              ]
+  , jMonths: function (m) {
+      return this._jMonths[m.jMonth()]
+    }
+
+  , _jMonthsShort:  [ 'Far'
+                    , 'Ord'
+                    , 'Kho'
+                    , 'Tir'
+                    , 'Amo'
+                    , 'Sha'
+                    , 'Meh'
+                    , 'Aab'
+                    , 'Aaz'
+                    , 'Dey'
+                    , 'Bah'
+                    , 'Esf'
+                    ]
+  , jMonthsShort: function (m) {
+      return this._jMonthsShort[m.jMonth()]
+    }
+
+  , jMonthsParse: function (monthName) {
+      var i
+        , mom
+        , regex
+      if (!this._jMonthsParse)
+        this._jMonthsParse = []
+      for (i = 0; i < 12; i += 1) {
+        // Make the regex if we don't have it already.
+        if (!this._jMonthsParse[i]) {
+          mom = jMoment([2000, (2 + i) % 12, 25])
+          regex = '^' + this.jMonths(mom, '') + '|^' + this.jMonthsShort(mom, '')
+          this._jMonthsParse[i] = new RegExp(regex.replace('.', ''), 'i')
+        }
+        // Test the regex.
+        if (this._jMonthsParse[i].test(monthName))
+          return i
+      }
+    }
+  }
+)
+
+/************************************
+    Formatting
+************************************/
+
+function makeFormatFunction(format) {
+  var array = format.match(formattingTokens)
+    , length = array.length
+    , i
+
+  for (i = 0; i < length; i += 1)
+    if (formatTokenFunctions[array[i]])
+      array[i] = formatTokenFunctions[array[i]]
+
+  return function (mom) {
+    var output = ''
+    for (i = 0; i < length; i += 1)
+      output += array[i] instanceof Function ? '[' + array[i].call(mom, format) + ']' : array[i]
+    return output
+  }
+}
+
+/************************************
+    Parsing
+************************************/
+
+function getParseRegexForToken(token, config) {
+  switch (token) {
+  case 'jDDDD':
+    return parseTokenThreeDigits
+  case 'jYYYY':
+    return parseTokenFourDigits
+  case 'jYYYYY':
+    return parseTokenSixDigits
+  case 'jDDD':
+    return parseTokenOneToThreeDigits
+  case 'jMMM':
+  case 'jMMMM':
+    return parseTokenWord
+  case 'jMM':
+  case 'jDD':
+  case 'jYY':
+  case 'jM':
+  case 'jD':
+    return parseTokenOneOrTwoDigits
+  case 'DDDD':
+    return parseTokenThreeDigits
+  case 'YYYY':
+    return parseTokenFourDigits
+  case 'YYYYY':
+    return parseTokenSixDigits
+  case 'S':
+  case 'SS':
+  case 'SSS':
+  case 'DDD':
+    return parseTokenOneToThreeDigits
+  case 'MMM':
+  case 'MMMM':
+  case 'dd':
+  case 'ddd':
+  case 'dddd':
+    return parseTokenWord
+  case 'a':
+  case 'A':
+    return moment.localeData(config._l)._meridiemParse
+  case 'X':
+    return parseTokenTimestampMs
+  case 'Z':
+  case 'ZZ':
+    return parseTokenTimezone
+  case 'T':
+    return parseTokenT
+  case 'MM':
+  case 'DD':
+  case 'YY':
+  case 'HH':
+  case 'hh':
+  case 'mm':
+  case 'ss':
+  case 'M':
+  case 'D':
+  case 'd':
+  case 'H':
+  case 'h':
+  case 'm':
+  case 's':
+    return parseTokenOneOrTwoDigits
+  default:
+    return new RegExp(token.replace('\\', ''))
+  }
+}
+
+function addTimeToArrayFromToken(token, input, config) {
+  var a
+    , datePartArray = config._a
+
+  switch (token) {
+  case 'jM':
+  case 'jMM':
+    datePartArray[1] = input == null ? 0 : ~~input - 1
+    break
+  case 'jMMM':
+  case 'jMMMM':
+    a = moment.localeData(config._l).jMonthsParse(input)
+    if (a != null)
+      datePartArray[1] = a
+    else
+      config._isValid = false
+    break
+  case 'jD':
+  case 'jDD':
+  case 'jDDD':
+  case 'jDDDD':
+    if (input != null)
+      datePartArray[2] = ~~input
+    break
+  case 'jYY':
+    datePartArray[0] = ~~input + (~~input > 47 ? 1300 : 1400)
+    break
+  case 'jYYYY':
+  case 'jYYYYY':
+    datePartArray[0] = ~~input
+  }
+  if (input == null)
+    config._isValid = false
+}
+
+function dateFromArray(config) {
+  var g
+    , j
+    , jy = config._a[0]
+    , jm = config._a[1]
+    , jd = config._a[2]
+
+  if ((jy == null) && (jm == null) && (jd == null))
+    return [0, 0, 1]
+  jy = jy != null ? jy : 0
+  jm = jm != null ? jm : 0
+  jd = jd != null ? jd : 1
+  if (jd < 1 || jd > jMoment.jDaysInMonth(jy, jm) || jm < 0 || jm > 11)
+    config._isValid = false
+  g = toGregorian(jy, jm, jd)
+  j = toJalaali(g.gy, g.gm, g.gd)
+  if (isNaN(g.gy))
+    config._isValid = false
+  config._jDiff = 0
+  if (~~j.jy !== jy)
+    config._jDiff += 1
+  if (~~j.jm !== jm)
+    config._jDiff += 1
+  if (~~j.jd !== jd)
+    config._jDiff += 1
+  return [g.gy, g.gm, g.gd]
+}
+
+function makeDateFromStringAndFormat(config) {
+  var tokens = config._f.match(formattingTokens)
+    , string = config._i + ''
+    , len = tokens.length
+    , i
+    , token
+    , parsedInput
+
+  config._a = []
+
+  for (i = 0; i < len; i += 1) {
+    token = tokens[i]
+    parsedInput = (getParseRegexForToken(token, config).exec(string) || [])[0]
+    if (parsedInput)
+      string = string.slice(string.indexOf(parsedInput) + parsedInput.length)
+    if (formatTokenFunctions[token])
+      addTimeToArrayFromToken(token, parsedInput, config)
+  }
+  if (string)
+    config._il = string
+  return dateFromArray(config)
+}
+
+function makeDateFromStringAndArray(config, utc) {
+  var len = config._f.length
+    , i
+    , format
+    , tempMoment
+    , bestMoment
+    , currentScore
+    , scoreToBeat
+
+  if (len === 0) {
+    return makeMoment(new Date(NaN))
+  }
+
+  for (i = 0; i < len; i += 1) {
+    format = config._f[i]
+    currentScore = 0
+    tempMoment = makeMoment(config._i, format, config._l, config._strict, utc)
+
+    if (!tempMoment.isValid()) continue
+
+    // currentScore = compareArrays(tempMoment._a, tempMoment.toArray())
+    currentScore += tempMoment._jDiff
+    if (tempMoment._il)
+      currentScore += tempMoment._il.length
+    if (scoreToBeat == null || currentScore < scoreToBeat) {
+      scoreToBeat = currentScore
+      bestMoment = tempMoment
+    }
+  }
+
+  return bestMoment
+}
+
+function removeParsedTokens(config) {
+  var string = config._i + ''
+    , input = ''
+    , format = ''
+    , array = config._f.match(formattingTokens)
+    , len = array.length
+    , i
+    , match
+    , parsed
+
+  for (i = 0; i < len; i += 1) {
+    match = array[i]
+    parsed = (getParseRegexForToken(match, config).exec(string) || [])[0]
+    if (parsed)
+      string = string.slice(string.indexOf(parsed) + parsed.length)
+    if (!(formatTokenFunctions[match] instanceof Function)) {
+      format += match
+      if (parsed)
+        input += parsed
+    }
+  }
+  config._i = input
+  config._f = format
+}
+
+/************************************
+    Week of Year
+************************************/
+
+function jWeekOfYear(mom, firstDayOfWeek, firstDayOfWeekOfYear) {
+  var end = firstDayOfWeekOfYear - firstDayOfWeek
+    , daysToDayOfWeek = firstDayOfWeekOfYear - mom.day()
+    , adjustedMoment
+
+  if (daysToDayOfWeek > end) {
+    daysToDayOfWeek -= 7
+  }
+  if (daysToDayOfWeek < end - 7) {
+    daysToDayOfWeek += 7
+  }
+  adjustedMoment = jMoment(mom).add(daysToDayOfWeek, 'd')
+  return  { week: Math.ceil(adjustedMoment.jDayOfYear() / 7)
+          , year: adjustedMoment.jYear()
+          }
+}
+
+/************************************
+    Top Level Functions
+************************************/
+var maxTimestamp = 57724432199999
+
+function makeMoment(input, format, lang, strict, utc) {
+  if (typeof lang === 'boolean') {
+    strict = lang
+    lang = undefined
+  }
+
+  if (format && typeof format === 'string')
+    format = fixFormat(format, moment)
+
+  var config =
+      { _i: input
+      , _f: format
+      , _l: lang
+      , _strict: strict
+      , _isUTC: utc
+      }
+    , date
+    , m
+    , jm
+    , origInput = input
+    , origFormat = format
+  if (format) {
+    if (isArray(format)) {
+      return makeDateFromStringAndArray(config, utc)
+    } else {
+      date = makeDateFromStringAndFormat(config)
+      removeParsedTokens(config)
+      format = 'YYYY-MM-DD-' + config._f
+      input = leftZeroFill(date[0], 4) + '-'
+            + leftZeroFill(date[1] + 1, 2) + '-'
+            + leftZeroFill(date[2], 2) + '-'
+            + config._i
+    }
+  }
+  if (utc)
+    m = moment.utc(input, format, lang, strict)
+  else
+    m = moment(input, format, lang, strict)
+  if (config._isValid === false)
+    m._isValid = false
+  m._jDiff = config._jDiff || 0
+  jm = objectCreate(jMoment.fn)
+  extend(jm, m)
+  if (strict && format && jm.isValid()) {
+    jm._isValid = jm.format(origFormat) === origInput
+  }
+  if (m._d.getTime() > maxTimestamp) {
+    jm._isValid = false
+  }
+  return jm
+}
+
+function jMoment(input, format, lang, strict) {
+  return makeMoment(input, format, lang, strict, false)
+}
+
+extend(jMoment, moment)
+jMoment.fn = objectCreate(moment.fn)
+
+jMoment.utc = function (input, format, lang, strict) {
+  return makeMoment(input, format, lang, strict, true)
+}
+
+jMoment.unix = function (input) {
+  return makeMoment(input * 1000)
+}
+
+/************************************
+    jMoment Prototype
+************************************/
+
+function fixFormat(format, _moment) {
+  var i = 5
+  var replace = function (input) {
+    return _moment.localeData().longDateFormat(input) || input
+  }
+  while (i > 0 && localFormattingTokens.test(format)) {
+    i -= 1
+    format = format.replace(localFormattingTokens, replace)
+  }
+  return format
+}
+
+jMoment.fn.format = function (format) {
+
+  if (format) {
+    format = fixFormat(format, this)
+
+    if (!formatFunctions[format]) {
+      formatFunctions[format] = makeFormatFunction(format)
+    }
+    format = formatFunctions[format](this)
+  }
+  return moment.fn.format.call(this, format)
+}
+
+jMoment.fn.jYear = function (input) {
+  var lastDay
+    , j
+    , g
+  if (typeof input === 'number') {
+    j = toJalaali(this.year(), this.month(), this.date())
+    lastDay = Math.min(j.jd, jMoment.jDaysInMonth(input, j.jm))
+    g = toGregorian(input, j.jm, lastDay)
+    setDate(this, g.gy, g.gm, g.gd)
+    moment.updateOffset(this)
+    return this
+  } else {
+    return toJalaali(this.year(), this.month(), this.date()).jy
+  }
+}
+
+jMoment.fn.jMonth = function (input) {
+  var lastDay
+    , j
+    , g
+  if (input != null) {
+    if (typeof input === 'string') {
+      input = this.localeData().jMonthsParse(input)
+      if (typeof input !== 'number')
+        return this
+    }
+    j = toJalaali(this.year(), this.month(), this.date())
+    lastDay = Math.min(j.jd, jMoment.jDaysInMonth(j.jy, input))
+    this.jYear(j.jy + div(input, 12))
+    input = mod(input, 12)
+    if (input < 0) {
+      input += 12
+      this.jYear(this.jYear() - 1)
+    }
+    g = toGregorian(this.jYear(), input, lastDay)
+    setDate(this, g.gy, g.gm, g.gd)
+    moment.updateOffset(this)
+    return this
+  } else {
+    return toJalaali(this.year(), this.month(), this.date()).jm
+  }
+}
+
+jMoment.fn.jDate = function (input) {
+  var j
+    , g
+  if (typeof input === 'number') {
+    j = toJalaali(this.year(), this.month(), this.date())
+    g = toGregorian(j.jy, j.jm, input)
+    setDate(this, g.gy, g.gm, g.gd)
+    moment.updateOffset(this)
+    return this
+  } else {
+    return toJalaali(this.year(), this.month(), this.date()).jd
+  }
+}
+
+jMoment.fn.jDayOfYear = function (input) {
+  var dayOfYear = Math.round((jMoment(this).startOf('day') - jMoment(this).startOf('jYear')) / 864e5) + 1
+  return input == null ? dayOfYear : this.add(input - dayOfYear, 'd')
+}
+
+jMoment.fn.jWeek = function (input) {
+  var week = jWeekOfYear(this, this.localeData()._week.dow, this.localeData()._week.doy).week
+  return input == null ? week : this.add((input - week) * 7, 'd')
+}
+
+jMoment.fn.jWeekYear = function (input) {
+  var year = jWeekOfYear(this, this.localeData()._week.dow, this.localeData()._week.doy).year
+  return input == null ? year : this.add(input - year, 'y')
+}
+
+jMoment.fn.add = function (val, units) {
+  var temp
+  if (units !== null && !isNaN(+units)) {
+    temp = val
+    val = units
+    units = temp
+  }
+  units = normalizeUnits(units)
+  if (units === 'jyear') {
+    this.jYear(this.jYear() + val)
+  } else if (units === 'jmonth') {
+    this.jMonth(this.jMonth() + val)
+  } else {
+    moment.fn.add.call(this, val, units)
+    if (isNaN(this.jYear())) {
+      this._isValid = false
+    }
+  }
+  return this
+}
+
+jMoment.fn.subtract = function (val, units) {
+  var temp
+  if (units !== null && !isNaN(+units)) {
+    temp = val
+    val = units
+    units = temp
+  }
+  units = normalizeUnits(units)
+  if (units === 'jyear') {
+    this.jYear(this.jYear() - val)
+  } else if (units === 'jmonth') {
+    this.jMonth(this.jMonth() - val)
+  } else {
+    moment.fn.subtract.call(this, val, units)
+  }
+  return this
+}
+
+jMoment.fn.startOf = function (units) {
+  units = normalizeUnits(units)
+  if (units === 'jyear' || units === 'jmonth') {
+    if (units === 'jyear') {
+      this.jMonth(0)
+    }
+    this.jDate(1)
+    this.hours(0)
+    this.minutes(0)
+    this.seconds(0)
+    this.milliseconds(0)
+    return this
+  } else {
+    return moment.fn.startOf.call(this, units)
+  }
+}
+
+jMoment.fn.endOf = function (units) {
+  units = normalizeUnits(units)
+  if (units === undefined || units === 'milisecond') {
+    return this
+  }
+  return this.startOf(units).add(1, (units === 'isoweek' ? 'week' : units)).subtract(1, 'ms')
+}
+
+jMoment.fn.isSame = function (other, units) {
+  units = normalizeUnits(units)
+  if (units === 'jyear' || units === 'jmonth') {
+    return moment.fn.isSame.call(this.startOf(units), other.startOf(units))
+  }
+  return moment.fn.isSame.call(this, other, units)
+}
+
+jMoment.fn.clone = function () {
+  return jMoment(this)
+}
+
+jMoment.fn.jYears = jMoment.fn.jYear
+jMoment.fn.jMonths = jMoment.fn.jMonth
+jMoment.fn.jDates = jMoment.fn.jDate
+jMoment.fn.jWeeks = jMoment.fn.jWeek
+
+/************************************
+    jMoment Statics
+************************************/
+
+jMoment.jDaysInMonth = function (year, month) {
+  year += div(month, 12)
+  month = mod(month, 12)
+  if (month < 0) {
+    month += 12
+    year -= 1
+  }
+  if (month < 6) {
+    return 31
+  } else if (month < 11) {
+    return 30
+  } else if (jMoment.jIsLeapYear(year)) {
+    return 30
+  } else {
+    return 29
+  }
+}
+
+jMoment.jIsLeapYear = jalaali.isLeapJalaaliYear
+
+jMoment.loadPersian = function (args) {
+  var usePersianDigits =  args !== undefined && args.hasOwnProperty('usePersianDigits') ? args.usePersianDigits : false
+  var dialect =  args !== undefined && args.hasOwnProperty('dialect') ? args.dialect : 'persian'
+  moment.locale('fa')
+  moment.updateLocale('fa'
+  , { months: ('ژانویه_فوریه_مارس_آوریل_مه_ژوئن_ژوئیه_اوت_سپتامبر_اکتبر_نوامبر_دسامبر').split('_')
+    , monthsShort: ('ژانویه_فوریه_مارس_آوریل_مه_ژوئن_ژوئیه_اوت_سپتامبر_اکتبر_نوامبر_دسامبر').split('_')
+    , weekdays:
+      {
+        'persian': ('یک\u200cشنبه_دوشنبه_سه\u200cشنبه_چهارشنبه_پنج\u200cشنبه_آدینه_شنبه').split('_'),
+        'persian-modern': ('یک\u200cشنبه_دوشنبه_سه\u200cشنبه_چهارشنبه_پنج\u200cشنبه_جمعه_شنبه').split('_')
+      }[dialect]
+    , weekdaysShort:
+      {
+        'persian': ('یک\u200cشنبه_دوشنبه_سه\u200cشنبه_چهارشنبه_پنج\u200cشنبه_آدینه_شنبه').split('_'),
+        'persian-modern': ('یک\u200cشنبه_دوشنبه_سه\u200cشنبه_چهارشنبه_پنج\u200cشنبه_جمعه_شنبه').split('_')
+      }[dialect]
+    , weekdaysMin:
+      {
+        'persian': 'ی_د_س_چ_پ_آ_ش'.split('_'),
+        'persian-modern': 'ی_د_س_چ_پ_ج_ش'.split('_')
+      }[dialect]
+    , longDateFormat:
+      { LT: 'HH:mm'
+      , L: 'jYYYY/jMM/jDD'
+      , LL: 'jD jMMMM jYYYY'
+      , LLL: 'jD jMMMM jYYYY LT'
+      , LLLL: 'dddd، jD jMMMM jYYYY LT'
+      }
+    , calendar:
+      { sameDay: '[امروز ساعت] LT'
+      , nextDay: '[فردا ساعت] LT'
+      , nextWeek: 'dddd [ساعت] LT'
+      , lastDay: '[دیروز ساعت] LT'
+      , lastWeek: 'dddd [ی پیش ساعت] LT'
+      , sameElse: 'L'
+      }
+    , relativeTime:
+      { future: 'در %s'
+      , past: '%s پیش'
+      , s: 'چند ثانیه'
+      , m: '1 دقیقه'
+      , mm: '%d دقیقه'
+      , h: '1 ساعت'
+      , hh: '%d ساعت'
+      , d: '1 روز'
+      , dd: '%d روز'
+      , M: '1 ماه'
+      , MM: '%d ماه'
+      , y: '1 سال'
+      , yy: '%d سال'
+      }
+    , preparse: function (string) {
+        if (usePersianDigits) {
+          return string.replace(/[۰-۹]/g, function (match) {
+            return numberMap[match]
+          }).replace(/،/g, ',')
+        }
+        return string
+    }
+    , postformat: function (string) {
+        if (usePersianDigits) {
+          return string.replace(/\d/g, function (match) {
+            return symbolMap[match]
+          }).replace(/,/g, '،')
+        }
+        return string
+    }
+    , ordinal: '%dم'
+    , week:
+      { dow: 6 // Saturday is the first day of the week.
+      , doy: 12 // The week that contains Jan 1st is the first week of the year.
+      }
+    , meridiem: function (hour) {
+        return hour < 12 ? 'ق.ظ' : 'ب.ظ'
+      }
+    , jMonths:
+      {
+        'persian': ('فروردین_اردیبهشت_خرداد_تیر_امرداد_شهریور_مهر_آبان_آذر_دی_بهمن_اسفند').split('_'),
+        'persian-modern': ('فروردین_اردیبهشت_خرداد_تیر_مرداد_شهریور_مهر_آبان_آذر_دی_بهمن_اسفند').split('_')
+      }[dialect]
+    , jMonthsShort:
+      {
+        'persian': 'فرو_ارد_خرد_تیر_امر_شهر_مهر_آبا_آذر_دی_بهم_اسف'.split('_'),
+        'persian-modern': 'فرو_ارد_خرد_تیر_مرد_شهر_مهر_آبا_آذر_دی_بهم_اسف'.split('_')
+      }[dialect]
+    }
+  )
+}
+
+jMoment.jConvert =  { toJalaali: toJalaali
+                    , toGregorian: toGregorian
+                    }
+
+/************************************
+    Jalaali Conversion
+************************************/
+
+function toJalaali(gy, gm, gd) {
+  try {
+    var j = jalaali.toJalaali(gy, gm + 1, gd)
+    j.jm -= 1
+    return j
+  } catch (e) {
+    return {
+      jy: NaN
+      , jm: NaN
+      , jd: NaN
+    }
+  }
+}
+
+function toGregorian(jy, jm, jd) {
+  try {
+    var g = jalaali.toGregorian(jy, jm + 1, jd)
+    g.gm -= 1
+    return g
+  } catch (e) {
+    return {
+      gy: NaN
+      , gm: NaN
+      , gd: NaN
+    }
+  }
+}
+
+/*
+  Utility helper functions.
+*/
+
+function div(a, b) {
+  return ~~(a / b)
+}
+
+function mod(a, b) {
+  return a - ~~(a / b) * b
+}
+
+
+/***/ }),
+
 /***/ "./node_modules/moment/locale sync recursive ^\\.\\/.*$":
 /*!**************************************************!*\
   !*** ./node_modules/moment/locale sync ^\.\/.*$ ***!
@@ -53650,6 +54897,45 @@ module.exports = function(module) {
 
 /***/ }),
 
+/***/ "./resources/js/helpers/index.js":
+/*!***************************************!*\
+  !*** ./resources/js/helpers/index.js ***!
+  \***************************************/
+/*! exports provided: setPriority, redirectTo */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setPriority", function() { return setPriority; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "redirectTo", function() { return redirectTo; });
+var setPriority = function setPriority(id) {
+  switch (id) {
+    case 1:
+      return 'ضروری و مهم';
+      break;
+
+    case 2:
+      return 'ضروری و غیر مهم';
+      break;
+
+    case 3:
+      return 'غیر ضروری و مهم';
+      break;
+
+    case 4:
+      return 'غیر ضروری و غیر مهم';
+      break;
+
+    default:
+      break;
+  }
+};
+var redirectTo = function redirectTo(url) {
+  window.location.href = url;
+};
+
+/***/ }),
+
 /***/ "./resources/js/react/components/Task/index.jsx":
 /*!******************************************************!*\
   !*** ./resources/js/react/components/Task/index.jsx ***!
@@ -53664,10 +54950,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var moment_jalaali__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! moment-jalaali */ "./node_modules/moment-jalaali/index.js");
+/* harmony import */ var moment_jalaali__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(moment_jalaali__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _tinymce_editor_index__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../tinymce-editor/index */ "./resources/js/react/components/tinymce-editor/index.jsx");
 /* harmony import */ var _select2__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../select2 */ "./resources/js/select2.js");
+/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../helpers */ "./resources/js/helpers/index.js");
 function _typeof(obj) {
   "@babel/helpers - typeof";
 
@@ -53803,7 +55090,8 @@ function _defineProperty(obj, key, value) {
 
 
 
-moment__WEBPACK_IMPORTED_MODULE_2___default.a.locale('fa');
+moment_jalaali__WEBPACK_IMPORTED_MODULE_2___default.a.locale('fa');
+
 
 
 
@@ -53812,19 +55100,25 @@ var ShowTask = /*#__PURE__*/function (_Component) {
 
   var _super = _createSuper(ShowTask);
 
-  function ShowTask() {
+  function ShowTask(props) {
     var _this;
 
     _classCallCheck(this, ShowTask);
 
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
+    _this = _super.call(this, props);
 
-    _this = _super.call.apply(_super, [this].concat(args));
+    _defineProperty(_assertThisInitialized(_this), "toggle_finished_check", function () {
+      _this.setState(function (prevState) {
+        return {
+          finished_at_check: !prevState.finished_at_check
+        };
+      });
+    });
 
-    _defineProperty(_assertThisInitialized(_this), "state", {
-      mode: "show"
+    _defineProperty(_assertThisInitialized(_this), "handleDescriptionChange", function (content) {
+      _this.setState({
+        task_description: content
+      });
     });
 
     _defineProperty(_assertThisInitialized(_this), "changeMode", function (mode) {
@@ -53847,6 +55141,10 @@ var ShowTask = /*#__PURE__*/function (_Component) {
           });
           $('.select2-search__field').css('width', '100%');
         } else {
+          // Axios.put().then(res => {
+          //     let { data } = res
+          //     this.setState({task: data})
+          // })
           $.each($(".select2"), function (i, item) {
             item.remove();
           });
@@ -53854,264 +55152,312 @@ var ShowTask = /*#__PURE__*/function (_Component) {
       });
     });
 
-    _defineProperty(_assertThisInitialized(_this), "editInfo", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "col-12 col-md-8 offset-md-2 float-left mt-3 animated flash"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "edit-tasks-container col-12"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "input-group col-12 col-md-6 float-right mt-3"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "input-group-prepend"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-      className: "input-group-text"
-    }, "\u0639\u0646\u0648\u0627\u0646 \u06A9\u0627\u0631")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-      type: "text",
-      className: "form-control"
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "input-group col-12 col-md-6 float-right mt-3"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "input-group-prepend"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-      className: "input-group-text"
-    }, "\u062F\u0633\u062A\u0647 \u0628\u0646\u062F\u06CC")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-      type: "text",
-      className: "form-control"
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "input-group col-12 col-md-6 float-right mt-3 input-group-single-line"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "input-group-prepend"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-      className: "input-group-text"
-    }, "\u0627\u0648\u0644\u0648\u06CC\u062A")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
-      id: "edit-task-priority",
-      defaultValue: "1"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-      value: "1",
-      icon_name: "fas fa-hourglass-end"
-    }, "\u0636\u0631\u0648\u0631\u06CC \u0648 \u0645\u0647\u0645"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-      value: "2",
-      icon_name: "fas fa-hourglass-half"
-    }, "\u0636\u0631\u0648\u0631\u06CC \u0648 \u063A\u06CC\u0631 \u0645\u0647\u0645"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-      value: "3",
-      icon_name: "fas fa-hourglass-start"
-    }, "\u063A\u06CC\u0631 \u0636\u0631\u0648\u0631\u06CC \u0648 \u063A\u06CC\u0631 \u0645\u0647\u0645"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-      value: "4",
-      icon_name: "fas fa-hourglass"
-    }, "\u063A\u06CC\u0631 \u0636\u0631\u0648\u0631\u06CC \u0648 \u063A\u06CC\u0631 \u0645\u0647\u0645"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "input-group col-12 col-md-6 float-right mt-3 input-group-single-line"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "input-group-prepend"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-      className: "input-group-text"
-    }, "\u0627\u0646\u062C\u0627\u0645 \u062F\u0647\u0646\u062F\u06AF\u0627\u0646")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
-      id: "edit-task-members",
-      className: "form-control text-right",
-      multiple: true
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-      value: "1",
-      img_address: APP_PATH + "images/male-avatar.svg"
-    }, "\"\u062A\u0631\u0627\u0646\u0647 \u0646\u062E\u0639\u06CC\""), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-      value: "2",
-      img_address: APP_PATH + "images/male-avatar.svg"
-    }, "\"\u062A\u0631\u0627\u0646\u0647 \u0646\u062E\u0639\u06CC\""), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-      value: "3",
-      img_address: APP_PATH + "images/male-avatar.svg"
-    }, "\"\u062A\u0631\u0627\u0646\u0647 \u0646\u062E\u0639\u06CC\""))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "input-group col-12 col-md-6 float-right mt-3"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "input-group-prepend"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-      className: "input-group-text"
-    }, "\u0645\u0648\u0639\u062F \u062A\u062D\u0648\u06CC\u0644")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-      value: moment__WEBPACK_IMPORTED_MODULE_2___default()("2020-12-16 07:36:59").fromNow()
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "input-group col-12 col-md-6 float-right mt-3"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "input-group-prepend"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-      className: "input-group-text"
-    }, "\u0648\u0636\u0639\u06CC\u062A \u0627\u062A\u0645\u0627\u0645")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-      className: "form-control",
-      type: "text",
-      name: "",
-      id: ""
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "input-group-text"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-      className: "c-p",
-      type: "checkbox",
-      value: ""
-    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "input-group col-12 float-right mt-3 mb-3"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "w-100"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_tinymce_editor_index__WEBPACK_IMPORTED_MODULE_3__["default"], null)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "text-center mt-4 float-right col-12"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-      type: "button",
-      className: "btn btn-outline-primary",
-      onClick: _this.changeMode.bind(_assertThisInitialized(_this), "show")
-    }, "\u0630\u062E\u06CC\u0631\u0647 ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-      className: "fas fa-check"
-    })))));
+    _defineProperty(_assertThisInitialized(_this), "editInfo", function () {
+      var _this$state = _this.state,
+          task = _this$state.task,
+          finished_at_check = _this$state.finished_at_check,
+          logged_in_user_id = _this.props.logged_in_user_id;
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-12 col-md-8 offset-md-2 float-left mt-3 animated flash"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "edit-tasks-container col-12"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "input-group col-12 col-md-6 float-right mt-3"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "input-group-prepend"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "input-group-text"
+      }, "\u0639\u0646\u0648\u0627\u0646 \u06A9\u0627\u0631")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        className: "form-control",
+        defaultValue: task.title
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "input-group col-12 col-md-6 float-right mt-3"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "input-group-prepend"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "input-group-text"
+      }, "\u062F\u0633\u062A\u0647 \u0628\u0646\u062F\u06CC")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        className: "form-control",
+        defaultValue: task.group
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "input-group col-12 col-md-6 float-right mt-3 input-group-single-line"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "input-group-prepend"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "input-group-text"
+      }, "\u0627\u0648\u0644\u0648\u06CC\u062A")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+        id: "edit-task-priority",
+        defaultValue: "".concat(task.priority_id)
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "1",
+        icon_name: "fas fa-hourglass-end"
+      }, "\u0636\u0631\u0648\u0631\u06CC \u0648 \u0645\u0647\u0645"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "2",
+        icon_name: "fas fa-hourglass-half"
+      }, "\u0636\u0631\u0648\u0631\u06CC \u0648 \u063A\u06CC\u0631 \u0645\u0647\u0645"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "3",
+        icon_name: "fas fa-hourglass-start"
+      }, "\u063A\u06CC\u0631 \u0636\u0631\u0648\u0631\u06CC \u0648 \u063A\u06CC\u0631 \u0645\u0647\u0645"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "4",
+        icon_name: "fas fa-hourglass"
+      }, "\u063A\u06CC\u0631 \u0636\u0631\u0648\u0631\u06CC \u0648 \u063A\u06CC\u0631 \u0645\u0647\u0645"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "input-group col-12 col-md-6 float-right mt-3 input-group-single-line"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "input-group-prepend"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "input-group-text"
+      }, "\u0627\u0646\u062C\u0627\u0645 \u062F\u0647\u0646\u062F\u06AF\u0627\u0646")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+        id: "edit-task-members",
+        className: "form-control text-right",
+        multiple: true
+      }, task.users.map(function (user, i) {
+        if (user.id !== logged_in_user_id) {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+            key: i,
+            value: user.id,
+            img_address: APP_PATH + user.avatar_pic
+          }, user.fullname);
+        }
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "input-group col-12 col-md-6 float-right mt-3"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "input-group-prepend"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "input-group-text"
+      }, "\u0645\u0648\u0639\u062F \u062A\u062D\u0648\u06CC\u0644")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        defaultValue: moment_jalaali__WEBPACK_IMPORTED_MODULE_2___default()(task.due_to).format("jYYYY/jMM/jDD HH:mm")
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "input-group col-12 col-md-6 float-right mt-3"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "input-group-prepend"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "input-group-text"
+      }, "\u0648\u0636\u0639\u06CC\u062A \u0627\u062A\u0645\u0627\u0645")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        className: "form-control",
+        value: finished_at_check ? "تمام شده" : "نا تمام",
+        readOnly: true
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "input-group-text"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: "c-p",
+        type: "checkbox",
+        onChange: _this.toggle_finished_check.bind(_assertThisInitialized(_this)),
+        defaultChecked: task.finished_at !== null ? true : false
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "input-group col-12 float-right mt-3 mb-3"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "w-100"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_tinymce_editor_index__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        initialValue: task.description,
+        changeContent: _this.handleDescriptionChange
+      })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "text-center mt-4 float-right col-12"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        type: "button",
+        className: "btn btn-outline-primary",
+        onClick: _this.changeMode.bind(_assertThisInitialized(_this), "show")
+      }, "\u0630\u062E\u06CC\u0631\u0647 ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-check"
+      }))));
+    });
 
-    _defineProperty(_assertThisInitialized(_this), "showInfo", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "col-12 col-md-8 offset-md-2 float-left mt-3 animated fadeIn"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "show-tasks-container col-12"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "mt-3 col-12 col-md-5"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "task-title-section title-section"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-      className: "fas fa-hand-point-left"
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0639\u0646\u0648\u0627\u0646:")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "task-detail"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0637\u0631\u0627\u062D\u06CC \u0635\u0641\u062D\u0647 \u062A\u0633\u06A9"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "mt-3 col-12 col-md-5"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "task-title-section title-section"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-      className: "fas fa-object-group"
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u06AF\u0631\u0648\u0647:")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "task-detail"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0628\u0631\u0646\u0627\u0645\u0647 \u0646\u0648\u06CC\u0633\u06CC"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "mt-3 col-12 col-md-5"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "task-title-section title-section"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-      className: "fas fa-layer-group"
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0632\u06CC\u0631 \u0645\u062C\u0645\u0648\u0639\u0647:")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "task-detail"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", null, "\u0637\u0631\u0627\u062D\u06CC api"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "mt-3 col-12 col-md-5"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "task-title-section title-section"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-      className: "fas fa-star"
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0627\u0648\u0644\u0648\u06CC\u062A:")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "task-detail"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0636\u0631\u0648\u0631\u06CC \u0648 \u0645\u0647\u0645"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "mt-3 col-12 col-md-5"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "task-title-section title-section"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-      className: "fas fa-calendar-day"
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0633\u0627\u062E\u062A\u0647 \u0634\u062F\u0647 \u062F\u0631 \u062A\u0627\u0631\u06CC\u062E:")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "task-detail"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u06F1\u06F2 \u0645\u0647\u0631"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "mt-3 col-12 col-md-5"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "task-title-section title-section"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-      className: "fas fa-sync"
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0622\u062E\u0631\u06CC\u0646 \u062A\u063A\u06CC\u06CC\u0631\u0627\u062A \u062F\u0631 \u062A\u0627\u0631\u06CC\u062E:")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "task-detail"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u06F1\u06F2 \u0645\u0647\u0631"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "mt-3 col-12 col-md-5"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "task-title-section title-section"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-      className: "fas fa-hourglass-start"
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0645\u0648\u0639\u062F \u062A\u062D\u0648\u06CC\u0644:")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "task-detail"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u06F3 \u0631\u0648\u0632 \u062F\u06CC\u06AF\u0631"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "mt-3 col-12 col-md-5"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "task-title-section title-section"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-      className: "fas fa-clipboard-check"
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0648\u0636\u0639\u06CC\u062A \u0627\u062A\u0645\u0627\u0645:")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "task-detail"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u062A\u0645\u0627\u0645 \u0634\u062F\u0647"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "mt-3 col-12 col-md-5"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "task-title-section title-section"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-      className: "fas fa-calendar-check"
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u062A\u0627\u0631\u06CC\u062E \u0627\u062A\u0645\u0627\u0645:")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "task-detail"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u06F1\u06F2 \u0645\u0647\u0631"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "mt-3 col-12 col-md-5"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "task-title-section title-section"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-      className: "fas fa-user-check"
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0627\u062A\u0645\u0627\u0645 \u06A9\u0646\u0646\u062F\u0647:")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "task-detail"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-      href: "",
-      className: "task-finisher"
-    }, "\u0627\u0645\u06CC\u0631\u0631\u0636\u0627 \u0645\u0646\u0635\u0648\u0631\u06CC\u0627\u0646"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "mt-3 col-12 col-md-5"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "task-title-section title-section float-right"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-      className: "fas fa-users"
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0627\u0646\u062C\u0627\u0645 \u062F\u0647\u0646\u062F\u06AF\u0627\u0646:")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "employees-container task-detail next-line"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "user-dropdown-item border-sharp animated jackInTheBox permanent-visible"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "user-right-flex"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "user-img-container ml-md-2 ml-1"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-      src: typeof workspace_users !== 'undefined' && workspace_users[user.id].avatar_pic !== null ? APP_PATH + workspace_users[user.id].avatar_pic : APP_PATH + 'images/male-avatar.svg'
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "user-info ml-md-2 ml-1"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "\u0627\u0645\u06CC\u0631\u0631\u0636\u0627 \u0645\u0646\u0635\u0648\u0631\u06CC\u0627\u0646"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-      href: "#user"
-    }, "@amirmns"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "user-label-container"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-      className: "btn btn-sm btn-success rtl admin p-1"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-      className: "fas fa-star ml-1"
-    }), "\u0627\u062F\u0645\u06CC\u0646", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-      className: "fas fa-user-tie mr-1"
-    }))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "mt-3 col-12 col-md-5"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "task-title-section title-section"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-      className: "fas fa-tasks"
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0648\u0638\u0627\u06CC\u0641 \u0632\u06CC\u0631 \u0645\u062C\u0645\u0648\u0639\u0647:")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "task-detail next-line"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-      className: "child-tasks"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", null, "\u0637\u0631\u0627\u062D\u06CC api \u062A\u0633\u06A9 \u0647\u0627")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", null, "\u0637\u0631\u0627\u062D\u06CC api \u062A\u0633\u06A9 \u0647\u0627")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", null, "\u0637\u0631\u0627\u062D\u06CC api \u062A\u0633\u06A9 \u0647\u0627")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", null, "\u0637\u0631\u0627\u062D\u06CC api \u062A\u0633\u06A9 \u0647\u0627"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "mt-3 col-12 col-md-10"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "task-title-section title-section"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-      className: "fas fa-comment-dots"
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u062A\u0648\u0636\u06CC\u062D\u0627\u062A \u062A\u06A9\u0645\u06CC\u0644\u06CC:")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "task-detail next-line"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-      className: "text-right"
-    }, "\u06A9\u06CC\u0631 \u062E\u0631")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "text-center mt-4"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-      className: "btn btn-outline-info",
-      onClick: _this.changeMode.bind(_assertThisInitialized(_this), "edit")
-    }, "\u0648\u06CC\u0631\u0627\u06CC\u0634 ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-      className: "fas fa-pen-alt"
-    })))));
+    _defineProperty(_assertThisInitialized(_this), "showInfo", function () {
+      var _this$state2 = _this.state,
+          task = _this$state2.task,
+          workspace_users = _this$state2.workspace_users;
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-12 col-md-8 offset-md-2 float-left mt-3 animated fadeIn"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "show-tasks-container"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "mt-3 col-12 col-md-5"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "task-title-section title-section"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-hand-point-left"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0639\u0646\u0648\u0627\u0646:")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "task-detail"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, task ? task.title : ""))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "mt-3 col-12 col-md-5"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "task-title-section title-section"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-object-group"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u06AF\u0631\u0648\u0647:")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "task-detail"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, task ? task.group : ""))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "mt-3 col-12 col-md-5"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "task-title-section title-section"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-layer-group"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0632\u06CC\u0631 \u0645\u062C\u0645\u0648\u0639\u0647:")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "task-detail"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", null, "\u0637\u0631\u0627\u062D\u06CC api"), " ")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "mt-3 col-12 col-md-5"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "task-title-section title-section"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-star"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0627\u0648\u0644\u0648\u06CC\u062A:")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "task-detail"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, Object(_helpers__WEBPACK_IMPORTED_MODULE_5__["setPriority"])(task ? task.priority_id : "")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "mt-3 col-12 col-md-5"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "task-title-section title-section"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-calendar-day"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0633\u0627\u062E\u062A\u0647 \u0634\u062F\u0647 \u062F\u0631 \u062A\u0627\u0631\u06CC\u062E:")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "task-detail"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, task ? moment_jalaali__WEBPACK_IMPORTED_MODULE_2___default()(task.created_at).format("jYYYY/jMM/jDD") : "", " (", task ? moment_jalaali__WEBPACK_IMPORTED_MODULE_2___default()(task.created_at).fromNow() : "", ")"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "mt-3 col-12 col-md-5"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "task-title-section title-section"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-sync"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0622\u062E\u0631\u06CC\u0646 \u062A\u063A\u06CC\u06CC\u0631\u0627\u062A \u062F\u0631 \u062A\u0627\u0631\u06CC\u062E:")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "task-detail"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, task ? moment_jalaali__WEBPACK_IMPORTED_MODULE_2___default()(task.updated_at).format("jYYYY/jMM/jDD") : "", " (", task ? moment_jalaali__WEBPACK_IMPORTED_MODULE_2___default()(task.updated_at).fromNow() : "", ")"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "mt-3 col-12 col-md-5"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "task-title-section title-section"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-hourglass-start"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0645\u0648\u0639\u062F \u062A\u062D\u0648\u06CC\u0644:")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "task-detail"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, task ? moment_jalaali__WEBPACK_IMPORTED_MODULE_2___default()(task.due_to).format("jYYYY/jMM/jDD") : "", " (", task ? moment_jalaali__WEBPACK_IMPORTED_MODULE_2___default()(task.due_to).fromNow() : "", ")"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "mt-3 col-12 col-md-5"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "task-title-section title-section"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-clipboard-check"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0648\u0636\u0639\u06CC\u062A \u0627\u062A\u0645\u0627\u0645:")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "task-detail"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u062A\u0645\u0627\u0645 \u0634\u062F\u0647"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "mt-3 col-12 col-md-5"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "task-title-section title-section"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-calendar-check"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u062A\u0627\u0631\u06CC\u062E \u0627\u062A\u0645\u0627\u0645:")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "task-detail"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, task && task.finished_at !== null ? moment_jalaali__WEBPACK_IMPORTED_MODULE_2___default()(task.finished_at).format("jYYYY/jMM/jDD") + " (" + moment_jalaali__WEBPACK_IMPORTED_MODULE_2___default()(task.finished_at).fromNow() + ")" : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-minus"
+      })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "mt-3 col-12 col-md-5"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "task-title-section title-section"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-user-check"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0627\u062A\u0645\u0627\u0645 \u06A9\u0646\u0646\u062F\u0647:")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "task-detail"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "",
+        className: "task-finisher"
+      }, task && task.finisher_id !== null && workspace_users ? workspace_users[task.finisher_id].fullname : ""))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "mt-3 col-12 col-md-5"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "task-title-section title-section float-right"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-users"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0627\u0646\u062C\u0627\u0645 \u062F\u0647\u0646\u062F\u06AF\u0627\u0646:")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "employees-container task-detail next-line"
+      }, task && task.users >= 1 && task.user.map(function (user, i) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "user-dropdown-item border-sharp animated jackInTheBox permanent-visible"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "user-right-flex"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "user-img-container ml-md-2 ml-1"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+          src: APP_PATH + user.avatar_pic
+        })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "user-info ml-md-2 ml-1"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, user.fullname), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+          href: "#user"
+        }, user.name))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "user-label-container"
+        }));
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "mt-3 col-12 col-md-5"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "task-title-section title-section"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-tasks"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0648\u0638\u0627\u06CC\u0641 \u0632\u06CC\u0631 \u0645\u062C\u0645\u0648\u0639\u0647:")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "task-detail next-line"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        className: "child-tasks"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", null, "\u0637\u0631\u0627\u062D\u06CC api \u062A\u0633\u06A9 \u0647\u0627")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", null, "\u0637\u0631\u0627\u062D\u06CC api \u062A\u0633\u06A9 \u0647\u0627")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", null, "\u0637\u0631\u0627\u062D\u06CC api \u062A\u0633\u06A9 \u0647\u0627")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", null, "\u0637\u0631\u0627\u062D\u06CC api \u062A\u0633\u06A9 \u0647\u0627"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "mt-3 col-12 col-md-10"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "task-title-section title-section"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-comment-dots"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u062A\u0648\u0636\u06CC\u062D\u0627\u062A \u062A\u06A9\u0645\u06CC\u0644\u06CC:")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "task-detail next-line"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "text-right"
+      }, "\u06A9\u06CC\u0631 \u062E\u0631")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "text-center mt-4"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "btn btn-outline-info",
+        onClick: _this.changeMode.bind(_assertThisInitialized(_this), "edit")
+      }, "\u0648\u06CC\u0631\u0627\u06CC\u0634 ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-pen-alt"
+      }))));
+    });
 
+    _this.state = {
+      mode: "show"
+    };
     return _this;
   }
 
   _createClass(ShowTask, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      var task_api = this.props.task_api;
-      console.log(task_api);
+      var _this2 = this;
+
+      var _this$props = this.props,
+          task_api = _this$props.task_api,
+          workspace_api = _this$props.workspace_api;
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(task_api).then(function (res) {
+        var data = res.data;
+
+        _this2.setState({
+          task: data,
+          finished_at_check: data.finished_at !== null ? true : false
+        });
+      });
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(workspace_api).then(function (res) {
+        var data = res.data;
+
+        _this2.setState({
+          workspace: data
+        }, function () {
+          _this2.state.workspace.users.map(function (user, i) {
+            _this2.setState(function (prevState) {
+              return {
+                workspace_users: Object.assign({}, prevState.workspace_users, _defineProperty({}, user.id, {
+                  is_admin: user.pivot.is_admin,
+                  fullname: user.fullname
+                }))
+              };
+            });
+          });
+        });
+      });
     }
   }, {
     key: "render",
     value: function render() {
-      var mode = this.state.mode;
+      var _this$state3 = this.state,
+          mode = _this$state3.mode,
+          task = _this$state3.task;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-12 float-right task-info-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -54129,7 +55475,7 @@ var ShowTask = /*#__PURE__*/function (_Component) {
         className: "fas fa-arrow-circle-left"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         className: "float-right hoverable"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, "\u0637\u0631\u0627\u062D\u06CC api"))), mode === "show" ? this.showInfo : this.editInfo));
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, "\u0637\u0631\u0627\u062D\u06CC api"))), mode === "show" ? this.showInfo() : this.editInfo()));
     }
   }]);
 
@@ -54314,8 +55660,9 @@ var TinymcEditor = /*#__PURE__*/function (_React$Component) {
   _createClass(TinymcEditor, [{
     key: "render",
     value: function render() {
+      var initialValue = this.props.initialValue;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_tinymce_tinymce_react__WEBPACK_IMPORTED_MODULE_1__["Editor"], {
-        initialValue: "",
+        initialValue: initialValue ? initialValue : "",
         tinymceScriptSrc: "".concat(APP_PATH, "js/tinymce/tinymce.js"),
         onEditorChange: this.handleEditorChange,
         init: {
@@ -54388,10 +55735,14 @@ __webpack_require__.r(__webpack_exports__);
 
 var target = document.getElementById("react-show-task");
 var taskApi = target.getAttribute("task_api");
+var workspaceApi = target.getAttribute("workspace_api");
+var loggedInUserId = parseInt(target.getAttribute("logged_in_user_id"));
 
 if (target) {
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Task_index__WEBPACK_IMPORTED_MODULE_2__["default"], {
-    task_api: taskApi
+    task_api: taskApi,
+    workspace_api: workspaceApi,
+    logged_in_user_id: loggedInUserId
   }), target);
 }
 

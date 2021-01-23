@@ -22,8 +22,7 @@
         "react-dom": "^16.2.0",
         "resolve-url-loader": "^3.1.0",
         "sass": "^1.15.2",
-        "sass-loader": "^8.0.0",
-        "vue-template-compiler": "^2.6.12"
+        "sass-loader": "^8.0.0"
     },
     "dependencies": {
         "@fortawesome/fontawesome-free": "^5.15.1",
@@ -31,6 +30,7 @@
         "animate.css": "^3.7.2",
         "chart.js": "^2.9.4",
         "moment": "^2.29.1",
+        "moment-jalaali": "^0.9.2",
         "persian-datepicker": "^1.2.0",
         "react-activity": "^1.2.2",
         "select2": "^4.0.13",

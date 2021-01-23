@@ -66,7 +66,7 @@ export default class Workspace extends Component {
     }
 
     addTask = () => {
-        let { add_task_api, logged_in_api_token } = this.props, { new_task_description, workspace_users, creater_id } = this.state
+        let { add_task_api, logged_in_user_id } = this.props, { new_task_description, workspace_users } = this.state
         let title = $("#new-task-title").val(), group = $("#new-task-group").val(), priority = parseInt($("#new-task-priority").val()), users = $("#new-task-members").val(), description = new_task_description
         if (title.length === 0 || group.length === 0 || priority === null) {
             Swal.fire({
@@ -94,7 +94,7 @@ export default class Workspace extends Component {
                             name: workspace_users[userId].name,
                         })
                     })
-                    new_task_users.unshift({id: creater_id, fullname: workspace_users[creater_id].fullname, name: workspace_users[creater_id].name})
+                    new_task_users.unshift({id: logged_in_user_id, fullname: workspace_users[logged_in_user_id].fullname, name: workspace_users[logged_in_user_id].name})
                     return ({
                         tasks: Object.assign({}, prevState.tasks, {
                             data: [{...res.data, users: new_task_users, finished_at: null, finisher_id: null}, ...prevState.tasks.data]
@@ -132,15 +132,12 @@ export default class Workspace extends Component {
     }
 
     componentDidMount() {
-        let { workspace_api, logged_in_api_token } = this.props
+        let { workspace_api, logged_in_user_id } = this.props
         this.handleMore("tasks", false)
         Axios.get(workspace_api).then(res => {
             let { data } = res
             this.setState({workspace: data}, () => {
                 this.state.workspace.users.map((user, i) => {
-                    if(user.api_token === logged_in_api_token) {
-
-                    }
                     this.setState(prevState => ({
                         workspace_users: Object.assign({}, prevState.workspace_users, {
                             [user.id]: {
@@ -150,7 +147,6 @@ export default class Workspace extends Component {
                                 avatar_pic: user.avatar_pic
                             } // we have a clear object in our states that tells us all the informations that we need about users
                         }),
-                        creater_id: user.api_token === logged_in_api_token ? user.id : prevState.creater_id
                     }))
                 })
             })
@@ -160,7 +156,7 @@ export default class Workspace extends Component {
 
     render() {
         let { isGetting, tasks, workspace_users, workspace } = this.state
-        let { taskRoute, logged_in_api_token } = this.props
+        let { taskRoute, logged_in_user_id } = this.props
 
         return (
             <div>
@@ -204,7 +200,7 @@ export default class Workspace extends Component {
                                 </div>
                                 <select id="new-task-members" className="form-control text-right" multiple>
                                     { workspace ? workspace.users.map((user, i) => {
-                                        if (user.api_token !== logged_in_api_token) {
+                                        if (user.id !== logged_in_user_id) {
                                             return (
                                                 <option key={i} value={user.id} img_address={APP_PATH + user.avatar_pic}>{user.fullname}</option>
                                             )                                            
@@ -301,7 +297,7 @@ export default class Workspace extends Component {
                                                                             <div key={i} className="user-dropdown-item border-sharp animated jackInTheBox">
                                                                                 <div className="user-right-flex">
                                                                                     <div className="user-img-container ml-2">
-                                                                                        <img src={typeof workspace_users !== 'undefined' && workspace_users[user.id].avatar_pic !== null ? APP_PATH + workspace_users[user.id].avatar_pic : APP_PATH + 'images/male-avatar.svg'} />
+                                                                                        <img src={typeof workspace_users !== 'undefined' ? APP_PATH + workspace_users[user.id].avatar_pic : APP_PATH + 'images/male-avatar.svg'} />
                                                                                     </div>
                                                                                     <div className="user-info ml-2">
                                                                                         <p>{ user.fullname }</p>
