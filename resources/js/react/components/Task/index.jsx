@@ -5,6 +5,7 @@ moment.locale('fa')
 import TinymcEditor from '../tinymce-editor/index'
 import { formatOption, formatMemberOption } from '../../../select2'
 import { setPriority, redirectTo } from '../../../helpers'
+import { take } from 'lodash'
 
 export default class ShowTask extends Component {
     constructor(props) {
@@ -317,24 +318,24 @@ export default class ShowTask extends Component {
     }
     
     render() {
-        let { mode, task } = this.state
+        let { mode, task, workspace } = this.state
 
         return (
             <div>
                 <div className="col-12 float-right task-info-container">
                     <div className="breadcrumb col-12 float-right">
                         <a className="float-right hoverable">
-                            <img src={APP_PATH + "images/elnovel-logo.jpg"} alt=""/>
-                            <h6>الناول</h6>
+                            <img src={workspace ? APP_PATH + workspace.avatar_pic : ""} alt=""/>
+                            <h6>{workspace ? workspace.title : ""}</h6>
                         </a>
                         <i className="fas fa-arrow-circle-left"></i>
                         <div className="float-right">
-                            <h6>طراحی وبسایت</h6>
+                            <h6>{task ? task.group : ""}</h6>
                         </div>
                         <i className="fas fa-arrow-circle-left"></i>
-                        <a className="float-right hoverable">
-                            <h6>طراحی api</h6>
-                        </a>
+                        { task && task.parent_id !== null && <a className="hoverable"><h6>تسک پدر</h6></a> } {/* then we add the parent task or the name of the task here */}
+                        { task && task.parent_id !== null && <i className="fas fa-arrow-circle-left"></i> }
+                        <a className="hoverable"><h6>{task ? task.title : ''}</h6></a>
                     </div>
                     {mode === "show" ? this.showInfo() : this.editInfo()}
                 </div>

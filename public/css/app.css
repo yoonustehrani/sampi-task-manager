@@ -9973,16 +9973,17 @@ div.breadcrumb {
   border-bottom: 1px solid #859398;
 }
 
-div.breadcrumb > div,
+div.breadcrumb div,
 div.breadcrumb a,
 div.breadcrumb i {
   direction: rtl;
   margin-right: 10px;
   color: #859398;
   text-align: center;
+  transition: 0.5s;
 }
 
-div.breadcrumb > i {
+div.breadcrumb i {
   font-size: 15px;
 }
 
@@ -10005,7 +10006,8 @@ div.breadcrumb .hoverable {
   cursor: pointer;
 }
 
-div.breadcrumb .hoverable:hover h6 {
+div.breadcrumb .hoverable:hover h6,
+div.breadcrumb .hoverable:hover a {
   color: #2C5364;
 }
 
