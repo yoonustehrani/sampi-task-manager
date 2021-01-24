@@ -448,13 +448,14 @@ div.breadcrumb {
     justify-content: right;
     align-items: center;
     border-bottom: 1px solid #859398;
-    > div, a, i {
+    div, a, i {
         direction: rtl;
         margin-right: 10px;
         color: #859398;
         text-align: center;
+        transition: 0.5s;
     }
-    > i {
+    i {
         font-size: 15px;
     }
     img {
@@ -474,7 +475,7 @@ div.breadcrumb {
         cursor: pointer;
     }
     .hoverable:hover {
-        h6 {
+        h6, a {
             color: #2C5364;
         }
         img {

@@ -13,7 +13,7 @@
 ></div>
 @endsection
 
-@section('scripts')
+@push('scripts')
     <script src="{{ asset("/js/task.js") }}"></script>
     <script src="{{ asset('js/select2.js') }}"></script>
-@endsection
+@endpush
