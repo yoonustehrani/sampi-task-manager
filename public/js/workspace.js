@@ -59869,7 +59869,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setPriority", function() { return setPriority; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "redirectTo", function() { return redirectTo; });
 var setPriority = function setPriority(id) {
-  switch (id) {
+  switch (parseInt(id)) {
     case 1:
       return 'ضروری و مهم';
       break;

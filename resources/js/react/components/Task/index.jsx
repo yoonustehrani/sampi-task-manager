@@ -63,9 +63,10 @@ export default class ShowTask extends Component {
     }
 
     changeMode = (mode) => {
-        this.setState({
-            mode: mode
-        }, () => {
+        let edited_title = $("#task-title-edit").val(), edited_group = $("#task-group-edit").val(), edited_priority = $("#edit-task-priority").val(), edited_users = $("#edit-task-members").val()
+        this.setState(prevState => ({
+            mode: mode,
+        }), () => {
             if (this.state.mode === "edit") {
                 $('#edit-task-priority').select2({
                     templateResult: formatOption,
@@ -83,27 +84,25 @@ export default class ShowTask extends Component {
                 $('.select2-search__field').css('width', '100%')
             } else {
                 let { edit_task_api, toggle_task_state_api } = this.props, { task_description, finished_at_check, first_check_state } = this.state
+                if (finished_at_check !== first_check_state) {
+                    Axios.put(toggle_task_state_api).then(res => {
+                        // we will show the erros with swal
+                        console.log(res)
+                    })
+                }
                 Axios.put(edit_task_api, {
-                    title: $("#task-title-edit").val(),
-                    group: $("#task-group-edit").val(),
-                    priority_id: parseInt($("#edit-task-priority").val()),
-                    users: $("#edit-task-members").val(),
+                    title: edited_title,
+                    group: edited_group,
+                    priority: edited_priority,
+                    users: edited_users,
                     description: task_description,
-                    due_to: "2020-12-16 07:36:59",
+                    // due_to: "",
                 }).then(res => {
                     let { data } = res
-                    console.log(res)
-                    if (finished_at_check !== first_check_state) {
-                        Axios.put(toggle_task_state_api).then(response => {
-                            this.setState({
-                                task: response.data
-                            })
-                        })
-                    } else {
-                        this.setState({
-                            task: data
-                        })
-                    }
+                    this.setState({
+                        task: data,
+                        first_check_state: data.finished_at !== null ? true : false,
+                    })
                 })
                 $.each($(".select2"), (i, item) => {
                     item.remove()

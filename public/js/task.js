@@ -57477,7 +57477,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setPriority", function() { return setPriority; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "redirectTo", function() { return redirectTo; });
 var setPriority = function setPriority(id) {
-  switch (id) {
+  switch (parseInt(id)) {
     case 1:
       return 'ضروری و مهم';
       break;
@@ -57696,8 +57696,15 @@ var ShowTask = /*#__PURE__*/function (_Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "changeMode", function (mode) {
-      _this.setState({
-        mode: mode
+      var edited_title = $("#task-title-edit").val(),
+          edited_group = $("#task-group-edit").val(),
+          edited_priority = $("#edit-task-priority").val(),
+          edited_users = $("#edit-task-members").val();
+
+      _this.setState(function (prevState) {
+        return {
+          mode: mode
+        };
       }, function () {
         if (_this.state.mode === "edit") {
           $('#edit-task-priority').select2({
@@ -57722,28 +57729,28 @@ var ShowTask = /*#__PURE__*/function (_Component) {
               task_description = _this$state.task_description,
               finished_at_check = _this$state.finished_at_check,
               first_check_state = _this$state.first_check_state;
+
+          if (finished_at_check !== first_check_state) {
+            axios__WEBPACK_IMPORTED_MODULE_1___default.a.put(toggle_task_state_api).then(function (res) {
+              // we will show the erros with swal
+              console.log(res);
+            });
+          }
+
           axios__WEBPACK_IMPORTED_MODULE_1___default.a.put(edit_task_api, {
-            title: $("#task-title-edit").val(),
-            group: $("#task-group-edit").val(),
-            priority_id: parseInt($("#edit-task-priority").val()),
-            users: $("#edit-task-members").val(),
-            description: task_description,
-            due_to: "2020-12-16 07:36:59"
+            title: edited_title,
+            group: edited_group,
+            priority: edited_priority,
+            users: edited_users,
+            description: task_description // due_to: "",
+
           }).then(function (res) {
             var data = res.data;
-            console.log(res);
 
-            if (finished_at_check !== first_check_state) {
-              axios__WEBPACK_IMPORTED_MODULE_1___default.a.put(toggle_task_state_api).then(function (response) {
-                _this.setState({
-                  task: response.data
-                });
-              });
-            } else {
-              _this.setState({
-                task: data
-              });
-            }
+            _this.setState({
+              task: data,
+              first_check_state: data.finished_at !== null ? true : false
+            });
           });
           $.each($(".select2"), function (i, item) {
             item.remove();

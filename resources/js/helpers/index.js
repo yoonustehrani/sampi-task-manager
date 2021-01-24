@@ -1,5 +1,5 @@
 export const setPriority = (id) => {
-    switch(id) {
+    switch(parseInt(id)) {
         case 1:
             return 'ضروری و مهم'
             break
