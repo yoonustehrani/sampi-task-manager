@@ -157,7 +157,7 @@ export default class Workspace extends Component {
     render() {
         let { isGetting, tasks, workspace_users, workspace } = this.state
         let { taskRoute, logged_in_user_id } = this.props
-
+        
         return (
             <div>
                 <div className="float-right col-12 pr-0 pl-0 pr-md-3 pl-md-3">
