@@ -109,9 +109,8 @@ class TaskController extends BaseController
                 $task->parent_id = $request->parent_id;
                 $task->group = $request->group ?: 'دسته بندی نشده';
                 $task->proiority_id = $request->proiority;
-                $task->due_to = $request->due_to;
+                // $task->due_to = $request->due_to;
                 $task->save();
-                
                 $users = $request->input('users') ?: [];
                 $task->users()->sync(
                     array_merge($users, [(string) $request->user()->id])
