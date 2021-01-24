@@ -97,7 +97,7 @@ class TaskController extends BaseController
             'parent_id' => 'nullable|numeric',
             'title' => 'required|string',
             'group' => 'nullable|string|min:3|max:100',
-            'proiority' => 'required|numeric',
+            'priority' => 'required|numeric',
             'due_to' => 'nullable|numeric',
         ]);
         $task = Task::where('workspace_id', $workspace)->findOrFail($task);
@@ -108,7 +108,7 @@ class TaskController extends BaseController
                 $task->description = $request->description;
                 $task->parent_id = $request->parent_id;
                 $task->group = $request->group ?: 'دسته بندی نشده';
-                $task->proiority_id = $request->proiority;
+                $task->priority_id = $request->priority;
                 // $task->due_to = $request->due_to;
                 $task->save();
                 $users = $request->input('users') ?: [];
