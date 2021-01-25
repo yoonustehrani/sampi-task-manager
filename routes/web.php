@@ -19,7 +19,7 @@ Route::get('/', function () {
     // $user = auth()->user() ?: User::find(2);
     // return $user->actions()->with('subject')->limit(5)->get();
     // return "<a href='". route('task-manager.') ."'>Task Manager</a>";
-    // return view('index');
+    return view('index');
 });
 
 Route::get('/chart', function() {

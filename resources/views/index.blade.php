@@ -7,7 +7,11 @@
     <title>Document</title>
 </head>
 <body>
+    <div class="col-12 float-left">
+        <input type="text" id="example">
+    </div>
     <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/datepicker.js') }}"></script>
 </body>
 </html>
 
