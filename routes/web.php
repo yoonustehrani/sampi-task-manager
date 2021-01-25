@@ -2,6 +2,7 @@
 
 use App\User;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,13 +16,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// $user = auth()->user() ?: User::find(2);
+// return $user->actions()->with('subject')->limit(5)->get();
+// return "<a href='". route('task-manager.') ."'>Task Manager</a>";
+
 Route::get('/', function () {
-    // $user = auth()->user() ?: User::find(2);
-    // return $user->actions()->with('subject')->limit(5)->get();
-    // return "<a href='". route('task-manager.') ."'>Task Manager</a>";
     return view('index');
 });
 
+Route::post('/', function(Request $request) {
+    $dt = $request->due_to ? new Carbon($request->due_to) : now();
+    return $dt->format('YY/MM/dd H:i:s');
+});
 Route::get('/chart', function() {
     // $user = User::first();
     // $dt_from = Carbon::createFromFormat('Y-m-d', '2021-01-01')->setTime(0,0);
