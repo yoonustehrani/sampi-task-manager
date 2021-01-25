@@ -116,19 +116,19 @@ export default class ShowTask extends Component {
         return (
             <div className="col-12 col-md-10 offset-md-2 float-left mt-3 animated flash">
                 <div className="edit-tasks-container col-12">
-                    <div className="input-group col-12 col-md-6 float-right mt-3">
+                    <div className="input-group col-12 col-md-6 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3">
                         <div className="input-group-prepend">
                             <span className="input-group-text">عنوان کار</span>
                         </div>
                         <input id="task-title-edit" type="text" className="form-control" defaultValue={task.title} />
                     </div>
-                    <div className="input-group col-12 col-md-6 float-right mt-3">
+                    <div className="input-group col-12 col-md-6 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3">
                         <div className="input-group-prepend">
                             <span className="input-group-text">دسته بندی</span>
                         </div>
                         <input id="task-group-edit" type="text" className="form-control" defaultValue={task.group}/>
                     </div>
-                    <div className="input-group col-12 col-md-6 float-right mt-3 input-group-single-line">
+                    <div className="input-group col-12 col-md-6 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3 input-group-single-line-all">
                         <div className="input-group-prepend">
                             <span className="input-group-text">اولویت</span>
                         </div>
@@ -139,7 +139,7 @@ export default class ShowTask extends Component {
                             <option value="4" icon_name="fas fa-hourglass">غیر ضروری و غیر مهم</option>
                         </select>                    
                     </div>
-                    <div className="input-group col-12 col-md-6 float-right mt-3 input-group-single-line">
+                    <div className="input-group col-12 col-md-6 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3 input-group-single-line">
                         <div className="input-group-prepend">
                             <span className="input-group-text">انجام دهندگان</span>
                         </div>
@@ -153,13 +153,13 @@ export default class ShowTask extends Component {
                             }) }
                         </select>
                     </div>
-                    <div className="input-group col-12 col-md-6 float-right mt-3">
+                    <div className="input-group col-12 col-md-6 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3">
                         <div className="input-group-prepend">
                             <span className="input-group-text">موعد تحویل</span>
                         </div>
                         {<input defaultValue={moment(task.due_to).format("jYYYY/jMM/jDD HH:mm")} />}
                     </div>
-                    <div className="input-group col-12 col-md-6 float-right mt-3">
+                    <div className="input-group col-12 col-md-6 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3">
                         <div className="input-group-prepend">
                             <span className="input-group-text">وضعیت اتمام</span>
                         </div>
@@ -169,7 +169,7 @@ export default class ShowTask extends Component {
                             <input className="c-p" type="checkbox" onChange={this.toggle_finished_check.bind(this)} defaultChecked={task.finished_at !== null ? true : false} />
                         </div>
                     </div>
-                    <div className="input-group col-12 float-right mt-3 mb-3">
+                    <div className="input-group col-12 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3 mb-3">
                         <div className="w-100">
                             <TinymcEditor initialValue={task.description} changeContent={this.handleDescriptionChange} />
                         </div>
@@ -344,7 +344,7 @@ export default class ShowTask extends Component {
         if (task && workspace) {
             return (
                 <div>
-                    <div className="col-12 float-right task-info-container">
+                    <div className="col-12 float-right task-info-container pl-0 pr-0 pr-md-3 pl-md-3">
                         <div className="breadcrumb col-12 float-right animated flipInX">
                             <a className="float-right hoverable">
                                 <img src={APP_PATH + workspace.avatar_pic} alt=""/>

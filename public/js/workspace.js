@@ -60401,7 +60401,7 @@ var Workspace = /*#__PURE__*/function (_Component) {
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", {
         className: ""
       }, "\u0648\u0638\u0627\u06CC\u0641 :")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "workspace-add-task mb-2 col-12"
+        className: "workspace-add-task mb-2 col-12 pl-0 pr-0 pr-md-3 pl-md-3"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "workspace-title-section title-section",
         onClick: this.toggleAddBox
@@ -60409,10 +60409,10 @@ var Workspace = /*#__PURE__*/function (_Component) {
         className: "fas fa-plus",
         ref: this.addIconRef
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, "\u0627\u0641\u0632\u0648\u062F\u0646 \u06A9\u0627\u0631")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "add-task-section d-none col-12 p-1 pt-2 pb-2 p-md-3 animated fadeIn",
+        className: "add-task-section d-none col-12 p-3 animated fadeIn",
         ref: this.addTaskRef
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "input-group col-12 col-md-6 mb-0 mb-md-0 pl-2 pr-2 pr-lg-3 pl-lg-3"
+        className: "input-group col-12 col-md-6 pl-0 pr-0 mb-2 mb-md-0"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "input-group-prepend"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
@@ -60423,7 +60423,7 @@ var Workspace = /*#__PURE__*/function (_Component) {
         className: "form-control",
         placeholder: "\u0639\u0646\u0648\u0627\u0646 \u06A9\u0627\u0631 \u0631\u0627 \u062F\u0631 \u0627\u06CC\u0646 \u0642\u0633\u0645\u062A \u0648\u0627\u0631\u062F \u06A9\u0646\u06CC\u062F"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "input-group col-12 col-md-6 mb-0 mb-md-0 pl-2 pr-2 pr-lg-3 pl-lg-3 input-group-single-line"
+        className: "input-group col-12 col-md-6 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line-all"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "input-group-prepend"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
@@ -60444,7 +60444,7 @@ var Workspace = /*#__PURE__*/function (_Component) {
         value: "4",
         icon_name: "fas fa-hourglass"
       }, "\u063A\u06CC\u0631 \u0636\u0631\u0648\u0631\u06CC \u0648 \u063A\u06CC\u0631 \u0645\u0647\u0645"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "input-group col-12 col-md-6 mb-0 mb-md-0 pl-2 pr-2 pr-lg-3 pl-lg-3"
+        className: "input-group col-12 col-md-6 pl-0 pr-0 mb-2 mb-md-0"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "input-group-prepend"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
@@ -60455,7 +60455,7 @@ var Workspace = /*#__PURE__*/function (_Component) {
         className: "form-control",
         placeholder: "\u0627\u06CC\u0646 \u06A9\u0627\u0631 \u062F\u0631 \u0686\u0647 \u06AF\u0631\u0648\u0647\u06CC \u0642\u0631\u0627\u0631 \u0645\u06CC\u06AF\u06CC\u0631\u062F\u061F"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "input-group col-12 col-md-6 mb-0 mb-md-0 pl-2 pr-2 pr-lg-3 pl-lg-3 input-group-single-line"
+        className: "input-group col-12 col-md-6 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "input-group-prepend"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
@@ -60473,7 +60473,7 @@ var Workspace = /*#__PURE__*/function (_Component) {
           }, user.fullname);
         }
       }) : null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "input-group col-12 input-group-single-line pl-2 pr-2 pr-lg-3 pl-lg-3"
+        className: "input-group col-12 pl-0 pr-0"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "tinymc-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_tinymce_editor_index__WEBPACK_IMPORTED_MODULE_1__["default"], {

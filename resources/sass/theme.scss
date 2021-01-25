@@ -389,8 +389,13 @@ div.add-task-section, div.task-info-container {
         }
     }
 }
+@media(min-width: 576px) {
+    div.input-group-single-line {
+        flex-wrap: nowrap !important;
+    }
+}
 
-div.input-group-single-line {
+div.input-group-single-line-all {
     flex-wrap: nowrap !important;
 }
 
