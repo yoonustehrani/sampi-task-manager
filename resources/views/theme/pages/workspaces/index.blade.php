@@ -36,34 +36,36 @@
                         <a href="{{ route('task-manager.workspaces.show', ['workspace' => $workspace->id]) }}">{{ $workspace->title }}</a>
                     </td>
                     <td>
-                        @if (count($workspace->users) > 1)
-                            {{ count($workspace->users) }} <i class="fas fa-users"></i>
-                        @elseif(count($workspace->users))
-                            <i class="fas fa-user"></i>
-                        @else
-                            <i class="fas fa-user-slash"></i>
-                        @endif
-                        <div class="dropdown-users d-none">
-                            @foreach ($workspace->users as $user)
-                                <div class="user-dropdown-item animated jackInTheBox">
-                                    <div class="user-right-flex">
-                                        <div class="user-img-container ml-2">
-                                            <img src="{{ asset($user->avatar_pic ?: 'images/male-avatar.svg') }}" />
+                        <div class="employees-container horizontal-centerlize">
+                            @if (count($workspace->users) > 1)
+                                <span>{{ count($workspace->users) }} <i class="fas fa-users"></i></span>
+                            @elseif(count($workspace->users))
+                                <span><i class="fas fa-user"></i></span>
+                            @else
+                                <i class="fas fa-user-slash"></i>
+                            @endif
+                            <div class="dropdown-users d-none">
+                                @foreach ($workspace->users as $user)
+                                    <div class="user-dropdown-item animated jackInTheBox">
+                                        <div class="user-right-flex">
+                                            <div class="user-img-container ml-2">
+                                                <img src="{{ asset($user->avatar_pic ?: 'images/male-avatar.svg') }}" />
+                                            </div>
+                                            <div class="user-info ml-2">
+                                                <p>{{ $user->fullname }}</p>
+                                                <a href="">{{"@".$user->name }}</a>
+                                            </div>
                                         </div>
-                                        <div class="user-info ml-2">
-                                            <p>{{ $user->fullname }}</p>
-                                            <a href="">@ {{ $user->name }}</a>
+                                        <div class="user-label-container">
+                                            @if ($user->pivot->is_admin == 1)
+                                                <button class="btn btn-sm btn-success rtl admin"><span>ادمین<i class="fas fa-user-tie mr-1"></i></span></button>
+                                            @else
+                                                <button class="btn btn-sm btn-primary rtl"><span>عضو<i class="fas fa-user mr-1"></i></span></button>
+                                            @endif 
                                         </div>
                                     </div>
-                                    <div class="user-label-container">
-                                        @if ($user->pivot->is_admin == 1)
-                                            <button class="btn btn-sm btn-success rtl admin"><span>ادمین<i class="fas fa-user-tie mr-1"></i></span></button>
-                                        @else
-                                            <button class="btn btn-sm btn-primary rtl"><span>عضو<i class="fas fa-user mr-1"></i></span></button>
-                                        @endif 
-                                    </div>
-                                </div>
-                            @endforeach
+                                @endforeach
+                            </div>
                         </div>
                     </td>
                     <td class="no-break">

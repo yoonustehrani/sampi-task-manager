@@ -225,7 +225,7 @@ export default class Dashboard extends Component {
                                                     <div className="employees-container horizontal-centerlize">
                                                         {
                                                             users.length === 0 &&
-                                                                <span><i className="fas fa-user-slash"></i></span>
+                                                                <i className="fas fa-user-slash"></i>
                                                         }
                                                         {
                                                             users.length === 1 &&
