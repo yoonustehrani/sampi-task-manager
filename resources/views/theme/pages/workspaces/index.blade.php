@@ -44,7 +44,7 @@
                             <i class="fas fa-user-slash"></i>
                         @endif
                         <div class="dropdown-users d-none">
-                            @foreach ($workspace as $)
+                            @foreach ($workspace->users as $user)
                                 
                             @endforeach
                         </div>
