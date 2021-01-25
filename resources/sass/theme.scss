@@ -265,7 +265,7 @@ div.user-info-workspace {
     justify-content: flex-start;
     align-items: center;
     flex-wrap: wrap;
-    width: min-content;
+    // width: min-content;
     > img {
         width: 50px;
         height: 50px;
@@ -276,19 +276,9 @@ div.user-info-workspace {
     }
 }
 
-div.name-row-user-workspace {
-    width: min-content;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-}
-
-@media (min-width: 567px) {
-    div.name-row-user-workspace {
-        flex-direction: row;
-        width: max-content;
+div.name-col-user-workspace {
+    span {
+        width: 100%;
     }
 }
 
@@ -308,14 +298,12 @@ div.workspace-sub-info {
         align-items: flex-start;
     }
     div.user-info-workspace {
-        flex-direction: row;
-        justify-content: flex-start;
-        align-items: center;
-        flex-wrap: nowrap;
-        width: max-content;
+        display: initial;
     }
-    div.name-row-user-workspace {
-        align-items: flex-start;
+    div.name-col-user-workspace {
+        span {
+            width: initial;
+        }
     }
 }
 
@@ -581,4 +569,15 @@ div.show-tasks-container {
 div.edit-tasks-container {
     box-shadow: 5px 5px 14px 0 #2c3e50;
     float: right;
+}
+
+@media(max-width: 567px) {
+    .no-break {
+        white-space: nowrap;
+        span {
+            width: 60%;
+            margin-right: 50%;
+            transform: translateX(50%)
+        }
+    }
 }

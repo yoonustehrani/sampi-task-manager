@@ -43,11 +43,16 @@
                         @else
                             <i class="fas fa-user-slash"></i>
                         @endif
+                        <div class="dropdown-users d-none">
+                            @foreach ($workspace as $)
+                                
+                            @endforeach
+                        </div>
                     </td>
-                    <td>
-                        کل : <span class="badge badge-primary">{{ $workspace->tasks_count }}</span>
-                        اتمام : <span class="badge badge-success">{{ $workspace->finished_tasks_count }}</span>
-                        باقی مانده : <span class="badge badge-danger">{{ $workspace->tasks_count - $workspace->finished_tasks_count }}</span>
+                    <td class="no-break">
+                        کل : <span class="badge badge-primary ml-md-4 d-block d-md-inline mb-1 mb-md-0">{{ $workspace->tasks_count }}</span>
+                        اتمام : <span class="badge badge-success ml-md-4 d-block d-md-inline mb-1 mb-md-0">{{ $workspace->finished_tasks_count }}</span>
+                        باقی مانده : <span class="badge badge-danger ml-md-4 d-block d-md-inline mb-1 mb-md-0">{{ $workspace->tasks_count - $workspace->finished_tasks_count }}</span>
                     </td>
                     <td>
                         {{ $workspace->demands_left_count }}

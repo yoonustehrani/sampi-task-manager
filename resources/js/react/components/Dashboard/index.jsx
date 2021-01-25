@@ -261,10 +261,10 @@ export default class Dashboard extends Component {
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td>
-                                                    کل : <span className="badge badge-primary ml-md-4 d-block d-md-inline">{ tasks_count }</span>
-                                                    اتمام : <span className="badge badge-success ml-md-4 d-block d-md-inline">{ finished_tasks_count }</span>
-                                                    باقی مانده : <span className="badge badge-danger ml-md-4 d-block d-md-inline">{ tasks_count - finished_tasks_count }</span>
+                                                <td className="no-break">
+                                                    کل : <span className="badge badge-primary ml-md-4 d-block d-md-inline mb-1 mb-md-0">{ tasks_count }</span>
+                                                    اتمام : <span className="badge badge-success ml-md-4 d-block d-md-inline mb-1 mb-md-0">{ finished_tasks_count }</span>
+                                                    باقی مانده : <span className="badge badge-danger ml-md-4 d-block d-md-inline mb-1 mb-md-0">{ tasks_count - finished_tasks_count }</span>
                                                 </td>
                                                 <td>
                                                     { demands_left_count }
