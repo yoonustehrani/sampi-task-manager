@@ -267,7 +267,7 @@ export default class ShowTask extends Component {
                                 <span>تاریخ اتمام:</span>
                             </div>
                             <div className="task-detail">
-                                <span>{task.finished_at !== null ? (moment(task.finished_at).format("jYYYY/jMM/jDD") + " (" + moment(task.finished_at).fromNow() + ")") : (<i className="fas fa-minus"></i>)}</span>
+                                <span>{task.finished_at !== null ? (moment(task.finished_at).format("jYYYY/jMM/jDD") + " (" + moment(task.finished_at).fromNow() + ")") : (<i className="fas fa-minus pt-1 pb-1 minus-icon"></i>)}</span>
                             </div>
                         </div>
                         <div className="mt-3 col-12 col-md-5">
@@ -277,7 +277,7 @@ export default class ShowTask extends Component {
                             </div>
                             <div className="task-detail">
                                 {/* <a className="task-finisher"><img src={APP_PATH + 'images/male-avatar.svg'} alt="" />امیررضا منصوریان</a> */}
-                                <a href="" className="task-finisher">{task.finisher_id !== null ? workspace_users[task.finisher_id].fullname : <i className="fas fa-minus"></i>}</a>
+                                {task.finisher_id !== null ? (<a href="" className="task-finisher">{workspace_users[task.finisher_id].fullname}</a>) : <i className="fas fa-minus pt-1 pb-1 minus-icon"></i>}
                             </div>
                         </div>
                         <div className="mt-3 col-12 col-md-5">

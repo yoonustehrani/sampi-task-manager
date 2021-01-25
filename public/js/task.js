@@ -57959,7 +57959,7 @@ var ShowTask = /*#__PURE__*/function (_Component) {
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u062A\u0627\u0631\u06CC\u062E \u0627\u062A\u0645\u0627\u0645:")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "task-detail"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, task.finished_at !== null ? moment_jalaali__WEBPACK_IMPORTED_MODULE_2___default()(task.finished_at).format("jYYYY/jMM/jDD") + " (" + moment_jalaali__WEBPACK_IMPORTED_MODULE_2___default()(task.finished_at).fromNow() + ")" : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-          className: "fas fa-minus"
+          className: "fas fa-minus pt-1 pb-1 minus-icon"
         })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "mt-3 col-12 col-md-5"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -57968,12 +57968,12 @@ var ShowTask = /*#__PURE__*/function (_Component) {
           className: "fas fa-user-check"
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0627\u062A\u0645\u0627\u0645 \u06A9\u0646\u0646\u062F\u0647:")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "task-detail"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        }, task.finisher_id !== null ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
           href: "",
           className: "task-finisher"
-        }, task.finisher_id !== null ? workspace_users[task.finisher_id].fullname : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-          className: "fas fa-minus"
-        })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }, workspace_users[task.finisher_id].fullname) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fas fa-minus pt-1 pb-1 minus-icon"
+        }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "mt-3 col-12 col-md-5"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "task-title-section title-section float-right"

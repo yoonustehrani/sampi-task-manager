@@ -10109,6 +10109,10 @@ div.show-tasks-container div.task-detail.next-line {
   margin-right: 0px !important;
 }
 
+div.show-tasks-container i.minus-icon {
+  font-size: 16px;
+}
+
 div.edit-tasks-container {
   box-shadow: 5px 5px 14px 0 #2c3e50;
   float: right;
