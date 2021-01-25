@@ -36,9 +36,9 @@
                         <a href="{{ route('task-manager.workspaces.show', ['workspace' => $workspace->id]) }}">{{ $workspace->title }}</a>
                     </td>
                     <td>
-                        @if ($workspace->users_count > 1)
-                            {{ $workspace->users_count }} <i class="fas fa-users"></i>
-                        @elseif($workspace->users_count)
+                        @if (count($workspace->users) > 1)
+                            {{ count($workspace->users) }} <i class="fas fa-users"></i>
+                        @elseif(count($workspace->users))
                             <i class="fas fa-user"></i>
                         @else
                             <i class="fas fa-user-slash"></i>
