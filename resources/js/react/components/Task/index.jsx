@@ -87,7 +87,6 @@ export default class ShowTask extends Component {
                 if (finished_at_check !== first_check_state) {
                     Axios.put(toggle_task_state_api).then(res => {
                         // we will show the erros with swal
-                        console.log(res)
                     })
                 }
                 Axios.put(edit_task_api, {

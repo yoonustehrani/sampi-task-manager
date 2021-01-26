@@ -57731,9 +57731,7 @@ var ShowTask = /*#__PURE__*/function (_Component) {
               first_check_state = _this$state.first_check_state;
 
           if (finished_at_check !== first_check_state) {
-            axios__WEBPACK_IMPORTED_MODULE_1___default.a.put(toggle_task_state_api).then(function (res) {
-              // we will show the erros with swal
-              console.log(res);
+            axios__WEBPACK_IMPORTED_MODULE_1___default.a.put(toggle_task_state_api).then(function (res) {// we will show the erros with swal
             });
           }
 

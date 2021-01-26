@@ -1,0 +1,73 @@
+div.user-card {
+    background-color: #ffffff;
+    div.user-info-section {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        div.user-img-container {
+            img {
+                width: 100px;
+                height: 100px;
+                border-radius: 50px;
+            }
+        }
+        div.user-text-info-container {
+            h5 {
+                font-weight: bold;
+                color: #000000;
+            }
+            h6 {
+                color: #757F9A;
+
+            }
+        }
+    }
+    div.user-work-section {
+        div.user-works-results {
+            overflow-x: hidden;
+            overflow-y: auto;
+            max-height: 480px;
+            div.workspace-item {
+                float: right;
+                // margin-bottom: 20px;
+                cursor: pointer;
+                transition: 0.5s;
+                padding: 10px;
+                border-radius: ۴px;
+                div.workspace-img-container {
+                    img {
+                        width: 40px;
+                        height: 40px;
+                        border-radius: 50px;
+                    }
+                }
+                h6 {
+                    color: #000000;
+                    text-align: right;
+                }
+                span {
+                    color: #757F9A;
+                    text-align: right;
+                }
+            }
+            div.workspace-item:hover {
+                background-color: #7BC6CC;
+            }  
+        } 
+    }
+}
+
+div.statistics-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    > div {
+        background-color: #ffffff;
+    }
+    div.wide-section-statistics {
+        border: 1px solid #2C5364;
+    }
+}

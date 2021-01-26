@@ -5,7 +5,7 @@
 @endsection
 
 @section('page-content')
-    <div class="col-12 float-right mb-3">
+    {{-- <div class="col-12 float-right mb-3">
         <img class="float-right" src="{{ asset($user->avatar_pic ?: 'images/male-avatar.svg') }}" style="height: 50px; widht: 50px;" alt="">
         <h4 class="text-right mt-3">
             حساب کاربری {{ auth()->user()->id == $user->id ? 'من' : $user->fullname }}
@@ -66,5 +66,12 @@
                 @endforeach
             @endcomponent
         @endcomponent
+    </div> --}}
+    <div
+        id="user-profile-react">
     </div>
 @endsection
+
+@push('scripts')
+    <script src="{{ asset("/js/user-profile.js") }}"></script>
+@endpush

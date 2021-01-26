@@ -11,11 +11,9 @@ export default class Dashboard extends Component {
     constructor(props) {
         super(props)
         this.tabResultsRef = []
-        for (let i = 0; i < 4; i++) {
-            this.tabResultsRef.push(React.createRef())
-        }
         this.tabTitlesRef = []
         for (let i = 0; i < 4; i++) {
+            this.tabResultsRef.push(React.createRef())
             this.tabTitlesRef.push(React.createRef())
         }
         this.state = {
