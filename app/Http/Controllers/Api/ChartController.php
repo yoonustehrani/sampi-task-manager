@@ -41,8 +41,6 @@ class ChartController extends Controller
         ->get([
             \DB::raw("COUNT(*) tasks, DATE_FORMAT(created_at, '%Y-%m-%e') date")
         ]);
-        // $geouped = $tasks->groupBy()
-        return $tasks;
         foreach ($tasks as $task) {
             $a = $month_day_numbers[0];
             for ($i=0; $i < 12; $i++) { 

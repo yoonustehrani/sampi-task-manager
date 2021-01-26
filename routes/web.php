@@ -32,51 +32,6 @@ Route::get('/chart', function() {
     $user = User::first();
     $dt_from = Carbon::createFromFormat('Y-m-d', '2020-3-20')->setTime(0,0);
     $dt_to = Carbon::createFromFormat('Y-m-d', '2021-03-21')->setTime(0,0);
-    $month_day_numbers = [
-        31,
-        31,
-        31,
-        31,
-        31,
-        31,
-        30,
-        30,
-        30,
-        30,
-        30,
-        29
-    ];
-    if ($dt_from->diffInDays($dt_to) == 366) {
-        $month_day_numbers[11] = 30;
-    }
-    // $dt_to = Carbon::createFromFormat('Y-m-d', '2021-01-30')->setTime(0,0);
-    // if (! $dt_from->isBefore($dt_to)) {
-    //     return [
-    //         'error' => true
-    //     ];
-    // }
-    $month_name = collect([
-        'فروردین',
-        'اردیبهشت',
-        'خرداد',
-        'تیر',
-        'مرداد',
-        'شهریور',
-        'مهر',
-        'آبان',
-        'آذر',
-        'دی',
-        'بهمن',
-        'اسفند',
-    ]);
-    $tasks = $user->tasks()
-                ->where('created_at', '<', $dt_to)
-                ->where('created_at', '>=', $dt_from)
-                ->groupBy('date')
-                ->orderBy('date', 'asc')
-                ->get([
-                    \DB::raw("COUNT(*) tasks, DATE_FORMAT(created_at, '%Y-%m-%e') date")
-                ]);
     $month_task = [
         'فروردین' => 0,
         'اردیبهشت' => 0,
