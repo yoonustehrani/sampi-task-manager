@@ -18,6 +18,9 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::group(['prefix' => 'task-manager', 'as' => 'api.task-manager.'], function () {
+    Route::get('priorities', function() {
+        return \App\Priority::all();
+    })->name('priorities.index');
     Route::get('permissions/all', function () {
         return \App\Permission::all();
     })->name('permissions.index');
@@ -30,7 +33,6 @@ Route::group(['prefix' => 'task-manager', 'as' => 'api.task-manager.'], function
     Route::get('roles/{role}/permissions', function ($role) {
         return \App\Role::findOrFail($role)->permissions()->get();
     })->name('role.permissions');
-    // Route::get('workspaces/{workspace}/tasks', 'TaskManagerController@tasks');
     Route::group(['middleware' => ['auth:api']], function () {
         $api_controllers = '\\App\\Http\\Controllers\\Api\\';
         Route::apiResource('workspaces', $api_controllers . 'WorkspaceController');
