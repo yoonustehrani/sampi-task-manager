@@ -24,10 +24,13 @@
             },
             @endforeach
         ];
+        var startDate = moment('2020-12-21').format('jYYYY-jMM-jDD');
+        var endDate = moment('2021-01-20').format('jYYYY-jMM-jDD');
         var myLineChart = new Chart(ctx, {
             type: 'line',
             data: {
                 {{-- // labels: {!! $month_name->__toString() !!}, --}}
+                labels: [startDate, endDate],
                 datasets: [
                     {
                         label: 'وظایف',
@@ -57,7 +60,7 @@
                     xAxes: [
                         {
                             ticks: {
-                                source: 'data',
+                                source: 'labels',
                                 fontFamily: 'Iransans'
                             },
                             distribution: 'series',
@@ -66,7 +69,7 @@
                                 round: true,
                                 unit: 'day',
                                 minUnit: 'day',
-                                tooltipFormat: 'dddd، DD MMMM YYYY',
+                                tooltipFormat: 'dddd، DD MMMM jYYYY',
                                 displayFormats: {
                                     'day': 'YYYY-MM-DD',
                                 },
