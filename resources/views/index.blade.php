@@ -8,9 +8,11 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
 <body>
-    <form target="/" method="POST" class="col-12 float-left p-3">
+    <form action="/" method="POST" class="col-12 float-left p-3">
+        @csrf
         <input type="hidden" name="due_to">
         <input type="text" id="example">
+        <button type="submit">Submit</button>
     </form>
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/datepicker.js') }}"></script>

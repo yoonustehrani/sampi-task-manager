@@ -77,7 +77,8 @@ class TaskController extends BaseController
                 $task->parent_id = $request->parent_id;
                 $task->group = $request->group ?: 'دسته بندی نشده';
                 $task->priority_id = $request->priority;
-                $task->due_to = $request->due_to;
+                $due_to = $request->due_to ? (new \Carbon\Carbon(((int) $request->due_to)))->timezone('Asia/Tehran')->seconds(0) : now();
+                $task->due_to = $due_to;
                 $task->creator_id = $request->user()->id;
                 $task = $workspace->tasks()->create($task->toArray());
                 $users = $request->input('users') ?: [];
@@ -109,7 +110,8 @@ class TaskController extends BaseController
                 $task->parent_id = $request->parent_id;
                 $task->group = $request->group ?: 'دسته بندی نشده';
                 $task->priority_id = $request->priority;
-                $task->due_to = $request->due_to;
+                $due_to = $request->due_to ? (new \Carbon\Carbon(((int) $request->due_to)))->timezone('Asia/Tehran')->seconds(0) : now();
+                $task->due_to = $due_to;
                 $task->save();
                 $users = $request->input('users') ?: [];
                 $task->users()->sync(
@@ -120,7 +122,7 @@ class TaskController extends BaseController
         } catch(\Exception $e) {
             \DB::rollback();
             throw $e;
-        }   
+        }
     }
     public function destroy(Request $request, $workspace, $task)
     {

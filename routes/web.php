@@ -25,8 +25,8 @@ Route::get('/', function () {
 });
 
 Route::post('/', function(Request $request) {
-    $dt = $request->due_to ? new Carbon($request->due_to) : now();
-    return $dt->format('YY/MM/dd H:i:s');
+    $dt = $request->due_to ? (new Carbon(((int) $request->due_to)))->timezone('Asia/Tehran')->seconds(0) : now();
+    return $dt->format('Y-m-d H:i:s');
 });
 Route::get('/chart', function() {
     // $user = User::first();
