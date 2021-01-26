@@ -45,18 +45,21 @@
             </div>
             <input type="password" name="password_confirmation" id="password_confirmation" class="form-control text-left d-ltr" placeholder="{{ __('confirm') . ' ' . __('password') }}">
         </div>
+        @if (auth()->user()->hasRole('developer'))
         <div class="col-lg-4 col-md-6 col-12 input-group float-right mb-3">
             <div class="input-group-append">
                 <span class="input-group-text"><i class="fas fa-image"></i></span>
             </div>
             <input type="text" value="{{ old('avatar_pic') ?: $user->avatar_pic }}" name="avatar_pic" id="avatar_pic" class="form-control text-left d-ltr" placeholder="{{ __('avatar_pic') }}">
         </div>
+        @endif
         <div class="col-lg-4 col-md-6 col-12 input-group float-right mb-3">
             <div class="input-group-append">
                 <span class="input-group-text"><i class="fas fa-paper-plane"></i></span>
             </div>
             <input type="text" value="{{ old('telegram_chat_id') ?: $user->telegram_chat_id }}" name="telegram_chat_id" id="telegram_chat_id" class="form-control text-left d-ltr" placeholder="{{ __('telegram_chat_id') }}">
         </div>
+        @if (auth()->user()->hasPermission('can_edit_user_role'))
         <div class="col-lg-4 col-md-6 col-12 input-group float-right mb-3">
             <div class="input-group-append">
                 <span class="input-group-text"><i class="fas fa-user-tag"></i></span>
@@ -65,6 +68,7 @@
                 <option></option>
             </select>
         </div>
+        @endif
         <div class="col-12 p-3 float-right text-right">
             <button type="submit" class="btn btn-outline-primary">{{ __('save') }}</button>
         </div>
@@ -72,6 +76,7 @@
 @endsection
 
 @push('scripts')
+@if (auth()->user()->hasPermission('can_edit_user_role'))
     <script>
         let roles_route = "{{ route('api.task-manager.roles.index') }}";
         let roles_of_user_route = "{{ route('api.task-manager.user.roles', ['user' => $user->id]) }}";
@@ -95,4 +100,5 @@
             })
         }) 
     </script>
+@endif
 @endpush

@@ -17,7 +17,7 @@ class CreateTasksTable extends Migration
             $table->bigIncrements('id');
             $table->integer('parent_id')->nullable();
             $table->string('title');
-            $table->string('group')->default('');
+            $table->string('group')->default('دسته بندی نشده');
             $table->longText('description')->nullable();
             $table->unsignedInteger('finisher_id')->nullable();
             $table->unsignedInteger('workspace_id');

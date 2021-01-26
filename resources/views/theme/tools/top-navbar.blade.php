@@ -11,7 +11,7 @@
                         <i class="fas fa-user-tie"></i> {{ auth()->user()->name }}
                     </button>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">تنظیمات <i class="fas fa-cog"></i></a>
+                        <a class="dropdown-item" href="{{ route('task-manager.users.edit', auth()->user()->id) }}">تنظیمات <i class="fas fa-cog"></i></a>
                         <a id="logout-dropdown" href="#" class="dropdown-item">خروج <i class="fas fa-sign-out-alt"></i></a>
                     </div>
                 </div>
@@ -21,7 +21,7 @@
             <i class="fas fa-expand-arrows-alt fa-compress"></i>
         </button>
         <button class="btn btn-secondary float-right vertical-centerlize collapser-btn">
-            <i class="fas fa-angle-double-right"></i>
+            <i class="fas fa-angle-double-left"></i>
         </button>
     </div>
 </div>

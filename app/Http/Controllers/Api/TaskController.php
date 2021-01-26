@@ -2,51 +2,43 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use App\Task;
 use App\Workspace;
 use Illuminate\Http\Request;
 
-class TaskController extends Controller
+class TaskController extends BaseController
 {
+    protected $default_group = 'دسته بندی نشده';
     public function index(Request $request, $workspace)
     {
         $request->validate([
             'limit' => 'nullable|numeric',
             'order' => 'nullable|string',
-            'order_by' => 'nullable|string'
+            'group' => 'nullable|string',
+            'order_by' => 'nullable|string|min:3'
         ]);
-        $user_tasks = $request->user()->tasks()->with('users')->withCount('demands')->where('workspace_id', $workspace);
-        if ($request->order_by) {
-            $order = $request->order != 'desc' ? 'asc' : 'desc';
-            $user_tasks = $user_tasks->orderBy($request->order_by, $order);
-        }
-        if ($request->limit) {
-            return $user_tasks->limit((int) $request->limit)->get();
-        } else {
-            return $user_tasks->latest()->paginate(10);
-        }
+        $user = ($request->user_id) ? \App\User::find($request->user_id) : $request->user();
+        $relationship = $this->model_relationship($request->relationship, $user, '_tasks', 'tasks');
+        $user_tasks = $user->{$relationship}()->with('users')->withCount('demands')->where('workspace_id', $workspace);
+        $group = $request->group ?: $this->default_group;
+        $user_tasks = $user_tasks->where('group', '=', $group);
+        return $request->limit
+                ? $this->decide_ordered($request, $user_tasks)->limit((int) $request->limit)->get()
+                : $this->decide_ordered($request, $user_tasks)->latest()->paginate(10);
     }
     public function mixed(Request $request)
     {
         $request->validate([
             'limit' => 'nullable|numeric',
             'order' => 'nullable|string',
-            'order_by' => 'nullable|string'
+            'order_by' => 'nullable|string|min:3'
         ]);
-        $user_tasks = $request->user()->tasks()->with([
-            'users',
-            'workspace:id,title,avatar_pic'
-        ])->withCount('demands');
-        if ($request->order_by) {
-            $order = $request->order != 'desc' ? 'asc' : 'desc';
-            $user_tasks = $user_tasks->orderBy($request->order_by, $order);
-        }
-        if ($request->limit) {
-            return $user_tasks->limit((int) $request->limit)->get();
-        } else {
-            return $user_tasks->paginate(10);
-        }
+        $user = ($request->user_id) ? \App\User::find($request->user_id) : $request->user();
+        $relationship = $this->model_relationship($request->relationship, $user, '_tasks', 'tasks');
+        $user_tasks = $user->{$relationship}()->with(['users','workspace:id,title,avatar_pic'])->withCount('demands');
+        return $request->limit
+            ? $this->decide_ordered($request, $user_tasks)->limit((int) $request->limit)->get()
+            : $this->decide_ordered($request, $user_tasks)->paginate(10);
     }
     public function search(Request $request)
     {
@@ -55,25 +47,18 @@ class TaskController extends Controller
             'order_by' => 'nullable|string|min:3',
             'limit' => 'required|integer|min:3|max:30'
         ]);
-        $user = $request->user();
-        $relationship = $request->relationship && method_exists($user, $request->relationship . '_tasks')
-                        ? $request->relationship . '_tasks'
-                        : 'tasks';
+        $user = ($request->user_id) ? \App\User::find($request->user_id) : $request->user();
+        $relationship = $this->model_relationship($request->relationship, $user, '_tasks', 'tasks');
         $tasks = $user->{$relationship}()->with(['workspace:id,title,avatar_pic'])->withCount('users');
-        if ($request->order_by) {
-            $order = $request->order && $request->order != 'desc' ? 'asc' : 'desc';
-            $tasks = $tasks->orderBy($request->order_by, $order);
-        }
-        return $tasks->search($request->q, null, true)
-                     ->limit((int) $request->limit)
-                     ->get();
+        return $this->decide_ordered($request, $tasks)->search($request->q, null, true)->limit((int) $request->limit)->get();
     }
     public function show(Request $request, $workspace, $task)
     {
         $task = Task::where('workspace_id', $workspace)->with([
-            'demands' => function($q) { $q->with('from', 'to'); }
+            'users'
         ])->findOrFail($task);
-        $task->load('users');
+        $this->authorize('view', $task);
+        $task->load(['demands' => function($q) { $q->with('from', 'to'); }]);
         return $task;
     }
     public function store(Request $request, $workspace)
@@ -85,16 +70,19 @@ class TaskController extends Controller
             'priority' => 'required|numeric',
             'due_to' => 'nullable|numeric',
         ]);
-        $workspace = $request->user()->workspaces()->findOrFail($workspace);
+        $this->authorize('create', Task::class);
+        $user = ($request->user_id) ? \App\User::find($request->user_id) : $request->user();
+        $workspace = $user->workspaces()->findOrFail($workspace);
         try {
             \DB::beginTransaction();
                 $task = new Task();
                 $task->title = $request->title;
                 $task->description = $request->description;
                 $task->parent_id = $request->parent_id;
-                $task->group = $request->group ?: 'دسته بندی نشده';
+                $task->group = $request->group ?: $this->default_group;
                 $task->priority_id = $request->priority;
-                $task->due_to = $request->due_to;
+                $due_to = $request->due_to ? (new \Carbon\Carbon(((int) $request->due_to)))->timezone('Asia/Tehran')->seconds(0) : now();
+                $task->due_to = $due_to;
                 $task->creator_id = $request->user()->id;
                 $task = $workspace->tasks()->create($task->toArray());
                 $users = $request->input('users') ?: [];
@@ -114,37 +102,47 @@ class TaskController extends Controller
             'parent_id' => 'nullable|numeric',
             'title' => 'required|string',
             'group' => 'nullable|string|min:3|max:100',
-            'proiority' => 'required|numeric',
+            'priority' => 'required|numeric',
             'due_to' => 'nullable|numeric',
         ]);
         $task = Task::where('workspace_id', $workspace)->findOrFail($task);
+        $this->authorize('update', $task);
         try {
             \DB::beginTransaction();
                 $task->title = $request->title;
                 $task->description = $request->description;
                 $task->parent_id = $request->parent_id;
-                $task->group = $request->group ?: 'دسته بندی نشده';
-                $task->proiority_id = $request->proiority;
-                $task->due_to = $request->due_to;
+                $task->group = $request->group ?: $this->default_group;
+                $task->priority_id = $request->priority;
+                $due_to = $request->due_to ? (new \Carbon\Carbon(((int) $request->due_to)))->timezone('Asia/Tehran')->seconds(0) : now();
+                $task->due_to = $due_to;
                 $task->save();
                 $users = $request->input('users') ?: [];
                 $task->users()->sync(
                     array_merge($users, [(string) $request->user()->id])
                 );
             \DB::commit();
-            return $task;
+            return $task->load('users');
         } catch(\Exception $e) {
             \DB::rollback();
             throw $e;
-        }   
+        }
     }
     public function destroy(Request $request, $workspace, $task)
     {
         $task = Task::where('workspace_id', $workspace)->findOrFail($task);
-        if ($request->user()->id === $task->creator_id) {
-            $task->delete();
-            return ['okay' => true];
+        $this->authorize('delete', $task);
+        $task->delete();
+        return ['okay' => true];
+    }
+
+    public function toggle(Request $request, $task)
+    {
+        $user = ($request->user_id) ? \App\User::find($request->user_id) : $request->user();
+        $task = $user->tasks()->findOrFail($task);
+        $task->finished_at = $task->finished_at ? null : now();
+        if ($task->save()) {
+            return $task;
         }
-        abort(403);
     }
 }

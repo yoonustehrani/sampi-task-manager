@@ -91,9 +91,39 @@
   !*** ./resources/js/select2.js ***!
   \*********************************/
 /*! exports provided: formatOption, formatMemberOption */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nError: ENOENT: no such file or directory, open 'I:\\projects\\task-manager\\resources\\js\\select2.js'");
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "formatOption", function() { return formatOption; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "formatMemberOption", function() { return formatMemberOption; });
+var formatOption = function formatOption(option) {
+  if (option.element) {
+    var icon_name = option.element.attributes.icon_name.nodeValue;
+    var containerClass = option.element.attributes.container_class ? option.element.attributes.container_class.nodeValue : null;
+    return $("<div class=\"select-option ".concat(containerClass !== null ? containerClass : "", "\"><i class=\"").concat(icon_name, "\"></i>").concat(option.text, "</div>"));
+  }
+};
+var formatMemberOption = function formatMemberOption(option) {
+  if (option.element) {
+    var img_src = option.element.attributes.img_address.nodeValue;
+    return $("<div class=\"select-option\"><img src=\"".concat(img_src, "\" class=\"member-img\" />").concat(option.text, "</div>"));
+  }
+};
+$('#new-task-priority, #tasks_order_select, #tasks_order_by_select, #tasks_relation_select').select2({
+  templateResult: formatOption,
+  minimumResultsForSearch: Infinity,
+  width: '100%',
+  dir: "rtl"
+});
+$("#new-task-members").select2({
+  placeholder: "انجام دهندگان این کار",
+  width: "100%",
+  dir: 'rtl',
+  multiple: true,
+  templateResult: formatMemberOption
+});
+$('.select2-search__field').css('width', '100%');
 
 /***/ }),
 

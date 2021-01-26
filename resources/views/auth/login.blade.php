@@ -1,7 +1,16 @@
 @extends('layouts.default')
 
 @section('head')
-<link rel="stylesheet" href="{{ asset('/css/auth.css') }}">
+<link rel="stylesheet" href="{{ asset('css/auth.css') }}">
+<style>
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active  {
+  transition: background-color 5000s;
+  -webkit-text-fill-color: #fff !important;
+}
+</style>
 @endsection
 
 @section('content')

@@ -3,6 +3,7 @@
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Nunito|Open+Sans');
 @import '~@fortawesome/fontawesome-free/css/all.min.css';
+@import "~animate.css/animate.min.css";
 @import 'fonts';
 
 // Variables
@@ -11,9 +12,11 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
-// scss files
+// custom scss files
 @import 'theme';
 
+// other
 @import './select2.scss';
-
 @import '~chart.js/dist/Chart.min.css';
+@import '~sweetalert2/src/sweetalert2.scss';
+@import '../../node_modules/persian-datepicker/src/sass/persian-datepicker.scss'

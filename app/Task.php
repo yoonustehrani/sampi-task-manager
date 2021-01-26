@@ -12,6 +12,7 @@ class Task extends Model
     protected $fillable = ['title', 'description', 'parent_id', 'group', 'workspace_id', 'creator_id', 'finisher_id', 'priority_id', 'due_to', 'finished_at'];
     protected $casts = [
         'due_to' => 'datetime',
+        'date'   => 'datetime',
     ];
     protected $hidden = ['pivot'];
     public $searchable = [
@@ -32,5 +33,9 @@ class Task extends Model
     public function demands()
     {
         return $this->hasMany(Demand::class);
+    }
+    public function priority()
+    {
+        return $this->belongsTo(Priority::class);
     }
 }

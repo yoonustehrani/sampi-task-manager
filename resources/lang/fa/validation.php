@@ -27,6 +27,13 @@ return [
         'country_code' => 'کد کشور',
         'phone_number' => 'تلفن همراه',
         'name' => 'نام کاربری',
-        'group' => 'گروه'
+        'group' => 'گروه',
+        'title' => 'عنوان',
+        'target_user' => 'کاربر هدف',
+        'priority' => 'فوریت',
+        'task' => 'وظیفه',
+        'text' => 'متن',
+        'icon_class' => 'آیکون',
+        'color_class' => 'رنگ',
     ]
 ];
