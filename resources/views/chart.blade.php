@@ -15,45 +15,19 @@
     <script src="{{ asset('js/chart.js') }}"></script>
     <script>
         let ctx = document.getElementById('myChart');
-        // let data = {{ $month_task->__toString() }};
+        {{-- let data = {{ $month_task->__toString() }}; --}}
         let data = [
+            @foreach($task_days as $task_day)
             {
-                y: 1,
-                t: moment("2021-01-1").format("jYYYY-jMM-jDD")
+                y: {{ $task_day->tasks }},
+                t: moment("{{ $task_day->date->format('Y-m-d') }}").format("jYYYY-jMM-jDD")
             },
-            {
-                y: 1,
-                t: moment("2021-01-2")
-            },
-            {
-                y: 2,
-                t: moment("2021-01-3")
-            },
-            {
-                y: 3,
-                t: moment("2021-01-4")
-            },
-            {
-                y: 2,
-                t: moment("2021-01-5")
-            },
-            {
-                y: 2,
-                t: moment("2021-01-6")
-            },
-            {
-                y: 6,
-                t: moment("2021-01-8")
-            },
-            {
-                y: 1,
-                t: moment("2021-01-9")
-            }
+            @endforeach
         ];
         var myLineChart = new Chart(ctx, {
             type: 'line',
             data: {
-                // labels: {!! $month_name->__toString() !!},
+                {{-- // labels: {!! $month_name->__toString() !!}, --}}
                 datasets: [
                     {
                         label: 'وظایف',
@@ -92,9 +66,9 @@
                                 round: true,
                                 unit: 'day',
                                 minUnit: 'day',
-                                tooltipFormat: 'dddd، jDD jMMMM jYYYY',
+                                tooltipFormat: 'dddd، DD MMMM YYYY',
                                 displayFormats: {
-                                    'day': 'jYYYY-jMM-jDD',
+                                    'day': 'YYYY-MM-DD',
                                 },
                             }
                         }
