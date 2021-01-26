@@ -15,79 +15,11 @@
     <script src="{{ asset('js/chart.js') }}"></script>
     <script>
         let ctx = document.getElementById('myChart');
-        let data = [
-            {
-                y: 1,
-                t: moment("2021-01-1")
-            },
-            {
-                y: 1,
-                t: moment("2021-01-2")
-            },
-            {
-                y: 2,
-                t: moment("2021-01-3")
-            },
-            {
-                y: 3,
-                t: moment("2021-01-4")
-            },
-            {
-                y: 2,
-                t: moment("2021-01-5")
-            },
-            {
-                y: 2,
-                t: moment("2021-01-6")
-            },
-            {
-                y: 6,
-                t: moment("2021-01-8")
-            },
-            {
-                y: 1,
-                t: moment("2021-01-9")
-            }
-            // {
-            //     t: moment('2021-01-02'),
-            //     y: 0
-            // },
-            // {
-            //     t: moment('2021-01-03'),
-            //     y: 100
-            // },
-            // {
-            //     t: moment('2021-01-05'),
-            //     y: 100
-            // },
-            // {
-            //     t: moment('2021-01-06'),
-            //     y: 100
-            // },
-            // {
-            //     t: moment('2021-01-12'),
-            //     y: 50
-            // },
-            // {
-            //     t: moment('2021-01-14'),
-            //     y: 60
-            // },
-            // {
-            //     t: moment('2021-01-16'),
-            //     y: 40
-            // },
-            // {
-            //     t: moment('2021-01-17'),
-            //     y: 100
-            // },
-            // {
-            //     t: moment('2021-01-18'),
-            //     y: 100
-            // }
-        ];
+        let data = {{ $month_task->__toString() }};
         var myLineChart = new Chart(ctx, {
-            type: 'line',
+            type: 'bar',
             data: {
+                labels: {!! $month_name->__toString() !!},
                 datasets: [
                     {
                         label: 'وظایف',
@@ -121,16 +53,16 @@
                                 fontFamily: 'Iransans'
                             },
                             distribution: 'series',
-                            type: 'time',
-                            time: {
-                                round: true,
-                                unit: 'day',
-                                minUnit: 'day',
-                                tooltipFormat: 'dddd، DD MMMM YYYY',
-                                displayFormats: {
-                                    'day': 'YYYY-MM-DD'
-                                },
-                            }
+                            // type: 'time',
+                            // time: {
+                            //     round: true,
+                            //     unit: 'day',
+                            //     minUnit: 'day',
+                            //     tooltipFormat: 'dddd، DD MMMM YYYY',
+                            //     displayFormats: {
+                            //         'day': 'YYYY-MM-DD',
+                            //     },
+                            // }
                         }
                     ],
                     yAxes: [{
@@ -153,6 +85,40 @@
                 }
             }
         });
+                // let data = [
+        //     {
+        //         y: 1,
+        //         t: moment("2021-01-1")
+        //     },
+        //     {
+        //         y: 1,
+        //         t: moment("2021-01-2")
+        //     },
+        //     {
+        //         y: 2,
+        //         t: moment("2021-01-3")
+        //     },
+        //     {
+        //         y: 3,
+        //         t: moment("2021-01-4")
+        //     },
+        //     {
+        //         y: 2,
+        //         t: moment("2021-01-5")
+        //     },
+        //     {
+        //         y: 2,
+        //         t: moment("2021-01-6")
+        //     },
+        //     {
+        //         y: 6,
+        //         t: moment("2021-01-8")
+        //     },
+        //     {
+        //         y: 1,
+        //         t: moment("2021-01-9")
+        //     }
+        // ];
     </script>
 </body>
 </html>

@@ -27,14 +27,16 @@ mix.disableNotifications();
 
 var { res, pub } = src
 
+mix.js(res.js + 'chart.js', pub.js)
+
 // mix.sass(res.sass + 'app.scss', pub.css)
     // .js(res.js + 'tinymce/tinymce.js', pub.js + 'tinymce')
     // .sass(res.sass + 'tinytheme.scss', pub.css)
     // .sass(res.sass + 'auth.scss', pub.css)
     // .react(res.react + 'dashboard.js', pub.js)
-    mix.react(res.js + "app.js", pub.js)
-    .sass(res.sass + 'app.scss', pub.css)
-    .js(res.js + "datepicker.js", pub.js)
+    // mix.react(res.js + "app.js", pub.js)
+    // .sass(res.sass + 'app.scss', pub.css)
+    // .js(res.js + "datepicker.js", pub.js)
     // .react(res.react + 'workspace.js', pub.js)
     // .react(res.react + "task.js", pub.js)
     // .js(res.js + "select2.js", pub.js)

@@ -37896,12 +37896,7 @@ Chart.platform.disableCSSInjection = true;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-<<<<<<< HEAD
-__webpack_require__(/*! W:\php\sampies\resources\js\chart.js */"./resources/js/chart.js");
-module.exports = __webpack_require__(/*! W:\php\sampies\resources\sass\app.scss */"./resources/sass/app.scss");
-=======
 module.exports = __webpack_require__(/*! W:\php\sampies\resources\js\chart.js */"./resources/js/chart.js");
->>>>>>> chart
 
 
 /***/ })
