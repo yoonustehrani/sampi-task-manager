@@ -15,16 +15,50 @@
     <script src="{{ asset('js/chart.js') }}"></script>
     <script>
         let ctx = document.getElementById('myChart');
-        let data = {{ $month_task->__toString() }};
+        // let data = {{ $month_task->__toString() }};
+        let data = [
+            {
+                y: 1,
+                t: moment("2021-01-1")
+            },
+            {
+                y: 1,
+                t: moment("2021-01-2")
+            },
+            {
+                y: 2,
+                t: moment("2021-01-3")
+            },
+            {
+                y: 3,
+                t: moment("2021-01-4")
+            },
+            {
+                y: 2,
+                t: moment("2021-01-5")
+            },
+            {
+                y: 2,
+                t: moment("2021-01-6")
+            },
+            {
+                y: 6,
+                t: moment("2021-01-8")
+            },
+            {
+                y: 1,
+                t: moment("2021-01-9")
+            }
+        ];
         var myLineChart = new Chart(ctx, {
-            type: 'bar',
+            type: 'line',
             data: {
-                labels: {!! $month_name->__toString() !!},
+                // labels: {!! $month_name->__toString() !!},
                 datasets: [
                     {
                         label: 'وظایف',
                         // showLine: false,
-                        // lineTension: 0,
+                        lineTension: 0,
                         data: data,
                         // fill: false,
                         borderColor: 'red',
@@ -53,16 +87,16 @@
                                 fontFamily: 'Iransans'
                             },
                             distribution: 'series',
-                            // type: 'time',
-                            // time: {
-                            //     round: true,
-                            //     unit: 'day',
-                            //     minUnit: 'day',
-                            //     tooltipFormat: 'dddd، DD MMMM YYYY',
-                            //     displayFormats: {
-                            //         'day': 'YYYY-MM-DD',
-                            //     },
-                            // }
+                            type: 'time',
+                            time: {
+                                round: true,
+                                unit: 'day',
+                                minUnit: 'day',
+                                tooltipFormat: 'dddd، DD MMMM YYYY',
+                                displayFormats: {
+                                    'day': 'YYYY-MM-DD',
+                                },
+                            }
                         }
                     ],
                     yAxes: [{
@@ -85,40 +119,6 @@
                 }
             }
         });
-                // let data = [
-        //     {
-        //         y: 1,
-        //         t: moment("2021-01-1")
-        //     },
-        //     {
-        //         y: 1,
-        //         t: moment("2021-01-2")
-        //     },
-        //     {
-        //         y: 2,
-        //         t: moment("2021-01-3")
-        //     },
-        //     {
-        //         y: 3,
-        //         t: moment("2021-01-4")
-        //     },
-        //     {
-        //         y: 2,
-        //         t: moment("2021-01-5")
-        //     },
-        //     {
-        //         y: 2,
-        //         t: moment("2021-01-6")
-        //     },
-        //     {
-        //         y: 6,
-        //         t: moment("2021-01-8")
-        //     },
-        //     {
-        //         y: 1,
-        //         t: moment("2021-01-9")
-        //     }
-        // ];
     </script>
 </body>
 </html>

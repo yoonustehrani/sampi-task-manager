@@ -8,6 +8,10 @@ use Carbon\Carbon;
 
 class ChartController extends Controller
 {
+    public function monthly(Request $request)
+    {
+        
+    }
     public function yearly(Request $request)
     {
         $dt_from = Carbon::createFromFormat('Y-m-d', '2020-3-20')->setTime(0,0);
@@ -37,6 +41,8 @@ class ChartController extends Controller
         ->get([
             \DB::raw("COUNT(*) tasks, DATE_FORMAT(created_at, '%Y-%m-%e') date")
         ]);
+        // $geouped = $tasks->groupBy()
+        return $tasks;
         foreach ($tasks as $task) {
             $a = $month_day_numbers[0];
             for ($i=0; $i < 12; $i++) { 
