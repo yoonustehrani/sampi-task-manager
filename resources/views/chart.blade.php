@@ -19,7 +19,7 @@
         let data = [
             {
                 y: 1,
-                t: moment("2021-01-1")
+                t: moment("2021-01-1").format("jYYYY-jMM-jDD")
             },
             {
                 y: 1,
@@ -92,9 +92,9 @@
                                 round: true,
                                 unit: 'day',
                                 minUnit: 'day',
-                                tooltipFormat: 'dddd، DD MMMM YYYY',
+                                tooltipFormat: 'dddd، jDD jMMMM jYYYY',
                                 displayFormats: {
-                                    'day': 'YYYY-MM-DD',
+                                    'day': 'jYYYY-jMM-jDD',
                                 },
                             }
                         }
