@@ -13,10 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
-
 Route::group(['prefix' => 'task-manager', 'as' => 'api.task-manager.'], function () {
     Route::get('priorities', function() {
         return \App\Priority::all();
