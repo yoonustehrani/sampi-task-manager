@@ -8,16 +8,20 @@ use Illuminate\Http\Request;
 
 class TaskController extends BaseController
 {
+    protected $default_group = 'دسته بندی نشده';
     public function index(Request $request, $workspace)
     {
         $request->validate([
             'limit' => 'nullable|numeric',
             'order' => 'nullable|string',
+            'group' => 'nullable|string',
             'order_by' => 'nullable|string|min:3'
         ]);
         $user = ($request->user_id) ? \App\User::find($request->user_id) : $request->user();
         $relationship = $this->model_relationship($request->relationship, $user, '_tasks', 'tasks');
         $user_tasks = $user->{$relationship}()->with('users')->withCount('demands')->where('workspace_id', $workspace);
+        $group = $request->group ?: $this->default_group;
+        $user_tasks = $user_tasks->where('group', '=', $group);
         return $request->limit
                 ? $this->decide_ordered($request, $user_tasks)->limit((int) $request->limit)->get()
                 : $this->decide_ordered($request, $user_tasks)->latest()->paginate(10);
@@ -75,7 +79,7 @@ class TaskController extends BaseController
                 $task->title = $request->title;
                 $task->description = $request->description;
                 $task->parent_id = $request->parent_id;
-                $task->group = $request->group ?: 'دسته بندی نشده';
+                $task->group = $request->group ?: $this->default_group;
                 $task->priority_id = $request->priority;
                 $due_to = $request->due_to ? (new \Carbon\Carbon(((int) $request->due_to)))->timezone('Asia/Tehran')->seconds(0) : now();
                 $task->due_to = $due_to;
@@ -108,7 +112,7 @@ class TaskController extends BaseController
                 $task->title = $request->title;
                 $task->description = $request->description;
                 $task->parent_id = $request->parent_id;
-                $task->group = $request->group ?: 'دسته بندی نشده';
+                $task->group = $request->group ?: $this->default_group;
                 $task->priority_id = $request->priority;
                 $due_to = $request->due_to ? (new \Carbon\Carbon(((int) $request->due_to)))->timezone('Asia/Tehran')->seconds(0) : now();
                 $task->due_to = $due_to;

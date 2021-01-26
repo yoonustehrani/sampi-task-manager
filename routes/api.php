@@ -34,6 +34,7 @@ Route::group(['prefix' => 'task-manager', 'as' => 'api.task-manager.'], function
     Route::group(['middleware' => ['auth:api']], function () {
         $api_controllers = '\\App\\Http\\Controllers\\Api\\';
         Route::apiResource('workspaces', $api_controllers . 'WorkspaceController');
+        Route::get('workspaces/{workspace}/task_groups', $api_controllers . 'WorkspaceController@groups')->name('workspaces.groups');
         Route::apiResource('workspaces/{workspace}/tasks', $api_controllers . 'TaskController');
         Route::apiResource('workspaces/{workspace}/demands', $api_controllers . 'DemandController');
         Route::get('tasks', $api_controllers . 'TaskController@mixed')->name('tasks.mixed');

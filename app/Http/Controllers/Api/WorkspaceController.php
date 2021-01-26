@@ -18,4 +18,11 @@ class WorkspaceController extends Controller
         $this->authorize('view', $workspace);
         return $workspace->load('users');
     }
+    public function groups(Request $request, $workspace)
+    {
+        $groups = $request->user()->tasks()->whereWorkspaceId($workspace)
+        ->select('group as name', \DB::raw('count(*) as tasks'))
+        ->groupBy('group')->get();
+        return $groups;
+    }
 }
