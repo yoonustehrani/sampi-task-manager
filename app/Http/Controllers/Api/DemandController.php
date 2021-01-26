@@ -13,18 +13,20 @@ class DemandController extends BaseController
     {
         $user = $request->user();
         $relationship = $this->model_relationship($request->relationship, $user, '_demands', 'demands');
+        $with = $relationship == 'demands' ? 'to' : 'from';
         return  $user->{$relationship}()
                 ->where('workspace_id', $workspace)
                 ->withCount('messages')
-                ->with('from', 'to', 'priority:id,title')
+                ->with($with, 'priority:id,title')
                 ->paginate(10);
     }
     public function mixed(Request $request)
     {
         $user = $request->user();
         $relationship = $this->model_relationship($request->relationship, $user, '_demands', 'demands');
+        $with = $relationship == 'demands' ? 'to' : 'from';
         return  $user->{$relationship}()
-                ->with('from', 'to', 'priority:id,title', 'workspace')
+                ->with($with, 'priority:id,title', 'workspace')
                 ->paginate(10);
     }
     public function show(Workspace $workspace, $demand)
@@ -72,14 +74,30 @@ class DemandController extends BaseController
     public function update(Request $request, Workspace $workspace, $demand)
     {
         $request->validate([
-            'text' => 'required|string'
+            'title' => 'required|string|min:3|max:255',
+            'target_user'  => 'required|numeric',
+            'priority' => 'required|numeric',
+            'task'     => 'nullable|numeric',
+            'due_to'   => 'nullable|numeric',
         ]);
-        $demand = $workspace->demands()->findOrFail($demand);
-        $message = new DemandMessage();
-        $message->text = $request->text;
-        $message->user_id = $request->user()->id;
-        $demand->messages()->create($message->toArray());
-        return ['okay' => true];
+        try {
+            \DB::beginTransaction();
+            $user = $request->user();
+            $target_user = \App\User::findOrFail($request->target_user);
+            $demand = new Demand();
+            $demand->title = $request->title;
+            $demand->priority_id = $request->priority;
+            $demand->title = $request->title;
+            $demand->to_id = $target_user->id;
+            $demand->workspace_id = $workspace->id;
+            \DB::commit();
+            return $demand;
+        } catch (\Exception $e){
+            \DB::rollback();
+            return [
+                'message' => $e->getMessage()
+            ];
+        }
     }
     public function destroy(Workspace $workspace, $demand)
     {
@@ -88,5 +106,20 @@ class DemandController extends BaseController
             return ['okay' => true];
         }
         return ['message' => 'خطا در عملیات حذف.'];
+    }
+    public function new_message(Request $request, Demand $demand)
+    {
+        $request->validate([
+            'text' => 'required|string'
+        ]);
+        $message = new DemandMessage();
+        $message->text = $request->text;
+        $message->user_id = $request->user()->id;
+        $demand->messages()->create($message->toArray());
+        return ['okay' => true];
+    }
+    public function messages(Demand $demand)
+    {
+        return $demand->messages()->orderBy('created_at', 'desc')->paginate(10);
     }
 }
