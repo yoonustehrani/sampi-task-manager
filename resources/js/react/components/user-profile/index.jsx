@@ -78,7 +78,7 @@ export default class UserProfile extends Component {
                             <div className="user-text-info-container">
                                 <h5 className="d-block mt-3">دانیال طهرانیم</h5>
                                 <h6 className="float-right">danialtehrani@</h6>
-                                <h6 className="mr-1">مدیر بخش مالی</h6>
+                                <h6 className="mr-1 float-right">مدیر بخش مالی</h6>
                             </div>
                             <hr/>
                         </div>
@@ -113,7 +113,7 @@ export default class UserProfile extends Component {
                                 </div>
                             </div>
                             <div className="user-works-results col-12 mt-4" ref={this.tabResultsRef[1]}>
-                                <div className="filter-box mb-4 p-2 col-12 animated fadeIn">
+                                <div className="filter-box task-bg-color mb-4 p-2 col-12 animated fadeIn">
                                     <div className="filter-option col-12 mb-3 text-center">
                                         <span>جستجو در: </span>
                                         <select id="mixed_tasks_relation_select" defaultValue="all">
@@ -151,7 +151,7 @@ export default class UserProfile extends Component {
                                 </div>
                             </div>
                             <div className="user-works-results col-12 mt-4" ref={this.tabResultsRef[2]}>
-                                <div className="filter-box mb-4 p-2 col-12 animated fadeIn">
+                                <div className="filter-box demand-bg-color mb-4 p-2 col-12 animated fadeIn">
                                     <div className="filter-option col-12 mb-3 text-center">
                                         <span>جستجو در: </span>
                                         <select id="mixed_demands_relation_select" defaultValue="all">
@@ -196,7 +196,7 @@ export default class UserProfile extends Component {
                                 </div>
                             </div>
                             <div className="user-works-results col-12 mt-4" ref={this.tabResultsRef[3]}>
-                                <div className="filter-box mb-4 p-2 col-12 animated fadeIn">
+                                <div className="filter-box need-bg-color mb-4 p-2 col-12 animated fadeIn">
                                     <div className="filter-option col-12 mb-3 text-center">
                                         <span>جستجو در: </span>
                                         <select id="mixed_needs_relation_select" defaultValue="all">

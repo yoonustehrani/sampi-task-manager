@@ -28846,7 +28846,7 @@ var UserProfile = /*#__PURE__*/function (_Component) {
       }, "\u062F\u0627\u0646\u06CC\u0627\u0644 \u0637\u0647\u0631\u0627\u0646\u06CC\u0645"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", {
         className: "float-right"
       }, "danialtehrani@"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", {
-        className: "mr-1"
+        className: "mr-1 float-right"
       }, "\u0645\u062F\u06CC\u0631 \u0628\u062E\u0634 \u0645\u0627\u0644\u06CC")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "user-work-section"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
@@ -28891,7 +28891,7 @@ var UserProfile = /*#__PURE__*/function (_Component) {
         className: "user-works-results col-12 mt-4",
         ref: this.tabResultsRef[1]
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "filter-box mb-4 p-2 col-12 animated fadeIn"
+        className: "filter-box task-bg-color mb-4 p-2 col-12 animated fadeIn"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "filter-option col-12 mb-3 text-center"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u062C\u0633\u062A\u062C\u0648 \u062F\u0631: "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
@@ -28962,7 +28962,7 @@ var UserProfile = /*#__PURE__*/function (_Component) {
         className: "user-works-results col-12 mt-4",
         ref: this.tabResultsRef[2]
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "filter-box mb-4 p-2 col-12 animated fadeIn"
+        className: "filter-box demand-bg-color mb-4 p-2 col-12 animated fadeIn"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "filter-option col-12 mb-3 text-center"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u062C\u0633\u062A\u062C\u0648 \u062F\u0631: "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
@@ -29043,7 +29043,7 @@ var UserProfile = /*#__PURE__*/function (_Component) {
         className: "user-works-results col-12 mt-4",
         ref: this.tabResultsRef[3]
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "filter-box mb-4 p-2 col-12 animated fadeIn"
+        className: "filter-box need-bg-color mb-4 p-2 col-12 animated fadeIn"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "filter-option col-12 mb-3 text-center"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u062C\u0633\u062A\u062C\u0648 \u062F\u0631: "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
