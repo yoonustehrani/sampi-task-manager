@@ -9274,8 +9274,9 @@ div.result-container div.filter-box div.filter-option select option {
   font-family: "Iransans";
 }
 
-div.result-container.active {
-  display: block;
+div.result-container.active,
+div.user-works-results.active {
+  display: block !important;
 }
 
 table {
@@ -9474,6 +9475,7 @@ div.user-card div.user-info-section div.user-text-info-container h6 {
 }
 
 div.user-card div.user-work-section div.user-works-results {
+  display: none;
   overflow-x: hidden;
   overflow-y: auto;
   max-height: 480px;
@@ -9504,7 +9506,7 @@ div.user-card div.user-work-section div.user-works-results div.workspace-item sp
 }
 
 div.user-card div.user-work-section div.user-works-results div.workspace-item:hover {
-  background-color: #7BC6CC;
+  background-color: #E2E2E2;
 }
 
 div.statistics-section {

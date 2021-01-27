@@ -76,16 +76,16 @@ export default class UserProfile extends Component {
                                         <i className="fas fa-tasks d-block d-md-inline"></i>
                                         وظایف
                                     </a>
-                                    <a className="tab-link" ref={this.tabTitlesRef[3]} onClick={this.changeTab.bind(this, 2)}>
+                                    <a className="tab-link" ref={this.tabTitlesRef[2]} onClick={this.changeTab.bind(this, 2)}>
                                         <i className="fas fa-comment-dots d-block d-md-inline"></i>
                                         درخواست ها
                                     </a>
-                                    <a className="tab-link" ref={this.tabTitlesRef[4]} onClick={this.changeTab.bind(this, 3)}>
+                                    <a className="tab-link" ref={this.tabTitlesRef[3]} onClick={this.changeTab.bind(this, 3)}>
                                         <i className="fas fa-clipboard-list d-block d-md-inline"></i>
                                         نیاز ها
                                     </a>
                                 </nav>
-                                <div className="user-works-results col-12 mt-4" ref={this.tabResultsRef[0]}>
+                                <div className="user-works-results col-12 mt-4 active" ref={this.tabResultsRef[0]}>
                                     <div className="workspace-item col-12">
                                         <div className="workspace-img-container float-right ml-1">
                                             <img src={APP_PATH + "images/elnovel-logo.png"} alt=""/>
@@ -196,7 +196,7 @@ export default class UserProfile extends Component {
                                     </div>
                                 </div>
                                 <div className="user-works-results col-12 mt-4" ref={this.tabResultsRef[1]}>
-                                
+                                    
                                 </div>
                                 <div className="user-works-results col-12 mt-4" ref={this.tabResultsRef[2]}>
                                 

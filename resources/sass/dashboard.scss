@@ -135,8 +135,8 @@ div.result-container {
         }
     }
 }
-div.result-container.active {
-    display: block;
+div.result-container.active, div.user-works-results.active {
+    display: block !important;
 }
 
 table {

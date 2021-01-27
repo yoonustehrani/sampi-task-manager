@@ -25,6 +25,7 @@ div.user-card {
     }
     div.user-work-section {
         div.user-works-results {
+            display: none;
             overflow-x: hidden;
             overflow-y: auto;
             max-height: 480px;
@@ -52,7 +53,7 @@ div.user-card {
                 }
             }
             div.workspace-item:hover {
-                background-color: #7BC6CC;
+                background-color: #E2E2E2;
             }  
         } 
     }

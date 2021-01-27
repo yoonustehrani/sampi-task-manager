@@ -28851,18 +28851,18 @@ var UserProfile = /*#__PURE__*/function (_Component) {
         className: "fas fa-tasks d-block d-md-inline"
       }), "\u0648\u0638\u0627\u06CC\u0641"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         className: "tab-link",
-        ref: this.tabTitlesRef[3],
+        ref: this.tabTitlesRef[2],
         onClick: this.changeTab.bind(this, 2)
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-comment-dots d-block d-md-inline"
       }), "\u062F\u0631\u062E\u0648\u0627\u0633\u062A \u0647\u0627"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         className: "tab-link",
-        ref: this.tabTitlesRef[4],
+        ref: this.tabTitlesRef[3],
         onClick: this.changeTab.bind(this, 3)
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-clipboard-list d-block d-md-inline"
       }), "\u0646\u06CC\u0627\u0632 \u0647\u0627")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "user-works-results col-12 mt-4",
+        className: "user-works-results col-12 mt-4 active",
         ref: this.tabResultsRef[0]
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "workspace-item col-12"
