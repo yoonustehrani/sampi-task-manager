@@ -131,6 +131,10 @@ class TaskController extends BaseController
                 $task->priority_id = $request->priority;
                 $due_to = $request->due_to ? (new \Carbon\Carbon(((int) $request->due_to)))->timezone('Asia/Tehran')->seconds(0) : now();
                 $task->due_to = $due_to;
+                if ($request->finished) {
+                    $task->finished_at = $task->finished_at ? null : now();
+                    $task->finisher_id = $request->user()->id;
+                }
                 $task->save();
                 $users = $request->input('users') ?: [];
                 $task->users()->sync(
@@ -156,6 +160,7 @@ class TaskController extends BaseController
         $user = ($request->user_id) ? \App\User::find($request->user_id) : $request->user();
         $task = $user->tasks()->findOrFail($task);
         $task->finished_at = $task->finished_at ? null : now();
+        $task->finisher_id = $user->id;
         if ($task->save()) {
             return $task;
         }

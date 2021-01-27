@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Demand;
 use Illuminate\Http\Request;
 
 class DemandController extends Controller
@@ -40,21 +41,22 @@ class DemandController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $demand
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($demand)
     {
-        //
+        $demand = Demand::with('from', 'to', 'workspace', 'priority', 'task')->withCount('messages')->findOrFail($demand);
+        return view('theme.pages.demands.show', compact('demand'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $demand
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($demand)
     {
         //
     }
@@ -63,10 +65,10 @@ class DemandController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  int  $demand
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $demand)
     {
         //
     }
@@ -74,10 +76,10 @@ class DemandController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int  $demand
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($demand)
     {
         //
     }

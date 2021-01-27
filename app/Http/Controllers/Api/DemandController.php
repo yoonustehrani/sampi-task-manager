@@ -29,14 +29,6 @@ class DemandController extends BaseController
                 ->with($with, 'priority:id,title', 'workspace')
                 ->paginate(10);
     }
-    public function show(Workspace $workspace, $demand)
-    {
-        $demand = $workspace->demands()->with(['from', 'to', 'priority:id,title', 'task'])->findOrFail($demand);
-        $demand->load(['messages' => function($q) {
-            $q->orderBy('created_at', 'asc');
-        }]);
-        return $demand;
-    }
     public function store(Request $request, Workspace $workspace)
     {
         $request->validate([
