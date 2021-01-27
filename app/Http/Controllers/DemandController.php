@@ -13,7 +13,7 @@ class DemandController extends Controller
      */
     public function index()
     {
-        //
+        return view('theme.pages.demands.index');
     }
 
     /**
