@@ -1,6 +1,9 @@
 {
     "/js/app.js": "/js/app.js",
+    "/js/dashboard.js": "/js/dashboard.js",
+    "/js/select2.js": "/js/select2.js",
     "/css/app.css": "/css/app.css",
-    "/css/auth.css": "/css/auth.css",
-    "/js/dashboard.js": "/js/dashboard.js"
+    "/js/task.js": "/js/task.js",
+    "/js/user-profile.js": "/js/user-profile.js",
+    "/js/workspace.js": "/js/workspace.js"
 }
