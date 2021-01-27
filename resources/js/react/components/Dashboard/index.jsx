@@ -191,7 +191,7 @@ export default class Dashboard extends Component {
                             <i className="fas fa-comment-dots d-block d-md-inline"></i>
                             درخواست ها
                         </a>
-                        <a className="tab-link" ref={this.tuser-works-results[3]} onClick={this.changeTab.bind(this, 3)}>
+                        <a className="tab-link" ref={this.tabTitlesRef[3]} onClick={this.changeTab.bind(this, 3)}>
                             <i className="fas fa-clipboard-list d-block d-md-inline"></i>
                             نیاز ها
                         </a>

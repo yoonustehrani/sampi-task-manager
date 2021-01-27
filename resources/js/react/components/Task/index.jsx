@@ -282,7 +282,7 @@ export default class ShowTask extends Component {
                         <div className="mt-3 col-12 col-md-5">
                             <div className="task-title-section title-section float-right">
                                 <i className="fas fa-users"></i>
-                                <span>انجام دهندگان:</span>
+                                <span>دست اندرکاران:</span>
                             </div>
                             <div className="employees-container task-detail next-line">
                                 {
@@ -290,7 +290,7 @@ export default class ShowTask extends Component {
                                         <div key={i} className="user-dropdown-item border-sharp animated flipInX permanent-visible">
                                             <div className="user-right-flex">
                                                 <div className="user-img-container ml-md-2 ml-1">
-                                                    <img src={APP_PATH + user.avatar_pic} />
+                                                    <img src={APP_PATH + (user.avatar_pic !== null ? user.avatar_pic : "/images/male-avatar")} />
                                                 </div>
                                                 <div className="user-info ml-md-2 ml-1">
                                                     <p>{user.fullname}</p>
@@ -327,9 +327,7 @@ export default class ShowTask extends Component {
                                 <i className="fas fa-comment-dots"></i>
                                 <span>توضیحات تکمیلی:</span>
                             </div>
-                            <div className="task-detail next-line">
-                                { task.description }
-                            </div>
+                            <div className="task-detail next-line" dangerouslySetInnerHTML={{__html: task.description}}></div>
                         </div>
                     </div>
                     <div className="text-center mt-4"><button className="btn btn-outline-info" onClick={this.changeMode.bind(this, "edit")}>ویرایش <i className="fas fa-pen-alt"></i></button></div>

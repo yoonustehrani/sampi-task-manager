@@ -57977,7 +57977,7 @@ var ShowTask = /*#__PURE__*/function (_Component) {
           className: "task-title-section title-section float-right"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-users"
-        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0627\u0646\u062C\u0627\u0645 \u062F\u0647\u0646\u062F\u06AF\u0627\u0646:")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u062F\u0633\u062A \u0627\u0646\u062F\u0631\u06A9\u0627\u0631\u0627\u0646:")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "employees-container task-detail next-line"
         }, task.users.map(function (user, i) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -57988,7 +57988,7 @@ var ShowTask = /*#__PURE__*/function (_Component) {
           }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             className: "user-img-container ml-md-2 ml-1"
           }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-            src: APP_PATH + user.avatar_pic
+            src: APP_PATH + (user.avatar_pic !== null ? user.avatar_pic : "/images/male-avatar")
           })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             className: "user-info ml-md-2 ml-1"
           }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, user.fullname), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
@@ -58025,8 +58025,11 @@ var ShowTask = /*#__PURE__*/function (_Component) {
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-comment-dots"
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u062A\u0648\u0636\u06CC\u062D\u0627\u062A \u062A\u06A9\u0645\u06CC\u0644\u06CC:")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "task-detail next-line"
-        }, task.description))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "task-detail next-line",
+          dangerouslySetInnerHTML: {
+            __html: task.description
+          }
+        }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "text-center mt-4"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           className: "btn btn-outline-info",
