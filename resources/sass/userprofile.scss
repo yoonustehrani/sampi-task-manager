@@ -87,7 +87,7 @@ div.user-card {
                     }
                 }
                 div.task-item:hover {
-                    background-color: #E9E4F0;
+                    background-color: #D3CCE3;
                 }
                 div.demand-item {
                     display: flex;
@@ -114,10 +114,10 @@ div.user-card {
                     }
                 }
                 div.demand-item:hover {
-                    background-color: #D7DDE8;
+                    background-color: #C9D6FF;
                 }
                 div.hover-bg:hover {
-                    background-color: #f2fcfe !important;
+                    background-color: #CFDEF3!important;
                 }
             }
         } 
@@ -125,15 +125,15 @@ div.user-card {
 }
 
 .demand-bg-color {
-    background-color: #D7DDE8 !important;
+    background: linear-gradient(#C9D6FF, #E2E2E2);
 }
 
 .need-bg-color {
-    background-color: #f2fcfe !important;
+    background: linear-gradient(#E0EAFC, #CFDEF3);
 }
 
 .task-bg-color {
-    background-color: #E9E4F0 !important;
+    background: linear-gradient(#D3CCE3, #E9E4F0);
 }
 
 div.statistics-section {
