@@ -19,18 +19,5 @@
 
 @push('scripts')
     <script src="{{ asset('/js/dashboard.js') }}"></script>
-    <script>
-        let formatOption = (option) => {
-            if (option.element) {
-                let icon_name = option.element.attributes.icon_name.nodeValue
-                return $(`<div class="select-option"><i class="${icon_name}"></i>${option.text}</div>`)
-            }
-        }
-        $('#mixed_tasks_order_select, #mixed_tasks_order_by_select, #mixed_tasks_relation_select').select2({
-            templateResult: formatOption,
-            minimumResultsForSearch: Infinity,
-            width: '100%',
-            dir: "rtl"
-        })
-    </script>
+    <script src="{{ asset('js/select2.js') }}"></script>
 @endpush

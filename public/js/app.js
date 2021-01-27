@@ -73214,9 +73214,79 @@ window.Swal = __webpack_require__(/*! ../../node_modules/sweetalert2/src/sweetal
   !*** ./resources/js/userarea.js ***!
   \**********************************/
 /*! no exports provided */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nError: ENOENT: no such file or directory, open 'I:\\projects\\task-manager\\resources\\js\\userarea.js'");
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_0__);
+
+$('#logout-dropdown, #toggle-logout').on('click', function (e) {
+  e.preventDefault();
+  $('#logout-form').trigger('submit');
+});
+$('.has_sub').on('click', function () {
+  $(this).toggleClass('active');
+  $(' .opener', this).toggleClass('opened');
+});
+var elem = document.documentElement;
+/* View in fullscreen */
+
+function openFullscreen() {
+  if (elem.requestFullscreen) {
+    elem.requestFullscreen();
+  } else if (elem.mozRequestFullScreen) {
+    /* Firefox */
+    elem.mozRequestFullScreen();
+  } else if (elem.webkitRequestFullscreen) {
+    /* Chrome, Safari and Opera */
+    elem.webkitRequestFullscreen();
+  } else if (elem.msRequestFullscreen) {
+    /* IE/Edge */
+    elem.msRequestFullscreen();
+  }
+}
+/* Close fullscreen */
+
+
+function closeFullscreen() {
+  if (document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if (document.mozCancelFullScreen) {
+    /* Firefox */
+    document.mozCancelFullScreen();
+  } else if (document.webkitExitFullscreen) {
+    /* Chrome, Safari and Opera */
+    document.webkitExitFullscreen();
+  } else if (document.msExitFullscreen) {
+    /* IE/Edge */
+    document.msExitFullscreen();
+  }
+}
+
+$('.scr-controller').on('click', function () {
+  $(' > i', this).toggleClass('fa-expand-arrows-alt');
+
+  if ($(this).attr('data-event') == 'max') {
+    $(this).attr('data-event', 'min');
+    return openFullscreen();
+  }
+
+  $(this).attr('data-event', 'max');
+  return closeFullscreen();
+});
+
+function toggleCollapser() {
+  $('.collapser-btn > i').toggleClass('fa-angle-double-right fa-angle-double-left');
+  $("#right-menu").toggleClass('collapsed');
+  $("#mainpage").toggleClass('col-lg-10 col-md-9');
+}
+
+$('.collapser-btn').click(toggleCollapser);
+
+if ($(window).width() > 576) {
+  toggleCollapser();
+}
 
 /***/ }),
 

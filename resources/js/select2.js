@@ -11,7 +11,7 @@ export const formatMemberOption = (option) => {
         return $(`<div class="select-option"><img src="${img_src}" class="member-img" />${option.text}</div>`)
     }
 }
-$('#new-task-priority, #tasks_order_select, #tasks_order_by_select, #tasks_relation_select').select2({
+$('#new-task-priority, #tasks_order_select, #tasks_order_by_select, #tasks_relation_select, #mixed_tasks_order_select, #mixed_tasks_order_by_select, #mixed_tasks_relation_select, #mixed_demands_order_select, #mixed_demands_order_by_select, #mixed_demands_relation_select, #mixed_needs_order_select, #mixed_needs_order_by_select, #mixed_needs_relation_select').select2({
     templateResult: formatOption,
     minimumResultsForSearch: Infinity,
     width: '100%',

@@ -64,33 +64,33 @@ a:hover {
 
 div.dashboard-tab-container {
     margin-top: 30px;
-    .tab-title-bar {
-        display: flex;
-        flex-direction: row-reverse;
-        flex-wrap: nowrap;
-        justify-content: space-evenly;
-        a.tab-link {
-            direction: rtl;
+}
+.tab-title-bar {
+    display: flex;
+    flex-direction: row-reverse;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+    a.tab-link {
+        direction: rtl;
+        font-size: 18px;
+        font-family: $iran-sans;
+        cursor: pointer;
+        transition: 0.3s;
+        color: #009FFF;
+        i {
+            margin-left: 5px;
             font-size: 18px;
-            font-family: $iran-sans;
-            cursor: pointer;
-            transition: 0.3s;
-            color: #009FFF;
-            i {
-                margin-left: 5px;
-                font-size: 18px;
-            }
-        }
-        a.tab-link:hover {
-            color: #ec2F4B;
-        }
-        a.tab-link.active {
-            border-bottom: 2px solid #ec2F4B;
-            color: #ec2F4B;
         }
     }
+    a.tab-link:hover {
+        color: #ec2F4B;
+    }
+    a.tab-link.active {
+        border-bottom: 2px solid #ec2F4B;
+        color: #ec2F4B;
+    }
 }
-div.result-container {
+div.result-container, div.user-works-results {
     display: none;
     // background-color: #E0EAFC;
     // box-shadow: 4px 4px 6px 0 #bdc3c7;
@@ -135,8 +135,8 @@ div.result-container {
         }
     }
 }
-div.result-container.active {
-    display: block;
+div.result-container.active, div.user-works-results.active {
+    display: block !important;
 }
 
 table {
@@ -157,7 +157,7 @@ table {
         > span {
             color: #4286f4;
         }
-         div.dropdown-users {
+        div.dropdown-users {
             display: block !important;
         }
     }

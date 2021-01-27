@@ -9196,14 +9196,14 @@ div.dashboard-tab-container {
   margin-top: 30px;
 }
 
-div.dashboard-tab-container .tab-title-bar {
+.tab-title-bar {
   display: flex;
   flex-direction: row-reverse;
   flex-wrap: nowrap;
   justify-content: space-evenly;
 }
 
-div.dashboard-tab-container .tab-title-bar a.tab-link {
+.tab-title-bar a.tab-link {
   direction: rtl;
   font-size: 18px;
   font-family: "Iransans";
@@ -9212,30 +9212,33 @@ div.dashboard-tab-container .tab-title-bar a.tab-link {
   color: #009FFF;
 }
 
-div.dashboard-tab-container .tab-title-bar a.tab-link i {
+.tab-title-bar a.tab-link i {
   margin-left: 5px;
   font-size: 18px;
 }
 
-div.dashboard-tab-container .tab-title-bar a.tab-link:hover {
+.tab-title-bar a.tab-link:hover {
   color: #ec2F4B;
 }
 
-div.dashboard-tab-container .tab-title-bar a.tab-link.active {
+.tab-title-bar a.tab-link.active {
   border-bottom: 2px solid #ec2F4B;
   color: #ec2F4B;
 }
 
-div.result-container {
+div.result-container,
+div.user-works-results {
   display: none;
 }
 
-div.result-container img.workspace-img {
+div.result-container img.workspace-img,
+div.user-works-results img.workspace-img {
   width: 30px;
   height: 30px;
 }
 
-div.result-container div.filter-box {
+div.result-container div.filter-box,
+div.user-works-results div.filter-box {
   float: right;
   background-color: #E0EAFC;
   box-shadow: 3px 3px 7px 0 #bdc3c7;
@@ -9249,7 +9252,8 @@ div.result-container div.filter-box {
   direction: rtl;
 }
 
-div.result-container div.filter-box div.filter-option {
+div.result-container div.filter-box div.filter-option,
+div.user-works-results div.filter-box div.filter-option {
   direction: rtl;
   text-align: right;
   font-family: "Iransans";
@@ -9262,20 +9266,23 @@ div.result-container div.filter-box div.filter-option {
   align-items: center;
 }
 
-div.result-container div.filter-box div.filter-option > span {
+div.result-container div.filter-box div.filter-option > span,
+div.user-works-results div.filter-box div.filter-option > span {
   text-align: center;
   margin-left: 6px;
   font-size: 15px;
   width: 100%;
 }
 
-div.result-container div.filter-box div.filter-option select option {
+div.result-container div.filter-box div.filter-option select option,
+div.user-works-results div.filter-box div.filter-option select option {
   text-align: right;
   font-family: "Iransans";
 }
 
-div.result-container.active {
-  display: block;
+div.result-container.active,
+div.user-works-results.active {
+  display: block !important;
 }
 
 table {
@@ -9447,6 +9454,179 @@ div.employees-container div.user-dropdown-item.permanent-visible div.user-img-co
   padding: initial !important;
 }
 
+div.user-card {
+  background-color: #ffffff;
+}
+
+div.user-card div.user-info-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+div.user-card div.user-info-section div.user-img-container img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50px;
+}
+
+div.user-card div.user-info-section div.user-text-info-container h5 {
+  font-weight: bold;
+  color: #000000;
+}
+
+div.user-card div.user-info-section div.user-text-info-container h6 {
+  color: #757F9A;
+}
+
+div.user-card div.user-work-section div.scrollable-items {
+  overflow-x: hidden;
+  overflow-y: auto;
+  max-height: 480px;
+  box-shadow: 0px 2px 5px 2px rgba(156, 156, 156, 0.1);
+}
+
+div.user-card div.user-work-section div.user-works-results {
+  display: none;
+}
+
+div.user-card div.user-work-section div.user-works-results div.workspace-item {
+  float: right;
+  cursor: pointer;
+  transition: 0.5s;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+div.user-card div.user-work-section div.user-works-results div.workspace-item div.workspace-img-container {
+  float: right !important;
+}
+
+div.user-card div.user-work-section div.user-works-results div.workspace-item div.workspace-img-container img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50px;
+}
+
+div.user-card div.user-work-section div.user-works-results div.workspace-item h6 {
+  color: #000000;
+  text-align: right;
+}
+
+div.user-card div.user-work-section div.user-works-results div.workspace-item span {
+  color: #757F9A;
+  text-align: right;
+}
+
+div.user-card div.user-work-section div.user-works-results div.workspace-item div.workspace-item-text-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+div.user-card div.user-work-section div.user-works-results div.workspace-item:hover {
+  background-color: #E2E2E2;
+}
+
+div.user-card div.user-work-section div.user-works-results div.user-tasks-container div.user-work-item {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: nowrap;
+  cursor: pointer;
+  transition: 0.5s;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+div.user-card div.user-work-section div.user-works-results div.user-tasks-container div.task-item h6 {
+  color: #000000;
+}
+
+div.user-card div.user-work-section div.user-works-results div.user-tasks-container div.task-item span {
+  color: #757F9A;
+}
+
+div.user-card div.user-work-section div.user-works-results div.user-tasks-container div.task-item:hover {
+  background-color: #E9E4F0;
+}
+
+div.user-card div.user-work-section div.user-works-results div.user-tasks-container div.demand-item {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: 0.5s;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+div.user-card div.user-work-section div.user-works-results div.user-tasks-container div.demand-item > i {
+  color: #2C5364;
+  font-size: 26px;
+}
+
+div.user-card div.user-work-section div.user-works-results div.user-tasks-container div.demand-item div.demand-sender {
+  display: flex;
+  align-items: flex-end;
+  flex-direction: row-reverse;
+}
+
+div.user-card div.user-work-section div.user-works-results div.user-tasks-container div.demand-item img {
+  width: 35px;
+  height: 35px;
+  border-radius: 50px;
+}
+
+div.user-card div.user-work-section div.user-works-results div.user-tasks-container div.demand-item:hover {
+  background-color: #D7DDE8;
+}
+
+div.user-card div.user-work-section div.user-works-results div.user-tasks-container div.hover-bg:hover {
+  background-color: #f2fcfe !important;
+}
+
+.demand-bg-color {
+  background-color: #D7DDE8 !important;
+}
+
+.need-bg-color {
+  background-color: #f2fcfe !important;
+}
+
+.task-bg-color {
+  background-color: #E9E4F0 !important;
+}
+
+div.statistics-section {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+div.statistics-section > div {
+  background-color: #ffffff;
+}
+
+div.statistics-section div.wide-section-statistics {
+  border: 1px solid #2C5364;
+}
+
+div.select-option-big {
+  font-size: 16px !important;
+}
+
+div.select-option-big i {
+  margin-left: 8px !important;
+  font-size: 18px !important;
+}
+
 body,
 html {
   width: 100%;
@@ -9550,7 +9730,6 @@ a {
 .contentbar {
   overflow-y: auto;
   height: 100%;
-  padding-bottom: 100px !important;
 }
 
 nav a:hover {
@@ -9761,9 +9940,6 @@ div.user-info-workspace {
   justify-content: flex-start;
   align-items: center;
   flex-wrap: wrap;
-  width: -webkit-min-content;
-  width: -moz-min-content;
-  width: min-content;
 }
 
 div.user-info-workspace > img {
@@ -9776,24 +9952,8 @@ div.user-info-workspace a {
   text-align: center;
 }
 
-div.name-row-user-workspace {
-  width: -webkit-min-content;
-  width: -moz-min-content;
-  width: min-content;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-}
-
-@media (min-width: 567px) {
-  div.name-row-user-workspace {
-    flex-direction: row;
-    width: -webkit-max-content;
-    width: -moz-max-content;
-    width: max-content;
-  }
+div.name-col-user-workspace span {
+  width: 100%;
 }
 
 div.workspace-sub-info {
@@ -9813,17 +9973,11 @@ div.workspace-sub-info {
   }
 
   div.user-info-workspace {
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    flex-wrap: nowrap;
-    width: -webkit-max-content;
-    width: -moz-max-content;
-    width: max-content;
+    display: initial;
   }
 
-  div.name-row-user-workspace {
-    align-items: flex-start;
+  div.name-col-user-workspace span {
+    width: initial;
   }
 }
 
@@ -9925,7 +10079,13 @@ div.task-info-container .select2-selection .select2-selection__arrow {
   top: auto;
 }
 
-div.input-group-single-line {
+@media (min-width: 576px) {
+  div.input-group-single-line {
+    flex-wrap: nowrap !important;
+  }
+}
+
+div.input-group-single-line-all {
   flex-wrap: nowrap !important;
 }
 
@@ -10038,7 +10198,7 @@ div.show-tasks-container {
   justify-content: space-evenly;
   align-items: flex-start;
   flex-wrap: wrap;
-  box-shadow: 5px 5px 14px 0 #2c3e50;
+  box-shadow: 0px 2px 5px 2px rgba(156, 156, 156, 0.1);
 }
 
 div.show-tasks-container div.task-title-section {
@@ -10114,8 +10274,20 @@ div.show-tasks-container i.minus-icon {
 }
 
 div.edit-tasks-container {
-  box-shadow: 5px 5px 14px 0 #2c3e50;
+  box-shadow: 0px 2px 5px 2px rgba(156, 156, 156, 0.1);
   float: right;
+}
+
+@media (max-width: 567px) {
+  .no-break {
+    white-space: nowrap;
+  }
+
+  .no-break span {
+    width: 60%;
+    margin-right: 50%;
+    transform: translateX(50%);
+  }
 }
 
 .select2-container {

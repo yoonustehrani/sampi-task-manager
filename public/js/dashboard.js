@@ -55099,14 +55099,11 @@ var Dashboard = /*#__PURE__*/function (_Component) {
     });
 
     _this.tabResultsRef = [];
+    _this.tabTitlesRef = [];
 
     for (var i = 0; i < 4; i++) {
       _this.tabResultsRef.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef());
-    }
 
-    _this.tabTitlesRef = [];
-
-    for (var _i = 0; _i < 4; _i++) {
       _this.tabTitlesRef.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef());
     }
 
@@ -55337,9 +55334,9 @@ var Dashboard = /*#__PURE__*/function (_Component) {
           href: workspace_url
         }, title)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "employees-container horizontal-centerlize"
-        }, users.length === 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        }, users.length === 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-user-slash"
-        })), users.length === 1 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, users.length, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        }), users.length === 1 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, users.length, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-user mr-2"
         })), users.length > 1 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, users.length, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-users mr-2"
@@ -55373,12 +55370,14 @@ var Dashboard = /*#__PURE__*/function (_Component) {
           }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0639\u0636\u0648", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
             className: "fas fa-user mr-1"
           })))));
-        })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "\u06A9\u0644 : ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-          className: "badge badge-primary ml-md-4 d-block d-md-inline"
+        })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+          className: "no-break"
+        }, "\u06A9\u0644 : ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+          className: "badge badge-primary ml-md-4 d-block d-md-inline mb-1 mb-md-0"
         }, tasks_count), "\u0627\u062A\u0645\u0627\u0645 : ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-          className: "badge badge-success ml-md-4 d-block d-md-inline"
+          className: "badge badge-success ml-md-4 d-block d-md-inline mb-1 mb-md-0"
         }, finished_tasks_count), "\u0628\u0627\u0642\u06CC \u0645\u0627\u0646\u062F\u0647 : ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-          className: "badge badge-danger ml-md-4 d-block d-md-inline"
+          className: "badge badge-danger ml-md-4 d-block d-md-inline mb-1 mb-md-0"
         }, tasks_count - finished_tasks_count)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, demands_left_count));
       }) : null)), workspaces.length <= 0 && !isGetting && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "text-center text-secondary"

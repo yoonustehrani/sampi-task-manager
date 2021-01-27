@@ -87,7 +87,6 @@ export default class ShowTask extends Component {
                 if (finished_at_check !== first_check_state) {
                     Axios.put(toggle_task_state_api).then(res => {
                         // we will show the erros with swal
-                        console.log(res)
                     })
                 }
                 Axios.put(edit_task_api, {
@@ -116,19 +115,19 @@ export default class ShowTask extends Component {
         return (
             <div className="col-12 col-md-10 offset-md-2 float-left mt-3 animated flash">
                 <div className="edit-tasks-container col-12">
-                    <div className="input-group col-12 col-md-6 float-right mt-3">
+                    <div className="input-group col-12 col-md-6 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3">
                         <div className="input-group-prepend">
                             <span className="input-group-text">عنوان کار</span>
                         </div>
                         <input id="task-title-edit" type="text" className="form-control" defaultValue={task.title} />
                     </div>
-                    <div className="input-group col-12 col-md-6 float-right mt-3">
+                    <div className="input-group col-12 col-md-6 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3">
                         <div className="input-group-prepend">
                             <span className="input-group-text">دسته بندی</span>
                         </div>
                         <input id="task-group-edit" type="text" className="form-control" defaultValue={task.group}/>
                     </div>
-                    <div className="input-group col-12 col-md-6 float-right mt-3 input-group-single-line">
+                    <div className="input-group col-12 col-md-6 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3 input-group-single-line-all">
                         <div className="input-group-prepend">
                             <span className="input-group-text">اولویت</span>
                         </div>
@@ -139,7 +138,7 @@ export default class ShowTask extends Component {
                             <option value="4" icon_name="fas fa-hourglass">غیر ضروری و غیر مهم</option>
                         </select>                    
                     </div>
-                    <div className="input-group col-12 col-md-6 float-right mt-3 input-group-single-line">
+                    <div className="input-group col-12 col-md-6 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3 input-group-single-line">
                         <div className="input-group-prepend">
                             <span className="input-group-text">انجام دهندگان</span>
                         </div>
@@ -153,13 +152,13 @@ export default class ShowTask extends Component {
                             }) }
                         </select>
                     </div>
-                    <div className="input-group col-12 col-md-6 float-right mt-3">
+                    <div className="input-group col-12 col-md-6 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3">
                         <div className="input-group-prepend">
                             <span className="input-group-text">موعد تحویل</span>
                         </div>
                         {<input defaultValue={moment(task.due_to).format("jYYYY/jMM/jDD HH:mm")} />}
                     </div>
-                    <div className="input-group col-12 col-md-6 float-right mt-3">
+                    <div className="input-group col-12 col-md-6 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3">
                         <div className="input-group-prepend">
                             <span className="input-group-text">وضعیت اتمام</span>
                         </div>
@@ -169,7 +168,7 @@ export default class ShowTask extends Component {
                             <input className="c-p" type="checkbox" onChange={this.toggle_finished_check.bind(this)} defaultChecked={task.finished_at !== null ? true : false} />
                         </div>
                     </div>
-                    <div className="input-group col-12 float-right mt-3 mb-3">
+                    <div className="input-group col-12 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3 mb-3">
                         <div className="w-100">
                             <TinymcEditor initialValue={task.description} changeContent={this.handleDescriptionChange} />
                         </div>
@@ -283,7 +282,7 @@ export default class ShowTask extends Component {
                         <div className="mt-3 col-12 col-md-5">
                             <div className="task-title-section title-section float-right">
                                 <i className="fas fa-users"></i>
-                                <span>انجام دهندگان:</span>
+                                <span>دست اندرکاران:</span>
                             </div>
                             <div className="employees-container task-detail next-line">
                                 {
@@ -291,7 +290,7 @@ export default class ShowTask extends Component {
                                         <div key={i} className="user-dropdown-item border-sharp animated flipInX permanent-visible">
                                             <div className="user-right-flex">
                                                 <div className="user-img-container ml-md-2 ml-1">
-                                                    <img src={APP_PATH + user.avatar_pic} />
+                                                    <img src={APP_PATH + (user.avatar_pic !== null ? user.avatar_pic : "/images/male-avatar")} />
                                                 </div>
                                                 <div className="user-info ml-md-2 ml-1">
                                                     <p>{user.fullname}</p>
@@ -328,9 +327,7 @@ export default class ShowTask extends Component {
                                 <i className="fas fa-comment-dots"></i>
                                 <span>توضیحات تکمیلی:</span>
                             </div>
-                            <div className="task-detail next-line">
-                                { task.description }
-                            </div>
+                            <div className="task-detail next-line" dangerouslySetInnerHTML={{__html: task.description}}></div>
                         </div>
                     </div>
                     <div className="text-center mt-4"><button className="btn btn-outline-info" onClick={this.changeMode.bind(this, "edit")}>ویرایش <i className="fas fa-pen-alt"></i></button></div>
@@ -344,7 +341,7 @@ export default class ShowTask extends Component {
         if (task && workspace) {
             return (
                 <div>
-                    <div className="col-12 float-right task-info-container">
+                    <div className="col-12 float-right task-info-container pl-0 pr-0 pr-md-3 pl-md-3">
                         <div className="breadcrumb col-12 float-right animated flipInX">
                             <a className="float-right hoverable">
                                 <img src={APP_PATH + workspace.avatar_pic} alt=""/>
