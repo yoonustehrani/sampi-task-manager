@@ -37,11 +37,8 @@ Route::group(['prefix' => 'task-manager', 'as' => 'api.task-manager.'], function
         Route::apiResource('workspaces/{workspace}/demands', $api_controllers . 'DemandController');
         Route::get('tasks', $api_controllers . 'TaskController@mixed')->name('tasks.mixed');
         Route::get('demands', $api_controllers . 'DemandController@mixed')->name('demands.mixed');
-<<<<<<< HEAD
         Route::get('demands/messages', $api_controllers . 'DemandController@messages')->name('demands.messages.index');
         Route::post('demands/messages', $api_controllers . 'DemandController@new_message')->name('demands.messages.store');
-=======
->>>>>>> design
         Route::get('tasks/search', $api_controllers . 'TaskController@search')->name('tasks.search');
         Route::put('tasks/{task}/toggle_state', $api_controllers . 'TaskController@toggle')->name('tasks.toggle_state');
         Route::group(['prefix' => 'count', 'as' => 'counter.'], function() use($api_controllers) {
