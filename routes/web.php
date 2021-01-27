@@ -32,7 +32,7 @@ Route::get('/chart', function() {
     $user = User::first();
     $dt_from = Carbon::createFromFormat('Y-m-d', '2020-12-21')->setTime(0,0);
     $dt_to = Carbon::createFromFormat('Y-m-d', '2021-01-20')->setTime(0,0);
-    $task_days = $user->tasks()
+    $craeted_tasks = $user->tasks()
         ->where('created_at', '<', $dt_to)
         ->where('created_at', '>=', $dt_from)
         ->groupBy('date')
@@ -40,6 +40,32 @@ Route::get('/chart', function() {
         ->get([
             \DB::raw("COUNT(*) tasks, DATE_FORMAT(created_at, '%Y-%m-%e') date")
         ]);
+    $finished_tasks = $user->tasks()
+    ->where('finished_at', '<', $dt_to)
+    ->where('finished_at', '>=', $dt_from)
+    ->whereNotNull('finished_at')
+    ->groupBy('date')
+    ->orderBy('date', 'asc')
+    ->get([
+        \DB::raw("COUNT(*) tasks, DATE_FORMAT(finished_at, '%Y-%m-%e') date")
+    ]);
+    $total_count = 0;
+    $finished_count = 0;
+    $target_task_days = collect([]);
+    foreach ($craeted_tasks as $task_day) {
+        $total_count += $task_day->tasks;
+        $task_day->total = $total_count;
+        foreach ($finished_tasks as $finished) {
+            if ($finished->date->diffInSeconds($task_day->date) == 0) {
+                $finished_count += $finished->tasks;
+                break;
+            }
+        }
+        $task_day->finished = $finished_count;
+        $task_day->percentage = round($finished_count / $total_count, 2) * 100;
+        $target_task_days->push($task_day);
+    }
+    $task_days = $target_task_days;
     return view('chart', compact('task_days'));
 });
 

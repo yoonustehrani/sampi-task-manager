@@ -19,18 +19,18 @@
         let data = [
             @foreach($task_days as $task_day)
             {
-                y: {{ $task_day->tasks }},
+                y: {{ $task_day->percentage }},
                 t: moment("{{ $task_day->date->format('Y-m-d') }}").format("jYYYY-jMM-jDD")
             },
             @endforeach
         ];
-        var startDate = moment('2020-12-21').format('jYYYY-jMM-jDD');
-        var endDate = moment('2021-01-20').format('jYYYY-jMM-jDD');
+        // var startDate = moment('2020-12-21').format('jYYYY-jMM-jDD');
+        // var endDate = moment('2021-01-20').format('jYYYY-jMM-jDD');
         var myLineChart = new Chart(ctx, {
             type: 'line',
             data: {
                 {{-- // labels: {!! $month_name->__toString() !!}, --}}
-                labels: [startDate, endDate],
+                // labels: [startDate, endDate],
                 datasets: [
                     {
                         label: 'وظایف',
@@ -60,7 +60,7 @@
                     xAxes: [
                         {
                             ticks: {
-                                source: 'labels',
+                                source: 'auto',
                                 fontFamily: 'Iransans'
                             },
                             distribution: 'series',
@@ -80,7 +80,9 @@
                         stacked: false,
                         ticks: {
                             beginAtZero: true,
-                            fontFamily: 'Iransans'
+                            fontFamily: 'Iransans',
+                            suggestedMin: 0,
+                            suggestedMax: 100,
                         }
                     }]
                 },
