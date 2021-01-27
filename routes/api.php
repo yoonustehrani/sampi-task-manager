@@ -13,11 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
-
 Route::group(['prefix' => 'task-manager', 'as' => 'api.task-manager.'], function () {
+    Route::get('priorities', function() {
+        return \App\Priority::all();
+    })->name('priorities.index');
     Route::get('permissions/all', function () {
         return \App\Permission::all();
     })->name('permissions.index');
@@ -30,12 +29,23 @@ Route::group(['prefix' => 'task-manager', 'as' => 'api.task-manager.'], function
     Route::get('roles/{role}/permissions', function ($role) {
         return \App\Role::findOrFail($role)->permissions()->get();
     })->name('role.permissions');
-    // Route::get('workspaces/{workspace}/tasks', 'TaskManagerController@tasks');
     Route::group(['middleware' => ['auth:api']], function () {
         $api_controllers = '\\App\\Http\\Controllers\\Api\\';
         Route::apiResource('workspaces', $api_controllers . 'WorkspaceController');
+        Route::get('workspaces/{workspace}/task_groups', $api_controllers . 'WorkspaceController@groups')->name('workspaces.groups');
         Route::apiResource('workspaces/{workspace}/tasks', $api_controllers . 'TaskController');
+        Route::apiResource('workspaces/{workspace}/demands', $api_controllers . 'DemandController');
         Route::get('tasks', $api_controllers . 'TaskController@mixed')->name('tasks.mixed');
+        Route::get('demands', $api_controllers . 'DemandController@mixed')->name('demands.mixed');
+        Route::get('demands/messages', $api_controllers . 'DemandController@messages')->name('demands.messages.index');
+        Route::post('demands/messages', $api_controllers . 'DemandController@new_message')->name('demands.messages.store');
+        Route::get('tasks/search', $api_controllers . 'TaskController@search')->name('tasks.search');
+        Route::put('tasks/{task}/toggle_state', $api_controllers . 'TaskController@toggle')->name('tasks.toggle_state');
+        Route::group(['prefix' => 'count', 'as' => 'counter.'], function() use($api_controllers) {
+            Route::get('workspaces', $api_controllers . 'CounterController@workspaces')->name('workspaces');
+            Route::get('tasks', $api_controllers . 'CounterController@tasks')->name('tasks');
+            Route::get('demands', $api_controllers . 'CounterController@demands')->name('demands');
+        });
     });
 });
 

@@ -14,7 +14,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        
+        return view('theme.pages.tasks.index');
     }
 
     /**
@@ -47,6 +47,7 @@ class TaskController extends Controller
     public function show($task)
     {
         $task = Task::with('demands', 'users', 'workspace')->findOrFail($task);
+        $this->authorize('view', $task);
         return view('theme.pages.tasks.show', compact('task'));
     }
 

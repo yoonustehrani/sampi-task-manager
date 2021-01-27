@@ -1,4 +1,15 @@
 const mix = require('laravel-mix');
+const src = {
+    res: {
+        js: 'resources/js/',
+        sass: 'resources/sass/',
+        react: 'resources/js/react/'
+    },
+    pub: {
+        js: 'public/js/',
+        css: 'public/css/'
+    }
+}
 
 /*
  |--------------------------------------------------------------------------
@@ -10,7 +21,21 @@ const mix = require('laravel-mix');
  | file for the application as well as bundling up all the JS files.
  |
  */
+
+
 mix.disableNotifications();
-mix.react('resources/js/app.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css')
-    // .sass('resources/sass/auth.scss', 'public/css')
+
+var { res, pub } = src
+
+// mix.sass(res.sass + 'app.scss', pub.css)
+    // .js(res.js + 'tinymce/tinymce.js', pub.js + 'tinymce')
+    // .sass(res.sass + 'tinytheme.scss', pub.css)
+    // .sass(res.sass + 'auth.scss', pub.css)
+    // .react(res.react + 'dashboard.js', pub.js)
+    mix.react(res.js + "app.js", pub.js)
+    .sass(res.sass + 'app.scss', pub.css)
+    .js(res.js + "datepicker.js", pub.js)
+    // .react(res.react + 'workspace.js', pub.js)
+    // .react(res.react + "task.js", pub.js)
+    // .js(res.js + "select2.js", pub.js)
+    // .js(res.js + 'tinymce/langs/fa.js', pub.js + 'tinymce/langs')`

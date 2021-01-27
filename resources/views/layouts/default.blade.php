@@ -8,7 +8,11 @@
 </head>
 <body>
     @yield('content')
+    <script>
+        var APP_PATH = "{{ asset('/') }}";
+    </script>
     <script src="{{ asset('js/app.js') }}"></script>
+    @include('partials.error')
     @stack('scripts')
 </body>
 </html>

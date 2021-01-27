@@ -10,6 +10,13 @@ class PermissionPolicy
 {
     use HandlesAuthorization;
 
+    public function before($user, $ability)
+    {
+        if ($user->hasRole('developer')) {
+            return true;
+        }
+    }
+
     /**
      * Determine whether the user can view any models.
      *
@@ -18,7 +25,7 @@ class PermissionPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return $user->hasPermission('can_view_any_permissions');
     }
 
     /**
