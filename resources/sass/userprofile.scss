@@ -24,19 +24,23 @@ div.user-card {
         }
     }
     div.user-work-section {
-        div.user-works-results {
-            display: none;
+        div.scrollable-items {
             overflow-x: hidden;
             overflow-y: auto;
             max-height: 480px;
+            box-shadow: 0px 2px 5px 2px rgb(156 156 156 / 10%);
+        }
+        div.user-works-results {
+            display: none;
             div.workspace-item {
                 float: right;
                 // margin-bottom: 20px;
                 cursor: pointer;
                 transition: 0.5s;
                 padding: 10px;
-                border-radius: ۴px;
+                border-radius: 4px;
                 div.workspace-img-container {
+                    float: right !important;
                     img {
                         width: 40px;
                         height: 40px;
@@ -51,10 +55,71 @@ div.user-card {
                     color: #757F9A;
                     text-align: right;
                 }
+                div.workspace-item-text-info {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: flex-end;
+                }
             }
             div.workspace-item:hover {
                 background-color: #E2E2E2;
             }  
+            div.user-tasks-container {
+                // border: 1px solid #757F9A;
+                div.user-work-item {
+                    display: flex;
+                    flex-direction: row-reverse;
+                    justify-content: space-between;
+                    align-items: center;
+                    flex-wrap: nowrap;
+                    cursor: pointer;
+                    transition: 0.5s;
+                    padding: 10px;
+                    border-radius: 4px;
+                }  
+                div.task-item {
+                    h6 {
+                        color: #000000;
+                    }
+                    span {
+                        color: #757F9A;
+                    }
+                }
+                div.task-item:hover {
+                    background-color: #E9E4F0;
+                }
+                div.demand-item {
+                    display: flex;
+                    flex-direction: row-reverse;
+                    justify-content: space-between;
+                    align-items: center;
+                    cursor: pointer;
+                    transition: 0.5s;
+                    padding: 10px;
+                    border-radius: 4px;
+                    > i {
+                        color: #2C5364;
+                        font-size: 26px;
+                    }
+                    div.demand-sender {
+                        display: flex;
+                        align-items: flex-end;
+                        flex-direction: row-reverse;
+                    }
+                    img {
+                        width: 35px;
+                        height: 35px;
+                        border-radius: 50px;
+                    }
+                }
+                div.demand-item:hover {
+                    background-color: #D7DDE8;
+                }
+                div.hover-bg:hover {
+                    background-color: #f2fcfe !important;
+                }
+            }
         } 
     }
 }
@@ -71,4 +136,12 @@ div.statistics-section {
     div.wide-section-statistics {
         border: 1px solid #2C5364;
     }
+}
+
+div.select-option-big {
+    i {
+        margin-left: 8px !important;
+        font-size: 18px !important;
+    }
+    font-size: 16px !important;
 }

@@ -9226,16 +9226,19 @@ div.dashboard-tab-container {
   color: #ec2F4B;
 }
 
-div.result-container {
+div.result-container,
+div.user-works-results {
   display: none;
 }
 
-div.result-container img.workspace-img {
+div.result-container img.workspace-img,
+div.user-works-results img.workspace-img {
   width: 30px;
   height: 30px;
 }
 
-div.result-container div.filter-box {
+div.result-container div.filter-box,
+div.user-works-results div.filter-box {
   float: right;
   background-color: #E0EAFC;
   box-shadow: 3px 3px 7px 0 #bdc3c7;
@@ -9249,7 +9252,8 @@ div.result-container div.filter-box {
   direction: rtl;
 }
 
-div.result-container div.filter-box div.filter-option {
+div.result-container div.filter-box div.filter-option,
+div.user-works-results div.filter-box div.filter-option {
   direction: rtl;
   text-align: right;
   font-family: "Iransans";
@@ -9262,14 +9266,16 @@ div.result-container div.filter-box div.filter-option {
   align-items: center;
 }
 
-div.result-container div.filter-box div.filter-option > span {
+div.result-container div.filter-box div.filter-option > span,
+div.user-works-results div.filter-box div.filter-option > span {
   text-align: center;
   margin-left: 6px;
   font-size: 15px;
   width: 100%;
 }
 
-div.result-container div.filter-box div.filter-option select option {
+div.result-container div.filter-box div.filter-option select option,
+div.user-works-results div.filter-box div.filter-option select option {
   text-align: right;
   font-family: "Iransans";
 }
@@ -9474,11 +9480,15 @@ div.user-card div.user-info-section div.user-text-info-container h6 {
   color: #757F9A;
 }
 
-div.user-card div.user-work-section div.user-works-results {
-  display: none;
+div.user-card div.user-work-section div.scrollable-items {
   overflow-x: hidden;
   overflow-y: auto;
   max-height: 480px;
+  box-shadow: 0px 2px 5px 2px rgba(156, 156, 156, 0.1);
+}
+
+div.user-card div.user-work-section div.user-works-results {
+  display: none;
 }
 
 div.user-card div.user-work-section div.user-works-results div.workspace-item {
@@ -9486,7 +9496,11 @@ div.user-card div.user-work-section div.user-works-results div.workspace-item {
   cursor: pointer;
   transition: 0.5s;
   padding: 10px;
-  border-radius: ۴px;
+  border-radius: 4px;
+}
+
+div.user-card div.user-work-section div.user-works-results div.workspace-item div.workspace-img-container {
+  float: right !important;
 }
 
 div.user-card div.user-work-section div.user-works-results div.workspace-item div.workspace-img-container img {
@@ -9505,8 +9519,75 @@ div.user-card div.user-work-section div.user-works-results div.workspace-item sp
   text-align: right;
 }
 
+div.user-card div.user-work-section div.user-works-results div.workspace-item div.workspace-item-text-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+}
+
 div.user-card div.user-work-section div.user-works-results div.workspace-item:hover {
   background-color: #E2E2E2;
+}
+
+div.user-card div.user-work-section div.user-works-results div.user-tasks-container div.user-work-item {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: nowrap;
+  cursor: pointer;
+  transition: 0.5s;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+div.user-card div.user-work-section div.user-works-results div.user-tasks-container div.task-item h6 {
+  color: #000000;
+}
+
+div.user-card div.user-work-section div.user-works-results div.user-tasks-container div.task-item span {
+  color: #757F9A;
+}
+
+div.user-card div.user-work-section div.user-works-results div.user-tasks-container div.task-item:hover {
+  background-color: #E9E4F0;
+}
+
+div.user-card div.user-work-section div.user-works-results div.user-tasks-container div.demand-item {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: 0.5s;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+div.user-card div.user-work-section div.user-works-results div.user-tasks-container div.demand-item > i {
+  color: #2C5364;
+  font-size: 26px;
+}
+
+div.user-card div.user-work-section div.user-works-results div.user-tasks-container div.demand-item div.demand-sender {
+  display: flex;
+  align-items: flex-end;
+  flex-direction: row-reverse;
+}
+
+div.user-card div.user-work-section div.user-works-results div.user-tasks-container div.demand-item img {
+  width: 35px;
+  height: 35px;
+  border-radius: 50px;
+}
+
+div.user-card div.user-work-section div.user-works-results div.user-tasks-container div.demand-item:hover {
+  background-color: #D7DDE8;
+}
+
+div.user-card div.user-work-section div.user-works-results div.user-tasks-container div.hover-bg:hover {
+  background-color: #f2fcfe !important;
 }
 
 div.statistics-section {
@@ -9523,6 +9604,15 @@ div.statistics-section > div {
 
 div.statistics-section div.wide-section-statistics {
   border: 1px solid #2C5364;
+}
+
+div.select-option-big {
+  font-size: 16px !important;
+}
+
+div.select-option-big i {
+  margin-left: 8px !important;
+  font-size: 18px !important;
 }
 
 body,

@@ -73,5 +73,6 @@
 @endsection
 
 @push('scripts')
-    <script src="{{ asset("/js/user-profile.js") }}"></script>
+    <script src="{{ asset("js/user-profile.js") }}"></script>
+    <script src="{{ asset('js/select2.js') }}"></script>
 @endpush

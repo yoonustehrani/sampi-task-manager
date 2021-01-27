@@ -28791,6 +28791,22 @@ var UserProfile = /*#__PURE__*/function (_Component) {
       });
     });
 
+    _defineProperty(_assertThisInitialized(_this), "sortData", function (tab) {
+      var mixedTasksApi = _this.props.mixedTasksApi; // this.setState({
+      //     isGetting: true
+      // })
+      // if (tab === "tasks") {
+      //     let mixed_tasks_order_by = $('#mixed_tasks_order_by_select').val(), mixed_tasks_order = $('#mixed_tasks_order_select').val(), mixed_tasks_relation = $('#mixed_tasks_relation_select').val()
+      //     Axios.get(`${mixedTasksApi}&limit=15&order_by=${mixed_tasks_order_by}&order=${mixed_tasks_order}&relationship=${mixed_tasks_relation}`).then(res => {
+      //         let { data } = res
+      //         this.setState({
+      //             mixedTasks: data,
+      //             isGetting: false,
+      //         })
+      //     })
+      // }
+    });
+
     _this.tabResultsRef = [];
     _this.tabTitlesRef = [];
 
@@ -28813,11 +28829,9 @@ var UserProfile = /*#__PURE__*/function (_Component) {
     key: "render",
     value: function render() {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "float-right"
+        className: "user-info-section col-12 col-md-4 pl-0 pr-0 float-right"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "user-info-section col-12 col-md-4 float-right pl-0 pr-0"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "user-card pt-4"
+        className: "user-card pt-4 pb-2"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "user-info-section text-center"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -28832,7 +28846,7 @@ var UserProfile = /*#__PURE__*/function (_Component) {
       }, "\u062F\u0627\u0646\u06CC\u0627\u0644 \u0637\u0647\u0631\u0627\u0646\u06CC\u0645"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", {
         className: "float-right"
       }, "danialtehrani@"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", {
-        className: "float-right mr-1"
+        className: "mr-1"
       }, "\u0645\u062F\u06CC\u0631 \u0628\u062E\u0634 \u0645\u0627\u0644\u06CC")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "user-work-section"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
@@ -28862,150 +28876,251 @@ var UserProfile = /*#__PURE__*/function (_Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-clipboard-list d-block d-md-inline"
       }), "\u0646\u06CC\u0627\u0632 \u0647\u0627")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "user-works-results col-12 mt-4 active",
+        className: "user-works-results scrollable-items col-12 mt-4 active",
         ref: this.tabResultsRef[0]
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "workspace-item col-12"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "workspace-img-container float-right ml-1"
+        className: "workspace-img-container ml-1"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         src: APP_PATH + "images/elnovel-logo.png",
         alt: ""
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "float-right"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", {
-        className: "d-block"
-      }, "\u0627\u0644\u0646\u0627\u0648\u0644"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0645\u06A9\u0627\u0646\u06CC \u0628\u0631\u0627\u06CC \u0639\u0644\u0627\u0642\u0647 \u0645\u0646\u062F\u0627\u0646 \u0628\u0647 \u0647\u0646\u0631 \u0648 \u0641\u0631\u0647\u0646\u06AF \u0627\u06CC\u0631\u0627\u0646\u06CC"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "workspace-item col-12"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "workspace-img-container float-right ml-1"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        src: APP_PATH + "images/elnovel-logo.png",
-        alt: ""
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "float-right"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", {
-        className: "d-block"
-      }, "\u0627\u0644\u0646\u0627\u0648\u0644"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0645\u06A9\u0627\u0646\u06CC \u0628\u0631\u0627\u06CC \u0639\u0644\u0627\u0642\u0647 \u0645\u0646\u062F\u0627\u0646 \u0628\u0647 \u0647\u0646\u0631 \u0648 \u0641\u0631\u0647\u0646\u06AF \u0627\u06CC\u0631\u0627\u0646\u06CC"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "workspace-item col-12"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "workspace-img-container float-right ml-1"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        src: APP_PATH + "images/elnovel-logo.png",
-        alt: ""
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "float-right"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", {
-        className: "d-block"
-      }, "\u0627\u0644\u0646\u0627\u0648\u0644"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0645\u06A9\u0627\u0646\u06CC \u0628\u0631\u0627\u06CC \u0639\u0644\u0627\u0642\u0647 \u0645\u0646\u062F\u0627\u0646 \u0628\u0647 \u0647\u0646\u0631 \u0648 \u0641\u0631\u0647\u0646\u06AF \u0627\u06CC\u0631\u0627\u0646\u06CC"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "workspace-item col-12"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "workspace-img-container float-right ml-1"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        src: APP_PATH + "images/elnovel-logo.png",
-        alt: ""
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "float-right"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", {
-        className: "d-block"
-      }, "\u0627\u0644\u0646\u0627\u0648\u0644"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0645\u06A9\u0627\u0646\u06CC \u0628\u0631\u0627\u06CC \u0639\u0644\u0627\u0642\u0647 \u0645\u0646\u062F\u0627\u0646 \u0628\u0647 \u0647\u0646\u0631 \u0648 \u0641\u0631\u0647\u0646\u06AF \u0627\u06CC\u0631\u0627\u0646\u06CC"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "workspace-item col-12"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "workspace-img-container float-right ml-1"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        src: APP_PATH + "images/elnovel-logo.png",
-        alt: ""
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "float-right"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", {
-        className: "d-block"
-      }, "\u0627\u0644\u0646\u0627\u0648\u0644"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0645\u06A9\u0627\u0646\u06CC \u0628\u0631\u0627\u06CC \u0639\u0644\u0627\u0642\u0647 \u0645\u0646\u062F\u0627\u0646 \u0628\u0647 \u0647\u0646\u0631 \u0648 \u0641\u0631\u0647\u0646\u06AF \u0627\u06CC\u0631\u0627\u0646\u06CC"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "workspace-item col-12"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "workspace-img-container float-right ml-1"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        src: APP_PATH + "images/elnovel-logo.png",
-        alt: ""
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "float-right"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", {
-        className: "d-block"
-      }, "\u0627\u0644\u0646\u0627\u0648\u0644"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0645\u06A9\u0627\u0646\u06CC \u0628\u0631\u0627\u06CC \u0639\u0644\u0627\u0642\u0647 \u0645\u0646\u062F\u0627\u0646 \u0628\u0647 \u0647\u0646\u0631 \u0648 \u0641\u0631\u0647\u0646\u06AF \u0627\u06CC\u0631\u0627\u0646\u06CC"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "workspace-item col-12"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "workspace-img-container float-right ml-1"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        src: APP_PATH + "images/elnovel-logo.png",
-        alt: ""
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "float-right"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", {
-        className: "d-block"
-      }, "\u0627\u0644\u0646\u0627\u0648\u0644"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0645\u06A9\u0627\u0646\u06CC \u0628\u0631\u0627\u06CC \u0639\u0644\u0627\u0642\u0647 \u0645\u0646\u062F\u0627\u0646 \u0628\u0647 \u0647\u0646\u0631 \u0648 \u0641\u0631\u0647\u0646\u06AF \u0627\u06CC\u0631\u0627\u0646\u06CC"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "workspace-item col-12"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "workspace-img-container float-right ml-1"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        src: APP_PATH + "images/elnovel-logo.png",
-        alt: ""
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "float-right"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", {
-        className: "d-block"
-      }, "\u0627\u0644\u0646\u0627\u0648\u0644"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0645\u06A9\u0627\u0646\u06CC \u0628\u0631\u0627\u06CC \u0639\u0644\u0627\u0642\u0647 \u0645\u0646\u062F\u0627\u0646 \u0628\u0647 \u0647\u0646\u0631 \u0648 \u0641\u0631\u0647\u0646\u06AF \u0627\u06CC\u0631\u0627\u0646\u06CC"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "workspace-item col-12"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "workspace-img-container float-right ml-1"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        src: APP_PATH + "images/elnovel-logo.png",
-        alt: ""
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "float-right"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", {
-        className: "d-block"
-      }, "\u0627\u0644\u0646\u0627\u0648\u0644"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0645\u06A9\u0627\u0646\u06CC \u0628\u0631\u0627\u06CC \u0639\u0644\u0627\u0642\u0647 \u0645\u0646\u062F\u0627\u0646 \u0628\u0647 \u0647\u0646\u0631 \u0648 \u0641\u0631\u0647\u0646\u06AF \u0627\u06CC\u0631\u0627\u0646\u06CC"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "workspace-item col-12"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "workspace-img-container float-right ml-1"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        src: APP_PATH + "images/elnovel-logo.png",
-        alt: ""
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "float-right"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", {
-        className: "d-block"
-      }, "\u0627\u0644\u0646\u0627\u0648\u0644"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0645\u06A9\u0627\u0646\u06CC \u0628\u0631\u0627\u06CC \u0639\u0644\u0627\u0642\u0647 \u0645\u0646\u062F\u0627\u0646 \u0628\u0647 \u0647\u0646\u0631 \u0648 \u0641\u0631\u0647\u0646\u06AF \u0627\u06CC\u0631\u0627\u0646\u06CC"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "workspace-item col-12"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "workspace-img-container float-right ml-1"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        src: APP_PATH + "images/elnovel-logo.png",
-        alt: ""
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "float-right"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", {
-        className: "d-block"
-      }, "\u0627\u0644\u0646\u0627\u0648\u0644"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0645\u06A9\u0627\u0646\u06CC \u0628\u0631\u0627\u06CC \u0639\u0644\u0627\u0642\u0647 \u0645\u0646\u062F\u0627\u0646 \u0628\u0647 \u0647\u0646\u0631 \u0648 \u0641\u0631\u0647\u0646\u06AF \u0627\u06CC\u0631\u0627\u0646\u06CC"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "workspace-item col-12"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "workspace-img-container float-right ml-1"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        src: APP_PATH + "images/elnovel-logo.png",
-        alt: ""
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "float-right"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", {
-        className: "d-block"
-      }, "\u0627\u0644\u0646\u0627\u0648\u0644"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0645\u06A9\u0627\u0646\u06CC \u0628\u0631\u0627\u06CC \u0639\u0644\u0627\u0642\u0647 \u0645\u0646\u062F\u0627\u0646 \u0628\u0647 \u0647\u0646\u0631 \u0648 \u0641\u0631\u0647\u0646\u06AF \u0627\u06CC\u0631\u0627\u0646\u06CC")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "workspace-item-text-info"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, "\u0627\u0644\u0646\u0627\u0648\u0644"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0645\u06A9\u0627\u0646\u06CC \u0628\u0631\u0627\u06CC \u0639\u0644\u0627\u0642\u0647 \u0645\u0646\u062F\u0627\u0646 \u0628\u0647 \u0647\u0646\u0631 \u0648 \u0641\u0631\u0647\u0646\u06AF \u0627\u06CC\u0631\u0627\u0646\u06CC")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "user-works-results col-12 mt-4",
         ref: this.tabResultsRef[1]
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "filter-box mb-4 p-2 col-12 animated fadeIn"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "filter-option col-12 mb-3 text-center"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u062C\u0633\u062A\u062C\u0648 \u062F\u0631: "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+        id: "mixed_tasks_relation_select",
+        defaultValue: "all"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        container_class: "select-option-big",
+        value: "all",
+        icon_name: "fas fa-tasks"
+      }, "\u0647\u0645\u0647"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        container_class: "select-option-big",
+        value: "finished",
+        icon_name: "fas fa-check-square"
+      }, "\u0627\u0646\u062C\u0627\u0645 \u0634\u062F\u0647"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        container_class: "select-option-big",
+        value: "unfinished",
+        icon_name: "fas fa-times-circle"
+      }, "\u0627\u0646\u062C\u0627\u0645 \u0646\u0634\u062F\u0647"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        container_class: "select-option-big",
+        value: "expired",
+        icon_name: "fas fa-calendar-minus"
+      }, "\u0645\u0646\u0642\u0636\u06CC"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "filter-option col-12 mb-3 text-center"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0645\u0631\u062A\u0628 \u0633\u0627\u0632\u06CC \u0628\u0631 \u0627\u0633\u0627\u0633:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+        id: "mixed_tasks_order_by_select",
+        defaultValue: "due_to"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        container_class: "select-option-big",
+        value: "due_to",
+        icon_name: "fas fa-hourglass-start"
+      }, "\u062A\u0627\u0631\u06CC\u062E \u062A\u062D\u0648\u06CC\u0644"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        container_class: "select-option-big",
+        value: "created_at",
+        icon_name: "fas fa-calendar-plus"
+      }, "\u062A\u0627\u0631\u06CC\u062E \u0627\u06CC\u062C\u0627\u062F"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        container_class: "select-option-big",
+        value: "updated_at",
+        icon_name: "fas fa-user-edit"
+      }, "\u062A\u0627\u0631\u06CC\u062E \u062A\u063A\u06CC\u06CC\u0631\u0627\u062A"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        container_class: "select-option-big",
+        value: "finished_at",
+        icon_name: "fas fa-calendar-check"
+      }, "\u062A\u0627\u0631\u06CC\u062E \u0627\u062A\u0645\u0627\u0645"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "filter-option col-12 mb-3 text-center"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0646\u062D\u0648\u0647 \u0645\u0631\u062A\u0628 \u0633\u0627\u0632\u06CC:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+        id: "mixed_tasks_order_select",
+        defaultValue: "desc"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        container_class: "select-option-big",
+        value: "asc",
+        icon_name: "fas fa-sort-amount-up"
+      }, "\u0635\u0639\u0648\u062F\u06CC"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        container_class: "select-option-big",
+        value: "desc",
+        icon_name: "fas fa-sort-amount-down"
+      }, "\u0646\u0632\u0648\u0644\u06CC"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "text-center"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "btn btn-outline-info",
+        onClick: this.sortData.bind(this, 'tasks')
+      }, "\u0645\u0631\u062A\u0628 \u0633\u0627\u0632\u06CC"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "scrollable-items user-tasks-container col-12 mt-4"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "task-item user-work-item"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, "\u0637\u0631\u0627\u062D\u06CC \u0635\u0641\u062D\u0647 \u062A\u0633\u06A9 (\u0628\u0631\u0646\u0627\u0645\u0647 \u0646\u0648\u06CC\u0633\u06CC)"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0633\u0647 \u0631\u0648\u0632 \u067E\u06CC\u0634 ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-check"
+      }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "user-works-results col-12 mt-4",
         ref: this.tabResultsRef[2]
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "filter-box mb-4 p-2 col-12 animated fadeIn"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "filter-option col-12 mb-3 text-center"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u062C\u0633\u062A\u062C\u0648 \u062F\u0631: "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+        id: "mixed_demands_relation_select",
+        defaultValue: "all"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        container_class: "select-option-big",
+        value: "all",
+        icon_name: "fas fa-tasks"
+      }, "\u0647\u0645\u0647"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        container_class: "select-option-big",
+        value: "finished",
+        icon_name: "fas fa-check-square"
+      }, "\u0627\u0646\u062C\u0627\u0645 \u0634\u062F\u0647"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        container_class: "select-option-big",
+        value: "unfinished",
+        icon_name: "fas fa-times-circle"
+      }, "\u0627\u0646\u062C\u0627\u0645 \u0646\u0634\u062F\u0647"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        container_class: "select-option-big",
+        value: "expired",
+        icon_name: "fas fa-calendar-minus"
+      }, "\u0645\u0646\u0642\u0636\u06CC"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "filter-option col-12 mb-3 text-center"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0645\u0631\u062A\u0628 \u0633\u0627\u0632\u06CC \u0628\u0631 \u0627\u0633\u0627\u0633:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+        id: "mixed_demands_order_by_select",
+        defaultValue: "due_to"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        container_class: "select-option-big",
+        value: "due_to",
+        icon_name: "fas fa-hourglass-start"
+      }, "\u062A\u0627\u0631\u06CC\u062E \u062A\u062D\u0648\u06CC\u0644"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        container_class: "select-option-big",
+        value: "created_at",
+        icon_name: "fas fa-calendar-plus"
+      }, "\u062A\u0627\u0631\u06CC\u062E \u0627\u06CC\u062C\u0627\u062F"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        container_class: "select-option-big",
+        value: "updated_at",
+        icon_name: "fas fa-user-edit"
+      }, "\u062A\u0627\u0631\u06CC\u062E \u062A\u063A\u06CC\u06CC\u0631\u0627\u062A"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        container_class: "select-option-big",
+        value: "finished_at",
+        icon_name: "fas fa-calendar-check"
+      }, "\u062A\u0627\u0631\u06CC\u062E \u0627\u062A\u0645\u0627\u0645"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "filter-option col-12 mb-3 text-center"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0646\u062D\u0648\u0647 \u0645\u0631\u062A\u0628 \u0633\u0627\u0632\u06CC:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+        id: "mixed_demands_order_select",
+        defaultValue: "desc"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        container_class: "select-option-big",
+        value: "asc",
+        icon_name: "fas fa-sort-amount-up"
+      }, "\u0635\u0639\u0648\u062F\u06CC"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        container_class: "select-option-big",
+        value: "desc",
+        icon_name: "fas fa-sort-amount-down"
+      }, "\u0646\u0632\u0648\u0644\u06CC"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "text-center"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "btn btn-outline-info",
+        onClick: this.sortData.bind(this, 'tasks')
+      }, "\u0645\u0631\u062A\u0628 \u0633\u0627\u0632\u06CC"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "scrollable-items user-tasks-container col-12 mt-4"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "demand-item"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "demand-sender"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        src: APP_PATH + "images/male-avatar.svg",
+        alt: ""
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, "\u0637\u0631\u0627\u062D\u06CC \u0627\u06CC \u067E\u06CC \u0627\u06CC \u0628\u0631\u0627\u06CC \u062A\u0633\u06A9 \u0647\u0627")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-long-arrow-alt-left"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        src: APP_PATH + "images/male-avatar.svg",
+        alt: ""
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-check"
+      }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "user-works-results col-12 mt-4",
         ref: this.tabResultsRef[3]
-      })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "filter-box mb-4 p-2 col-12 animated fadeIn"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "filter-option col-12 mb-3 text-center"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u062C\u0633\u062A\u062C\u0648 \u062F\u0631: "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+        id: "mixed_needs_relation_select",
+        defaultValue: "all"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        container_class: "select-option-big",
+        value: "all",
+        icon_name: "fas fa-tasks"
+      }, "\u0647\u0645\u0647"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        container_class: "select-option-big",
+        value: "finished",
+        icon_name: "fas fa-check-square"
+      }, "\u0627\u0646\u062C\u0627\u0645 \u0634\u062F\u0647"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        container_class: "select-option-big",
+        value: "unfinished",
+        icon_name: "fas fa-times-circle"
+      }, "\u0627\u0646\u062C\u0627\u0645 \u0646\u0634\u062F\u0647"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        container_class: "select-option-big",
+        value: "expired",
+        icon_name: "fas fa-calendar-minus"
+      }, "\u0645\u0646\u0642\u0636\u06CC"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "filter-option col-12 mb-3 text-center"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0645\u0631\u062A\u0628 \u0633\u0627\u0632\u06CC \u0628\u0631 \u0627\u0633\u0627\u0633:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+        id: "mixed_needs_order_by_select",
+        defaultValue: "due_to"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        container_class: "select-option-big",
+        value: "due_to",
+        icon_name: "fas fa-hourglass-start"
+      }, "\u062A\u0627\u0631\u06CC\u062E \u062A\u062D\u0648\u06CC\u0644"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        container_class: "select-option-big",
+        value: "created_at",
+        icon_name: "fas fa-calendar-plus"
+      }, "\u062A\u0627\u0631\u06CC\u062E \u0627\u06CC\u062C\u0627\u062F"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        container_class: "select-option-big",
+        value: "updated_at",
+        icon_name: "fas fa-user-edit"
+      }, "\u062A\u0627\u0631\u06CC\u062E \u062A\u063A\u06CC\u06CC\u0631\u0627\u062A"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        container_class: "select-option-big",
+        value: "finished_at",
+        icon_name: "fas fa-calendar-check"
+      }, "\u062A\u0627\u0631\u06CC\u062E \u0627\u062A\u0645\u0627\u0645"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "filter-option col-12 mb-3 text-center"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0646\u062D\u0648\u0647 \u0645\u0631\u062A\u0628 \u0633\u0627\u0632\u06CC:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+        id: "mixed_needs_order_select",
+        defaultValue: "desc"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        container_class: "select-option-big",
+        value: "asc",
+        icon_name: "fas fa-sort-amount-up"
+      }, "\u0635\u0639\u0648\u062F\u06CC"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        container_class: "select-option-big",
+        value: "desc",
+        icon_name: "fas fa-sort-amount-down"
+      }, "\u0646\u0632\u0648\u0644\u06CC"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "text-center"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "btn btn-outline-info",
+        onClick: this.sortData.bind(this, 'tasks')
+      }, "\u0645\u0631\u062A\u0628 \u0633\u0627\u0632\u06CC"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "scrollable-items user-tasks-container col-12 mt-4"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "demand-item hover-bg"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-times"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        src: APP_PATH + "images/male-avatar.svg",
+        alt: ""
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-long-arrow-alt-right"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "demand-sender"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, "\u0637\u0631\u0627\u062D\u06CC \u0627\u06CC \u067E\u06CC \u0627\u06CC \u0628\u0631\u0627\u06CC \u062A\u0633\u06A9 \u0647\u0627"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        src: APP_PATH + "images/male-avatar.svg",
+        alt: ""
+      })))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "statistics-section col-12 col-md-8 float-right"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "wide-section-statistics col-12 mb-1"
@@ -29017,7 +29132,7 @@ var UserProfile = /*#__PURE__*/function (_Component) {
         className: "small-section-statictics col-12 col-md-6 mr-2 mb-1"
       }, "cahrt"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "small-section-statictics col-12 col-md-6 mb-1"
-      }, "cahrt"))));
+      }, "cahrt")));
     }
   }]);
 
