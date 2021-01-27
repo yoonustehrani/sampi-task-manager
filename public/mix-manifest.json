@@ -1,8 +1,10 @@
 {
     "/js/app.js": "/js/app.js",
     "/js/dashboard.js": "/js/dashboard.js",
-    "/js/select2.js": "/js/select2.js",
+    "/js/datepicker.js": "/js/datepicker.js",
     "/css/app.css": "/css/app.css",
+    "/js/demands.js": "/js/demands.js",
+    "/js/select2.js": "/js/select2.js",
     "/js/task.js": "/js/task.js",
     "/js/user-profile.js": "/js/user-profile.js",
     "/js/workspace.js": "/js/workspace.js"

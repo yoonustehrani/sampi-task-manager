@@ -5,5 +5,12 @@
 @endsection
 
 @section('page-content')
-    @component('theme.tools.title', ['title' => 'درخواست ها']) @endcomponent
+    <div 
+        id="demands-react"
+    >
+    </div>
 @endsection
+
+@push('scripts')
+    <script src="{{ asset('js/demands.js') }}"></script>
+@endpush

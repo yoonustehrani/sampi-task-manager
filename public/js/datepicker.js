@@ -95,7 +95,7 @@
 
 /*!
  * 
- * persian-date -  1.1.0
+ * persian-date -  1.1.0-rc2
  * Reza Babakhani <babakhani.reza@gmail.com>
  * http://babakhani.github.io/PersianWebToolkit/docs/persian-date/
  * Under MIT license 
@@ -355,7 +355,7 @@ var PersianDateClass = function () {
         this.leapYearMode = PersianDateClass.leapYearMode;
 
         this.algorithms = new Algorithms(this);
-        this.version = "1.1.0";
+        this.version = "1.1.0-rc2";
         this._utcMode = false;
         if (this.localType !== 'fa') {
             this.formatPersian = false;
@@ -7917,8 +7917,8 @@ $('#example').persianDatepicker({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! W:\php\sampies\resources\js\datepicker.js */"./resources/js/datepicker.js");
-module.exports = __webpack_require__(/*! W:\php\sampies\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! I:\projects\task-manager\resources\js\datepicker.js */"./resources/js/datepicker.js");
+module.exports = __webpack_require__(/*! I:\projects\task-manager\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

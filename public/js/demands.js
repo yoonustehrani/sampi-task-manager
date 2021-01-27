@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 6);
+/******/ 	return __webpack_require__(__webpack_require__.s = 7);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -28601,16 +28601,16 @@ if (false) {} else {
 
 /***/ }),
 
-/***/ "./resources/js/react/components/user-profile/index.jsx":
-/*!**************************************************************!*\
-  !*** ./resources/js/react/components/user-profile/index.jsx ***!
-  \**************************************************************/
+/***/ "./resources/js/react/components/demands/index.jsx":
+/*!*********************************************************!*\
+  !*** ./resources/js/react/components/demands/index.jsx ***!
+  \*********************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return UserProfile; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Demands; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 function _typeof(obj) {
@@ -28730,423 +28730,121 @@ function _getPrototypeOf(o) {
   return _getPrototypeOf(o);
 }
 
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
+
+
+var Demands = /*#__PURE__*/function (_Component) {
+  _inherits(Demands, _Component);
+
+  var _super = _createSuper(Demands);
+
+  function Demands() {
+    _classCallCheck(this, Demands);
+
+    return _super.apply(this, arguments);
   }
 
-  return obj;
-}
-
-
-
-var UserProfile = /*#__PURE__*/function (_Component) {
-  _inherits(UserProfile, _Component);
-
-  var _super = _createSuper(UserProfile);
-
-  function UserProfile(props) {
-    var _this;
-
-    _classCallCheck(this, UserProfile);
-
-    _this = _super.call(this, props);
-
-    _defineProperty(_assertThisInitialized(_this), "changeTab", function (tab_index) {
-      var mixedTasksApi = _this.props.mixedTasksApi;
-      var mixedTasks = _this.state.mixedTasks; // if (tab_index === 1 && mixedTasks.length === 0) {
-      //     this.setState({
-      //         isGetting: true
-      //     })
-      //     Axios.get(`${mixedTasksApi}&limit=15&order_by=due_to&order=desc`).then(res => {
-      //         let { data } = res
-      //         this.setState({
-      //             mixedTasks: data,
-      //             isGetting: false
-      //         })
-      //     })
-      // }
-
-      _this.tabResultsRef.map(function (tabResultRef, i) {
-        if (tab_index === i) {
-          tabResultRef.current.classList.add("active");
-        } else {
-          tabResultRef.current.classList.remove("active");
-        }
-      });
-
-      _this.tabTitlesRef.map(function (tabTitleRef, i) {
-        if (tab_index === i) {
-          tabTitleRef.current.classList.add("active");
-        } else {
-          tabTitleRef.current.classList.remove("active");
-        }
-      });
-    });
-
-    _defineProperty(_assertThisInitialized(_this), "sortData", function (tab) {
-      var mixedTasksApi = _this.props.mixedTasksApi; // this.setState({
-      //     isGetting: true
-      // })
-      // if (tab === "tasks") {
-      //     let mixed_tasks_order_by = $('#mixed_tasks_order_by_select').val(), mixed_tasks_order = $('#mixed_tasks_order_select').val(), mixed_tasks_relation = $('#mixed_tasks_relation_select').val()
-      //     Axios.get(`${mixedTasksApi}&limit=15&order_by=${mixed_tasks_order_by}&order=${mixed_tasks_order}&relationship=${mixed_tasks_relation}`).then(res => {
-      //         let { data } = res
-      //         this.setState({
-      //             mixedTasks: data,
-      //             isGetting: false,
-      //         })
-      //     })
-      // }
-    });
-
-    _this.tabResultsRef = [];
-    _this.tabTitlesRef = [];
-
-    for (var i = 0; i < 4; i++) {
-      _this.tabResultsRef.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef());
-
-      _this.tabTitlesRef.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef());
-    }
-
-    _this.state = {
-      mixedTasks: [],
-      statistics: {},
-      isGetting: true,
-      workspaces: []
-    };
-    return _this;
-  }
-
-  _createClass(UserProfile, [{
+  _createClass(Demands, [{
     key: "render",
     value: function render() {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "user-info-section col-12 col-md-4 pl-0 pr-0 float-right"
+        className: "col-12 mt-4 float-right"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "user-card pt-4 pb-2"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "user-info-section text-center"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "user-img-container"
+        className: "title-section"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-arrow-left"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, "\u062E\u0648\u0627\u0633\u062A\u0647 \u0647\u0627")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
+        className: "col-12 table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right animated rubberBand"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", {
+        className: "thead-dark"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+        scope: "col"
+      }, "#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+        scope: "col"
+      }, "\u0639\u0646\u0648\u0627\u0646"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+        scope: "col"
+      }, "\u067E\u0631\u0648\u0698\u0647"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+        scope: "col"
+      }, "\u062F\u0631\u062E\u0648\u0627\u0633\u062A \u06A9\u0646\u0646\u062F\u0647"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+        scope: "col"
+      }, "\u062A\u0633\u06A9 \u0645\u0631\u0628\u0648\u0637\u0647"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+        scope: "col"
+      }, "\u0627\u0648\u0644\u0648\u06CC\u062A"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+        scope: "col"
+      }, "\u0645\u0648\u0639\u062F \u062A\u062D\u0648\u06CC\u0644"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+        scope: "col"
+      }, "\u0648\u0636\u0639\u06CC\u062A \u0627\u062A\u0645\u0627\u0645"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+        scope: "col"
+      }, "\u062A\u0627\u0631\u06CC\u062E \u0627\u062A\u0645\u0627\u0645"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
+        className: "animated fadeIn"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+        scope: "row"
+      }, "\u06F1"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "\u0627\u0631\u0633\u0627\u0644 \u0641\u0631\u0645\u062A \u067E\u06CC \u0627\u0646 \u062C\u06CC \u0644\u0648\u06AF\u0648"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+        className: "text-right"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        src: APP_PATH + "images/danial.jpg",
-        alt: ""
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "user-text-info-container"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
-        className: "d-block mt-3"
-      }, "\u062F\u0627\u0646\u06CC\u0627\u0644 \u0637\u0647\u0631\u0627\u0646\u06CC\u0645"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", {
-        className: "float-right"
-      }, "danialtehrani@"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", {
-        className: "mr-1 float-right"
-      }, "\u0645\u062F\u06CC\u0631 \u0628\u062E\u0634 \u0645\u0627\u0644\u06CC")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "user-work-section"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
-        className: "tab-title-bar text-center"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        className: "tab-link active",
-        ref: this.tabTitlesRef[0],
-        onClick: this.changeTab.bind(this, 0)
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-project-diagram d-block d-md-inline"
-      }), "\u067E\u0631\u0648\u0698\u0647 \u0647\u0627"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        className: "tab-link",
-        ref: this.tabTitlesRef[1],
-        onClick: this.changeTab.bind(this, 1)
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-tasks d-block d-md-inline"
-      }), "\u0648\u0638\u0627\u06CC\u0641"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        className: "tab-link",
-        ref: this.tabTitlesRef[2],
-        onClick: this.changeTab.bind(this, 2)
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-comment-dots d-block d-md-inline"
-      }), "\u062F\u0631\u062E\u0648\u0627\u0633\u062A \u0647\u0627"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        className: "tab-link",
-        ref: this.tabTitlesRef[3],
-        onClick: this.changeTab.bind(this, 3)
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-clipboard-list d-block d-md-inline"
-      }), "\u0646\u06CC\u0627\u0632 \u0647\u0627")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "user-works-results scrollable-items col-12 mt-4 active",
-        ref: this.tabResultsRef[0]
+        src: "workspace img link"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "workspace link"
+      }, "workspace title")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "\u0627\u0645\u06CC\u0631\u0631\u0636\u0627 \u0645\u0646\u0635\u0648\u0631\u06CC\u0627\u0646"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "\u0637\u0631\u0627\u062D\u06CC \u0635\u0641\u062D\u0647 \u0627\u0635\u0644\u06CC \u0627\u067E"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "\u0636\u0631\u0648\u0631\u06CC \u0648 \u0645\u0647\u0645"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "\u06F1\u06F2 \u0641\u0631\u0648\u0631\u062F\u06CC\u0646"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-check-circle fa-3x"
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-calendar-times fa-3x"
+      })))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-12 mt-4 float-right"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "workspace-item col-12"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "workspace-img-container ml-1"
+        className: "title-section"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-arrow-right"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, "\u0646\u06CC\u0627\u0632 \u0647\u0627")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
+        className: "col-12 table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right animated rubberBand"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", {
+        className: "thead-dark"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+        scope: "col"
+      }, "#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+        scope: "col"
+      }, "\u0639\u0646\u0648\u0627\u0646"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+        scope: "col"
+      }, "\u067E\u0631\u0648\u0698\u0647"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+        scope: "col"
+      }, "\u062F\u0631\u062E\u0648\u0627\u0633\u062A \u06A9\u0646\u0646\u062F\u0647"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+        scope: "col"
+      }, "\u062A\u0633\u06A9 \u0645\u0631\u0628\u0648\u0637\u0647"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+        scope: "col"
+      }, "\u0627\u0648\u0644\u0648\u06CC\u062A"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+        scope: "col"
+      }, "\u0645\u0648\u0639\u062F \u062A\u062D\u0648\u06CC\u0644"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+        scope: "col"
+      }, "\u0648\u0636\u0639\u06CC\u062A \u0627\u062A\u0645\u0627\u0645"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+        scope: "col"
+      }, "\u062A\u0627\u0631\u06CC\u062E \u0627\u062A\u0645\u0627\u0645"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
+        className: "animated fadeIn"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+        scope: "row"
+      }, "\u06F1"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "\u0627\u0631\u0633\u0627\u0644 \u0641\u0631\u0645\u062A \u067E\u06CC \u0627\u0646 \u062C\u06CC \u0644\u0648\u06AF\u0648"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+        className: "text-right"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        src: APP_PATH + "images/elnovel-logo.png",
-        alt: ""
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "workspace-item-text-info"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, "\u0627\u0644\u0646\u0627\u0648\u0644"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0645\u06A9\u0627\u0646\u06CC \u0628\u0631\u0627\u06CC \u0639\u0644\u0627\u0642\u0647 \u0645\u0646\u062F\u0627\u0646 \u0628\u0647 \u0647\u0646\u0631 \u0648 \u0641\u0631\u0647\u0646\u06AF \u0627\u06CC\u0631\u0627\u0646\u06CC")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "user-works-results col-12 mt-4",
-        ref: this.tabResultsRef[1]
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "filter-box task-bg-color mb-4 p-2 col-12 animated fadeIn"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "filter-option col-12 mb-3 text-center"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u062C\u0633\u062A\u062C\u0648 \u062F\u0631: "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
-        id: "mixed_tasks_relation_select",
-        defaultValue: "all"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        container_class: "select-option-big",
-        value: "all",
-        icon_name: "fas fa-tasks"
-      }, "\u0647\u0645\u0647"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        container_class: "select-option-big",
-        value: "finished",
-        icon_name: "fas fa-check-square"
-      }, "\u0627\u0646\u062C\u0627\u0645 \u0634\u062F\u0647"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        container_class: "select-option-big",
-        value: "unfinished",
-        icon_name: "fas fa-times-circle"
-      }, "\u0627\u0646\u062C\u0627\u0645 \u0646\u0634\u062F\u0647"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        container_class: "select-option-big",
-        value: "expired",
-        icon_name: "fas fa-calendar-minus"
-      }, "\u0645\u0646\u0642\u0636\u06CC"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "filter-option col-12 mb-3 text-center"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0645\u0631\u062A\u0628 \u0633\u0627\u0632\u06CC \u0628\u0631 \u0627\u0633\u0627\u0633:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
-        id: "mixed_tasks_order_by_select",
-        defaultValue: "due_to"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        container_class: "select-option-big",
-        value: "due_to",
-        icon_name: "fas fa-hourglass-start"
-      }, "\u062A\u0627\u0631\u06CC\u062E \u062A\u062D\u0648\u06CC\u0644"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        container_class: "select-option-big",
-        value: "created_at",
-        icon_name: "fas fa-calendar-plus"
-      }, "\u062A\u0627\u0631\u06CC\u062E \u0627\u06CC\u062C\u0627\u062F"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        container_class: "select-option-big",
-        value: "updated_at",
-        icon_name: "fas fa-user-edit"
-      }, "\u062A\u0627\u0631\u06CC\u062E \u062A\u063A\u06CC\u06CC\u0631\u0627\u062A"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        container_class: "select-option-big",
-        value: "finished_at",
-        icon_name: "fas fa-calendar-check"
-      }, "\u062A\u0627\u0631\u06CC\u062E \u0627\u062A\u0645\u0627\u0645"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "filter-option col-12 mb-3 text-center"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0646\u062D\u0648\u0647 \u0645\u0631\u062A\u0628 \u0633\u0627\u0632\u06CC:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
-        id: "mixed_tasks_order_select",
-        defaultValue: "desc"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        container_class: "select-option-big",
-        value: "asc",
-        icon_name: "fas fa-sort-amount-up"
-      }, "\u0635\u0639\u0648\u062F\u06CC"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        container_class: "select-option-big",
-        value: "desc",
-        icon_name: "fas fa-sort-amount-down"
-      }, "\u0646\u0632\u0648\u0644\u06CC"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "text-center"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "btn btn-outline-info",
-        onClick: this.sortData.bind(this, 'tasks')
-      }, "\u0645\u0631\u062A\u0628 \u0633\u0627\u0632\u06CC"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "scrollable-items user-tasks-container col-12 mt-4"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "task-item user-work-item"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, "\u0637\u0631\u0627\u062D\u06CC \u0635\u0641\u062D\u0647 \u062A\u0633\u06A9 (\u0628\u0631\u0646\u0627\u0645\u0647 \u0646\u0648\u06CC\u0633\u06CC)"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0633\u0647 \u0631\u0648\u0632 \u067E\u06CC\u0634 ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-check"
-      }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "user-works-results col-12 mt-4",
-        ref: this.tabResultsRef[2]
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "filter-box demand-bg-color mb-4 p-2 col-12 animated fadeIn"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "filter-option col-12 mb-3 text-center"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u062C\u0633\u062A\u062C\u0648 \u062F\u0631: "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
-        id: "mixed_demands_relation_select",
-        defaultValue: "all"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        container_class: "select-option-big",
-        value: "all",
-        icon_name: "fas fa-tasks"
-      }, "\u0647\u0645\u0647"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        container_class: "select-option-big",
-        value: "finished",
-        icon_name: "fas fa-check-square"
-      }, "\u0627\u0646\u062C\u0627\u0645 \u0634\u062F\u0647"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        container_class: "select-option-big",
-        value: "unfinished",
-        icon_name: "fas fa-times-circle"
-      }, "\u0627\u0646\u062C\u0627\u0645 \u0646\u0634\u062F\u0647"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        container_class: "select-option-big",
-        value: "expired",
-        icon_name: "fas fa-calendar-minus"
-      }, "\u0645\u0646\u0642\u0636\u06CC"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "filter-option col-12 mb-3 text-center"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0645\u0631\u062A\u0628 \u0633\u0627\u0632\u06CC \u0628\u0631 \u0627\u0633\u0627\u0633:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
-        id: "mixed_demands_order_by_select",
-        defaultValue: "due_to"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        container_class: "select-option-big",
-        value: "due_to",
-        icon_name: "fas fa-hourglass-start"
-      }, "\u062A\u0627\u0631\u06CC\u062E \u062A\u062D\u0648\u06CC\u0644"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        container_class: "select-option-big",
-        value: "created_at",
-        icon_name: "fas fa-calendar-plus"
-      }, "\u062A\u0627\u0631\u06CC\u062E \u0627\u06CC\u062C\u0627\u062F"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        container_class: "select-option-big",
-        value: "updated_at",
-        icon_name: "fas fa-user-edit"
-      }, "\u062A\u0627\u0631\u06CC\u062E \u062A\u063A\u06CC\u06CC\u0631\u0627\u062A"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        container_class: "select-option-big",
-        value: "finished_at",
-        icon_name: "fas fa-calendar-check"
-      }, "\u062A\u0627\u0631\u06CC\u062E \u0627\u062A\u0645\u0627\u0645"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "filter-option col-12 mb-3 text-center"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0646\u062D\u0648\u0647 \u0645\u0631\u062A\u0628 \u0633\u0627\u0632\u06CC:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
-        id: "mixed_demands_order_select",
-        defaultValue: "desc"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        container_class: "select-option-big",
-        value: "asc",
-        icon_name: "fas fa-sort-amount-up"
-      }, "\u0635\u0639\u0648\u062F\u06CC"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        container_class: "select-option-big",
-        value: "desc",
-        icon_name: "fas fa-sort-amount-down"
-      }, "\u0646\u0632\u0648\u0644\u06CC"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "text-center"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "btn btn-outline-info",
-        onClick: this.sortData.bind(this, 'tasks')
-      }, "\u0645\u0631\u062A\u0628 \u0633\u0627\u0632\u06CC"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "scrollable-items user-tasks-container col-12 mt-4"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "demand-item"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "demand-sender"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        src: APP_PATH + "images/male-avatar.svg",
-        alt: ""
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, "\u0637\u0631\u0627\u062D\u06CC \u0627\u06CC \u067E\u06CC \u0627\u06CC \u0628\u0631\u0627\u06CC \u062A\u0633\u06A9 \u0647\u0627")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-long-arrow-alt-left"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        src: APP_PATH + "images/male-avatar.svg",
-        alt: ""
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-check"
-      }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "user-works-results col-12 mt-4",
-        ref: this.tabResultsRef[3]
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "filter-box need-bg-color mb-4 p-2 col-12 animated fadeIn"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "filter-option col-12 mb-3 text-center"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u062C\u0633\u062A\u062C\u0648 \u062F\u0631: "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
-        id: "mixed_needs_relation_select",
-        defaultValue: "all"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        container_class: "select-option-big",
-        value: "all",
-        icon_name: "fas fa-tasks"
-      }, "\u0647\u0645\u0647"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        container_class: "select-option-big",
-        value: "finished",
-        icon_name: "fas fa-check-square"
-      }, "\u0627\u0646\u062C\u0627\u0645 \u0634\u062F\u0647"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        container_class: "select-option-big",
-        value: "unfinished",
-        icon_name: "fas fa-times-circle"
-      }, "\u0627\u0646\u062C\u0627\u0645 \u0646\u0634\u062F\u0647"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        container_class: "select-option-big",
-        value: "expired",
-        icon_name: "fas fa-calendar-minus"
-      }, "\u0645\u0646\u0642\u0636\u06CC"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "filter-option col-12 mb-3 text-center"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0645\u0631\u062A\u0628 \u0633\u0627\u0632\u06CC \u0628\u0631 \u0627\u0633\u0627\u0633:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
-        id: "mixed_needs_order_by_select",
-        defaultValue: "due_to"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        container_class: "select-option-big",
-        value: "due_to",
-        icon_name: "fas fa-hourglass-start"
-      }, "\u062A\u0627\u0631\u06CC\u062E \u062A\u062D\u0648\u06CC\u0644"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        container_class: "select-option-big",
-        value: "created_at",
-        icon_name: "fas fa-calendar-plus"
-      }, "\u062A\u0627\u0631\u06CC\u062E \u0627\u06CC\u062C\u0627\u062F"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        container_class: "select-option-big",
-        value: "updated_at",
-        icon_name: "fas fa-user-edit"
-      }, "\u062A\u0627\u0631\u06CC\u062E \u062A\u063A\u06CC\u06CC\u0631\u0627\u062A"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        container_class: "select-option-big",
-        value: "finished_at",
-        icon_name: "fas fa-calendar-check"
-      }, "\u062A\u0627\u0631\u06CC\u062E \u0627\u062A\u0645\u0627\u0645"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "filter-option col-12 mb-3 text-center"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0646\u062D\u0648\u0647 \u0645\u0631\u062A\u0628 \u0633\u0627\u0632\u06CC:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
-        id: "mixed_needs_order_select",
-        defaultValue: "desc"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        container_class: "select-option-big",
-        value: "asc",
-        icon_name: "fas fa-sort-amount-up"
-      }, "\u0635\u0639\u0648\u062F\u06CC"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        container_class: "select-option-big",
-        value: "desc",
-        icon_name: "fas fa-sort-amount-down"
-      }, "\u0646\u0632\u0648\u0644\u06CC"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "text-center"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "btn btn-outline-info",
-        onClick: this.sortData.bind(this, 'tasks')
-      }, "\u0645\u0631\u062A\u0628 \u0633\u0627\u0632\u06CC"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "scrollable-items user-tasks-container col-12 mt-4"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "demand-item hover-bg"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-times"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        src: APP_PATH + "images/male-avatar.svg",
-        alt: ""
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-long-arrow-alt-right"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "demand-sender"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, "\u0637\u0631\u0627\u062D\u06CC \u0627\u06CC \u067E\u06CC \u0627\u06CC \u0628\u0631\u0627\u06CC \u062A\u0633\u06A9 \u0647\u0627"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        src: APP_PATH + "images/male-avatar.svg",
-        alt: ""
-      })))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "statistics-section col-12 col-md-8 float-right"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "wide-section-statistics col-12 mb-1"
-      }, "cahrt"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "small-section-statictics col-12 col-md-6 mr-2 mb-1"
-      }, "cahrt"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "small-section-statictics col-12 col-md-6 mb-1"
-      }, "cahrt"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "small-section-statictics col-12 col-md-6 mr-2 mb-1"
-      }, "cahrt"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "small-section-statictics col-12 col-md-6 mb-1"
-      }, "cahrt")));
+        src: "workspace img link"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "workspace link"
+      }, "workspace title")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "\u0627\u0645\u06CC\u0631\u0631\u0636\u0627 \u0645\u0646\u0635\u0648\u0631\u06CC\u0627\u0646"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "\u0637\u0631\u0627\u062D\u06CC \u0635\u0641\u062D\u0647 \u0627\u0635\u0644\u06CC \u0627\u067E"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "\u0636\u0631\u0648\u0631\u06CC \u0648 \u0645\u0647\u0645"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "\u06F1\u06F2 \u0641\u0631\u0648\u0631\u062F\u06CC\u0646"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-check-circle fa-3x"
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-calendar-times fa-3x"
+      })))))));
     }
   }]);
 
-  return UserProfile;
+  return Demands;
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
 
 
 /***/ }),
 
-/***/ "./resources/js/react/user-profile.js":
-/*!********************************************!*\
-  !*** ./resources/js/react/user-profile.js ***!
-  \********************************************/
+/***/ "./resources/js/react/demands.js":
+/*!***************************************!*\
+  !*** ./resources/js/react/demands.js ***!
+  \***************************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -29156,26 +28854,26 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _components_user_profile_index__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/user-profile/index */ "./resources/js/react/components/user-profile/index.jsx");
+/* harmony import */ var _components_demands_index_jsx__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/demands/index.jsx */ "./resources/js/react/components/demands/index.jsx");
 
 
 
-var target = document.getElementById("user-profile-react");
+var target = document.getElementById("demands-react");
 
 if (target) {
-  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_user_profile_index__WEBPACK_IMPORTED_MODULE_2__["default"], null), target);
+  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_demands_index_jsx__WEBPACK_IMPORTED_MODULE_2__["default"], null), target);
 }
 
 /***/ }),
 
-/***/ 6:
-/*!**************************************************!*\
-  !*** multi ./resources/js/react/user-profile.js ***!
-  \**************************************************/
+/***/ 7:
+/*!*********************************************!*\
+  !*** multi ./resources/js/react/demands.js ***!
+  \*********************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! I:\projects\task-manager\resources\js\react\user-profile.js */"./resources/js/react/user-profile.js");
+module.exports = __webpack_require__(/*! I:\projects\task-manager\resources\js\react\demands.js */"./resources/js/react/demands.js");
 
 
 /***/ })
