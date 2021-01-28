@@ -102,12 +102,13 @@ class DemandController extends BaseController
     }
     public function toggle(Demand $demand)
     {
-        $this->authorize('update', $demand);
+        $this->authorize('toggle_state', $demand);
         $demand->finished_at = $demand->finished_at ? null : now();
         $demand->save();
     }
     public function new_message(Request $request, Demand $demand)
     {
+        $this->authorize('view', $demand);
         $request->validate([
             'text' => 'required|string'
         ]);
@@ -119,6 +120,7 @@ class DemandController extends BaseController
     }
     public function messages(Demand $demand)
     {
+        $this->authorize('view', $demand);
         return $demand->messages()->orderBy('created_at', 'desc')->paginate(10);
     }
 }
