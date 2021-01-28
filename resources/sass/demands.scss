@@ -4,38 +4,43 @@ nav.demands-tabs-titles {
     justify-content: space-evenly;
     align-items: flex-start;
     flex-wrap: nowrap;
-    margin-bottom: 60px;
+    margin-bottom: 20px;
     .demand-tab-title {
         color: #0275d8;
         transition: 0.3s;
         cursor: pointer;
-        position: relative;
+        // position: relative;
         font-size: 15px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: center;
+        align-items: center;
         i {
-            position: absolute;
-            top: -52%;
-            font-size: 95px;
+            // position: absolute;
+            // top: -52%;
+            font-size: 80px;
             transition: 0.3s;
         }
         i.right-arrow {
-            right: 4%;
+            // right: 4%;
         }
         i.left-arrow {
-            left: -145%;
+            // left: -145%;
         }
     }
     @media(min-width: 768px) {
         .demand-tab-title {
             font-size: 20px;
             i {
-                font-size: 140px;
-                top: -75%;
+                font-size: 100px;
+                // top: -75%;
             }
             i.right-arrow {
-                right: -5%;
+                // right: -5%;
             }
             i.left-arrow {
-                left: -115%;
+                // left: -115%;
             }
         }
     }

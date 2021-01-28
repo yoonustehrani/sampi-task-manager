@@ -98,39 +98,39 @@ div.result-container, div.user-works-results {
         width: 30px;
         height: 30px;
     }
-    div.filter-box {
-        float: right;
-        background-color: #E0EAFC;
-        box-shadow: 3px 3px 7px 0 #bdc3c7;
-        border: 2px solid #A7BFE8;
-        border-radius: 8px;         
+}
+div.filter-box {
+    float: right;
+    background-color: #E0EAFC;
+    box-shadow: 3px 3px 7px 0 #bdc3c7;
+    border: 2px solid #A7BFE8;
+    border-radius: 8px;         
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;   
+    direction: rtl;
+    div.filter-option {
+        direction: rtl;
+        text-align: right;
+        font-family: $iran-sans;
+        width: max-content !important;
         display: flex;
         flex-direction: row;
-        flex-wrap: wrap;
+        justify-content: center;
         align-items: center;
-        justify-content: space-around;   
-        direction: rtl;
-        div.filter-option {
-            direction: rtl;
-            text-align: right;
-            font-family: $iran-sans;
-            width: max-content !important;
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            align-items: center;
-            > span {
-                text-align: center;
-                // white-space: nowrap;
-                margin-left: 6px;
-                font-size: 15px;
-                width: 100%;
-            }
-            select {
-                option {
-                    text-align: right;
-                    font-family: $iran-sans;
-                }
+        > span {
+            text-align: center;
+            // white-space: nowrap;
+            margin-left: 6px;
+            font-size: 15px;
+            width: 100%;
+        }
+        select {
+            option {
+                text-align: right;
+                font-family: $iran-sans;
             }
         }
     }

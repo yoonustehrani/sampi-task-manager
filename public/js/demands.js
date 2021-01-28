@@ -28773,6 +28773,8 @@ var Demands = /*#__PURE__*/function (_Component) {
       });
     });
 
+    _defineProperty(_assertThisInitialized(_this), "sortData", function (catagory) {});
+
     _this.tabTitlesRef = [];
     _this.tabResultsRef = [];
 
@@ -28782,11 +28784,18 @@ var Demands = /*#__PURE__*/function (_Component) {
       _this.tabResultsRef.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef());
     }
 
-    _this.state = {};
+    _this.state = {
+      current_tab: 'demands'
+    };
     return _this;
   }
 
   _createClass(Demands, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var get_tickets_api = this.props.get_tickets_api;
+    }
+  }, {
     key: "render",
     value: function render() {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
@@ -28796,19 +28805,81 @@ var Demands = /*#__PURE__*/function (_Component) {
         className: "demand-tab-title active",
         ref: this.tabTitlesRef[0],
         onClick: this.changeTab.bind(this, 0)
-      }, "\u062F\u0631\u062E\u0648\u0627\u0633\u062A", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-long-arrow-alt-left right-arrow animated slideInLeft"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u062F\u0631\u062E\u0648\u0627\u0633\u062A"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-long-arrow-alt-down left-arrow animated slideInDown"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         href: "#needs",
         className: "demand-tab-title",
         ref: this.tabTitlesRef[1],
         onClick: this.changeTab.bind(this, 1)
-      }, "\u0646\u06CC\u0627\u0632", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-long-arrow-alt-right left-arrow animated slideInRight"
-      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-long-arrow-alt-up left-arrow animated slideInUp"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0646\u06CC\u0627\u0632"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-12 mt-4 float-right demand-tab-result active",
         ref: this.tabResultsRef[0]
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "filter-box demand-bg-color mb-4 p-2 col-12 animated fadeIn"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "filter-option col-12 col-md-6 col-lg-3 mb-3 mb-lg-0 text-center"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u062C\u0633\u062A\u062C\u0648 \u062F\u0631: "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+        id: "mixed_demands_relation_select",
+        defaultValue: "all"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        container_class: "select-option-big",
+        value: "all",
+        icon_name: "fas fa-tasks"
+      }, "\u0647\u0645\u0647"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        container_class: "select-option-big",
+        value: "finished",
+        icon_name: "fas fa-check-square"
+      }, "\u0627\u0646\u062C\u0627\u0645 \u0634\u062F\u0647"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        container_class: "select-option-big",
+        value: "unfinished",
+        icon_name: "fas fa-times-circle"
+      }, "\u0627\u0646\u062C\u0627\u0645 \u0646\u0634\u062F\u0647"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        container_class: "select-option-big",
+        value: "expired",
+        icon_name: "fas fa-calendar-minus"
+      }, "\u0645\u0646\u0642\u0636\u06CC"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "filter-option col-12 col-md-6 col-lg-3 mb-3 mb-lg-0 text-center"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0645\u0631\u062A\u0628 \u0633\u0627\u0632\u06CC \u0628\u0631 \u0627\u0633\u0627\u0633:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+        id: "mixed_demands_order_by_select",
+        defaultValue: "due_to"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        container_class: "select-option-big",
+        value: "due_to",
+        icon_name: "fas fa-hourglass-start"
+      }, "\u062A\u0627\u0631\u06CC\u062E \u062A\u062D\u0648\u06CC\u0644"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        container_class: "select-option-big",
+        value: "created_at",
+        icon_name: "fas fa-calendar-plus"
+      }, "\u062A\u0627\u0631\u06CC\u062E \u0627\u06CC\u062C\u0627\u062F"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        container_class: "select-option-big",
+        value: "updated_at",
+        icon_name: "fas fa-user-edit"
+      }, "\u062A\u0627\u0631\u06CC\u062E \u062A\u063A\u06CC\u06CC\u0631\u0627\u062A"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        container_class: "select-option-big",
+        value: "finished_at",
+        icon_name: "fas fa-calendar-check"
+      }, "\u062A\u0627\u0631\u06CC\u062E \u0627\u062A\u0645\u0627\u0645"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "filter-option col-12 col-md-6 col-lg-3 mb-3 mb-lg-0 text-center"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0646\u062D\u0648\u0647 \u0645\u0631\u062A\u0628 \u0633\u0627\u0632\u06CC:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+        id: "mixed_demands_order_select",
+        defaultValue: "desc"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        container_class: "select-option-big",
+        value: "asc",
+        icon_name: "fas fa-sort-amount-up"
+      }, "\u0635\u0639\u0648\u062F\u06CC"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        container_class: "select-option-big",
+        value: "desc",
+        icon_name: "fas fa-sort-amount-down"
+      }, "\u0646\u0632\u0648\u0644\u06CC"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "text-center"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "btn btn-outline-info",
+        onClick: this.sortData.bind(this, 'demands')
+      }, "\u0645\u0631\u062A\u0628 \u0633\u0627\u0632\u06CC"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
         className: "col-12 table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right animated rubberBand"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", {
         className: "thead-dark"
@@ -28847,7 +28918,69 @@ var Demands = /*#__PURE__*/function (_Component) {
       })))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-12 mt-4 float-right demand-tab-result",
         ref: this.tabResultsRef[1]
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "filter-box demand-bg-color mb-4 p-2 col-12 animated fadeIn"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "filter-option col-12 col-md-6 col-lg-3 mb-3 mb-lg-0 text-center"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u062C\u0633\u062A\u062C\u0648 \u062F\u0631: "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+        id: "mixed_needs_relation_select",
+        defaultValue: "all"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        container_class: "select-option-big",
+        value: "all",
+        icon_name: "fas fa-tasks"
+      }, "\u0647\u0645\u0647"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        container_class: "select-option-big",
+        value: "finished",
+        icon_name: "fas fa-check-square"
+      }, "\u0627\u0646\u062C\u0627\u0645 \u0634\u062F\u0647"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        container_class: "select-option-big",
+        value: "unfinished",
+        icon_name: "fas fa-times-circle"
+      }, "\u0627\u0646\u062C\u0627\u0645 \u0646\u0634\u062F\u0647"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        container_class: "select-option-big",
+        value: "expired",
+        icon_name: "fas fa-calendar-minus"
+      }, "\u0645\u0646\u0642\u0636\u06CC"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "filter-option col-12 col-md-6 col-lg-3 mb-3 mb-lg-0 text-center"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0645\u0631\u062A\u0628 \u0633\u0627\u0632\u06CC \u0628\u0631 \u0627\u0633\u0627\u0633:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+        id: "mixed_needs_order_by_select",
+        defaultValue: "due_to"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        container_class: "select-option-big",
+        value: "due_to",
+        icon_name: "fas fa-hourglass-start"
+      }, "\u062A\u0627\u0631\u06CC\u062E \u062A\u062D\u0648\u06CC\u0644"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        container_class: "select-option-big",
+        value: "created_at",
+        icon_name: "fas fa-calendar-plus"
+      }, "\u062A\u0627\u0631\u06CC\u062E \u0627\u06CC\u062C\u0627\u062F"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        container_class: "select-option-big",
+        value: "updated_at",
+        icon_name: "fas fa-user-edit"
+      }, "\u062A\u0627\u0631\u06CC\u062E \u062A\u063A\u06CC\u06CC\u0631\u0627\u062A"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        container_class: "select-option-big",
+        value: "finished_at",
+        icon_name: "fas fa-calendar-check"
+      }, "\u062A\u0627\u0631\u06CC\u062E \u0627\u062A\u0645\u0627\u0645"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "filter-option col-12 col-md-6 col-lg-3 mb-3 mb-lg-0 text-center"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0646\u062D\u0648\u0647 \u0645\u0631\u062A\u0628 \u0633\u0627\u0632\u06CC:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+        id: "mixed_needs_order_select",
+        defaultValue: "desc"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        container_class: "select-option-big",
+        value: "asc",
+        icon_name: "fas fa-sort-amount-up"
+      }, "\u0635\u0639\u0648\u062F\u06CC"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        container_class: "select-option-big",
+        value: "desc",
+        icon_name: "fas fa-sort-amount-down"
+      }, "\u0646\u0632\u0648\u0644\u06CC"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "text-center"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "btn btn-outline-info",
+        onClick: this.sortData.bind(this, 'demands')
+      }, "\u0645\u0631\u062A\u0628 \u0633\u0627\u0632\u06CC"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
         className: "col-12 table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right animated rubberBand"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", {
         className: "thead-dark"
@@ -28912,9 +29045,14 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var target = document.getElementById("demands-react");
+var data_index = target.getAttribute("data-index");
+var data_store = target.getAttribute("data-store");
 
 if (target) {
-  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_demands_index_jsx__WEBPACK_IMPORTED_MODULE_2__["default"], null), target);
+  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_demands_index_jsx__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    get_tickets_api: data_index,
+    post_new_ticket_api: data_store
+  }), target);
 }
 
 /***/ }),

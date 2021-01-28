@@ -9237,8 +9237,7 @@ div.user-works-results img.workspace-img {
   height: 30px;
 }
 
-div.result-container div.filter-box,
-div.user-works-results div.filter-box {
+div.filter-box {
   float: right;
   background-color: #E0EAFC;
   box-shadow: 3px 3px 7px 0 #bdc3c7;
@@ -9252,8 +9251,7 @@ div.user-works-results div.filter-box {
   direction: rtl;
 }
 
-div.result-container div.filter-box div.filter-option,
-div.user-works-results div.filter-box div.filter-option {
+div.filter-box div.filter-option {
   direction: rtl;
   text-align: right;
   font-family: "Iransans";
@@ -9266,16 +9264,14 @@ div.user-works-results div.filter-box div.filter-option {
   align-items: center;
 }
 
-div.result-container div.filter-box div.filter-option > span,
-div.user-works-results div.filter-box div.filter-option > span {
+div.filter-box div.filter-option > span {
   text-align: center;
   margin-left: 6px;
   font-size: 15px;
   width: 100%;
 }
 
-div.result-container div.filter-box div.filter-option select option,
-div.user-works-results div.filter-box div.filter-option select option {
+div.filter-box div.filter-option select option {
   text-align: right;
   font-family: "Iransans";
 }
@@ -9640,30 +9636,24 @@ nav.demands-tabs-titles {
   justify-content: space-evenly;
   align-items: flex-start;
   flex-wrap: nowrap;
-  margin-bottom: 60px;
+  margin-bottom: 20px;
 }
 
 nav.demands-tabs-titles .demand-tab-title {
   color: #0275d8;
   transition: 0.3s;
   cursor: pointer;
-  position: relative;
   font-size: 15px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
 }
 
 nav.demands-tabs-titles .demand-tab-title i {
-  position: absolute;
-  top: -52%;
-  font-size: 95px;
+  font-size: 80px;
   transition: 0.3s;
-}
-
-nav.demands-tabs-titles .demand-tab-title i.right-arrow {
-  right: 4%;
-}
-
-nav.demands-tabs-titles .demand-tab-title i.left-arrow {
-  left: -145%;
 }
 
 @media (min-width: 768px) {
@@ -9672,16 +9662,7 @@ nav.demands-tabs-titles .demand-tab-title i.left-arrow {
   }
 
   nav.demands-tabs-titles .demand-tab-title i {
-    font-size: 140px;
-    top: -75%;
-  }
-
-  nav.demands-tabs-titles .demand-tab-title i.right-arrow {
-    right: -5%;
-  }
-
-  nav.demands-tabs-titles .demand-tab-title i.left-arrow {
-    left: -115%;
+    font-size: 100px;
   }
 }
 
