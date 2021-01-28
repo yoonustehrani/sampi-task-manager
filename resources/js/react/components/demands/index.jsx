@@ -1,3 +1,4 @@
+import axios from 'axios'
 import React, { Component } from 'react'
 
 export default class Demands extends Component {
@@ -31,8 +32,9 @@ export default class Demands extends Component {
     }
 
     componentDidMount() {
-        let { get_tickets_api } = this.props
-        
+        let { get_tickets_api } = this.props, { current_tab } = this.state
+        let order_by = $(`#mixed_${current_tab}_order_by_select`).val(), mixed_tasks_order = $('#mixed_tasks_order_select').val(), mixed_tasks_relation = $('#mixed_tasks_relation_select').val()
+        // axios.get(`${get_tickets_api}${current_tab === "demands" ? "&relation=asked" : ""}`)
     }
     
     
