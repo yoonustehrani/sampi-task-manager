@@ -6,6 +6,9 @@ import { Levels, Digital } from 'react-activity'
 import 'react-activity/dist/react-activity.css'
 import { setPriority, redirectTo } from '../../../helpers'
 import CounterTab from './CounterTab'
+import Workspaces from './Workspaces'
+import Task from './Tasks/Task'
+import Tasks from './Tasks'
 
 
 export default class Dashboard extends Component {
@@ -136,104 +139,21 @@ export default class Dashboard extends Component {
                 </div>
                 <div className="col-12 dashboard-tab-container">
                     <nav className="tab-title-bar text-center">
-                        {navbar && navbar.map((item) => {
+                        {navbar && navbar.map((item, i) => {
                             return (
-                                <a className="tab-link" ref={this.tabTitlesRef[item.tab]} onClick={this.changeTab.bind(this, item.tab)}>
+                                <a className="tab-link" ref={this.tabTitlesRef[item.tab]} onClick={this.changeTab.bind(this, item.tab)} key={i}>
                                     <i className="fas fa-project-diagram d-block d-md-inline"></i>
                                     {item.text}
                                 </a>
                             )
                         })}
                     </nav>
-
                     <div className="result-container col-12 mt-3 active" ref={this.tabResultsRef[0]}>
-                        <table className="table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right animated bounceIn">
-                            <thead className="thead-dark">
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">عنوان پروژه</th>
-                                    <th scope="col">کارمندان</th>
-                                    <th scope="col">وضعیت وظایف</th>
-                                    <th scope="col">خواسته های جاری</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {
-                                    workspaces.length > 0 ? workspaces.map((workspace, i) => {
-                                        let { id, avatar_pic, title, users, tasks_count, finished_tasks_count, demands_left_count } = workspace, workspace_url = workspace_route.replace("workspaceId", id)
-                                        return (
-                                            <tr className="animated fadeIn" key={i} onClick={() => redirectTo(workspace_url)}>
-                                                <th scope="row">{ i + 1 }</th>
-                                                <td className="text-right">
-                                                    <img className="workspace_avatar" src={APP_PATH + avatar_pic} />
-                                                    <a href={workspace_url}>{ title }</a>
-                                                </td>
-                                                <td>
-                                                    <div className="employees-container horizontal-centerlize">
-                                                        {
-                                                            users.length === 0 &&
-                                                                <i className="fas fa-user-slash"></i>
-                                                        }
-                                                        {
-                                                            users.length === 1 &&
-                                                                <span>{ users.length }<i className="fas fa-user mr-2"></i></span>
-                                                        }
-                                                        {
-                                                            users.length > 1 &&
-                                                                <span>{ users.length }<i className="fas fa-users mr-2"></i></span>
-                                                        }
-                                                        <div className="dropdown-users d-none" onClick={(e) => e.stopPropagation()}>
-                                                            {
-                                                                users.length >= 1 &&
-                                                                    users.map((user, i) => (
-                                                                        <div key={i} className="user-dropdown-item animated jackInTheBox">
-                                                                            <div className="user-right-flex">
-                                                                                <div className="user-img-container ml-2">
-                                                                                    <img src={user.avatar_pic !== null ? APP_PATH + user.avatar_pic : APP_PATH + 'images/male-avatar.svg'} />
-                                                                                </div>
-                                                                                <div className="user-info ml-2">
-                                                                                    <p>{ user.fullname }</p>
-                                                                                    <a href={"#user"}>@{user.name}</a>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div className="user-label-container">
-                                                                                    {
-                                                                                        user.pivot.is_admin === 1 ? <button className="btn btn-sm btn-success rtl admin"><span>ادمین<i className="fas fa-user-tie mr-1"></i></span></button>
-                                                                                        : <button className="btn btn-sm btn-primary rtl"><span>عضو<i className="fas fa-user mr-1"></i></span></button>
-                                                                                    } 
-                                                                            </div>
-                                                                        </div>
-                                                                    ))
-                                                            }
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td className="no-break">
-                                                    کل : <span className="badge badge-primary ml-md-4 d-block d-md-inline mb-1 mb-md-0">{ tasks_count }</span>
-                                                    اتمام : <span className="badge badge-success ml-md-4 d-block d-md-inline mb-1 mb-md-0">{ finished_tasks_count }</span>
-                                                    باقی مانده : <span className="badge badge-danger ml-md-4 d-block d-md-inline mb-1 mb-md-0">{ tasks_count - finished_tasks_count }</span>
-                                                </td>
-                                                <td>
-                                                    { demands_left_count }
-                                                </td>
-                                            </tr>
-                                        )
-                                    }) : null
-                                }
-                            </tbody>
-                        </table> 
-                        {
-                            workspaces.length <= 0 && !isGetting &&
-                                <p className="text-center text-secondary">موردی برای نمایش وجود ندارد</p>
-                        }
-                        {
-                            isGetting &&
-                                <div className="text-center">
-                                    <Digital color="#000000" size={24} />
-                                </div>
+                        {isGetting
+                            ? <div className="text-center"><Digital color="#000000" size={24} /></div>
+                            : <Workspaces AllWorkspaces={workspaces} Route={workspace_route}/>
                         }
                     </div>
-
                     <div className="result-container col-12 mt-3" ref={this.tabResultsRef[1]}>
                         <div className="filter-box mt-2 mb-2 p-3 col-12 animated fadeIn">
                             <div className="filter-option col-12 col-md-6 col-lg-3 mb-3 mb-lg-0 text-center">
@@ -265,58 +185,11 @@ export default class Dashboard extends Component {
                                 <button className="btn btn-outline-info" onClick={this.sortData.bind(this, 'tasks')}>مرتب سازی</button>
                             </div>
                         </div>
-                        <table className="table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right animated swing">
-                            <thead className="thead-dark">
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">عنوان</th>
-                                    <th scope="col">پروژه</th>
-                                    <th scope="col">دسته بندی</th>
-                                    <th scope="col">اولویت</th>
-                                    <th scope="col">موعد تحویل</th>
-                                    <th scope="col">وضعیت اتمام</th>
-                                    <th scope="col">تاریخ اتمام</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {
-                                    mixedTasks.length > 0 && !isGetting ? mixedTasks.map((task, i) => {
-                                        let { id, title, group, finished_at, priority_id, due_to, workspace, workspace_id } = task
-                                        return (
-                                            <tr className="animated fadeIn" key={i} onClick={() => redirectTo(task_route.replace("taskId", id))}>
-                                                <th scope="row">{ i + 1 }</th>
-                                                <td>{title}</td>
-                                                <td className="text-right">
-                                                    <img className="workspace_avatar" src={APP_PATH + workspace.avatar_pic} />
-                                                    <a href={workspace_route.replace('workspaceId', workspace_id)}>{workspace.title}</a>
-                                                </td>
-                                                <td>{group}</td>
-                                                <td>{setPriority(priority_id)}</td>
-                                                <td>{due_to !== null ? moment(due_to).fromNow() : <i className="fas fa-calendar-minus  fa-3x"></i>}</td>
-                                                <td>
-                                                    {finished_at === null ? <i className="fas fa-times-circle fa-3x"></i> : <i className="fas fa-check-circle fa-3x"></i>}
-                                                </td>
-                                                <td>
-                                                {finished_at === null ? <i className="fas fa-calendar-times fa-3x"></i> : moment(finished_at).fromNow()}
-                                                </td>
-                                            </tr>
-                                        )
-                                    }) : null
-                                }
-                            </tbody>
-                        </table> 
-                        {
-                            mixedTasks.length <= 0 && !isGetting &&
-                                <p className="text-center text-secondary">موردی برای نمایش وجود ندارد</p>
-                        }
-                        {
-                            isGetting &&
-                                <div className="text-center">
-                                    <Digital color="#000000" size={24} />
-                                </div>
+                        {isGetting
+                            ? <div className="text-center"><Digital color="#000000" size={24} /></div>
+                            : <Tasks AllTasks={mixedTasks} Route={task_route} workspace_route={workspace_route}/>
                         }
                     </div>
-
                     <div className="result-container col-12 mt-3" ref={this.tabResultsRef[2]}>
                         <table className="table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right animated rubberBand">
                             <thead className="thead-dark">
