@@ -10,6 +10,13 @@ class DemandPolicy
 {
     use HandlesAuthorization;
 
+    public function before($user, $ability)
+    {
+        if ($user->hasRole('developer')) {
+            return true;
+        }
+    }
+
     /**
      * Determine whether the user can view any models.
      *
@@ -18,7 +25,7 @@ class DemandPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return $user->hasPermission('can_view_any_demands');
     }
 
     /**
@@ -30,7 +37,10 @@ class DemandPolicy
      */
     public function view(User $user, Demand $demand)
     {
-        //
+        if ($user->id == $demand->from_id || $user->id == $demand->to_id) {
+            return true;
+        }
+        return $user->hasPermission('can_view_any_demands');
     }
 
     /**
@@ -41,7 +51,7 @@ class DemandPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->hasPermission('can_create_demands');
     }
 
     /**
@@ -53,7 +63,10 @@ class DemandPolicy
      */
     public function update(User $user, Demand $demand)
     {
-        //
+        if ($user->id == $demand->from_id || $user->id == $demand->to_id) {
+            return true;
+        }
+        return $user->hasPermission('can_update_any_demands');
     }
 
     /**
@@ -65,7 +78,10 @@ class DemandPolicy
      */
     public function delete(User $user, Demand $demand)
     {
-        //
+        if ($user->id == $demand->from_id || $user->id == $demand->to_id) {
+            return true;
+        }
+        return $user->hasPermission('can_delete_demands');
     }
 
     /**
@@ -77,7 +93,7 @@ class DemandPolicy
      */
     public function restore(User $user, Demand $demand)
     {
-        //
+        return $user->hasPermission('can_restore_demands');
     }
 
     /**
@@ -89,6 +105,6 @@ class DemandPolicy
      */
     public function forceDelete(User $user, Demand $demand)
     {
-        //
+        return $user->hasPermission('can_force_delete_demands');
     }
 }

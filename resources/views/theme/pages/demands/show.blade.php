@@ -55,11 +55,10 @@
                 </p>
             @endif
         </p>
-        <div
-        data-messages="{{ route('api.task-manager.demands.messages.index', ['demand' => $demand->id]) }}"
-        data-message="{{ route('api.task-manager.demands.messages.store', ['demand' => $demand->id]) }}"
-        class="col-12 float-left p-1">
-
+        <div class="col-12 float-left p-1"
+        data-messages="{{ route('api.task-manager.demands.messages.index', ['workspace' => $workspace->id, 'demand' => $demand->id]) }}"
+        data-message="{{ route('api.task-manager.demands.messages.store', ['workspace' => $workspace->id, 'demand' => $demand->id]) }}"
+        data-update="{{ route('api.task-manager.demands.update', ['workspace' => $workspace->id, 'demand' => $demand->id]) }}">
         </div>
     </div>
 @endsection

@@ -99,6 +99,10 @@ class DemandController extends BaseController
         }
         return ['message' => 'خطا در عملیات حذف.'];
     }
+    public function toggle(Demand $demand)
+    {
+        $this->authorize('update', $demand);
+    }
     public function new_message(Request $request, Demand $demand)
     {
         $request->validate([
