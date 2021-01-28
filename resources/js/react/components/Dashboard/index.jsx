@@ -17,11 +17,20 @@ export default class Dashboard extends Component {
             this.tabResultsRef.push(React.createRef())
             this.tabTitlesRef.push(React.createRef())
         }
+
+        let navbar = [
+            {text: 'پروژه ها', tab: 0, order: 0},
+            {text: 'وظایف', tab: 1, order: 1},
+            {text: 'درخواست ها', tab: 2, order: 2},
+            {text: 'نیاز ها', tab: 3, order: 3}
+        ].sort((a,b) => (a.order > b.order ? 0 : -1));
+
         this.state = {
             mixedTasks: [],
             statistics: {},
             isGetting: true,
-            workspaces: []
+            workspaces: [],
+            navbar: navbar
         }
     }
     
@@ -113,7 +122,7 @@ export default class Dashboard extends Component {
     
 
     render() {
-        let { mixedTasks, statistics, isGetting, workspaces } = this.state
+        let { mixedTasks, statistics, isGetting, workspaces, navbar } = this.state
         let { workspace_route, task_route } = this.props
         return (
             <div>
@@ -121,54 +130,20 @@ export default class Dashboard extends Component {
                     <CounterTab Title="پروژه های من" Item={statistics.workspaceCounter ? statistics.workspaceCounter.all : null} CustomClasses="projects" Icon="fas fa-project-diagram"/>
                     <CounterTab Title="وظایف انجام شده" Item={statistics.taskCounter ? statistics.taskCounter.finished : null} CustomClasses="finished-tasks" Icon="fas fa-check-double"/>
                     <CounterTab Title="نیازهای جاری" Item={statistics.demandCounter ? statistics.demandCounter.demands.unfinished : null} CustomClasses="finished-demands" Icon="fas fa-check"/>
-                    <CounterTab Title="وظایف عقب افتاده" Item={statistics.demandCounter ? statistics.demandCounter.demands.unfinished : null} CustomClasses="finished-demands" Icon="fas fa-check"/>
-                    {/*
-                    <div className="float-left animated pulse col-md-3 col-12 tickets delayed-tasks">
-                        <a href={statistics.taskCounter ? statistics.taskCounter.expired.href : "#"} className="item-link">
-                            <i className="float-right dashboard-item fas fa-hourglass-end fa-3x"></i>
-                            <div>
-                                <span className="float-right dashboard-item">{ statistics.taskCounter ? statistics.taskCounter.expired.count : <Levels color="#ffffff" /> }</span>
-                                <span className="float-right dashboard-item">وظایف عقب افتاده</span>
-                            </div>
-                        </a>
-                    </div>
-                    <div className="float-left animated pulse col-md-3 col-12 tickets current-tasks">
-                        <a href={statistics.taskCounter ? statistics.taskCounter.unfinished.href : "#"} className="item-link">
-                            <i className="float-right dashboard-item fas fa-tasks fa-3x"></i>
-                            <div>
-                                <span className="float-right dashboard-item">{ statistics.taskCounter ? statistics.taskCounter.unfinished.count : <Levels color="#ffffff" /> }</span>
-                                <span className="float-right dashboard-item">وظایف جاری</span>
-                            </div>
-                        </a>
-                    </div>
-                    <div className="float-left animated pulse col-md-3 col-12 tickets current-demands">
-                        <a href={statistics.demandCounter ? statistics.demandCounter.asked_demands.unfinished.href : "#"} className="item-link">
-                            <i className="float-right dashboard-item fas fa-list-alt fa-3x"></i>
-                            <div>
-                                <span className="float-right dashboard-item">{ statistics.demandCounter ? statistics.demandCounter.asked_demands.unfinished.count : <Levels color="#ffffff" /> }</span>
-                                <span className="float-right dashboard-item">خواسته های جاری</span>
-                            </div>
-                        </a>
-                    </div> */}
+                    <CounterTab Title="وظایف عقب افتاده" Item={statistics.taskCounter ? statistics.taskCounter.expired : null} CustomClasses="delayed-tasks" Icon="fas fa-hourglass-end"/>
+                    <CounterTab Title="وظایف جاری" Item={statistics.taskCounter ? statistics.taskCounter.unfinished : null} CustomClasses="current-tasks" Icon="fas fa-tasks"/>
+                    <CounterTab Title="خواسته های جاری" Item={statistics.demandCounter ? statistics.demandCounter.asked_demands.unfinished : null} CustomClasses="current-demands" Icon="fas fa-list-alt"/>
                 </div>
                 <div className="col-12 dashboard-tab-container">
                     <nav className="tab-title-bar text-center">
-                        <a className="tab-link active" ref={this.tabTitlesRef[0]} onClick={this.changeTab.bind(this, 0)}>
-                            <i className="fas fa-project-diagram d-block d-md-inline"></i>
-                            پروژه ها
-                        </a>
-                        <a className="tab-link" ref={this.tabTitlesRef[1]} onClick={this.changeTab.bind(this, 1)}>
-                            <i className="fas fa-tasks d-block d-md-inline"></i>
-                            وظایف
-                        </a>
-                        <a className="tab-link" ref={this.tabTitlesRef[2]} onClick={this.changeTab.bind(this, 2)}>
-                            <i className="fas fa-comment-dots d-block d-md-inline"></i>
-                            درخواست ها
-                        </a>
-                        <a className="tab-link" ref={this.tabTitlesRef[3]} onClick={this.changeTab.bind(this, 3)}>
-                            <i className="fas fa-clipboard-list d-block d-md-inline"></i>
-                            نیاز ها
-                        </a>
+                        {navbar && navbar.map((item) => {
+                            return (
+                                <a className="tab-link" ref={this.tabTitlesRef[item.tab]} onClick={this.changeTab.bind(this, item.tab)}>
+                                    <i className="fas fa-project-diagram d-block d-md-inline"></i>
+                                    {item.text}
+                                </a>
+                            )
+                        })}
                     </nav>
 
                     <div className="result-container col-12 mt-3 active" ref={this.tabResultsRef[0]}>

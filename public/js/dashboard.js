@@ -55086,11 +55086,31 @@ var Dashboard = /*#__PURE__*/function (_Component) {
       _this.tabTitlesRef.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef());
     }
 
+    var navbar = [{
+      text: 'پروژه ها',
+      tab: 0,
+      order: 0
+    }, {
+      text: 'وظایف',
+      tab: 1,
+      order: 1
+    }, {
+      text: 'درخواست ها',
+      tab: 2,
+      order: 2
+    }, {
+      text: 'نیاز ها',
+      tab: 3,
+      order: 3
+    }].sort(function (a, b) {
+      return a.order > b.order ? 0 : -1;
+    });
     _this.state = {
       mixedTasks: [],
       statistics: {},
       isGetting: true,
-      workspaces: []
+      workspaces: [],
+      navbar: navbar
     };
     return _this;
   }
@@ -55154,11 +55174,14 @@ var Dashboard = /*#__PURE__*/function (_Component) {
   }, {
     key: "render",
     value: function render() {
+      var _this3 = this;
+
       var _this$state = this.state,
           mixedTasks = _this$state.mixedTasks,
           statistics = _this$state.statistics,
           isGetting = _this$state.isGetting,
-          workspaces = _this$state.workspaces;
+          workspaces = _this$state.workspaces,
+          navbar = _this$state.navbar;
       var _this$props2 = this.props,
           workspace_route = _this$props2.workspace_route,
           task_route = _this$props2.task_route;
@@ -55181,38 +55204,32 @@ var Dashboard = /*#__PURE__*/function (_Component) {
         Icon: "fas fa-check"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_CounterTab__WEBPACK_IMPORTED_MODULE_6__["default"], {
         Title: "\u0648\u0638\u0627\u06CC\u0641 \u0639\u0642\u0628 \u0627\u0641\u062A\u0627\u062F\u0647",
-        Item: statistics.demandCounter ? statistics.demandCounter.demands.unfinished : null,
-        CustomClasses: "finished-demands",
-        Icon: "fas fa-check"
+        Item: statistics.taskCounter ? statistics.taskCounter.expired : null,
+        CustomClasses: "delayed-tasks",
+        Icon: "fas fa-hourglass-end"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_CounterTab__WEBPACK_IMPORTED_MODULE_6__["default"], {
+        Title: "\u0648\u0638\u0627\u06CC\u0641 \u062C\u0627\u0631\u06CC",
+        Item: statistics.taskCounter ? statistics.taskCounter.unfinished : null,
+        CustomClasses: "current-tasks",
+        Icon: "fas fa-tasks"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_CounterTab__WEBPACK_IMPORTED_MODULE_6__["default"], {
+        Title: "\u062E\u0648\u0627\u0633\u062A\u0647 \u0647\u0627\u06CC \u062C\u0627\u0631\u06CC",
+        Item: statistics.demandCounter ? statistics.demandCounter.asked_demands.unfinished : null,
+        CustomClasses: "current-demands",
+        Icon: "fas fa-list-alt"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-12 dashboard-tab-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
         className: "tab-title-bar text-center"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        className: "tab-link active",
-        ref: this.tabTitlesRef[0],
-        onClick: this.changeTab.bind(this, 0)
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-project-diagram d-block d-md-inline"
-      }), "\u067E\u0631\u0648\u0698\u0647 \u0647\u0627"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        className: "tab-link",
-        ref: this.tabTitlesRef[1],
-        onClick: this.changeTab.bind(this, 1)
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-tasks d-block d-md-inline"
-      }), "\u0648\u0638\u0627\u06CC\u0641"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        className: "tab-link",
-        ref: this.tabTitlesRef[2],
-        onClick: this.changeTab.bind(this, 2)
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-comment-dots d-block d-md-inline"
-      }), "\u062F\u0631\u062E\u0648\u0627\u0633\u062A \u0647\u0627"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        className: "tab-link",
-        ref: this.tabTitlesRef[3],
-        onClick: this.changeTab.bind(this, 3)
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-clipboard-list d-block d-md-inline"
-      }), "\u0646\u06CC\u0627\u0632 \u0647\u0627")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, navbar && navbar.map(function (item) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+          className: "tab-link",
+          ref: _this3.tabTitlesRef[item.tab],
+          onClick: _this3.changeTab.bind(_this3, item.tab)
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fas fa-project-diagram d-block d-md-inline"
+        }), item.text);
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "result-container col-12 mt-3 active",
         ref: this.tabResultsRef[0]
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
