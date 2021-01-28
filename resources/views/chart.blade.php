@@ -19,7 +19,7 @@
         let data = [
             @foreach($task_days as $task_day)
             {
-                y: {{ $task_day->percentage }},
+                y: {{ rand(0,100) }},
                 t: moment("{{ $task_day->date->format('Y-m-d') }}").format("jYYYY-jMM-jDD")
             },
             @endforeach
@@ -35,7 +35,7 @@
                     {
                         label: 'وظایف',
                         // showLine: false,
-                        lineTension: 0,
+                        lineTension: 0.5,
                         data: data,
                         // fill: false,
                         borderColor: 'red',

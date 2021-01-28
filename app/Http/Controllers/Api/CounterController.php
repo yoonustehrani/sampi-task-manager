@@ -23,15 +23,15 @@ class CounterController extends Controller
         return [
             'finished' => [
                 'count' => $user->finished_tasks()->count(),
-                'href'  => '#'
+                'href'  => route('task-manager.tasks.index', ['relationship' => 'finished'])
             ],
             'unfinished' => [
                 'count' => $user->unfinished_tasks()->count(),
-                'href'  => '#'
+                'href'  => route('task-manager.tasks.index', ['relationship' => 'unfinished'])
             ],
             'expired' => [
                 'count' => $user->expired_tasks()->count(),
-                'href'  => '#'
+                'href'  => route('task-manager.tasks.index', ['relationship' => 'expired'])
             ]
         ];
     }
