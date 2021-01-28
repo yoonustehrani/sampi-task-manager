@@ -118,6 +118,7 @@ export default class Dashboard extends Component {
                 isGetting: false
             })
         })
+        this.tabTitlesRef[0].current.classList.add("active")
     }
     
 

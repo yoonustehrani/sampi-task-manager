@@ -55373,6 +55373,7 @@ var Dashboard = /*#__PURE__*/function (_Component) {
           isGetting: false
         });
       });
+      this.tabTitlesRef[0].current.classList.add("active");
     }
   }, {
     key: "render",
