@@ -55059,19 +55059,15 @@ var Dashboard = /*#__PURE__*/function (_Component) {
         });
       }
 
-      _this.tabResultsRef.map(function (tabResultRef, i) {
-        if (tab_index === i) {
-          tabResultRef.current.classList.add("active");
-        } else {
-          tabResultRef.current.classList.remove("active");
-        }
-      });
-
       _this.tabTitlesRef.map(function (tabTitleRef, i) {
         if (tab_index === i) {
           tabTitleRef.current.classList.add("active");
+
+          _this.tabResultsRef[i].current.classList.add("active");
         } else {
           tabTitleRef.current.classList.remove("active");
+
+          _this.tabResultsRef[i].current.classList.remove("active");
         }
       });
     });

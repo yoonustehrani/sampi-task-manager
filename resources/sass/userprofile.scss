@@ -1,5 +1,9 @@
 div.user-card {
     background-color: #ffffff;
+    min-width: 300px;
+    @media (min-width: 768px) {
+        min-width: 500px;
+    }
     div.user-info-section {
         display: flex;
         flex-direction: column;
@@ -87,7 +91,8 @@ div.user-card {
                     }
                 }
                 div.task-item:hover {
-                    background-color: #D3CCE3;
+                    // background-color: #D3CCE3;
+                    background-color: #D7DDE8;
                 }
                 div.demand-item {
                     display: flex;
@@ -133,7 +138,8 @@ div.user-card {
 }
 
 .task-bg-color {
-    background: linear-gradient(#D3CCE3, #E9E4F0);
+    // background: linear-gradient(#D3CCE3, #E9E4F0);
+    background-color: #D7DDE8 !important;
 }
 
 div.statistics-section {

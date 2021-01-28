@@ -28730,6 +28730,21 @@ function _getPrototypeOf(o) {
   return _getPrototypeOf(o);
 }
 
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
 
 
 var Demands = /*#__PURE__*/function (_Component) {
@@ -28737,22 +28752,63 @@ var Demands = /*#__PURE__*/function (_Component) {
 
   var _super = _createSuper(Demands);
 
-  function Demands() {
+  function Demands(props) {
+    var _this;
+
     _classCallCheck(this, Demands);
 
-    return _super.apply(this, arguments);
+    _this = _super.call(this, props);
+
+    _defineProperty(_assertThisInitialized(_this), "changeTab", function (tab_index) {
+      _this.tabTitlesRef.map(function (titleRef, i) {
+        if (tab_index === i) {
+          _this.tabTitlesRef[i].current.classList.add("active");
+
+          _this.tabResultsRef[i].current.classList.add("active");
+        } else {
+          _this.tabTitlesRef[i].current.classList.remove("active");
+
+          _this.tabResultsRef[i].current.classList.remove("active");
+        }
+      });
+    });
+
+    _this.tabTitlesRef = [];
+    _this.tabResultsRef = [];
+
+    for (var index = 0; index < 2; index++) {
+      _this.tabTitlesRef.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef());
+
+      _this.tabResultsRef.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef());
+    }
+
+    _this.state = {};
+    return _this;
   }
 
   _createClass(Demands, [{
     key: "render",
     value: function render() {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-12 mt-4 float-right"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "title-section"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-arrow-left"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, "\u062E\u0648\u0627\u0633\u062A\u0647 \u0647\u0627")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
+        className: "demands-tabs-titles col-12"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "#demands",
+        className: "demand-tab-title active",
+        ref: this.tabTitlesRef[0],
+        onClick: this.changeTab.bind(this, 0)
+      }, "\u062F\u0631\u062E\u0648\u0627\u0633\u062A", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-long-arrow-alt-left right-arrow animated slideInLeft"
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "#needs",
+        className: "demand-tab-title",
+        ref: this.tabTitlesRef[1],
+        onClick: this.changeTab.bind(this, 1)
+      }, "\u0646\u06CC\u0627\u0632", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-long-arrow-alt-right left-arrow animated slideInRight"
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-12 mt-4 float-right demand-tab-result active",
+        ref: this.tabResultsRef[0]
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
         className: "col-12 table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right animated rubberBand"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", {
         className: "thead-dark"
@@ -28789,12 +28845,9 @@ var Demands = /*#__PURE__*/function (_Component) {
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-calendar-times fa-3x"
       })))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-12 mt-4 float-right"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "title-section"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-arrow-right"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, "\u0646\u06CC\u0627\u0632 \u0647\u0627")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
+        className: "col-12 mt-4 float-right demand-tab-result",
+        ref: this.tabResultsRef[1]
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
         className: "col-12 table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right animated rubberBand"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", {
         className: "thead-dark"

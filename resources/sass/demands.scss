@@ -1,0 +1,58 @@
+nav.demands-tabs-titles {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+    margin-bottom: 60px;
+    .demand-tab-title {
+        color: #0275d8;
+        transition: 0.3s;
+        cursor: pointer;
+        position: relative;
+        font-size: 15px;
+        i {
+            position: absolute;
+            top: -52%;
+            font-size: 95px;
+            transition: 0.3s;
+        }
+        i.right-arrow {
+            right: 4%;
+        }
+        i.left-arrow {
+            left: -145%;
+        }
+    }
+    @media(min-width: 768px) {
+        .demand-tab-title {
+            font-size: 20px;
+            i {
+                font-size: 140px;
+                top: -75%;
+            }
+            i.right-arrow {
+                right: -5%;
+            }
+            i.left-arrow {
+                left: -115%;
+            }
+        }
+    }
+    .demand-tab-title.active {
+        color: #d9534f;
+        font-weight: bold;
+    }
+    .demand-tab-title:hover {
+        color: #d9534f;
+        i {
+            color: #d9534f;
+        }
+    }
+}
+div.demand-tab-result {
+    display: none;
+}
+div.demand-tab-result.active {
+    display: block !important;    
+}

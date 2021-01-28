@@ -39,18 +39,13 @@ export default class Dashboard extends Component {
                 })
             })
         }
-        this.tabResultsRef.map((tabResultRef, i) => {
-            if (tab_index === i) {
-                tabResultRef.current.classList.add("active")
-            } else {
-                tabResultRef.current.classList.remove("active")
-            }
-        })
         this.tabTitlesRef.map((tabTitleRef, i) => {
             if (tab_index === i) {
                 tabTitleRef.current.classList.add("active")
+                this.tabResultsRef[i].current.classList.add("active")
             } else {
                 tabTitleRef.current.classList.remove("active")
+                this.tabResultsRef[i].current.classList.remove("active")
             }
         })
     }

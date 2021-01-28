@@ -1,14 +1,49 @@
 import React, { Component } from 'react'
 
 export default class Demands extends Component {
+    constructor(props) {
+        super(props)
+        this.tabTitlesRef = []
+        this.tabResultsRef = []
+        for (let index = 0; index < 2; index++) {
+            this.tabTitlesRef.push(React.createRef())
+            this.tabResultsRef.push(React.createRef())
+        }
+        this.state = {
+             
+        }
+    }
+
+    changeTab = (tab_index) => {
+        this.tabTitlesRef.map((titleRef, i) => {
+            if (tab_index === i) {
+                this.tabTitlesRef[i].current.classList.add("active")
+                this.tabResultsRef[i].current.classList.add("active")
+            } else {
+                this.tabTitlesRef[i].current.classList.remove("active")
+                this.tabResultsRef[i].current.classList.remove("active")
+            }
+        })
+    }
+    
     render() {
         return (
             <div>
-                <div className="col-12 mt-4 float-right">
-                    <div className="title-section">
+                <nav className="demands-tabs-titles col-12">
+                    <a href="#demands" className="demand-tab-title active" ref={this.tabTitlesRef[0]} onClick={this.changeTab.bind(this, 0)}>
+                        درخواست 
+                        <i className="fas fa-long-arrow-alt-left right-arrow animated slideInLeft"></i>
+                    </a>
+                    <a href="#needs" className="demand-tab-title" ref={this.tabTitlesRef[1]} onClick={this.changeTab.bind(this, 1)}>
+                        نیاز
+                        <i className="fas fa-long-arrow-alt-right left-arrow animated slideInRight"></i>
+                    </a>
+                </nav>
+                <div className="col-12 mt-4 float-right demand-tab-result active" ref={this.tabResultsRef[0]}>
+                    {/* <div className="title-section">
                         <i className="fas fa-arrow-left"></i>
                         <h4>خواسته ها</h4>
-                    </div>
+                    </div> */}
                     <table className="col-12 table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right animated rubberBand">
                         <thead className="thead-dark">
                             <tr>
@@ -57,11 +92,11 @@ export default class Demands extends Component {
                             </div>
                     } */}
                 </div>
-                <div className="col-12 mt-4 float-right">
-                    <div className="title-section">
+                <div className="col-12 mt-4 float-right demand-tab-result" ref={this.tabResultsRef[1]}>
+                    {/* <div className="title-section">
                         <i className="fas fa-arrow-right"></i>
                         <h4>نیاز ها</h4>
-                    </div>
+                    </div> */}
                     <table className="col-12 table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right animated rubberBand">
                         <thead className="thead-dark">
                             <tr>

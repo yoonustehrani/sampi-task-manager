@@ -9456,6 +9456,13 @@ div.employees-container div.user-dropdown-item.permanent-visible div.user-img-co
 
 div.user-card {
   background-color: #ffffff;
+  min-width: 300px;
+}
+
+@media (min-width: 768px) {
+  div.user-card {
+    min-width: 500px;
+  }
 }
 
 div.user-card div.user-info-section {
@@ -9551,7 +9558,7 @@ div.user-card div.user-work-section div.user-works-results div.user-tasks-contai
 }
 
 div.user-card div.user-work-section div.user-works-results div.user-tasks-container div.task-item:hover {
-  background-color: #D3CCE3;
+  background-color: #D7DDE8;
 }
 
 div.user-card div.user-work-section div.user-works-results div.user-tasks-container div.demand-item {
@@ -9599,7 +9606,7 @@ div.user-card div.user-work-section div.user-works-results div.user-tasks-contai
 }
 
 .task-bg-color {
-  background: linear-gradient(#D3CCE3, #E9E4F0);
+  background-color: #D7DDE8 !important;
 }
 
 div.statistics-section {
@@ -9625,6 +9632,78 @@ div.select-option-big {
 div.select-option-big i {
   margin-left: 8px !important;
   font-size: 18px !important;
+}
+
+nav.demands-tabs-titles {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  flex-wrap: nowrap;
+  margin-bottom: 60px;
+}
+
+nav.demands-tabs-titles .demand-tab-title {
+  color: #0275d8;
+  transition: 0.3s;
+  cursor: pointer;
+  position: relative;
+  font-size: 15px;
+}
+
+nav.demands-tabs-titles .demand-tab-title i {
+  position: absolute;
+  top: -52%;
+  font-size: 95px;
+  transition: 0.3s;
+}
+
+nav.demands-tabs-titles .demand-tab-title i.right-arrow {
+  right: 4%;
+}
+
+nav.demands-tabs-titles .demand-tab-title i.left-arrow {
+  left: -145%;
+}
+
+@media (min-width: 768px) {
+  nav.demands-tabs-titles .demand-tab-title {
+    font-size: 20px;
+  }
+
+  nav.demands-tabs-titles .demand-tab-title i {
+    font-size: 140px;
+    top: -75%;
+  }
+
+  nav.demands-tabs-titles .demand-tab-title i.right-arrow {
+    right: -5%;
+  }
+
+  nav.demands-tabs-titles .demand-tab-title i.left-arrow {
+    left: -115%;
+  }
+}
+
+nav.demands-tabs-titles .demand-tab-title.active {
+  color: #d9534f;
+  font-weight: bold;
+}
+
+nav.demands-tabs-titles .demand-tab-title:hover {
+  color: #d9534f;
+}
+
+nav.demands-tabs-titles .demand-tab-title:hover i {
+  color: #d9534f;
+}
+
+div.demand-tab-result {
+  display: none;
+}
+
+div.demand-tab-result.active {
+  display: block !important;
 }
 
 body,
