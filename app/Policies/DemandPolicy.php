@@ -63,10 +63,7 @@ class DemandPolicy
      */
     public function update(User $user, Demand $demand)
     {
-        if ($user->id == $demand->from_id || $user->id == $demand->to_id) {
-            return true;
-        }
-        return $user->hasPermission('can_update_any_demands');
+        return $user->id == $demand->from_id || $user->hasPermission('can_update_any_demands');
     }
 
     /**
@@ -78,10 +75,7 @@ class DemandPolicy
      */
     public function delete(User $user, Demand $demand)
     {
-        if ($user->id == $demand->from_id || $user->id == $demand->to_id) {
-            return true;
-        }
-        return $user->hasPermission('can_delete_demands');
+        return $user->id == $demand->from_id || $user->hasPermission('can_delete_demands');
     }
 
     /**
@@ -106,5 +100,10 @@ class DemandPolicy
     public function forceDelete(User $user, Demand $demand)
     {
         return $user->hasPermission('can_force_delete_demands');
+    }
+
+    public function toggle_state(User $user, Demand $demand)
+    {
+        return $user->id == $demand->to_id || $user->hasPermission('can_update_any_demands');
     }
 }

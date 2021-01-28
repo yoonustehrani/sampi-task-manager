@@ -31,6 +31,8 @@ class DemandController extends BaseController
     }
     public function store(Request $request, Workspace $workspace)
     {
+        $user = $request->user();
+        $this->authorize('create', Demand::class);
         $request->validate([
             'title' => 'required|string|min:3|max:255',
             'target_user'  => 'required|numeric',
@@ -40,7 +42,6 @@ class DemandController extends BaseController
         ]);
         try {
             \DB::beginTransaction();
-            $user = $request->user();
             $target_user = \App\User::findOrFail($request->target_user);
             $demand = new Demand();
             $demand->title = $request->title;
@@ -65,6 +66,8 @@ class DemandController extends BaseController
     }
     public function update(Request $request, Workspace $workspace, $demand)
     {
+        $demand = $workspace->demands()->findOrFail($demand);
+        $this->authorize('update', $demand);
         $request->validate([
             'title' => 'required|string|min:3|max:255',
             'target_user'  => 'required|numeric',
@@ -74,14 +77,11 @@ class DemandController extends BaseController
         ]);
         try {
             \DB::beginTransaction();
-            $user = $request->user();
             $target_user = \App\User::findOrFail($request->target_user);
-            $demand = new Demand();
             $demand->title = $request->title;
             $demand->priority_id = $request->priority;
-            $demand->title = $request->title;
             $demand->to_id = $target_user->id;
-            $demand->workspace_id = $workspace->id;
+            $demand->save();
             \DB::commit();
             return $demand;
         } catch (\Exception $e){
@@ -94,6 +94,7 @@ class DemandController extends BaseController
     public function destroy(Workspace $workspace, $demand)
     {
         $demand = $workspace->demands()->findOrFail($demand);
+        $this->authorize('delete', $demand);
         if ($demand->delete()) {
             return ['okay' => true];
         }
