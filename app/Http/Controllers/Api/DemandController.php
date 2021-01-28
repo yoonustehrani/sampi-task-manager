@@ -14,20 +14,38 @@ class DemandController extends BaseController
         $user = $request->user();
         $relationship = $this->model_relationship($request->relationship, $user, '_demands', 'demands');
         $with = $relationship == 'demands' ? 'to' : 'from';
-        return  $user->{$relationship}()
-                ->where('workspace_id', $workspace)
-                ->withCount('messages')
-                ->with($with, 'priority:id,title')
-                ->paginate(10);
+        $user_demands = $user->{$relationship}()->where('workspace_id', $workspace);
+        switch ($request->filter) {
+            case 'finished':
+                $user_demands = $user_demands->whereNotNull('finished_at');
+                break;
+            case 'unfinished':
+                $user_demands = $user_demands->whereNull('finished_at');
+                break;
+        }
+        return $this->decide_ordered($request, $user_demands)
+                    ->withCount('messages')
+                    ->with($with, 'priority:id,title')
+                    ->paginate(10);
     }
     public function mixed(Request $request)
     {
         $user = $request->user();
         $relationship = $this->model_relationship($request->relationship, $user, '_demands', 'demands');
         $with = $relationship == 'demands' ? 'to' : 'from';
-        return  $user->{$relationship}()
-                ->with($with, 'priority:id,title', 'workspace')
-                ->paginate(10);
+        $user_demands = $user->{$relationship}();
+        switch ($request->filter) {
+            case 'finished':
+                $user_demands = $user_demands->whereNotNull('finished_at');
+                break;
+            case 'unfinished':
+                $user_demands = $user_demands->whereNull('finished_at');
+                break;
+        }
+        return $this->decide_ordered($request, $user_demands)
+                    ->withCount('messages')
+                    ->with($with, 'priority:id,title', 'workspace')
+                    ->paginate(10);
     }
     public function store(Request $request, Workspace $workspace)
     {

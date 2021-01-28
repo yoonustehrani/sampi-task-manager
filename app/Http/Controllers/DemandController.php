@@ -19,24 +19,13 @@ class DemandController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function mixed(Request $request)
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+        return view('theme.pages.demands.mixed');
     }
 
     /**
@@ -49,39 +38,5 @@ class DemandController extends Controller
     {
         $demand = $workspace->demands()->with('from', 'to', 'priority')->withCount('messages')->findOrFail($demand);
         return view('theme.pages.demands.show', compact('demand', 'workspace'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $demand
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($demand)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $demand
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $demand)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $demand
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($demand)
-    {
-        //
     }
 }

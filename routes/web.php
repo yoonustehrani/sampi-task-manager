@@ -59,7 +59,8 @@ Route::group(['prefix' => 'task-manager', 'as' => 'task-manager.', 'middleware' 
     Route::resource('priorities', 'PriorityController');
     Route::resource('workspaces',  'WorkspaceController');
     Route::resource('workspaces/{workspace}/demands', 'DemandController');
-    Route::resource('tasks',       'TaskController');
+    Route::resource('tasks', 'TaskController')->only('index', 'show');
+    Route::get('demands', 'DemandController@mixed')->name('demands.mixed');
     // Route::get('workspaces/{workspace}/tasks/{}', 'TaskController@index');
 });
 

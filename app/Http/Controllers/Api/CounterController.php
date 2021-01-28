@@ -23,7 +23,7 @@ class CounterController extends Controller
         return [
             'finished' => [
                 'count' => $user->finished_tasks()->count(),
-                'href'  => '#'
+                'href'  => route('task-manager.tasks.index')
             ],
             'unfinished' => [
                 'count' => $user->unfinished_tasks()->count(),
@@ -39,13 +39,17 @@ class CounterController extends Controller
     {
         $user = ($request->user_id) ? \App\User::find($request->user_id) : $request->user();
         return [
-            'finished'   => [
-                'count' => $user->demands()->whereNull('finished_at')->count(),
-                'href'  => '#'
+            'asked_demands' => [
+                'unfinished' => [
+                    'count' => $user->asked_demands()->whereNull('finished_at')->count(),
+                    'href'  => route('task-manager.demands.mixed', ['tab' => 'asked_demands'])
+                ]
             ],
-            'unfinished' => [
-                'count' => $user->demands()->whereNotNull('finished_at')->count(),
-                'href'  => '#'
+            'demands' => [
+                'unfinished' => [
+                    'count' => $user->demands()->whereNull('finished_at')->count(),
+                    'href'  => route('task-manager.demands.mixed', ['tab' => 'demand'])
+                ]
             ],
         ];
     }

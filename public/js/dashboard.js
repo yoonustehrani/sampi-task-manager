@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -1948,7 +1948,7 @@ module.exports = {
 
 /***/ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/react-activity/dist/react-activity.css":
 /*!*********************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader??ref--7-1!./node_modules/postcss-loader/src??ref--7-2!./node_modules/react-activity/dist/react-activity.css ***!
+  !*** ./node_modules/css-loader??ref--5-1!./node_modules/postcss-loader/src??ref--5-2!./node_modules/react-activity/dist/react-activity.css ***!
   \*********************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -1958,7 +1958,7 @@ exports = module.exports = __webpack_require__(/*! ../../css-loader/lib/css-base
 
 
 // module
-exports.push([module.i, "@-webkit-keyframes dots-pulse {\n  0% {\n    opacity: 0.1; }\n  15% {\n    opacity: 1; }\n  100% {\n    opacity: 0.1; } }\n@keyframes dots-pulse {\n  0% {\n    opacity: 0.1; }\n  15% {\n    opacity: 1; }\n  100% {\n    opacity: 0.1; } }\n.rai-dots .rai-circle {\n  border-radius: 100%;\n  display: inline-block;\n  margin-right: 0.1875em;\n  background-color: #727981;\n  width: 0.5em;\n  height: 0.5em;\n  -webkit-animation-name: dots-pulse;\n          animation-name: dots-pulse;\n  -webkit-animation-duration: inherit;\n          animation-duration: inherit;\n  -webkit-animation-timing-function: ease-in-out;\n          animation-timing-function: ease-in-out;\n  -webkit-animation-iteration-count: infinite;\n          animation-iteration-count: infinite; }\n  .rai-dots .rai-circle:last-child {\n    margin-right: 0; }\n\n@-webkit-keyframes levels-pulse {\n  0% {\n    height: 30%;\n    opacity: 0.5; }\n  20% {\n    height: 100%;\n    opacity: 1; }\n  35% {\n    height: 30%;\n    opacity: 0.5; }\n  55% {\n    height: 100%;\n    opacity: 1; }\n  70% {\n    height: 50%;\n    opacity: 0.5; }\n  80% {\n    height: 100%;\n    opacity: 1; }\n  100% {\n    height: 30%;\n    opacity: 0.5; } }\n\n@keyframes levels-pulse {\n  0% {\n    height: 30%;\n    opacity: 0.5; }\n  20% {\n    height: 100%;\n    opacity: 1; }\n  35% {\n    height: 30%;\n    opacity: 0.5; }\n  55% {\n    height: 100%;\n    opacity: 1; }\n  70% {\n    height: 50%;\n    opacity: 0.5; }\n  80% {\n    height: 100%;\n    opacity: 1; }\n  100% {\n    height: 30%;\n    opacity: 0.5; } }\n.rai-levels .rai-levels-container {\n  text-align: left;\n  display: inline-block;\n  height: 1em;\n  line-height: 1em;\n  -webkit-animation-duration: inherit;\n          animation-duration: inherit; }\n.rai-levels .rai-bar {\n  bottom: 0;\n  display: inline-block;\n  vertical-align: bottom;\n  width: 0.25em;\n  background: #727981;\n  margin-right: 0.125em;\n  height: 50%;\n  -webkit-animation-name: levels-pulse;\n          animation-name: levels-pulse;\n  -webkit-animation-duration: inherit;\n          animation-duration: inherit;\n  -webkit-animation-timing-function: ease-in-out;\n          animation-timing-function: ease-in-out;\n  -webkit-animation-iteration-count: infinite;\n          animation-iteration-count: infinite; }\n  .rai-levels .rai-bar:last-child {\n    margin-right: 0; }\n\n@-webkit-keyframes rai-sentry-pulse {\n  from {\n    transform: scale(0);\n    opacity: 1; }\n  to {\n    transform: scale(1);\n    opacity: 0; } }\n\n@keyframes rai-sentry-pulse {\n  from {\n    transform: scale(0);\n    opacity: 1; }\n  to {\n    transform: scale(1);\n    opacity: 0; } }\n.rai-sentry {\n  text-align: left;\n  display: inline-block;\n  position: relative;\n  width: 2em;\n  height: 2em; }\n  .rai-sentry .rai-wave-container {\n    display: inline-flex;\n    align-items: center;\n    justify-content: center;\n    width: 100%;\n    height: 100%;\n    position: absolute;\n    -webkit-animation-duration: inherit;\n            animation-duration: inherit; }\n  .rai-sentry .rai-wave {\n    display: inline-block;\n    border: 0.125em solid #727981;\n    border-radius: 100%;\n    box-sizing: border-box;\n    width: 100%;\n    height: 100%;\n    -webkit-animation-name: rai-sentry-pulse;\n            animation-name: rai-sentry-pulse;\n    -webkit-animation-duration: inherit;\n            animation-duration: inherit;\n    -webkit-animation-timing-function: linear;\n            animation-timing-function: linear;\n    -webkit-animation-iteration-count: infinite;\n            animation-iteration-count: infinite; }\n\n@-webkit-keyframes rai-spinner {\n  from {\n    transform: rotate(0deg); }\n  to {\n    transform: rotate(360deg); } }\n\n@keyframes rai-spinner {\n  from {\n    transform: rotate(0deg); }\n  to {\n    transform: rotate(360deg); } }\n.rai-spinner {\n  width: 1.5em;\n  height: 1.5em;\n  position: relative;\n  margin: 0; }\n  .rai-spinner-inner, .rai-spinner-outer {\n    position: absolute;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    border-radius: 100%;\n    margin-left: -0.0625em;\n    margin-top: -0.0625em; }\n  .rai-spinner-outer {\n    border: 0.125em solid #727981;\n    opacity: 0.2; }\n  .rai-spinner-inner {\n    position: absolute;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    border-radius: 100%;\n    border-top: 0.125em solid #727981;\n    border-right: 0.125em solid transparent !important;\n    border-bottom: 0.125em solid transparent !important;\n    border-left: 0.125em solid transparent !important;\n    -webkit-animation-name: rai-spinner;\n            animation-name: rai-spinner;\n    -webkit-animation-iteration-count: infinite;\n            animation-iteration-count: infinite;\n    -webkit-animation-timing-function: linear;\n            animation-timing-function: linear;\n    -webkit-animation-duration: inherit;\n            animation-duration: inherit; }\n\n@keyframes dots-pulse {\n  0% {\n    opacity: 0.1; }\n  15% {\n    opacity: 1; }\n  100% {\n    opacity: 0.1; } }\n.rai-squares .rai-square {\n  display: inline-block;\n  margin-right: 0.1875em;\n  background-color: #727981;\n  width: 0.5em;\n  height: 0.5em;\n  -webkit-animation-name: dots-pulse;\n          animation-name: dots-pulse;\n  -webkit-animation-duration: inherit;\n          animation-duration: inherit;\n  -webkit-animation-timing-function: ease-in-out;\n          animation-timing-function: ease-in-out;\n  -webkit-animation-iteration-count: infinite;\n          animation-iteration-count: infinite; }\n  .rai-squares .rai-square:last-child {\n    margin-right: 0; }\n\n@-webkit-keyframes digital-pulse {\n  0%, 40%, 100% {\n    transform: scaleY(0.4); }\n  20% {\n    transform: scaleY(1); } }\n\n@keyframes digital-pulse {\n  0%, 40%, 100% {\n    transform: scaleY(0.4); }\n  20% {\n    transform: scaleY(1); } }\n.rai-digital {\n  height: 1em;\n  text-align: center; }\n  .rai-digital > div {\n    display: inline-block;\n    margin-right: 0.125em;\n    background-color: #727981;\n    width: 0.25em;\n    height: 100%;\n    -webkit-animation-name: digital-pulse;\n            animation-name: digital-pulse;\n    -webkit-animation-duration: inherit;\n            animation-duration: inherit;\n    -webkit-animation-timing-function: ease-in-out;\n            animation-timing-function: ease-in-out;\n    -webkit-animation-iteration-count: infinite;\n            animation-iteration-count: infinite; }\n    .rai-digital > div:last-child {\n      margin-right: 0; }\n\n@-webkit-keyframes bounce-pulse {\n  0% {\n    transform: translateY(0.1875em); }\n  30% {\n    transform: translateY(-0.25em); }\n  50% {\n    transform: translateY(3); } }\n\n@keyframes bounce-pulse {\n  0% {\n    transform: translateY(0.1875em); }\n  30% {\n    transform: translateY(-0.25em); }\n  50% {\n    transform: translateY(3); } }\n.rai-bounce > div {\n  transform: translateY(0.1875em);\n  border-radius: 100%;\n  display: inline-block;\n  margin-right: 0.1875em;\n  background-color: #727981;\n  width: 0.5em;\n  height: 0.5em;\n  -webkit-animation-name: bounce-pulse;\n          animation-name: bounce-pulse;\n  -webkit-animation-duration: inherit;\n          animation-duration: inherit;\n  -webkit-animation-timing-function: ease-in-out;\n          animation-timing-function: ease-in-out;\n  -webkit-animation-iteration-count: infinite;\n          animation-iteration-count: infinite; }\n  .rai-bounce > div:last-child {\n    margin-right: 0; }\n\n@-webkit-keyframes windill-pulse {\n  0% {\n    transform: rotate(0deg); }\n  99% {\n    transform: rotate(356deg); } }\n\n@keyframes windill-pulse {\n  0% {\n    transform: rotate(0deg); }\n  99% {\n    transform: rotate(356deg); } }\n.rai-windill {\n  width: 1em;\n  height: 1em;\n  position: relative; }\n  .rai-windill > div {\n    border-radius: 0.125em;\n    position: absolute;\n    top: 0;\n    left: 50%;\n    margin-left: -0.0625em;\n    width: 0.125em;\n    height: 100%;\n    -webkit-animation-name: windill-pulse;\n            animation-name: windill-pulse;\n    -webkit-animation-duration: inherit;\n            animation-duration: inherit;\n    -webkit-animation-timing-function: linear;\n            animation-timing-function: linear;\n    -webkit-animation-iteration-count: infinite;\n            animation-iteration-count: infinite; }\n", ""]);
+exports.push([module.i, "@keyframes dots-pulse {\n  0% {\n    opacity: 0.1; }\n  15% {\n    opacity: 1; }\n  100% {\n    opacity: 0.1; } }\n.rai-dots .rai-circle {\n  border-radius: 100%;\n  display: inline-block;\n  margin-right: 0.1875em;\n  background-color: #727981;\n  width: 0.5em;\n  height: 0.5em;\n  animation-name: dots-pulse;\n  animation-duration: inherit;\n  animation-timing-function: ease-in-out;\n  animation-iteration-count: infinite; }\n  .rai-dots .rai-circle:last-child {\n    margin-right: 0; }\n\n@keyframes levels-pulse {\n  0% {\n    height: 30%;\n    opacity: 0.5; }\n  20% {\n    height: 100%;\n    opacity: 1; }\n  35% {\n    height: 30%;\n    opacity: 0.5; }\n  55% {\n    height: 100%;\n    opacity: 1; }\n  70% {\n    height: 50%;\n    opacity: 0.5; }\n  80% {\n    height: 100%;\n    opacity: 1; }\n  100% {\n    height: 30%;\n    opacity: 0.5; } }\n.rai-levels .rai-levels-container {\n  text-align: left;\n  display: inline-block;\n  height: 1em;\n  line-height: 1em;\n  animation-duration: inherit; }\n.rai-levels .rai-bar {\n  bottom: 0;\n  display: inline-block;\n  vertical-align: bottom;\n  width: 0.25em;\n  background: #727981;\n  margin-right: 0.125em;\n  height: 50%;\n  animation-name: levels-pulse;\n  animation-duration: inherit;\n  animation-timing-function: ease-in-out;\n  animation-iteration-count: infinite; }\n  .rai-levels .rai-bar:last-child {\n    margin-right: 0; }\n\n@keyframes rai-sentry-pulse {\n  from {\n    transform: scale(0);\n    opacity: 1; }\n  to {\n    transform: scale(1);\n    opacity: 0; } }\n.rai-sentry {\n  text-align: left;\n  display: inline-block;\n  position: relative;\n  width: 2em;\n  height: 2em; }\n  .rai-sentry .rai-wave-container {\n    display: inline-flex;\n    align-items: center;\n    justify-content: center;\n    width: 100%;\n    height: 100%;\n    position: absolute;\n    animation-duration: inherit; }\n  .rai-sentry .rai-wave {\n    display: inline-block;\n    border: 0.125em solid #727981;\n    border-radius: 100%;\n    box-sizing: border-box;\n    width: 100%;\n    height: 100%;\n    animation-name: rai-sentry-pulse;\n    animation-duration: inherit;\n    animation-timing-function: linear;\n    animation-iteration-count: infinite; }\n\n@keyframes rai-spinner {\n  from {\n    transform: rotate(0deg); }\n  to {\n    transform: rotate(360deg); } }\n.rai-spinner {\n  width: 1.5em;\n  height: 1.5em;\n  position: relative;\n  margin: 0; }\n  .rai-spinner-inner, .rai-spinner-outer {\n    position: absolute;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    border-radius: 100%;\n    margin-left: -0.0625em;\n    margin-top: -0.0625em; }\n  .rai-spinner-outer {\n    border: 0.125em solid #727981;\n    opacity: 0.2; }\n  .rai-spinner-inner {\n    position: absolute;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    border-radius: 100%;\n    border-top: 0.125em solid #727981;\n    border-right: 0.125em solid transparent !important;\n    border-bottom: 0.125em solid transparent !important;\n    border-left: 0.125em solid transparent !important;\n    animation-name: rai-spinner;\n    animation-iteration-count: infinite;\n    animation-timing-function: linear;\n    animation-duration: inherit; }\n\n@keyframes dots-pulse {\n  0% {\n    opacity: 0.1; }\n  15% {\n    opacity: 1; }\n  100% {\n    opacity: 0.1; } }\n.rai-squares .rai-square {\n  display: inline-block;\n  margin-right: 0.1875em;\n  background-color: #727981;\n  width: 0.5em;\n  height: 0.5em;\n  animation-name: dots-pulse;\n  animation-duration: inherit;\n  animation-timing-function: ease-in-out;\n  animation-iteration-count: infinite; }\n  .rai-squares .rai-square:last-child {\n    margin-right: 0; }\n\n@keyframes digital-pulse {\n  0%, 40%, 100% {\n    transform: scaleY(0.4); }\n  20% {\n    transform: scaleY(1); } }\n.rai-digital {\n  height: 1em;\n  text-align: center; }\n  .rai-digital > div {\n    display: inline-block;\n    margin-right: 0.125em;\n    background-color: #727981;\n    width: 0.25em;\n    height: 100%;\n    animation-name: digital-pulse;\n    animation-duration: inherit;\n    animation-timing-function: ease-in-out;\n    animation-iteration-count: infinite; }\n    .rai-digital > div:last-child {\n      margin-right: 0; }\n\n@keyframes bounce-pulse {\n  0% {\n    transform: translateY(0.1875em); }\n  30% {\n    transform: translateY(-0.25em); }\n  50% {\n    transform: translateY(3); } }\n.rai-bounce > div {\n  transform: translateY(0.1875em);\n  border-radius: 100%;\n  display: inline-block;\n  margin-right: 0.1875em;\n  background-color: #727981;\n  width: 0.5em;\n  height: 0.5em;\n  animation-name: bounce-pulse;\n  animation-duration: inherit;\n  animation-timing-function: ease-in-out;\n  animation-iteration-count: infinite; }\n  .rai-bounce > div:last-child {\n    margin-right: 0; }\n\n@keyframes windill-pulse {\n  0% {\n    transform: rotate(0deg); }\n  99% {\n    transform: rotate(356deg); } }\n.rai-windill {\n  width: 1em;\n  height: 1em;\n  position: relative; }\n  .rai-windill > div {\n    border-radius: 0.125em;\n    position: absolute;\n    top: 0;\n    left: 50%;\n    margin-left: -0.0625em;\n    width: 0.125em;\n    height: 100%;\n    animation-name: windill-pulse;\n    animation-duration: inherit;\n    animation-timing-function: linear;\n    animation-iteration-count: infinite; }\n", ""]);
 
 // exports
 
@@ -7270,7 +7270,7 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
             sameElse: 'L',
         },
         relativeTime: {
-            future: '%s دیگر',
+            future: 'در %s',
             past: '%s پیش',
             s: 'چند ثانیه',
             ss: '%d ثانیه',
@@ -24066,7 +24066,7 @@ module.exports = ReactPropTypesSecret;
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(/*! !../../css-loader??ref--7-1!../../postcss-loader/src??ref--7-2!./react-activity.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/react-activity/dist/react-activity.css");
+var content = __webpack_require__(/*! !../../css-loader??ref--5-1!../../postcss-loader/src??ref--5-2!./react-activity.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/react-activity/dist/react-activity.css");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -54867,6 +54867,95 @@ var redirectTo = function redirectTo(url) {
 
 /***/ }),
 
+/***/ "./resources/js/react/components/Dashboard/CounterTab.jsx":
+/*!****************************************************************!*\
+  !*** ./resources/js/react/components/Dashboard/CounterTab.jsx ***!
+  \****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_activity__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-activity */ "./node_modules/react-activity/dist/react-activity.js");
+/* harmony import */ var react_activity__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_activity__WEBPACK_IMPORTED_MODULE_1__);
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+
+var CounterTab = /*#__PURE__*/function (_Component) {
+  _inherits(CounterTab, _Component);
+
+  var _super = _createSuper(CounterTab);
+
+  function CounterTab(props) {
+    var _this;
+
+    _classCallCheck(this, CounterTab);
+
+    _this = _super.call(this, props);
+    _this.state = {
+      title: props.Title,
+      icon: props.Icon,
+      custom_class: props.CustomClasses
+    };
+    return _this;
+  }
+
+  _createClass(CounterTab, [{
+    key: "render",
+    value: function render() {
+      var item = this.props.Item;
+      var _this$state = this.state,
+          title = _this$state.title,
+          icon = _this$state.icon,
+          custom_class = _this$state.custom_class;
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "float-left animated pulse col-md-3 col-12 ".concat(custom_class)
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: item ? item.href : "#",
+        className: "item-link"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "float-right dashboard-item ".concat(icon, " fa-3x")
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "float-right dashboard-item"
+      }, item ? item.count : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_activity__WEBPACK_IMPORTED_MODULE_1__["Levels"], {
+        color: "#ffffff"
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "float-right dashboard-item"
+      }, title))));
+    }
+  }]);
+
+  return CounterTab;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+/* harmony default export */ __webpack_exports__["default"] = (CounterTab);
+
+/***/ }),
+
 /***/ "./resources/js/react/components/Dashboard/index.jsx":
 /*!***********************************************************!*\
   !*** ./resources/js/react/components/Dashboard/index.jsx ***!
@@ -54888,142 +54977,36 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_activity_dist_react_activity_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-activity/dist/react-activity.css */ "./node_modules/react-activity/dist/react-activity.css");
 /* harmony import */ var react_activity_dist_react_activity_css__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_activity_dist_react_activity_css__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../helpers */ "./resources/js/helpers/index.js");
-function _typeof(obj) {
-  "@babel/helpers - typeof";
+/* harmony import */ var _CounterTab__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./CounterTab */ "./resources/js/react/components/Dashboard/CounterTab.jsx");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-    _typeof = function _typeof(obj) {
-      return typeof obj;
-    };
-  } else {
-    _typeof = function _typeof(obj) {
-      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    };
-  }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-  return _typeof(obj);
-}
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-function _classCallCheck(instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-}
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-function _defineProperties(target, props) {
-  for (var i = 0; i < props.length; i++) {
-    var descriptor = props[i];
-    descriptor.enumerable = descriptor.enumerable || false;
-    descriptor.configurable = true;
-    if ("value" in descriptor) descriptor.writable = true;
-    Object.defineProperty(target, descriptor.key, descriptor);
-  }
-}
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
-function _createClass(Constructor, protoProps, staticProps) {
-  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
-  if (staticProps) _defineProperties(Constructor, staticProps);
-  return Constructor;
-}
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-function _inherits(subClass, superClass) {
-  if (typeof superClass !== "function" && superClass !== null) {
-    throw new TypeError("Super expression must either be null or a function");
-  }
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
-  subClass.prototype = Object.create(superClass && superClass.prototype, {
-    constructor: {
-      value: subClass,
-      writable: true,
-      configurable: true
-    }
-  });
-  if (superClass) _setPrototypeOf(subClass, superClass);
-}
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _setPrototypeOf(o, p) {
-  _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
-    o.__proto__ = p;
-    return o;
-  };
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
-  return _setPrototypeOf(o, p);
-}
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
 
-function _createSuper(Derived) {
-  var hasNativeReflectConstruct = _isNativeReflectConstruct();
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
-  return function _createSuperInternal() {
-    var Super = _getPrototypeOf(Derived),
-        result;
-
-    if (hasNativeReflectConstruct) {
-      var NewTarget = _getPrototypeOf(this).constructor;
-
-      result = Reflect.construct(Super, arguments, NewTarget);
-    } else {
-      result = Super.apply(this, arguments);
-    }
-
-    return _possibleConstructorReturn(this, result);
-  };
-}
-
-function _possibleConstructorReturn(self, call) {
-  if (call && (_typeof(call) === "object" || typeof call === "function")) {
-    return call;
-  }
-
-  return _assertThisInitialized(self);
-}
-
-function _assertThisInitialized(self) {
-  if (self === void 0) {
-    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-  }
-
-  return self;
-}
-
-function _isNativeReflectConstruct() {
-  if (typeof Reflect === "undefined" || !Reflect.construct) return false;
-  if (Reflect.construct.sham) return false;
-  if (typeof Proxy === "function") return true;
-
-  try {
-    Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
-    return true;
-  } catch (e) {
-    return false;
-  }
-}
-
-function _getPrototypeOf(o) {
-  _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
-    return o.__proto__ || Object.getPrototypeOf(o);
-  };
-  return _getPrototypeOf(o);
-}
-
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
 
 
 moment__WEBPACK_IMPORTED_MODULE_2___default.a.locale('fa');
+
 
 
 
@@ -55181,85 +55164,27 @@ var Dashboard = /*#__PURE__*/function (_Component) {
           task_route = _this$props2.task_route;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "analysis-boxes analysis-container"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "float-left animated pulse col-md-3 col-12 projects"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        href: statistics.workspaceCounter ? statistics.workspaceCounter.all.href : "#",
-        className: "item-link"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "float-right dashboard-item fas fa-project-diagram fa-3x"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "float-right dashboard-item"
-      }, statistics.workspaceCounter ? statistics.workspaceCounter.all.count : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_activity__WEBPACK_IMPORTED_MODULE_3__["Levels"], {
-        color: "#ffffff"
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "float-right dashboard-item"
-      }, "\u067E\u0631\u0648\u0698\u0647 \u0647\u0627\u06CC \u0645\u0646")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "float-left animated pulse col-md-3 col-12 finished-tasks"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        href: statistics.taskCounter ? statistics.taskCounter.finished.href : "#",
-        className: "item-link"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "float-right dashboard-item fas fa-check-double fa-3x"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "float-right dashboard-item"
-      }, statistics.taskCounter ? statistics.taskCounter.finished.count : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_activity__WEBPACK_IMPORTED_MODULE_3__["Levels"], {
-        color: "#ffffff"
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "float-right dashboard-item"
-      }, "\u0648\u0638\u0627\u06CC\u0641 \u0627\u0646\u062C\u0627\u0645 \u0634\u062F\u0647")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "float-left animated pulse col-md-3 col-12 tickets finished-demands"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        href: statistics.demandCounter ? statistics.demandCounter.finished.href : "#",
-        className: "item-link"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "float-right dashboard-item fas fa-check fa-3x"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "float-right dashboard-item"
-      }, statistics.demandCounter ? statistics.demandCounter.finished.count : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_activity__WEBPACK_IMPORTED_MODULE_3__["Levels"], {
-        color: "#ffffff"
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "float-right dashboard-item"
-      }, "\u062E\u0648\u0627\u0633\u062A\u0647 \u0647\u0627\u06CC \u0627\u0646\u062C\u0627\u0645 \u0634\u062F\u0647")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "float-left animated pulse col-md-3 col-12 tickets delayed-tasks"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        href: statistics.taskCounter ? statistics.taskCounter.expired.href : "#",
-        className: "item-link"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "float-right dashboard-item fas fa-hourglass-end fa-3x"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "float-right dashboard-item"
-      }, statistics.taskCounter ? statistics.taskCounter.expired.count : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_activity__WEBPACK_IMPORTED_MODULE_3__["Levels"], {
-        color: "#ffffff"
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "float-right dashboard-item"
-      }, "\u0648\u0638\u0627\u06CC\u0641 \u0639\u0642\u0628 \u0627\u0641\u062A\u0627\u062F\u0647")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "float-left animated pulse col-md-3 col-12 tickets current-tasks"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        href: statistics.taskCounter ? statistics.taskCounter.unfinished.href : "#",
-        className: "item-link"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "float-right dashboard-item fas fa-tasks fa-3x"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "float-right dashboard-item"
-      }, statistics.taskCounter ? statistics.taskCounter.unfinished.count : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_activity__WEBPACK_IMPORTED_MODULE_3__["Levels"], {
-        color: "#ffffff"
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "float-right dashboard-item"
-      }, "\u0648\u0638\u0627\u06CC\u0641 \u062C\u0627\u0631\u06CC")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "float-left animated pulse col-md-3 col-12 tickets current-demands"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        href: statistics.demandCounter ? statistics.demandCounter.unfinished.href : "#",
-        className: "item-link"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "float-right dashboard-item fas fa-list-alt fa-3x"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "float-right dashboard-item"
-      }, statistics.demandCounter ? statistics.demandCounter.unfinished.count : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_activity__WEBPACK_IMPORTED_MODULE_3__["Levels"], {
-        color: "#ffffff"
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "float-right dashboard-item"
-      }, "\u062E\u0648\u0627\u0633\u062A\u0647 \u0647\u0627\u06CC \u062C\u0627\u0631\u06CC"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_CounterTab__WEBPACK_IMPORTED_MODULE_6__["default"], {
+        Title: "\u067E\u0631\u0648\u0698\u0647 \u0647\u0627\u06CC \u0645\u0646",
+        Item: statistics.workspaceCounter ? statistics.workspaceCounter.all : null,
+        CustomClasses: "projects",
+        Icon: "fas fa-project-diagram"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_CounterTab__WEBPACK_IMPORTED_MODULE_6__["default"], {
+        Title: "\u0648\u0638\u0627\u06CC\u0641 \u0627\u0646\u062C\u0627\u0645 \u0634\u062F\u0647",
+        Item: statistics.taskCounter ? statistics.taskCounter.finished : null,
+        CustomClasses: "finished-tasks",
+        Icon: "fas fa-check-double"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_CounterTab__WEBPACK_IMPORTED_MODULE_6__["default"], {
+        Title: "\u0646\u06CC\u0627\u0632\u0647\u0627\u06CC \u062C\u0627\u0631\u06CC",
+        Item: statistics.demandCounter ? statistics.demandCounter.demands.unfinished : null,
+        CustomClasses: "finished-demands",
+        Icon: "fas fa-check"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_CounterTab__WEBPACK_IMPORTED_MODULE_6__["default"], {
+        Title: "\u0648\u0638\u0627\u06CC\u0641 \u0639\u0642\u0628 \u0627\u0641\u062A\u0627\u062F\u0647",
+        Item: statistics.demandCounter ? statistics.demandCounter.demands.unfinished : null,
+        CustomClasses: "finished-demands",
+        Icon: "fas fa-check"
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-12 dashboard-tab-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
         className: "tab-title-bar text-center"
@@ -55636,14 +55561,14 @@ if (target) {
 
 /***/ }),
 
-/***/ 3:
+/***/ 0:
 /*!***********************************************!*\
   !*** multi ./resources/js/react/dashboard.js ***!
   \***********************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! I:\projects\task-manager\resources\js\react\dashboard.js */"./resources/js/react/dashboard.js");
+module.exports = __webpack_require__(/*! W:\php\sampies\resources\js\react\dashboard.js */"./resources/js/react/dashboard.js");
 
 
 /***/ })
