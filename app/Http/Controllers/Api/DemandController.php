@@ -102,6 +102,8 @@ class DemandController extends BaseController
     public function toggle(Demand $demand)
     {
         $this->authorize('update', $demand);
+        $demand->finished_at = $demand->finished_at ? null : now();
+        $demand->save();
     }
     public function new_message(Request $request, Demand $demand)
     {

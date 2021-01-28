@@ -58,7 +58,8 @@
         <div class="col-12 float-left p-1"
         data-messages="{{ route('api.task-manager.demands.messages.index', ['workspace' => $workspace->id, 'demand' => $demand->id]) }}"
         data-message="{{ route('api.task-manager.demands.messages.store', ['workspace' => $workspace->id, 'demand' => $demand->id]) }}"
-        data-update="{{ route('api.task-manager.demands.update', ['workspace' => $workspace->id, 'demand' => $demand->id]) }}">
+        data-update="{{ route('api.task-manager.demands.update', ['workspace' => $workspace->id, 'demand' => $demand->id]) }}"
+        data-toggle="{{ route('api.task-manager.demands.toggle_state', ['demand' => $demand->id]) }}">
         </div>
     </div>
 @endsection
