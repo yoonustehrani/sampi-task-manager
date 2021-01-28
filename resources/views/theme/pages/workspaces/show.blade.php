@@ -13,11 +13,15 @@
             </h4>
         </div>
         <div class="workspace-sub-info float-right col-12">
-            <span><i class="far fa-user-circle ml-1 animated heartBeat delay-2s"></i><span class="number ml-1">2</span>عضو</span>
-            <span><i class="fas fa-thumbtack ml-1 animated heartBeat delay-2s"></i><span class="number ml-1">24</span>وظیفه جاری</span>
-            <span><i class="far fa-check-square ml-1 animated heartBeat delay-2s"></i><span class="number ml-1">13</span>وظیفه انجام شده</span>
-            <span><i class="far fa-comments ml-1 animated heartBeat delay-2s"></i><span class="number ml-1">45</span>خواسته جاری</span>
-            <span><i class="far fa-check-circle ml-1 animated heartBeat delay-2s"></i><span class="number ml-1">24</span>خواسته انجام شده</span>
+            <span><i class="far fa-user-circle ml-1 animated heartBeat delay-2s"></i><span class="number ml-1">{{ count($workspace->users) }}</span>عضو</span>
+            <span><i class="fas fa-thumbtack ml-1 animated heartBeat delay-2s"></i><span class="number ml-1">{{ $workspace->tasks_count - $workspace->finished_tasks_count }}</span>وظیفه جاری</span>
+            <span><i class="far fa-check-square ml-1 animated heartBeat delay-2s"></i><span class="number ml-1">{{ $workspace->finished_tasks_count }}</span>وظیفه انجام شده</span>
+            <a href="{{ route('task-manager.demands.index', ['workspace' => $workspace->id]) }}">
+                <span><i class="far fa-comments ml-1 animated heartBeat delay-2s"></i><span class="number ml-1">{{ $workspace->demands_left_count }}</span>خواسته جاری</span>
+            </a>
+            <a href="{{ route('task-manager.demands.index', ['workspace' => $workspace->id]) }}">
+                <span><i class="far fa-check-circle ml-1 animated heartBeat delay-2s"></i><span class="number ml-1">{{ $workspace->demands_count -  $workspace->demands_left_count }}</span>خواسته انجام شده</span>
+            </a>
         </div>
         <div class="col-12 float-right pr-0 pl-0 pr-md-3 pl-md-3 animated flipInX">
             <div class="title-section workspace-title-section col-12">
@@ -49,11 +53,6 @@
                                     @endif
                                 </div>
                             </td>
-                            {{-- <td>
-                                @if ($user->pivot->is_admin)
-                                    <span class="badge badge-dark">ادمین</span>
-                                @endif
-                            </td> --}}
                             <td class="no-break">
                                 وظیفه : <span class="badge badge-warning ml-md-4 d-block d-md-inline mb-1 mb-md-0">{{ $user->tasks_count }} <i class="fas fa-briefcase"></i></span>
                                 درخواست : <span class="badge badge-primary ml-md-4 d-block d-md-inline mb-1 mb-md-0">{{ $user->asked_demands_count }} <i class="fas fa-arrow-down"></i></span>

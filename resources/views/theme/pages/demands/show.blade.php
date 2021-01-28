@@ -5,8 +5,13 @@
 @endsection
 
 @section('page-content')
-    @component('theme.tools.title', ['title' => 'درخواست ها - ' . $demand->title]) @endcomponent
     <div class="col-12 float-left">
+        <h2 class="text-right">
+            درخواست ها - {{ $demand->title }} 
+            <a href="{{ route('task-manager.workspaces.show', ['workspace' => $demand->workspace->id]) }}" title="{{ $demand->workspace->title }}">
+                <img src="{{ asset($demand->workspace->avatar_pic ?: 'male-avatar.svg') }}" alt="{{ $demand->workspace->title }}" height="30" width="30">
+            </a>
+        </h2>
         @if ($demand->priority)
         <p class="text-right">
             @if ($demand->priority->icon_class)
@@ -35,11 +40,26 @@
                 @endif
             </a>
             <br><br>
-            @if ($demand->task)
-                <a href="{{ route('task-manager.tasks.show', ['task' => $demand->task->id]) }}">
+            @if ($demand->task_id)
+                @php
+                    $demand->load('task.workspace')
+                @endphp
+                <p class="text-right" style="direction: rtl;">
+                    <b>وظیفه مرتبط : </b>
+                    <a href="{{ route('task-manager.workspaces.show', ['workspace' => $demand->task->workspace->id]) }}" title="{{ $demand->task->workspace->title }}">
+                        <img src="{{ asset($demand->task->workspace->avatar_pic ?: 'male-avatar.svg') }}" alt="{{ $demand->task->workspace->title }}" height="30" width="30">
+                    </a>
+                    <a href="{{ route('task-manager.tasks.show', ['task' => $demand->task->id]) }}">
                     {{ $demand->task->title }}
-                </a>
+                    </a>
+                </p>
             @endif
         </p>
+        <div
+        data-messages="{{ route('api.task-manager.demands.messages.index', ['demand' => $demand->id]) }}"
+        data-message="{{ route('api.task-manager.demands.messages.store', ['demand' => $demand->id]) }}"
+        class="col-12 float-left p-1">
+
+        </div>
     </div>
 @endsection
