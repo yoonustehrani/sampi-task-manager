@@ -16,12 +16,11 @@
             <span><i class="far fa-user-circle ml-1 animated heartBeat delay-2s"></i><span class="number ml-1">{{ count($workspace->users) }}</span>عضو</span>
             <span><i class="fas fa-thumbtack ml-1 animated heartBeat delay-2s"></i><span class="number ml-1">{{ $workspace->tasks_count - $workspace->finished_tasks_count }}</span>وظیفه جاری</span>
             <span><i class="far fa-check-square ml-1 animated heartBeat delay-2s"></i><span class="number ml-1">{{ $workspace->finished_tasks_count }}</span>وظیفه انجام شده</span>
-            <a href="{{ route('task-manager.demands.index', ['workspace' => $workspace->id]) }}">
-                <span><i class="far fa-comments ml-1 animated heartBeat delay-2s"></i><span class="number ml-1">{{ $workspace->demands_left_count }}</span>خواسته جاری</span>
+            <a style="direction: rtl;" href="{{ route('task-manager.demands.index', ['workspace' => $workspace->id]) }}">
+                <span><i class="far fa-check-square ml-1 animated heartBeat delay-2s"></i><span class="number ml-1">{{ $workspace->demands_count }}</span><b>خواسته ها</b></span>
             </a>
-            <a href="{{ route('task-manager.demands.index', ['workspace' => $workspace->id]) }}">
-                <span><i class="far fa-check-circle ml-1 animated heartBeat delay-2s"></i><span class="number ml-1">{{ $workspace->demands_count -  $workspace->demands_left_count }}</span>خواسته انجام شده</span>
-            </a>
+            <span><i class="far fa-comments ml-1 animated heartBeat delay-2s"></i><span class="number ml-1">{{ $workspace->demands_left_count }}</span>خواسته جاری</span>
+            <span><i class="far fa-check-circle ml-1 animated heartBeat delay-2s"></i><span class="number ml-1">{{ $workspace->demands_count -  $workspace->demands_left_count }}</span>خواسته انجام شده</span>
         </div>
         <div class="col-12 float-right pr-0 pl-0 pr-md-3 pl-md-3 animated flipInX">
             <div class="title-section workspace-title-section col-12">

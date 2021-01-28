@@ -8,8 +8,8 @@
     <div class="col-12 float-left">
         <h2 class="text-right">
             درخواست ها - {{ $demand->title }} 
-            <a href="{{ route('task-manager.workspaces.show', ['workspace' => $demand->workspace->id]) }}" title="{{ $demand->workspace->title }}">
-                <img src="{{ asset($demand->workspace->avatar_pic ?: 'male-avatar.svg') }}" alt="{{ $demand->workspace->title }}" height="30" width="30">
+            <a href="{{ route('task-manager.workspaces.show', ['workspace' => $workspace->id]) }}" title="{{ $workspace->title }}">
+                <img src="{{ asset($workspace->avatar_pic ?: 'male-avatar.svg') }}" alt="{{ $workspace->title }}" height="30" width="30">
             </a>
         </h2>
         @if ($demand->priority)
