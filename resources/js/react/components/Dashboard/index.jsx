@@ -5,6 +5,7 @@ moment.locale('fa')
 import { Levels, Digital } from 'react-activity'
 import 'react-activity/dist/react-activity.css'
 import { setPriority, redirectTo } from '../../../helpers'
+import CounterTab from './CounterTab'
 
 
 export default class Dashboard extends Component {
@@ -117,33 +118,11 @@ export default class Dashboard extends Component {
         return (
             <div>
                 <div className="analysis-boxes analysis-container">
-                    <div className="float-left animated pulse col-md-3 col-12 projects">
-                        <a href={statistics.workspaceCounter ? statistics.workspaceCounter.all.href : "#"} className="item-link">
-                            <i className="float-right dashboard-item fas fa-project-diagram fa-3x"></i>
-                            <div>
-                                <span className="float-right dashboard-item">{ statistics.workspaceCounter ? statistics.workspaceCounter.all.count : <Levels color="#ffffff" /> }</span>
-                                <span className="float-right dashboard-item">پروژه های من</span>
-                            </div>
-                        </a>
-                    </div>
-                    <div className="float-left animated pulse col-md-3 col-12 finished-tasks">
-                        <a href={statistics.taskCounter ? statistics.taskCounter.finished.href : "#"} className="item-link">
-                            <i className="float-right dashboard-item fas fa-check-double fa-3x"></i>
-                            <div>
-                                <span className="float-right dashboard-item">{ statistics.taskCounter ? statistics.taskCounter.finished.count : <Levels color="#ffffff" /> }</span>
-                                <span className="float-right dashboard-item">وظایف انجام شده</span>
-                            </div>
-                        </a>
-                    </div>
-                    <div className="float-left animated pulse col-md-3 col-12 tickets finished-demands">
-                        <a href={statistics.demandCounter ? statistics.demandCounter.finished.href : "#"} className="item-link">
-                            <i className="float-right dashboard-item fas fa-check fa-3x"></i>
-                            <div>
-                                <span className="float-right dashboard-item">{ statistics.demandCounter ? statistics.demandCounter.finished.count : <Levels color="#ffffff" /> }</span>
-                                <span className="float-right dashboard-item">خواسته های انجام شده</span>
-                            </div>
-                        </a>
-                    </div>
+                    <CounterTab Title="پروژه های من" Item={statistics.workspaceCounter ? statistics.workspaceCounter.all : null} CustomClasses="projects" Icon="fas fa-project-diagram"/>
+                    <CounterTab Title="وظایف انجام شده" Item={statistics.taskCounter ? statistics.taskCounter.finished : null} CustomClasses="finished-tasks" Icon="fas fa-check-double"/>
+                    <CounterTab Title="نیازهای جاری" Item={statistics.demandCounter ? statistics.demandCounter.demands.unfinished : null} CustomClasses="finished-demands" Icon="fas fa-check"/>
+                    <CounterTab Title="وظایف عقب افتاده" Item={statistics.demandCounter ? statistics.demandCounter.demands.unfinished : null} CustomClasses="finished-demands" Icon="fas fa-check"/>
+                    {/*
                     <div className="float-left animated pulse col-md-3 col-12 tickets delayed-tasks">
                         <a href={statistics.taskCounter ? statistics.taskCounter.expired.href : "#"} className="item-link">
                             <i className="float-right dashboard-item fas fa-hourglass-end fa-3x"></i>
@@ -163,14 +142,14 @@ export default class Dashboard extends Component {
                         </a>
                     </div>
                     <div className="float-left animated pulse col-md-3 col-12 tickets current-demands">
-                        <a href={statistics.demandCounter ? statistics.demandCounter.unfinished.href : "#"} className="item-link">
+                        <a href={statistics.demandCounter ? statistics.demandCounter.asked_demands.unfinished.href : "#"} className="item-link">
                             <i className="float-right dashboard-item fas fa-list-alt fa-3x"></i>
                             <div>
-                                <span className="float-right dashboard-item">{ statistics.demandCounter ? statistics.demandCounter.unfinished.count : <Levels color="#ffffff" /> }</span>
+                                <span className="float-right dashboard-item">{ statistics.demandCounter ? statistics.demandCounter.asked_demands.unfinished.count : <Levels color="#ffffff" /> }</span>
                                 <span className="float-right dashboard-item">خواسته های جاری</span>
                             </div>
                         </a>
-                    </div>
+                    </div> */}
                 </div>
                 <div className="col-12 dashboard-tab-container">
                     <nav className="tab-title-bar text-center">

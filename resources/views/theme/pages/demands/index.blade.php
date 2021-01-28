@@ -1,7 +1,7 @@
 @extends('theme.panel')
 
 @section('title')
-درخواست ها
+درخواست ها در پروژه ({{ $workspace->title }})
 @endsection
 
 @section('page-content')
