@@ -170,7 +170,7 @@ export default class Demands extends Component {
     }
     
     render() {
-        let { demands, needs, isGetting, workspace, already_added_needs } = this.state, { user_profile_route, task_route, logged_in_user_id } = this.props
+        let { demands, needs, isGetting, workspace, already_added_needs } = this.state, { user_profile_route, task_route, logged_in_user_id, demand_show_route } = this.props
         return (
             <div>
                 <nav className="demands-tabs-titles col-12">
@@ -230,7 +230,7 @@ export default class Demands extends Component {
                             {demands && demands.data.length > 0 && demands.data.map((demand, i) => {
                                 let { title, task, priority, finished_at, from } = demand
                                 return (
-                                    <tr key={i} className="animated fadeIn">
+                                    <tr key={i} className="animated fadeIn" onClick={() => redirectTo(demand_show_route.replace("demandId", demand.id))}>
                                         <th scope="row">{i + 1}</th>
                                         <td>{ title }</td>
                                         <td><a href={user_profile_route.replace("userId", from.id)}>{ from.fullname }</a></td>
@@ -373,7 +373,7 @@ export default class Demands extends Component {
 
                                 let { title, task, priority, due_to, finished_at, to, id } = need
                                 return (
-                                    <tr key={i} className="animated fadeIn">
+                                    <tr key={i} className="animated fadeIn" onClick={() => redirectTo(demand_show_route.replace("demandId", demand.id))}>
                                         <th scope="row">{i + 1}</th>
                                         <td>{ title }</td>
                                         <td><a href={user_profile_route.replace("userId", to.id)}>{ to.fullname }</a></td>

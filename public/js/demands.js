@@ -60429,7 +60429,8 @@ var Demands = /*#__PURE__*/function (_Component) {
           _this$props = this.props,
           user_profile_route = _this$props.user_profile_route,
           task_route = _this$props.task_route,
-          logged_in_user_id = _this$props.logged_in_user_id;
+          logged_in_user_id = _this$props.logged_in_user_id,
+          demand_show_route = _this$props.demand_show_route;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
         className: "demands-tabs-titles col-12"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
@@ -60529,7 +60530,10 @@ var Demands = /*#__PURE__*/function (_Component) {
             from = demand.from;
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
           key: i,
-          className: "animated fadeIn"
+          className: "animated fadeIn",
+          onClick: function onClick() {
+            return Object(_helpers__WEBPACK_IMPORTED_MODULE_7__["redirectTo"])(demand_show_route.replace("demandId", demand.id));
+          }
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
           scope: "row"
         }, i + 1), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
@@ -60730,7 +60734,10 @@ var Demands = /*#__PURE__*/function (_Component) {
             id = need.id;
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
           key: i,
-          className: "animated fadeIn"
+          className: "animated fadeIn",
+          onClick: function onClick() {
+            return Object(_helpers__WEBPACK_IMPORTED_MODULE_7__["redirectTo"])(demand_show_route.replace("demandId", demand.id));
+          }
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
           scope: "row"
         }, i + 1), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
@@ -61023,6 +61030,7 @@ var user_profile_route = target.getAttribute("user-profile-route");
 var task_route = target.getAttribute("task-route");
 var workspace_api = target.getAttribute("workspace-api");
 var logged_in_user_id = parseInt(target.getAttribute("logged-in-user-id"));
+var demand_show_route = target.getAttribute("data-show");
 
 if (target) {
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_demands_index_jsx__WEBPACK_IMPORTED_MODULE_2__["default"], {
@@ -61031,7 +61039,8 @@ if (target) {
     user_profile_route: user_profile_route,
     task_route: task_route,
     get_workspace_api: workspace_api,
-    logged_in_user_id: logged_in_user_id
+    logged_in_user_id: logged_in_user_id,
+    demand_show_route: demand_show_route
   }), target);
 }
 
