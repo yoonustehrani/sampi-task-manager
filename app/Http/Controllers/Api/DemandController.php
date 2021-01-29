@@ -25,7 +25,7 @@ class DemandController extends BaseController
         }
         return $this->decide_ordered($request, $user_demands)
                     ->withCount('messages')
-                    ->with($with, 'priority:id,title')
+                    ->with($with, 'task', 'priority:id,title')
                     ->paginate(10);
     }
     public function mixed(Request $request)
@@ -44,7 +44,7 @@ class DemandController extends BaseController
         }
         return $this->decide_ordered($request, $user_demands)
                     ->withCount('messages')
-                    ->with($with, 'priority:id,title', 'workspace')
+                    ->with($with, 'task', 'priority:id,title', 'workspace')
                     ->paginate(10);
     }
     public function store(Request $request, Workspace $workspace)
