@@ -9781,7 +9781,7 @@ a {
 
 #mainpage .navbar-top {
   background: #ffffff;
-  height: 71px;
+  height: 10%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -9789,7 +9789,7 @@ a {
 
 .contentbar {
   overflow-y: auto;
-  height: 100%;
+  height: 90%;
 }
 
 nav a:hover {

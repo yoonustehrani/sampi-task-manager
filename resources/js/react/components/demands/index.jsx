@@ -1,5 +1,6 @@
 import axios from 'axios'
 import React, { Component } from 'react'
+import { Digital, Spinner } from 'react-activity'
 
 export default class Demands extends Component {
     constructor(props) {
@@ -11,7 +12,8 @@ export default class Demands extends Component {
             this.tabResultsRef.push(React.createRef())
         }
         this.state = {
-            current_tab: 'demands'
+            current_tab: 'demands',
+            isGetting: true,
         }
     }
 
@@ -33,12 +35,19 @@ export default class Demands extends Component {
 
     componentDidMount() {
         let { get_tickets_api } = this.props, { current_tab } = this.state
-        let order_by = $(`#mixed_${current_tab}_order_by_select`).val(), mixed_tasks_order = $('#mixed_tasks_order_select').val(), mixed_tasks_relation = $('#mixed_tasks_relation_select').val()
-        // axios.get(`${get_tickets_api}${current_tab === "demands" ? "&relation=asked" : ""}`)
+        let order_by = $(`#mixed_${current_tab}_order_by_select`).val(), order = $(`#mixed_${current_tab}_order_select`).val(), filter = $(`#mixed_${current_tab}_relation_select`).val()
+        axios.get(`${get_tickets_api}${current_tab === "demands" ? "&relation=asked" : ""}&order_by=${order_by}&order=${order}&filter=${filter}`).then(res => {
+            let { data } = res
+            this.setState({
+                [current_tab]: data,
+                isGetting: false
+            })
+        })
     }
     
     
     render() {
+        let { demands, needs, isGetting } = this.state
         return (
             <div>
                 <nav className="demands-tabs-titles col-12">
@@ -65,7 +74,6 @@ export default class Demands extends Component {
                                 <option container_class="select-option-big" value="all" icon_name="fas fa-tasks">همه</option>
                                 <option container_class="select-option-big" value="finished" icon_name="fas fa-check-square">انجام شده</option>
                                 <option container_class="select-option-big" value="unfinished" icon_name="fas fa-times-circle">انجام نشده</option>
-                                <option container_class="select-option-big" value="expired" icon_name="fas fa-calendar-minus">منقضی</option>
                             </select>
                         </div>
                         <div className="filter-option col-12 col-md-6 col-lg-3 mb-3 mb-lg-0 text-center">
@@ -103,38 +111,43 @@ export default class Demands extends Component {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr className="animated fadeIn">
-                                <th scope="row">۱</th>
-                                <td>ارسال فرمت پی ان جی لوگو</td>
-                                <td className="text-right">
-                                    <img src="workspace img link"/>
-                                    <a href="workspace link">workspace title</a>
-                                </td>
-                                <td>امیررضا منصوریان</td>
-                                <td>طراحی صفحه اصلی اپ</td>
-                                <td>ضروری و مهم</td>
-                                <td>۱۲ فروردین</td>
-                                <td>
-                                    <i className="fas fa-check-circle fa-3x"></i>
-                                    {/* <i className="fas fa-times-circle"></i> */}
-                                </td>
-                                <td>
-                                    {/* ۱۰ فروردین */}
-                                    <i className="fas fa-calendar-times fa-3x"></i>
-                                </td>
-                            </tr>
+                            {demands && demands.data.length > 0 && demands.data.map((demand, i) => {
+                                return (
+                                    <tr className="animated fadeIn">
+                                        <th scope="row">۱</th>
+                                        <td>ارسال فرمت پی ان جی لوگو</td>
+                                        <td className="text-right">
+                                            <img src="workspace img link"/>
+                                            <a href="workspace link">workspace title</a>
+                                        </td>
+                                        <td>امیررضا منصوریان</td>
+                                        <td>طراحی صفحه اصلی اپ</td>
+                                        <td>ضروری و مهم</td>
+                                        <td>۱۲ فروردین</td>
+                                        <td>
+                                            <i className="fas fa-check-circle fa-3x"></i>
+                                            {/* <i className="fas fa-times-circle"></i> */}
+                                        </td>
+                                        <td>
+                                            {/* ۱۰ فروردین */}
+                                            <i className="fas fa-calendar-times fa-3x"></i>
+                                        </td>
+                                    </tr>
+                                )
+                            })
+                            }
                         </tbody>
                     </table> 
-                    {/* {
-                        workspaces.length <= 0 && !isGetting &&
+                    {
+                        demands && demands.data.length <= 0 && !isGetting &&
                             <p className="text-center text-secondary">موردی برای نمایش وجود ندارد</p>
-                    } */}
-                    {/* {
+                    }
+                    {
                         isGetting &&
                             <div className="text-center">
                                 <Digital color="#000000" size={24} />
                             </div>
-                    } */}
+                    }
                 </div>
                 <div className="col-12 mt-4 float-right demand-tab-result" ref={this.tabResultsRef[1]}>
                     {/* <div className="title-section">
@@ -148,7 +161,6 @@ export default class Demands extends Component {
                                 <option container_class="select-option-big" value="all" icon_name="fas fa-tasks">همه</option>
                                 <option container_class="select-option-big" value="finished" icon_name="fas fa-check-square">انجام شده</option>
                                 <option container_class="select-option-big" value="unfinished" icon_name="fas fa-times-circle">انجام نشده</option>
-                                <option container_class="select-option-big" value="expired" icon_name="fas fa-calendar-minus">منقضی</option>
                             </select>
                         </div>
                         <div className="filter-option col-12 col-md-6 col-lg-3 mb-3 mb-lg-0 text-center">
@@ -168,7 +180,7 @@ export default class Demands extends Component {
                             </select>
                         </div>
                         <div className="text-center">
-                            <button className="btn btn-outline-info" onClick={this.sortData.bind(this, 'demands')}>مرتب سازی</button>
+                            <button className="btn btn-outline-info" onClick={this.sortData.bind(this, 'needs')}>مرتب سازی</button>
                         </div>
                     </div>
                     <table className="col-12 table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right animated rubberBand">
@@ -185,41 +197,43 @@ export default class Demands extends Component {
                                 <th scope="col">تاریخ اتمام</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr className="animated fadeIn">
-                                <th scope="row">۱</th>
-                                <td>ارسال فرمت پی ان جی لوگو</td>
-                                <td className="text-right">
-                                    <img src="workspace img link"/>
-                                    <a href="workspace link">workspace title</a>
-                                </td>
-                                <td>امیررضا منصوریان</td>
-                                <td>طراحی صفحه اصلی اپ</td>
-                                <td>ضروری و مهم</td>
-                                <td>۱۲ فروردین</td>
-                                <td>
-                                    <i className="fas fa-check-circle fa-3x"></i>
-                                    {/* <i className="fas fa-times-circle"></i> */}
-                                </td>
-                                <td>
-                                    {/* ۱۰ فروردین */}
-                                    <i className="fas fa-calendar-times fa-3x"></i>
-                                </td>
-                            </tr>
-                        </tbody>
+                        {needs &&
+                            <tbody>
+                                <tr className="animated fadeIn">
+                                    <th scope="row">۱</th>
+                                    <td>ارسال فرمت پی ان جی لوگو</td>
+                                    <td className="text-right">
+                                        <img src="workspace img link"/>
+                                        <a href="workspace link">workspace title</a>
+                                    </td>
+                                    <td>امیررضا منصوریان</td>
+                                    <td>طراحی صفحه اصلی اپ</td>
+                                    <td>ضروری و مهم</td>
+                                    <td>۱۲ فروردین</td>
+                                    <td>
+                                        <i className="fas fa-check-circle fa-3x"></i>
+                                        {/* <i className="fas fa-times-circle"></i> */}
+                                    </td>
+                                    <td>
+                                        {/* ۱۰ فروردین */}
+                                        <i className="fas fa-calendar-times fa-3x"></i>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        }
                     </table> 
-                    {/* {
-                        workspaces.length <= 0 && !isGetting &&
+                    {
+                        needs && needs.length <= 0 && !isGetting &&
                             <p className="text-center text-secondary">موردی برای نمایش وجود ندارد</p>
-                    } */}
-                    {/* {
+                    }
+                    {
                         isGetting &&
                             <div className="text-center">
                                 <Digital color="#000000" size={24} />
                             </div>
-                    } */}
+                    }
                 </div>
             </div>
-        )
+        )   
     }
 }
