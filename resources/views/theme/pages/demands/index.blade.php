@@ -12,6 +12,10 @@
         data-store="{{ route('api.task-manager.demands.store', ['workspace' => $workspace->id, 'api_token' => auth()->user()->api_token]) }}"
         data-show="{{ route('api.task-manager.demands.show', ['workspace' => $workspace->id, 'demand' => 'demandId']) }}"
         data-destroy="{{ route('api.task-manager.demands.destroy', ['workspace' => $workspace->id, 'demand' => 'demandId']) }}"
+        user-profile-route="{{ route('task-manager.users.show', ['user' => 'userId']) }}"
+        task-route="{{ route('task-manager.tasks.show', ['task' => 'taskId']) }}"
+        workspace-api = "{{ route('api.task-manager.workspaces.show', ['workspace' => $workspace->id, 'api_token' => auth()->user()->api_token]) }}"
+        logged-in-user-id = "{{ auth()->user()->id }}"
     >
     </div>
 @endsection

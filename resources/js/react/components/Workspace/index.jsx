@@ -3,7 +3,7 @@ import TinymcEditor from '../tinymce-editor/index'
 import Axios from 'axios'
 import moment from 'moment'
 moment.locale('fa')
-import { Squares  } from 'react-activity'
+import { Squares } from 'react-activity'
 import 'react-activity/dist/react-activity.css'
 import Swal from 'sweetalert2'
 import { setPriority, redirectTo } from '../../../helpers'
@@ -19,8 +19,9 @@ export default class Workspace extends Component {
             tasks: {
                 data: [],
                 nextPage: 1,
-                hasMore: true
-            }
+                hasMore: true,
+            },
+            already_added_tasks: {}
         }
     }
 
@@ -38,16 +39,16 @@ export default class Workspace extends Component {
 
     handleMore = (table, filtering) => {
         let { list_tasks_api } = this.props
-        let { tasks } = this.state
+        let { tasks, already_added_tasks } = this.state
         let tasks_order_by = $('#tasks_order_by_select').val(), tasks_order = $('#tasks_order_select').val(), tasks_relation = $('#tasks_relation_select').val()
-        this.setState({ isGetting: true })
         const getList = (table) => {            
-            Axios.get(`${eval("list_" + table + "_api")}&order_by=${eval(table + "_order_by")}&order=${eval(table + "_order")}&relationship=${eval(table + "_relation")}&page=${this.state.tasks.nextPage}`).then(res => {
+            Axios.get(`${eval("list_" + table + "_api")}&order_by=${eval(table + "_order_by")}&order=${eval(table + "_order")}&relationship=${eval(table + "_relation")}&page=${this.state[table].nextPage}`).then(res => {
                 let { data, current_page, last_page } = res.data
+                let filteredArray = data.filter((item) => already_added_tasks && typeof already_added_tasks[item.id] === "undefined")
                 this.setState(prevState => {
                 return ({
                     [table]: {
-                        data: [...prevState[table].data, ...data],
+                        data: [...prevState[table].data, ...filteredArray],
                         nextPage: current_page + 1,
                         hasMore: current_page === last_page ? false : true
                     },
@@ -55,6 +56,12 @@ export default class Workspace extends Component {
                 })})
             })
         }
+        this.setState(prevState => { 
+            return ({
+                isGetting: true,
+                already_added_tasks: filtering ? {} : prevState.already_added_tasks
+            })
+        })
         switch (table) {
             case "tasks":
                 filtering ? this.setState({tasks: {data: [], nextPage: 1, hasMore: true}}, () => {getList("tasks")}) : getList("tasks")
@@ -68,67 +75,58 @@ export default class Workspace extends Component {
     addTask = () => {
         let { add_task_api, logged_in_user_id } = this.props, { new_task_description, workspace_users } = this.state
         let title = $("#new-task-title").val(), group = $("#new-task-group").val(), priority = parseInt($("#new-task-priority").val()), users = $("#new-task-members").val(), description = new_task_description
-        if (title.length === 0 || group.length === 0 || priority === null) {
+        Axios.post(add_task_api, {
+            title: title,
+            priority: priority,
+            group: group,
+            users: users,
+            description: new_task_description
+        }).then(res => {
+            this.setState(prevState => {
+                let new_task_users = users.map((userId, i) => {
+                    return ({
+                        id: userId,
+                        fullname: workspace_users[userId].fullname,
+                        name: workspace_users[userId].name,
+                    })
+                })
+                new_task_users.unshift({id: logged_in_user_id, fullname: workspace_users[logged_in_user_id].fullname, name: workspace_users[logged_in_user_id].name})
+                return ({
+                    tasks: Object.assign({}, prevState.tasks, {
+                        data: [{...res.data, users: new_task_users, finished_at: null, finisher_id: null}, ...prevState.tasks.data]
+                    }),
+                    already_added_tasks: Object.assign({}, prevState.already_added_tasks, {
+                        [res.data.id]: res.data.id
+                    })
+                })
+            })
             Swal.fire({
-                title: 'خطا',
-                text: "فیلد های مورد نیاز به درستی پر نشدند",
-                icon: 'error',
-                confirmButtonText: 'بستن',
+                icon: 'success',
+                title: "موفقیت",
+                text: "کار شما به لیست افزوده شد",
+                showConfirmButton: true,
                 customClass: {
-                    content: 'persian-text'
+                    content: "persian-text"
                 }
             })
-        } else {
-            Axios.post(add_task_api, {
-                title: title,
-                priority: priority,
-                group: group,
-                users: users,
-                description: new_task_description
-            }).then(res => {
-                this.setState(prevState => {
-                    let new_task_users = users.map((userId, i) => {
-                        return ({
-                            id: userId,
-                            fullname: workspace_users[userId].fullname,
-                            name: workspace_users[userId].name,
-                        })
-                    })
-                    new_task_users.unshift({id: logged_in_user_id, fullname: workspace_users[logged_in_user_id].fullname, name: workspace_users[logged_in_user_id].name})
-                    return ({
-                        tasks: Object.assign({}, prevState.tasks, {
-                            data: [{...res.data, users: new_task_users, finished_at: null, finisher_id: null}, ...prevState.tasks.data]
-                        })
-                    })
+        }).catch(err => {
+            let {status, data} = err.response
+            if (status === 422) {
+                let {errors} = data, err_html = ""
+                Object.entries(errors).map(([param, message]) => {
+                    err_html += `<p class="float-right text-center col-12">${message}</p><br>`
                 })
                 Swal.fire({
-                    icon: 'success',
-                    title: "موفقیت",
-                    text: "کار شما به لیست افزوده شد",
-                    showConfirmButton: true,
+                    title: 'خطا',
+                    html: err_html,
+                    icon: 'error',
+                    confirmButtonText: 'تایید',
                     customClass: {
-                        content: "persian-text"
+                        content: 'persian-text'
                     }
                 })
-            }).catch(err => {
-                let {status, data} = err.response
-                if (status === 422) {
-                    let {errors} = data, err_html = ""
-                    Object.entries(errors).map(([param, message]) => {
-                        err_html += `<p class="float-right text-center col-12">${message}</p><br>`
-                    })
-                    Swal.fire({
-                        title: 'خطا',
-                        text: err_htlm,
-                        icon: 'error',
-                        confirmButtonText: 'تایید',
-                        customClass: {
-                            content: 'persian-text'
-                        }
-                    })
-                }
-            })
-        }
+            }
+        })
     }
 
     componentDidMount() {

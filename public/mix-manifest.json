@@ -1,5 +1,7 @@
 {
     "/js/dashboard.js": "/js/dashboard.js",
+    "/js/demands.js": "/js/demands.js",
+    "/js/select2.js": "/js/select2.js",
     "/css/app.css": "/css/app.css",
-    "/js/demands.js": "/js/demands.js"
+    "/js/workspace.js": "/js/workspace.js"
 }

@@ -3,7 +3,7 @@ import Axios from 'axios'
 import moment from 'moment-jalaali'
 moment.locale('fa')
 import TinymcEditor from '../tinymce-editor/index'
-import { formatOption, formatMemberOption } from '../../../select2'
+import { formatOptionWithIcon, formatOptionWithImage } from '../../../select2'
 import { setPriority, redirectTo } from '../../../helpers'
 import { Spinner } from 'react-activity'
 import 'react-activity/dist/react-activity.css'
@@ -69,7 +69,7 @@ export default class ShowTask extends Component {
         }), () => {
             if (this.state.mode === "edit") {
                 $('#edit-task-priority').select2({
-                    templateResult: formatOption,
+                    templateResult: formatOptionWithIcon,
                     minimumResultsForSearch: Infinity,
                     width: '100%',
                     dir: "rtl",
@@ -79,7 +79,7 @@ export default class ShowTask extends Component {
                     width: "100%",
                     dir: 'rtl',
                     multiple: true,
-                    templateResult: formatMemberOption
+                    templateResult: formatOptionWithImage
                 })
                 $('.select2-search__field').css('width', '100%')
             } else {

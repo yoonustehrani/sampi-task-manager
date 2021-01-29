@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -60198,33 +60198,41 @@ var Workspace = /*#__PURE__*/function (_Component) {
 
     _defineProperty(_assertThisInitialized(_this), "handleMore", function (table, filtering) {
       var list_tasks_api = _this.props.list_tasks_api;
-      var tasks = _this.state.tasks;
+      var _this$state = _this.state,
+          tasks = _this$state.tasks,
+          already_added_tasks = _this$state.already_added_tasks;
       var tasks_order_by = $('#tasks_order_by_select').val(),
           tasks_order = $('#tasks_order_select').val(),
           tasks_relation = $('#tasks_relation_select').val();
 
-      _this.setState({
-        isGetting: true
-      });
-
       var getList = function getList(table) {
-        axios__WEBPACK_IMPORTED_MODULE_2___default.a.get("".concat(eval("list_" + table + "_api"), "&order_by=").concat(eval(table + "_order_by"), "&order=").concat(eval(table + "_order"), "&relationship=").concat(eval(table + "_relation"), "&page=").concat(_this.state.tasks.nextPage)).then(function (res) {
+        axios__WEBPACK_IMPORTED_MODULE_2___default.a.get("".concat(eval("list_" + table + "_api"), "&order_by=").concat(eval(table + "_order_by"), "&order=").concat(eval(table + "_order"), "&relationship=").concat(eval(table + "_relation"), "&page=").concat(_this.state[table].nextPage)).then(function (res) {
           var _res$data = res.data,
               data = _res$data.data,
               current_page = _res$data.current_page,
               last_page = _res$data.last_page;
+          var filteredArray = data.filter(function (item) {
+            return already_added_tasks && typeof already_added_tasks[item.id] === "undefined";
+          });
 
           _this.setState(function (prevState) {
             var _ref;
 
             return _ref = {}, _defineProperty(_ref, table, {
-              data: [].concat(_toConsumableArray(prevState[table].data), _toConsumableArray(data)),
+              data: [].concat(_toConsumableArray(prevState[table].data), _toConsumableArray(filteredArray)),
               nextPage: current_page + 1,
               hasMore: current_page === last_page ? false : true
             }), _defineProperty(_ref, "isGetting", false), _ref;
           });
         });
       };
+
+      _this.setState(function (prevState) {
+        return {
+          isGetting: true,
+          already_added_tasks: filtering ? {} : prevState.already_added_tasks
+        };
+      });
 
       switch (table) {
         case "tasks":
@@ -60248,93 +60256,81 @@ var Workspace = /*#__PURE__*/function (_Component) {
       var _this$props = _this.props,
           add_task_api = _this$props.add_task_api,
           logged_in_user_id = _this$props.logged_in_user_id,
-          _this$state = _this.state,
-          new_task_description = _this$state.new_task_description,
-          workspace_users = _this$state.workspace_users;
+          _this$state2 = _this.state,
+          new_task_description = _this$state2.new_task_description,
+          workspace_users = _this$state2.workspace_users;
       var title = $("#new-task-title").val(),
           group = $("#new-task-group").val(),
           priority = parseInt($("#new-task-priority").val()),
           users = $("#new-task-members").val(),
           description = new_task_description;
-
-      if (title.length === 0 || group.length === 0 || priority === null) {
-        sweetalert2__WEBPACK_IMPORTED_MODULE_6___default.a.fire({
-          title: 'خطا',
-          text: "فیلد های مورد نیاز به درستی پر نشدند",
-          icon: 'error',
-          confirmButtonText: 'بستن',
-          customClass: {
-            content: 'persian-text'
-          }
-        });
-      } else {
-        axios__WEBPACK_IMPORTED_MODULE_2___default.a.post(add_task_api, {
-          title: title,
-          priority: priority,
-          group: group,
-          users: users,
-          description: new_task_description
-        }).then(function (res) {
-          _this.setState(function (prevState) {
-            var new_task_users = users.map(function (userId, i) {
-              return {
-                id: userId,
-                fullname: workspace_users[userId].fullname,
-                name: workspace_users[userId].name
-              };
-            });
-            new_task_users.unshift({
-              id: logged_in_user_id,
-              fullname: workspace_users[logged_in_user_id].fullname,
-              name: workspace_users[logged_in_user_id].name
-            });
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.post(add_task_api, {
+        title: title,
+        priority: priority,
+        group: group,
+        users: users,
+        description: new_task_description
+      }).then(function (res) {
+        _this.setState(function (prevState) {
+          var new_task_users = users.map(function (userId, i) {
             return {
-              tasks: Object.assign({}, prevState.tasks, {
-                data: [_objectSpread(_objectSpread({}, res.data), {}, {
-                  users: new_task_users,
-                  finished_at: null,
-                  finisher_id: null
-                })].concat(_toConsumableArray(prevState.tasks.data))
-              })
+              id: userId,
+              fullname: workspace_users[userId].fullname,
+              name: workspace_users[userId].name
             };
           });
-
-          sweetalert2__WEBPACK_IMPORTED_MODULE_6___default.a.fire({
-            icon: 'success',
-            title: "موفقیت",
-            text: "کار شما به لیست افزوده شد",
-            showConfirmButton: true,
-            customClass: {
-              content: "persian-text"
-            }
+          new_task_users.unshift({
+            id: logged_in_user_id,
+            fullname: workspace_users[logged_in_user_id].fullname,
+            name: workspace_users[logged_in_user_id].name
           });
-        })["catch"](function (err) {
-          var _err$response = err.response,
-              status = _err$response.status,
-              data = _err$response.data;
+          return {
+            tasks: Object.assign({}, prevState.tasks, {
+              data: [_objectSpread(_objectSpread({}, res.data), {}, {
+                users: new_task_users,
+                finished_at: null,
+                finisher_id: null
+              })].concat(_toConsumableArray(prevState.tasks.data))
+            }),
+            already_added_tasks: Object.assign({}, prevState.already_added_tasks, _defineProperty({}, res.data.id, res.data.id))
+          };
+        });
 
-          if (status === 422) {
-            var errors = data.errors,
-                err_html = "";
-            Object.entries(errors).map(function (_ref2) {
-              var _ref3 = _slicedToArray(_ref2, 2),
-                  param = _ref3[0],
-                  message = _ref3[1];
-
-              err_html += "<p class=\"float-right text-center col-12\">".concat(message, "</p><br>");
-            });
-            sweetalert2__WEBPACK_IMPORTED_MODULE_6___default.a.fire({
-              title: 'خطا',
-              text: err_htlm,
-              icon: 'error',
-              confirmButtonText: 'تایید',
-              customClass: {
-                content: 'persian-text'
-              }
-            });
+        sweetalert2__WEBPACK_IMPORTED_MODULE_6___default.a.fire({
+          icon: 'success',
+          title: "موفقیت",
+          text: "کار شما به لیست افزوده شد",
+          showConfirmButton: true,
+          customClass: {
+            content: "persian-text"
           }
         });
-      }
+      })["catch"](function (err) {
+        var _err$response = err.response,
+            status = _err$response.status,
+            data = _err$response.data;
+
+        if (status === 422) {
+          var errors = data.errors,
+              err_html = "";
+          Object.entries(errors).map(function (_ref2) {
+            var _ref3 = _slicedToArray(_ref2, 2),
+                param = _ref3[0],
+                message = _ref3[1];
+
+            err_html += "<p class=\"float-right text-center col-12\">".concat(message, "</p><br>");
+          });
+          sweetalert2__WEBPACK_IMPORTED_MODULE_6___default.a.fire({
+            title: 'خطا',
+            html: err_html,
+            icon: 'error',
+            confirmButtonText: 'تایید',
+            customClass: {
+              content: 'persian-text'
+            }
+          });
+        }
+      });
     });
 
     _this.addTaskRef = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
@@ -60346,7 +60342,8 @@ var Workspace = /*#__PURE__*/function (_Component) {
         data: [],
         nextPage: 1,
         hasMore: true
-      }
+      },
+      already_added_tasks: {}
     };
     return _this;
   }
@@ -60384,11 +60381,11 @@ var Workspace = /*#__PURE__*/function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this$state2 = this.state,
-          isGetting = _this$state2.isGetting,
-          tasks = _this$state2.tasks,
-          workspace_users = _this$state2.workspace_users,
-          workspace = _this$state2.workspace;
+      var _this$state3 = this.state,
+          isGetting = _this$state3.isGetting,
+          tasks = _this$state3.tasks,
+          workspace_users = _this$state3.workspace_users,
+          workspace = _this$state3.workspace;
       var _this$props3 = this.props,
           taskRoute = _this$props3.taskRoute,
           logged_in_user_id = _this$props3.logged_in_user_id;
@@ -60846,7 +60843,7 @@ var TinymcEditor = /*#__PURE__*/function (_React$Component) {
           height: 350,
           menubar: false,
           branding: false,
-          placeholder: "توضیحات تکمیلی کار را در این قسمت وارد نمایید",
+          placeholder: "توضیحات تکمیلی را در این قسمت وارد نمایید",
           directionality: 'rtl',
           language: "fa",
           language_url: APP_PATH + "js/tinymce/langs/fa.js",
@@ -60926,7 +60923,7 @@ if (target) {
 
 /***/ }),
 
-/***/ 4:
+/***/ 2:
 /*!***********************************************!*\
   !*** multi ./resources/js/react/workspace.js ***!
   \***********************************************/
