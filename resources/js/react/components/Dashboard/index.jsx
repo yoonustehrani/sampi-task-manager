@@ -47,7 +47,7 @@ export default class Dashboard extends Component {
                     isGetting: true
                 })
                 Axios.get(`${api}&limit=15&order_by=${tabName === "mixed_tasks" ? "due_to" : "created_at"}&order=desc${tabName === "mixed_demands" ? "&relationship=asked" : ""}`).then(res => {
-                    let data = tabName === "mixed_tasks" ? res.data : res.data.data
+                    let { data } = res
                     this.setState({
                         [tabName]: data,
                         isGetting: false
@@ -90,7 +90,7 @@ export default class Dashboard extends Component {
             this.setState({ isGetting: true })
             let order_by = $(`#${tab}_order_by_select`).val(), order = $(`#${tab}_order_select`).val(), relation = $(`#${tab}_relation_select`).val()
             Axios.get(`${api}&order_by=${order_by}&order=${order}&relation=${tab === "mixed_tasks" ? relation : tab === "mixed_demands" ? "asked" : "mixed_need"}${tab === "mixed_tasks" ? "" : `&filter=${relation}`}`).then(res =>{
-                let { data } = res.data
+                let { data } = res
                 this.setState({
                     [tab]: data,
                     isGetting: false                    
