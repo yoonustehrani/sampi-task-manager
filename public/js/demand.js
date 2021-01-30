@@ -34546,31 +34546,31 @@ var DemandMessages = /*#__PURE__*/function (_Component) {
         _this.setState({
           loading: true
         });
-      }
 
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(url).then(function (res) {
-        var _res$data = res.data,
-            data = _res$data.data,
-            next_page_url = _res$data.next_page_url;
+        axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(url).then(function (res) {
+          var _res$data = res.data,
+              data = _res$data.data,
+              next_page_url = _res$data.next_page_url;
 
-        _this.setState(function (prevState) {
-          return {
-            hasMore: next_page_url ? true : false,
-            currentPage: prevState.currentPage + 1,
-            messages: [].concat(_toConsumableArray(prevState.messages), _toConsumableArray(data)),
-            loading: false
-          };
+          _this.setState(function (prevState) {
+            return {
+              hasMore: next_page_url !== null ? true : false,
+              currentPage: prevState.currentPage + 1,
+              messages: [].concat(_toConsumableArray(prevState.messages), _toConsumableArray(data)),
+              loading: false
+            };
+          });
+        })["catch"](function (e) {
+          console.log(e);
         });
-      })["catch"](function (e) {
-        console.log(e);
-      });
+      }
     });
 
     _this.scrollParentRef = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createRef();
     _this.state = {
       messages: [],
       currentPage: 0,
-      hasMore: false,
+      hasMore: true,
       loading: true,
       api_token: _this.props.apiKey
     };
@@ -34606,7 +34606,7 @@ var DemandMessages = /*#__PURE__*/function (_Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_infinite_scroller__WEBPACK_IMPORTED_MODULE_2___default.a, {
         pageStart: 0,
         loadMore: this.handleLoadMore,
-        hasMore: hasMore,
+        hasMore: hasMore && !loading,
         useWindow: false,
         getScrollParent: function getScrollParent() {
           return _this2.scrollParentRef.current;
@@ -34676,8 +34676,8 @@ if (document.getElementById(target)) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! W:\php\sampies\resources\js\react\demand.js */"./resources/js/react/demand.js");
-module.exports = __webpack_require__(/*! W:\php\sampies\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! I:\projects\task-manager\resources\js\react\demand.js */"./resources/js/react/demand.js");
+module.exports = __webpack_require__(/*! I:\projects\task-manager\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
