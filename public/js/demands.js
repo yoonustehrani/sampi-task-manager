@@ -61085,7 +61085,7 @@ var user_profile_route = target.getAttribute("user-profile-route");
 var task_route = target.getAttribute("task-route");
 var workspace_api = target.getAttribute("workspace-api");
 var logged_in_user_id = parseInt(target.getAttribute("logged-in-user-id"));
-var demand_show_route = target.getAttribute("data-show");
+var demand_show_route = target.getAttribute("demand-show-route");
 
 if (target) {
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_demands_index_jsx__WEBPACK_IMPORTED_MODULE_2__["default"], {

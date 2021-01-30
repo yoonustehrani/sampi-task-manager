@@ -16,6 +16,7 @@
         task-route="{{ route('task-manager.tasks.show', ['task' => 'taskId']) }}"
         workspace-api = "{{ route('api.task-manager.workspaces.show', ['workspace' => $workspace->id, 'api_token' => auth()->user()->api_token]) }}"
         logged-in-user-id = "{{ auth()->user()->id }}"
+        demand-route="{{ route('task-manager.demands.show', ['workspace' => $workspace->id, 'demand' => 'demandId']) }}"
     >
     </div>
 @endsection

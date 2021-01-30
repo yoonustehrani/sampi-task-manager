@@ -14,10 +14,12 @@
         task_counter = "{{ route('api.task-manager.counter.tasks', ['api_token' => auth()->user()->api_token]) }}"
         demand_counter = "{{ route('api.task-manager.counter.demands', ['api_token' => auth()->user()->api_token]) }}"
         workspaces = "{{ route('api.task-manager.workspaces.index', ['api_token' => auth()->user()->api_token]) }}"
+        mixed_demands = "{{ route('api.task-manager.demands.mixed', ['api_token' => auth()->user()->api_token]) }}"
+        demand-show-route="{{ route('task-manager.demands.show', ['workspace' => 'workspaceId', 'demand' => 'demandId']) }}"
+        user-profile-route="{{ route('task-manager.users.show', ['user' => 'userId']) }}"
     ></div>
 @endsection
 
 @push('scripts')
     <script src="{{ asset('/js/dashboard.js') }}"></script>
-    <script src="{{ asset('js/select2.js') }}"></script>
 @endpush

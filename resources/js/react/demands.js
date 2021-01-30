@@ -9,7 +9,7 @@ const user_profile_route = target.getAttribute("user-profile-route")
 const task_route = target.getAttribute("task-route")
 const workspace_api = target.getAttribute("workspace-api")
 const logged_in_user_id = parseInt(target.getAttribute("logged-in-user-id"))
-const demand_show_route = target.getAttribute("data-show")
+const demand_show_route = target.getAttribute("demand-show-route")
 
 if (target) {
     ReactDom.render(

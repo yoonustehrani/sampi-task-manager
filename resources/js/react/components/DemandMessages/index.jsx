@@ -12,7 +12,7 @@ class DemandMessages extends Component {
         this.state = {
             messages: [],
             currentPage: 0,
-            hasMore: false,
+            hasMore: true,
             loading: true,
             api_token: this.props.apiKey
         }
@@ -27,21 +27,22 @@ class DemandMessages extends Component {
         let {api_token, currentPage, hasMore} = this.state;
         let url = getMessages + `?api_token=${api_token}&page=${currentPage + 1}`;
         if (hasMore) {
-            // this.setState(prevState => ({
-            //     loading: true,
-            // }))
+            this.setState({
+                loading: true
+            })
+            axios.get(url).then(res => {
+                let {data, next_page_url} = res.data;
+                this.setState(prevState => ({
+                    hasMore: next_page_url !== null ? true : false,
+                    currentPage: prevState.currentPage + 1,
+                    messages: [...prevState.messages, ...data],
+                    loading: false,
+                }))
+            }).catch(e => {
+                console.log(e);
+            })
         }
-        axios.get(url).then(res => {
-            let {data, next_page_url} = res.data;
-            this.setState(prevState => ({
-                hasMore: next_page_url ? true : false,
-                currentPage: prevState.currentPage + 1,
-                messages: [...prevState.messages, ...data],
-                loading: false,
-            }))
-        }).catch(e => {
-            console.log(e);
-        })
+
     }
     componentDidMount() {
         this.handleLoadMore(); 
@@ -58,7 +59,7 @@ class DemandMessages extends Component {
                 <InfiniteScroll
                     pageStart={0}
                     loadMore={this.handleLoadMore}
-                    hasMore={hasMore}
+                    hasMore={hasMore && !loading}
                     useWindow={false}
                     getScrollParent={() => {return this.scrollParentRef.current}}
                 >
