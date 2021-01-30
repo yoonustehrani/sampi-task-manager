@@ -6,9 +6,10 @@ const target = 'react-demand-show';
 if (document.getElementById(target)) {
     let elem = $(`#${target}`);
     let getMessages = elem.attr('data-messages'),
+    newMessage = elem.attr('data-message'),
     apiKey = elem.attr('data-apiKey');
     ReactDom.render(
-        <DemandMessages apiKey={apiKey} getMessages={getMessages}/>,
+        <DemandMessages apiKey={apiKey} newMessage={newMessage} getMessages={getMessages}/>,
         document.getElementById(target)
     )
 }
