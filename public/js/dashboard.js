@@ -56752,17 +56752,17 @@ var Dashboard = /*#__PURE__*/function (_Component) {
       order: 0
     }, {
       text: 'وظایف',
-      icon: '',
+      icon: 'tasks',
       tab: 1,
       order: 1
     }, {
       text: 'درخواست ها',
-      icon: '',
+      icon: 'comment-dots',
       tab: 2,
       order: 2
     }, {
       text: 'نیاز ها',
-      icon: '',
+      icon: 'clipboard-list',
       tab: 3,
       order: 3
     }].sort(function (a, b) {

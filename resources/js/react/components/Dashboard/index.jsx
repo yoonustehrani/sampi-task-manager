@@ -22,9 +22,9 @@ export default class Dashboard extends Component {
 
         let navbar = [
             {text: 'پروژه ها', icon: 'project-diagram', tab: 0, order: 0},
-            {text: 'وظایف', icon: '', tab: 1, order: 1},
-            {text: 'درخواست ها', icon: '', tab: 2, order: 2},
-            {text: 'نیاز ها', icon: '', tab: 3, order: 3}
+            {text: 'وظایف', icon: 'tasks', tab: 1, order: 1},
+            {text: 'درخواست ها', icon: 'comment-dots', tab: 2, order: 2},
+            {text: 'نیاز ها', icon: 'clipboard-list', tab: 3, order: 3}
         ].sort((a,b) => (a.order > b.order ? 0 : -1));
 
         this.state = {
