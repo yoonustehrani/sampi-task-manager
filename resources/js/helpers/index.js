@@ -24,3 +24,11 @@ export const redirectTo = (url) => {
 export const getUser = (userId) => {
     return USER_ROUTE.replace('userId', userId);
 }
+
+export const getTask = (taskId) => {
+    return TASK_ROUTE.replace('taskId', taskId);
+}
+
+export const getWorkspace = (workspaceId) => {
+    return WORKSPACE_ROUTE.replace('workspaceId', workspaceId);
+}

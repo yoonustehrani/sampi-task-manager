@@ -44,8 +44,7 @@ class DemandController extends BaseController
         }
         $user_demands = $this->decide_ordered($request, $user_demands)
                             ->withCount('messages')
-                            ->with($with, 'task', 'priority:id,title', 'workspace')
-                            ->paginate(10);
+                            ->with($with, 'task', 'priority:id,title', 'workspace');                       
         return $request->limit ? $user_demands->limit((int) $request->limit)->get() : $user_demands->paginate(10);
     }
     public function store(Request $request, Workspace $workspace)

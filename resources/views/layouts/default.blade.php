@@ -10,7 +10,9 @@
     @yield('content')
     <script>
         var APP_PATH = "{{ asset('/') }}";
-        const USER_ROUTE = "{{ route('task-manager.users.show', ['user' => 'userId']) }}";
+        const USER_ROUTE = "{{ route('task-manager.users.show', ['user' => 'userId']) }}",
+        TASK_ROUTE = "{{ route('task-manager.tasks.show', ['task' => 'taskId']) }}",
+        WORKSPACE_ROUTE = "{{ route('task-manager.workspaces.show', ['workspace' => 'workspaceId']) }}";
     </script>
     <script src="{{ asset('js/app.js') }}"></script>
     @include('partials.error')

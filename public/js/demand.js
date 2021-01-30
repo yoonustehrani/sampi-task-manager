@@ -34385,7 +34385,7 @@ module.exports = function (css) {
 /*!***************************************!*\
   !*** ./resources/js/helpers/index.js ***!
   \***************************************/
-/*! exports provided: setPriority, redirectTo, getUser */
+/*! exports provided: setPriority, redirectTo, getUser, getTask, getWorkspace */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -34393,6 +34393,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setPriority", function() { return setPriority; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "redirectTo", function() { return redirectTo; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getUser", function() { return getUser; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getTask", function() { return getTask; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getWorkspace", function() { return getWorkspace; });
 var setPriority = function setPriority(id) {
   switch (parseInt(id)) {
     case 1:
@@ -34420,6 +34422,12 @@ var redirectTo = function redirectTo(url) {
 };
 var getUser = function getUser(userId) {
   return USER_ROUTE.replace('userId', userId);
+};
+var getTask = function getTask(taskId) {
+  return TASK_ROUTE.replace('taskId', taskId);
+};
+var getWorkspace = function getWorkspace(workspaceId) {
+  return WORKSPACE_ROUTE.replace('workspaceId', workspaceId);
 };
 
 /***/ }),
