@@ -6,7 +6,7 @@
 
 @section('page-content')
     <div class="col-12 float-left">
-        <h2 class="text-right">
+        {{-- <h2 class="text-right">
             درخواست ها - {{ $demand->title }} 
             <a href="{{ route('task-manager.workspaces.show', ['workspace' => $workspace->id]) }}" title="{{ $workspace->title }}">
                 <img src="{{ asset($workspace->avatar_pic ?: 'male-avatar.svg') }}" alt="{{ $workspace->title }}" height="30" width="30">
@@ -15,7 +15,7 @@
         @if ($demand->priority)
         <p class="text-right">
             @if ($demand->priority->icon_class)
-                <b><i class="{{ $demand->priority->icon_class }} fa-2x"></i> {{ $demand->priority->title }}</b>
+                <b><i class="text-{{ $demand->priority->color_class }} {{ $demand->priority->icon_class }} fa-2x"></i> {{ $demand->priority->title }}</b>
             @else
                 <b>{{ $demand->priority->title }}</b>
             @endif
@@ -56,10 +56,11 @@
             @endif
         </p>
         <div class="col-12 float-left p-1"
+        id="react-demand-show"
         data-messages="{{ route('api.task-manager.demands.messages.index', ['workspace' => $workspace->id, 'demand' => $demand->id]) }}"
         data-message="{{ route('api.task-manager.demands.messages.store', ['workspace' => $workspace->id, 'demand' => $demand->id]) }}"
         data-update="{{ route('api.task-manager.demands.update', ['workspace' => $workspace->id, 'demand' => $demand->id]) }}"
         data-toggle="{{ route('api.task-manager.demands.toggle_state', ['demand' => $demand->id]) }}">
-        </div>
+        </div> --}}
     </div>
 @endsection
