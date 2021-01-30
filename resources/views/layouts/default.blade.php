@@ -10,6 +10,7 @@
     @yield('content')
     <script>
         var APP_PATH = "{{ asset('/') }}";
+        const USER_ROUTE = "{{ route('task-manager.users.show', ['user' => 'userId']) }}";
     </script>
     <script src="{{ asset('js/app.js') }}"></script>
     @include('partials.error')

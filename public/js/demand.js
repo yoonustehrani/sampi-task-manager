@@ -34381,6 +34381,49 @@ module.exports = function (css) {
 
 /***/ }),
 
+/***/ "./resources/js/helpers/index.js":
+/*!***************************************!*\
+  !*** ./resources/js/helpers/index.js ***!
+  \***************************************/
+/*! exports provided: setPriority, redirectTo, getUser */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setPriority", function() { return setPriority; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "redirectTo", function() { return redirectTo; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getUser", function() { return getUser; });
+var setPriority = function setPriority(id) {
+  switch (parseInt(id)) {
+    case 1:
+      return 'ضروری و مهم';
+      break;
+
+    case 2:
+      return 'ضروری و غیر مهم';
+      break;
+
+    case 3:
+      return 'غیر ضروری و مهم';
+      break;
+
+    case 4:
+      return 'غیر ضروری و غیر مهم';
+      break;
+
+    default:
+      break;
+  }
+};
+var redirectTo = function redirectTo(url) {
+  window.location.href = url;
+};
+var getUser = function getUser(userId) {
+  return USER_ROUTE.replace('userId', userId);
+};
+
+/***/ }),
+
 /***/ "./resources/js/react/components/DemandMessages/Message.jsx":
 /*!******************************************************************!*\
   !*** ./resources/js/react/components/DemandMessages/Message.jsx ***!
@@ -34392,6 +34435,7 @@ module.exports = function (css) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../helpers */ "./resources/js/helpers/index.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -34416,6 +34460,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+
 var Message = /*#__PURE__*/function (_Component) {
   _inherits(Message, _Component);
 
@@ -34430,23 +34475,29 @@ var Message = /*#__PURE__*/function (_Component) {
   _createClass(Message, [{
     key: "render",
     value: function render() {
-      var user = this.props.user;
+      var _this$props = this.props,
+          user = _this$props.user,
+          text = _this$props.text;
       var id = user.id,
           fullname = user.fullname;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "card mb-3"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-        className: "card-header text-right"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, fullname)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "card-body"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
-        className: "card-title"
-      }, "Special title treatment"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-        className: "card-text"
-      }, "With supporting text below as a natural lead-in to additional content."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        href: "#",
-        className: "btn btn-primary"
-      }, "Go somewhere")));
+        className: "card-header text-right d-rtl circle-avatar-pic"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        className: "text-dark",
+        href: Object(_helpers__WEBPACK_IMPORTED_MODULE_1__["getUser"])(user.id)
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        src: "".concat(APP_PATH).concat(user.avatar_pic ? user.avatar_pic : 'images/male-avatar.svg'),
+        alt: ""
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", {
+        className: "mr-2"
+      }, fullname))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "card-body",
+        dangerouslySetInnerHTML: {
+          __html: text
+        }
+      }));
     }
   }]);
 
@@ -34674,8 +34725,8 @@ if (document.getElementById(target)) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! I:\projects\task-manager\resources\js\react\demand.js */"./resources/js/react/demand.js");
-module.exports = __webpack_require__(/*! I:\projects\task-manager\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! W:\php\sampies\resources\js\react\demand.js */"./resources/js/react/demand.js");
+module.exports = __webpack_require__(/*! W:\php\sampies\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

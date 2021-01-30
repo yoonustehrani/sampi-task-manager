@@ -20,3 +20,7 @@ export const setPriority = (id) => {
 export const redirectTo = (url) => {
     window.location.href = url
 }
+
+export const getUser = (userId) => {
+    return USER_ROUTE.replace('userId', userId);
+}

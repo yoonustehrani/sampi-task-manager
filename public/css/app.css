@@ -12246,6 +12246,14 @@ div.demand-tab-result.active {
   direction: rtl;
 }
 
+.circle-avatar-pic img {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  padding: 2px;
+  box-shadow: 0 0 2px 1px #999999;
+}
+
 .select2-container {
   box-sizing: border-box;
   display: inline-block;
