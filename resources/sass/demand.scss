@@ -1,4 +1,18 @@
 .ticket-info-section {
+    p {
+        text-align: right;
+        direction: rtl;
+        width: fit-content;
+    }
+    .avatar-pic {
+        img {
+            height: 30px;
+            width: 30px;
+            border-radius: 50%;
+            padding: 2px;
+            box-shadow: 0 0 2px 1px rgba(0,0,0,0.1);
+        }
+    }
     .box-section {
         width: 100%;
         float: left;
@@ -31,6 +45,7 @@
             padding: 5px;
             float: right;
             text-align: right;
+            direction: rtl;
         }
     }
 }

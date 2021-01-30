@@ -140,6 +140,6 @@ class DemandController extends BaseController
     public function messages(Demand $demand)
     {
         $this->authorize('view', $demand);
-        return $demand->messages()->orderBy('created_at', 'desc')->paginate(10);
+        return $demand->messages()->with('user')->orderBy('created_at', 'desc')->paginate(10);
     }
 }

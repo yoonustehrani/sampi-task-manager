@@ -12196,6 +12196,22 @@ div.demand-tab-result.active {
   display: block !important;
 }
 
+.ticket-info-section p {
+  text-align: right;
+  direction: rtl;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+.ticket-info-section .avatar-pic img {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  padding: 2px;
+  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
+}
+
 .ticket-info-section .box-section {
   width: 100%;
   float: left;
@@ -12227,6 +12243,7 @@ div.demand-tab-result.active {
   padding: 5px;
   float: right;
   text-align: right;
+  direction: rtl;
 }
 
 .select2-container {
