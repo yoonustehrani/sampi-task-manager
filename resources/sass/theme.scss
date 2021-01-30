@@ -588,3 +588,13 @@ div.edit-tasks-container {
 @import 'userprofile.scss';
 @import 'demands.scss';
 @import 'demand.scss';
+
+.circle-avatar-pic {
+    img {
+        height: 30px;
+        width: 30px;
+        border-radius: 50%;
+        padding: 2px;
+        box-shadow: 0 0 2px 1px #999999;
+    }
+}

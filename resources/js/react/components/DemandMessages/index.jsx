@@ -27,9 +27,9 @@ class DemandMessages extends Component {
         let {api_token, currentPage, hasMore} = this.state;
         let url = getMessages + `?api_token=${api_token}&page=${currentPage + 1}`;
         if (hasMore) {
-            this.setState({
-                loading: true,
-            })
+            // this.setState(prevState => ({
+            //     loading: true,
+            // }))
         }
         axios.get(url).then(res => {
             let {data, next_page_url} = res.data;

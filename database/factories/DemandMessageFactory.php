@@ -7,7 +7,7 @@ use App\DemandMessage;
 
 $factory->define(DemandMessage::class, function (Faker $faker) {
     return [
-        'text' => $faker->sentences(2, true),
-        'user_id' => rand(1,3)
+        'text' => "<p>". $faker->sentences(2, true) ."</p>" . "<p><span>". $faker->sentences(2, true) ."</span></p>",
+        'user_id' => rand(1,2)
     ];
 });
