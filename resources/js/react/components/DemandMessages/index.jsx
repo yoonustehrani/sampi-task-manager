@@ -26,22 +26,20 @@ class DemandMessages extends Component {
         let {getMessages} = this.props;
         let {api_token, currentPage, hasMore} = this.state;
         let url = getMessages + `?api_token=${api_token}&page=${currentPage + 1}`;
-        if (hasMore) {
-            this.setState({
-                loading: true
-            })
-            axios.get(url).then(res => {
-                let {data, next_page_url} = res.data;
-                this.setState(prevState => ({
-                    hasMore: next_page_url !== null ? true : false,
-                    currentPage: prevState.currentPage + 1,
-                    messages: [...prevState.messages, ...data],
-                    loading: false,
-                }))
-            }).catch(e => {
-                console.log(e);
-            })
-        }
+        this.setState({
+            loading: true
+        })
+        axios.get(url).then(res => {
+            let {data, next_page_url} = res.data;
+            this.setState(prevState => ({
+                hasMore: next_page_url !== null ? true : false,
+                currentPage: prevState.currentPage + 1,
+                messages: [...prevState.messages, ...data],
+                loading: false,
+            }))
+        }).catch(e => {
+            console.log(e);
+        })
 
     }
     componentDidMount() {
