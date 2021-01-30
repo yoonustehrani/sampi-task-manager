@@ -395,7 +395,6 @@ export default class Demands extends Component {
                         </thead>
                         <tbody>
                             {needs && needs.data.length > 0 && needs.data.map((need, i) => {
-
                                 let { title, task, priority, due_to, finished_at, to, id } = need
                                 return (
                                     <tr key={i} className="animated fadeIn" onClick={() => redirectTo(demand_show_route.replace("demandId", demand.id))}>
