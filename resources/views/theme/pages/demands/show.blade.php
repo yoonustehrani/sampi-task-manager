@@ -5,7 +5,40 @@
 @endsection
 
 @section('page-content')
-    <div class="col-12 float-left">
+    <div class="col-12 p-0 float-left">
+        <div class="col-lg-3 col-md-4 col-12 float-right ticket-info-section p-3 mb-3">
+            <div class="box-section p-0">
+                <div class="box-header p-0 col-12 float-left">
+                    <div class="box-icon">
+                        <i class="fas fa-exclamation text-dark"></i>
+                    </div>
+                    <p class="box-header-title">اطلاعات درخواست
+                        @if ($demand->priority->icon_class)
+                            ({{ $demand->priority->title }} <i class="text-{{ $demand->priority->color_class }} {{ $demand->priority->icon_class }}"></i>)
+                        @else
+                            ({{ $demand->priority->title }})
+                        @endif
+                    </p>
+                </div>
+                <div class="box-body p-0 col-12 float-12">
+                    <div class="box-body-row col-6">
+                        شماره : #{{ $demand->id }}
+                    </div>
+                    <div class="box-body-row col-12">
+                        عنوان : {{ $demand->title }}
+                    </div>
+                    <div class="box-body-row col-6">
+                        از : {{ $demand->from->fullname }}
+                    </div>
+                    <div class="box-body-row col-6">
+                        به : {{ $demand->to->fullname }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-9 col-md-8 col-12 float-right bg-danger mb-3">
+            dool
+        </div>
         {{-- <h2 class="text-right">
             درخواست ها - {{ $demand->title }} 
             <a href="{{ route('task-manager.workspaces.show', ['workspace' => $workspace->id]) }}" title="{{ $workspace->title }}">

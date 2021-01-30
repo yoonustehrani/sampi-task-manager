@@ -28624,14 +28624,26 @@ if (target) {
 
 /***/ }),
 
+/***/ "./resources/sass/app.scss":
+/*!*********************************!*\
+  !*** ./resources/sass/app.scss ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
 /***/ 0:
-/*!********************************************!*\
-  !*** multi ./resources/js/react/demand.js ***!
-  \********************************************/
+/*!**********************************************************************!*\
+  !*** multi ./resources/js/react/demand.js ./resources/sass/app.scss ***!
+  \**********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! W:\php\sampies\resources\js\react\demand.js */"./resources/js/react/demand.js");
+__webpack_require__(/*! W:\php\sampies\resources\js\react\demand.js */"./resources/js/react/demand.js");
+module.exports = __webpack_require__(/*! W:\php\sampies\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

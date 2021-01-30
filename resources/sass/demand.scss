@@ -1,0 +1,36 @@
+.ticket-info-section {
+    .box-section {
+        width: 100%;
+        float: left;
+        border: 1px solid rgba(255,255,255,0.2);
+        box-shadow: -1px 1px 0 0 rgba(0,0,0,0.1);
+        // background: ;
+    }
+    .box-header {
+        .box-icon {
+            float: right;
+            background: #ebc109;
+            color: #ffffff;
+            font-size: 20px;
+            width: 40px;
+            height: 40px;
+            padding: 5px;
+            text-align: center;
+            border-radius: 0 0 0 10px;
+        }
+        .box-header-title {
+            float: right;
+            text-align: right;
+            padding: 10px;
+            font-weight: bold;
+            margin: 0px;
+        }
+    }
+    .box-body {
+        .box-body-row {
+            padding: 5px;
+            float: right;
+            text-align: right;
+        }
+    }
+}

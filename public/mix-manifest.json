@@ -1,8 +1,4 @@
 {
     "/js/demand.js": "/js/demand.js",
-    "/js/dashboard.js": "/js/dashboard.js",
-    "/js/demands.js": "/js/demands.js",
-    "/js/select2.js": "/js/select2.js",
-    "/css/app.css": "/css/app.css",
-    "/js/workspace.js": "/js/workspace.js"
+    "/css/app.css": "/css/app.css"
 }
