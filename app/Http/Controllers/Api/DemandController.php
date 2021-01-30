@@ -133,8 +133,9 @@ class DemandController extends BaseController
         $message = new DemandMessage();
         $message->text = $request->text;
         $message->user_id = $request->user()->id;
-        $demand->messages()->create($message->toArray());
-        return ['okay' => true];
+        $message = $demand->messages()->create($message->toArray());
+        $message['user'] = $request->user();
+        return $message;
     }
     public function messages(Demand $demand)
     {
