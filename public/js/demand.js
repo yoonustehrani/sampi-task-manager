@@ -34542,28 +34542,26 @@ var DemandMessages = /*#__PURE__*/function (_Component) {
           hasMore = _this$state.hasMore;
       var url = getMessages + "?api_token=".concat(api_token, "&page=").concat(currentPage + 1);
 
-      if (hasMore) {
-        _this.setState({
-          loading: true
-        });
+      _this.setState({
+        loading: true
+      });
 
-        axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(url).then(function (res) {
-          var _res$data = res.data,
-              data = _res$data.data,
-              next_page_url = _res$data.next_page_url;
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(url).then(function (res) {
+        var _res$data = res.data,
+            data = _res$data.data,
+            next_page_url = _res$data.next_page_url;
 
-          _this.setState(function (prevState) {
-            return {
-              hasMore: next_page_url !== null ? true : false,
-              currentPage: prevState.currentPage + 1,
-              messages: [].concat(_toConsumableArray(prevState.messages), _toConsumableArray(data)),
-              loading: false
-            };
-          });
-        })["catch"](function (e) {
-          console.log(e);
+        _this.setState(function (prevState) {
+          return {
+            hasMore: next_page_url !== null ? true : false,
+            currentPage: prevState.currentPage + 1,
+            messages: [].concat(_toConsumableArray(prevState.messages), _toConsumableArray(data)),
+            loading: false
+          };
         });
-      }
+      })["catch"](function (e) {
+        console.log(e);
+      });
     });
 
     _this.scrollParentRef = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createRef();
