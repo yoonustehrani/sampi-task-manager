@@ -36,7 +36,12 @@ class DemandController extends Controller
      */
     public function show(Workspace $workspace, $demand)
     {
-        $demand = $workspace->demands()->with('from', 'to', 'priority')->withCount('messages')->findOrFail($demand);
+        $demand = $workspace->demands()
+        ->with(['from', 'to', 'priority', 'messages' => function($q) {
+            $q->latest()->limit(1);
+        }])
+        ->withCount('messages')
+        ->findOrFail($demand);
         return view('theme.pages.demands.show', compact('demand', 'workspace'));
     }
 }

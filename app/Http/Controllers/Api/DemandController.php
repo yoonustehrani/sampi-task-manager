@@ -44,7 +44,7 @@ class DemandController extends BaseController
         }
         $user_demands = $this->decide_ordered($request, $user_demands)
                             ->withCount('messages')
-                            ->with($with, 'task', 'priority:id,title', 'workspace');                       
+                            ->with($with, 'task', 'priority:id,title', 'workspace');                  
         return $request->limit ? $user_demands->limit((int) $request->limit)->get() : $user_demands->paginate(10);
     }
     public function store(Request $request, Workspace $workspace)
@@ -62,6 +62,9 @@ class DemandController extends BaseController
             \DB::beginTransaction();
             $target_user = \App\User::findOrFail($request->target_user);
             $demand = new Demand();
+            if ($request->task) {
+                $demand->task_id = optional($user->tasks()->findOrFail($request->task))->id;
+            }
             $demand->title = $request->title;
             $demand->priority_id = $request->priority;
             $demand->title = $request->title;
@@ -88,20 +91,18 @@ class DemandController extends BaseController
         $this->authorize('update', $demand);
         $request->validate([
             'title' => 'required|string|min:3|max:255',
-            'target_user'  => 'required|numeric',
+            // 'target_user'  => 'required|numeric',
             'priority' => 'required|numeric',
-            'task'     => 'nullable|numeric',
-            'due_to'   => 'nullable|numeric',
+            // 'task'     => 'nullable|numeric',
+            // 'due_to'   => 'nullable|numeric',
         ]);
         try {
             \DB::beginTransaction();
-            $target_user = \App\User::findOrFail($request->target_user);
             $demand->title = $request->title;
             $demand->priority_id = $request->priority;
-            $demand->to_id = $target_user->id;
             $demand->save();
             \DB::commit();
-            return $demand;
+            return $demand->load('priority');
         } catch (\Exception $e){
             \DB::rollback();
             return [
@@ -133,7 +134,7 @@ class DemandController extends BaseController
         $message = new DemandMessage();
         $message->text = $request->text;
         $message->user_id = $request->user()->id;
-        $message = $demand->messages()->create($message->toArray());
+        $message = $demand->messages()->save($message);
         $message['user'] = $request->user();
         return $message;
     }

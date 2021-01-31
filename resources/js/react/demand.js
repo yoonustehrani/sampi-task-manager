@@ -7,9 +7,10 @@ if (document.getElementById(target)) {
     let elem = $(`#${target}`);
     let getMessages = elem.attr('data-messages'),
     newMessage = elem.attr('data-message'),
+    updateDemand = elem.attr('data-update'),
     apiKey = elem.attr('data-apiKey');
     ReactDom.render(
-        <DemandMessages apiKey={apiKey} newMessage={newMessage} getMessages={getMessages}/>,
+        <DemandMessages apiKey={apiKey} updateDemand={updateDemand} newMessage={newMessage} getMessages={getMessages}/>,
         document.getElementById(target)
     )
 }

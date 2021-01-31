@@ -48,22 +48,48 @@ export const sweetError = (errObject) => {
                 content: 'persian-text',
             },
         })
-        return;
+        return {'code': 0};
     }
     let { status, data } = errObject.response
-    if (status === 422) {
-        let { errors } = data, err_html = ""
-        Object.entries(errors).map(([param, message]) => {
-            err_html += `<p class="float-right text-center col-12">${message}</p>`
-        })
-        Swal.default.fire({
-            icon: "error",
-            title: "خطا",
-            html: err_html,
-            confirmButtonText: "تایید",
-            customClass: {
-                content: 'persian-text',
-            },
-        })
+    switch (status) {
+        case 422:
+            let { errors } = data, err_html = ""
+            Object.entries(errors).map(([param, message]) => {
+                err_html += `<p class="float-right text-center col-12">${message}</p>`
+            })
+            Swal.default.fire({
+                icon: "error",
+                title: "خطا",
+                html: err_html,
+                confirmButtonText: "تایید",
+                customClass: {
+                    content: 'persian-text',
+                },
+            })
+            break;
+        case 403:
+            Swal.default.fire({
+                icon: "error",
+                title: "خطا",
+                html: "اجازه دسترسی ندارید !",
+                confirmButtonText: "تایید",
+                customClass: {
+                    content: 'persian-text',
+                },
+            })
+        default:
+            if (status !== 200) {
+                Swal.default.fire({
+                    icon: "error",
+                    title: "خطا",
+                    html: "خطای سرور",
+                    confirmButtonText: "تایید",
+                    customClass: {
+                        content: 'persian-text',
+                    },
+                })
+            }
+            break;
     }
+    return {'code': status};
 }

@@ -6,6 +6,7 @@ import Message from './Message';
 import 'react-activity/lib/Spinner/Spinner.css'
 import CreateMessage from './CreateMessage';
 import { sweetError } from '../../../helpers';
+import EditForm from './EditForm';
 
 class DemandMessages extends Component {
     constructor(props) {
@@ -61,9 +62,11 @@ class DemandMessages extends Component {
     }
     render() {
         let {messages, hasMore, loading, api_token} = this.state;
+        let {updateDemand} = this.props;
         return (
             <div className="h-100">
                 <CreateMessage addMessage={this.handleAddMessage.bind(this)} editMessage={this.handleEditMessage.bind(this)} Target={this.props.newMessage + '?api_token=' + api_token}/>
+                <EditForm Target={updateDemand + '?api_token=' + api_token}/>
                 <div className="col-12 float-left" style={
                     {
                         height:'700px',

@@ -28,7 +28,7 @@ mix.disableNotifications();
 var { res, pub } = src
 
 mix.sass(res.sass + 'app.scss', pub.css)
-    // .react(res.react + 'demand.js', pub.js)
+    .react(res.react + 'demand.js', pub.js)
     // .js(res.js + 'tinymce/tinymce.js', pub.js + 'tinymce')
     // .sass(res.sass + 'tinytheme.scss', pub.css)
     // .sass(res.sass + 'auth.scss', pub.css)
@@ -46,5 +46,5 @@ mix.sass(res.sass + 'app.scss', pub.css)
     // .react(res.react + "user-profile.js", pub.js)
     // .react(res.react + "demands.js", pub.js)
     // .js(res.js + 'tinymce/langs/fa.js', pub.js + 'tinymce/langs')`
-        .react(res.react + "mixedDemands.js", pub.js)
+        // .react(res.react + "mixedDemands.js", pub.js)
     

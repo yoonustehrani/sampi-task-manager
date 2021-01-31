@@ -13,19 +13,21 @@
                         <i class="fas fa-exclamation text-dark"></i>
                     </div>
                     <p class="box-header-title">اطلاعات درخواست
+                        <span data-id="{{ $demand->priority->id }}" id="react-state-priority">
                         @if ($demand->priority->icon_class)
                             ({{ $demand->priority->title }} <i class="text-{{ $demand->priority->color_class }} {{ $demand->priority->icon_class }}"></i>)
                         @else
                             ({{ $demand->priority->title }})
                         @endif
+                        </span>
                     </p>
                 </div>
                 <div class="box-body p-0 col-12 float-12">
                     <div class="box-body-row col-6">
                         <b>شماره :</b> #{{ $demand->id }}
                     </div>
-                    <div class="box-body-row col-12">
-                        <b>عنوان :</b> {{ $demand->title }}
+                    <div class="box-body-row col-12" id="react-state-title">
+                        <b>عنوان :</b> <span>{{ $demand->title }}</span>
                     </div>
                     <div class="box-body-row col-12">
                         <b>از :</b>
@@ -83,6 +85,16 @@
                         <b>آخرین ویرایش :</b>
                         {{ $demand->updated_at->diffForHumans() }}
                     </div>
+                    @if (count($demand->messages) > 0)
+                    <div class="box-body-row col-12">
+                        <b>آخرین پیام :</b>
+                        {{ $demand->messages[0]->updated_at->diffForHumans() }}
+                    </div>
+                    @else
+                    <div id="last-message" class="box-body-row col-12 d-none">
+                        <b>آخرین پیام :</b>
+                    </div>
+                    @endif
                     @if ($demand->finished_at)
                     <div class="box-body-row col-12">
                         <b>بسته شده :</b>
