@@ -52,7 +52,7 @@ class DemandController extends BaseController
         $request->validate([
             'q' => 'required|min:3|max:60',
             'order_by' => 'nullable|string',
-            'limit' => 'required|integer|min:3|max:30'
+            'limit' => 'nullable|integer|min:3|max:30'
         ]);
         $user = ($request->user_id) ? \App\User::find($request->user_id) : $request->user();
         $relationship = $this->model_relationship($request->relationship, $user, '_demands', 'demands');
