@@ -42,6 +42,15 @@ class DemandController extends Controller
         }])
         ->withCount('messages')
         ->findOrFail($demand);
+        $this->authorize('view', $demand);
         return view('theme.pages.demands.show', compact('demand', 'workspace'));
+    }
+
+    public function destroy(Request $request, $workspace, Demand $demand)
+    {
+        $this->authorize('delete', $demand);
+        $targetId = $demand->workspace_id;
+        $demand->delete();
+        return redirect()->to(route('task-manager.demands.index', ['workspace' => $targetId]));
     }
 }
