@@ -42,11 +42,11 @@ class TaskController extends BaseController
         $user = ($request->user_id) ? \App\User::find($request->user_id) : $request->user();
         $relationship = $this->model_relationship($request->relationship, $user, '_tasks', 'tasks');
         $user_tasks = $user->{$relationship}()
-                        ->with([
-                            'users',
-                            'workspace:id,title,avatar_pic'
-                        ])
-                        ->withCount('demands', 'children');
+                            ->with([
+                                'users',
+                                'workspace:id,title,avatar_pic'
+                            ])
+                            ->withCount('demands', 'children');
         return $request->limit
             ? $this->decide_ordered($request, $user_tasks)->limit((int) $request->limit)->get()
             : $this->decide_ordered($request, $user_tasks)->paginate(10);
@@ -56,12 +56,14 @@ class TaskController extends BaseController
         $request->validate([
             'q' => 'required|min:3|max:60',
             'order_by' => 'nullable|string',
-            'limit' => 'required|integer|min:3|max:30'
+            'limit' => 'nullable|integer|min:3|max:30'
         ]);
         $user = ($request->user_id) ? \App\User::find($request->user_id) : $request->user();
         $relationship = $this->model_relationship($request->relationship, $user, '_tasks', 'tasks');
         $tasks = $user->{$relationship}()->with(['workspace:id,title,avatar_pic'])->withCount('users', 'children');
-        return $this->decide_ordered($request, $tasks)->search($request->q, null, true)->limit((int) $request->limit)->get();
+        return $request->limit
+                ? $this->decide_ordered($request, $tasks)->search($request->q, null, true)->limit((int) $request->limit)->get()
+                : $this->decide_ordered($request, $tasks)->search($request->q, null, true)->paginate(10);
     }
     public function show(Request $request, $workspace, $task)
     {
