@@ -6,7 +6,7 @@ import axios from 'axios'
 import 'react-activity/dist/react-activity.css'
 import TinymcEditor from '../tinymce-editor/index'
 import Swal from 'sweetalert2'
-import { setPriority, redirectTo } from '../../../helpers'
+import { setPriority, redirectTo, sweetError } from '../../../helpers'
 
 export default class Demands extends Component {
     constructor(props) {
@@ -128,22 +128,7 @@ export default class Demands extends Component {
                 }
             })
         }).catch(err => {
-            let { status, data } = err.response
-            if (status === 422) {
-                let { errors } = data, err_html = ""
-                Object.entries(errors).map(([param, message]) => {
-                    err_html += `<p class="float-right text-center col-12">${message}</p>`
-                })
-                Swal.fire({
-                    icon: "error",
-                    title: "خطا",
-                    html: err_html,
-                    confirmButtonText: "تایید",
-                    customClass: {
-                        content: 'persian-text',
-                    },
-                })
-            }
+            sweetError(err);
         })
     }
 

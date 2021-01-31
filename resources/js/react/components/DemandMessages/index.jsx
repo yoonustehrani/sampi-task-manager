@@ -5,6 +5,7 @@ import {Spinner} from 'react-activity';
 import Message from './Message';
 import 'react-activity/lib/Spinner/Spinner.css'
 import CreateMessage from './CreateMessage';
+import { sweetError } from '../../../helpers';
 
 class DemandMessages extends Component {
     constructor(props) {
@@ -34,22 +35,7 @@ class DemandMessages extends Component {
                 loading: false,
             }))
         }).catch(err => {
-            let { status, data } = err.response
-            if (status === 422) {
-                let { errors } = data, err_html = ""
-                Object.entries(errors).map(([param, message]) => {
-                    err_html += `<p class="float-right text-center col-12">${message}</p>`
-                })
-                Swal.fire({
-                    icon: "error",
-                    title: "خطا",
-                    html: err_html,
-                    confirmButtonText: "تایید",
-                    customClass: {
-                        content: 'persian-text',
-                    },
-                })
-            }
+            sweetError(err);
         })
     }
     handleAddMessage = (message) => {
