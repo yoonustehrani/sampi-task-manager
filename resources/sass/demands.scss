@@ -9,7 +9,6 @@ nav.demands-tabs-titles {
         color: #0275d8;
         transition: 0.3s;
         cursor: pointer;
-        // position: relative;
         font-size: 15px;
         display: flex;
         flex-direction: row;
@@ -17,16 +16,8 @@ nav.demands-tabs-titles {
         justify-content: center;
         align-items: center;
         i {
-            // position: absolute;
-            // top: -52%;
             font-size: 80px;
             transition: 0.3s;
-        }
-        i.right-arrow {
-            // right: 4%;
-        }
-        i.left-arrow {
-            // left: -145%;
         }
     }
     @media(min-width: 768px) {
@@ -34,13 +25,6 @@ nav.demands-tabs-titles {
             font-size: 20px;
             i {
                 font-size: 100px;
-                // top: -75%;
-            }
-            i.right-arrow {
-                // right: -5%;
-            }
-            i.left-arrow {
-                // left: -115%;
             }
         }
     }
@@ -54,6 +38,38 @@ nav.demands-tabs-titles {
             color: #d9534f;
         }
     }
+    .demand-tab-title-small-arrow {
+        color: #0275d8;
+        transition: 0.3s;
+        cursor: pointer;
+        font-size: 15px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-size: 20px;
+        i {
+            transition: 0.3s;
+            font-size: 18px;
+        }
+    }
+    .demand-tab-title-small-arrow.active {
+        color: #d9534f;
+        font-weight: bold;
+        border-bottom: 1px solid #d9534f;
+        padding-right: 8px;
+        padding-left: 8px;
+    }
+    .demand-tab-title-small-arrow:hover {
+        color: #d9534f;
+        border-bottom: 1px solid #d9534f;
+        padding-right: 8px;
+        padding-left: 8px;
+        i {
+            color: #d9534f;
+        }
+    }
+
 }
 div.demand-tab-result {
     display: none;

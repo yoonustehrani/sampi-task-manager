@@ -2,12 +2,16 @@ export const setPriority = (id) => {
     switch(parseInt(id)) {
         case 1:
             return 'ضروری و مهم'
+
         case 2:
             return 'ضروری و غیر مهم'
+
         case 3:
             return 'غیر ضروری و مهم'
+
         case 4:
             return 'غیر ضروری و غیر مهم'
+            
         default:
             break
     }
@@ -27,4 +31,8 @@ export const getTask = (taskId) => {
 
 export const getWorkspace = (workspaceId) => {
     return WORKSPACE_ROUTE.replace('workspaceId', workspaceId);
+}
+
+export const getDemand = (workspaceId, demandId) => {
+    return DEMAND_ROUTE.replace('workspaceId', workspaceId).replace('demandId', demandId)
 }

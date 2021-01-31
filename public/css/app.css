@@ -12188,6 +12188,42 @@ nav.demands-tabs-titles .demand-tab-title:hover i {
   color: #d9534f;
 }
 
+nav.demands-tabs-titles .demand-tab-title-small-arrow {
+  color: #0275d8;
+  transition: 0.3s;
+  cursor: pointer;
+  font-size: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+}
+
+nav.demands-tabs-titles .demand-tab-title-small-arrow i {
+  transition: 0.3s;
+  font-size: 18px;
+}
+
+nav.demands-tabs-titles .demand-tab-title-small-arrow.active {
+  color: #d9534f;
+  font-weight: bold;
+  border-bottom: 1px solid #d9534f;
+  padding-right: 8px;
+  padding-left: 8px;
+}
+
+nav.demands-tabs-titles .demand-tab-title-small-arrow:hover {
+  color: #d9534f;
+  border-bottom: 1px solid #d9534f;
+  padding-right: 8px;
+  padding-left: 8px;
+}
+
+nav.demands-tabs-titles .demand-tab-title-small-arrow:hover i {
+  color: #d9534f;
+}
+
 div.demand-tab-result {
   display: none;
 }
