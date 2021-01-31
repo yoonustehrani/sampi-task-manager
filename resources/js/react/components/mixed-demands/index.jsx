@@ -184,11 +184,11 @@ export default class MixedDemands extends Component {
             <div>
                 <nav className="demands-tabs-titles col-12">
                     <a href="#demands" className="demand-tab-title-small-arrow active" ref={this.tabTitlesRef[0]} onClick={this.changeTab.bind(this, 0)}>
-                        <i className="fas fa-arrow-circle-down animated bounce"></i>
+                        <i className="fas fa-arrow-circle-down animated heartBeat"></i>
                         <span>درخواست</span>
                     </a>
                     <a href="#needs" className="demand-tab-title-small-arrow" ref={this.tabTitlesRef[1]} onClick={this.changeTab.bind(this, 1)}>
-                        <i className="fas fa-arrow-circle-up animated bounce"></i>
+                        <i className="fas fa-arrow-circle-up animated heartBeat"></i>
                         <span>نیاز</span>
                     </a>
                 </nav>
