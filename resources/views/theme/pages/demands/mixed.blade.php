@@ -9,10 +9,11 @@
         id="mixed-demands-react"
         data-index="{{ route('api.task-manager.demands.mixed', ['api_token' => auth()->user()->api_token]) }}"
         {{-- relationship=asked -> from sb else to the current user --}}
-        data-store="{{ route('api.task-manager.demands.store', ['workspace' => 'workspaceId']) }}"
+        data-store="{{ route('api.task-manager.demands.store', ['workspace' => 'workspaceId', 'api_token' => auth()->user()->api_token]) }}"
         data-show="{{ route('api.task-manager.demands.show', ['workspace' => 'workspaceId', 'demand' => 'demandId']) }}"
         data-destroy="{{ route('api.task-manager.demands.destroy', ['workspace' => 'workspaceId', 'demand' => 'demandId']) }}"
         logged-in-user-id = "{{ auth()->user()->id }}"
+        {{-- data-search="{{ route('api.task-manager.demands.mixed.search', ['api_token' => auth()->user()->api_token]) }}" --}}
     >
     </div>
 @endsection

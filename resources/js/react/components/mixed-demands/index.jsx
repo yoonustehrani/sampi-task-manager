@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import { getTask, getDemand, getUser, getWorkspace } from '../../../helpers'
+import { getTask, getDemand, getUser, getWorkspace, sweetError } from '../../../helpers'
 import { Digital } from 'react-activity'
 import 'react-activity/lib/Digital/Digital.css'
 import TinymcEditor from '../tinymce-editor/index'
-import Swal from 'sweetalert2'
 import { setPriority, redirectTo } from '../../../helpers'
 import moment from 'moment'
 moment.locale('fa')
@@ -12,13 +11,15 @@ moment.locale('fa')
 export default class MixedDemands extends Component {
     constructor(props) {
         super(props)
-        this.tabTitlesRef = []
-        this.tabResultsRef = []
+        this.tabTitlesRefs = []
+        this.tabResultsRefs = []
+        this.filterBoxRefs = []
         this.addIconRef = React.createRef()
         this.addDemandRef = React.createRef()
         for (let index = 0; index < 2; index++) {
-            this.tabTitlesRef.push(React.createRef())
-            this.tabResultsRef.push(React.createRef())
+            this.tabTitlesRefs.push(React.createRef())
+            this.tabResultsRefs.push(React.createRef())
+            this.filterBoxRefs.push(React.createRef())
         }
         this.state = {
             current_tab: 'demands',
@@ -27,16 +28,15 @@ export default class MixedDemands extends Component {
             already_added_needs: {}
         }
     }
-    
 
     changeTab = (tab_index) => {
-        this.tabTitlesRef.map((titleRef, i) => {
+        this.tabTitlesRefs.map((titleRef, i) => {
             if (tab_index === i) {
-                this.tabTitlesRef[i].current.classList.add("active")
-                this.tabResultsRef[i].current.classList.add("active")
+                this.tabTitlesRefs[i].current.classList.add("active")
+                this.tabResultsRefs[i].current.classList.add("active")
             } else {
-                this.tabTitlesRef[i].current.classList.remove("active")
-                this.tabResultsRef[i].current.classList.remove("active")
+                this.tabTitlesRefs[i].current.classList.remove("active")
+                this.tabResultsRefs[i].current.classList.remove("active")
             }
         })
         let activeTab
@@ -63,17 +63,11 @@ export default class MixedDemands extends Component {
         })
     }
 
-    toggleAddBox = () => {
-        this.addIconRef.current.classList.toggle("fa-plus")
-        this.addIconRef.current.classList.toggle("fa-minus")
-        this.addDemandRef.current.classList.toggle("d-none")
-    }
-
     getData = () => {            
         let { get_mixed_demands_api } = this.props, { current_tab, already_added_needs } = this.state
         let order_by = $(`#mixed_${current_tab}_order_by_select`).val(), order = $(`#mixed_${current_tab}_order_select`).val(), filter = $(`#mixed_${current_tab}_relation_select`).val()
         this.setState({ isGetting: true })
-        axios.get(`${get_mixed_demands_api}${current_tab === "demands" ? "&relationship=asked" : ""}&order_by=${order_by}&order=${order}&filter=${filter}&page=${this.state[current_tab].nextPage}`).then(res => {
+        axios.get(`${get_mixed_demands_api}${current_tab === "demands" ? "&relationship=asked" : ""}&order_by=${order_by ? order_by : "created_at"}&order=${order ? order : "desc"}&filter=${filter ? filter : "all"}&page=${this.state[current_tab].nextPage}`).then(res => {
             let { data, current_page, last_page } = res.data
             let filteredArray = data.filter((item) => already_added_needs && typeof already_added_needs[item.id] === "undefined")
             this.setState(prevState => {
@@ -99,6 +93,10 @@ export default class MixedDemands extends Component {
         this.addDemandRef.current.classList.toggle("d-none")
     }
 
+    toggleFilterBox = (index) => {
+        this.filterBoxRefs[index].current.classList.toggle("d-none")
+    }
+
     onDescriptionChange = (content) => {
         this.setState({
             new_demand_description: content
@@ -106,9 +104,9 @@ export default class MixedDemands extends Component {
     }
 
     addDemand = () => {
-        let { post_new_ticket_api } = this.props, { new_demand_description, workspace_users } = this.state
-        let title = $("#new-demand-title").val(), priority = parseInt($("#new-task-priority").val()), toUser = $("#new-demand-member").val(), related_task = $("#task-select").val() === "0" ? "" : $("#task-select").val()
-        axios.post(post_new_ticket_api, {
+        let { post_demand_api } = this.props, { new_demand_description, workspace_users } = this.state
+        let title = $("#new-demand-title").val(), priority = parseInt($("#new-task-priority").val()), toUser = $("#new-demand-member").val(), related_task = $("#task-select").val() === "0" ? "" : $("#task-select").val(), workspaceId = $("#new-demand-project-select").val()
+        axios.post(post_demand_api.replace("workspaceId", workspaceId), {
             title: title,
             priority: priority,
             task_id: related_task,
@@ -136,45 +134,30 @@ export default class MixedDemands extends Component {
                 }
             })
         }).catch(err => {
-            let { status, data } = err.response
-            if (status === 422) {
-                let { errors } = data, err_html = ""
-                Object.entries(errors).map(([param, message]) => {
-                    err_html += `<p class="float-right text-center col-12">${message}</p>`
-                })
-                Swal.fire({
-                    icon: "error",
-                    title: "خطا",
-                    html: err_html,
-                    confirmButtonText: "تایید",
-                    customClass: {
-                        content: 'persian-text',
-                    },
-                })
-            }
+            sweetError(err)
         })
     }
 
     componentDidMount() {
         let { current_tab } = this.state, { get_workspace_api } = this.props
         this.setState({[current_tab]: {data: [], nextPage: 1, hasMore: true}}, () => this.getData())
-        axios.get(get_workspace_api).then(res => {
-            let { data } = res
-            this.setState({workspace: data}, () => {
-                this.state.workspace.users.map((user, i) => {
-                    this.setState(prevState => ({
-                        workspace_users: Object.assign({}, prevState.workspace_users, {
-                            [user.id]: {
-                                is_admin: user.pivot.is_admin,
-                                fullname: user.fullname,
-                                name: user.name,
-                                avatar_pic: user.avatar_pic
-                            } // we have a clear object in our states that tells us all the informations that we need about users
-                        }),
-                    }))
-                })
-            })
-        })
+        // axios.get(get_workspace_api).then(res => {
+        //     let { data } = res
+        //     this.setState({workspace: data}, () => {
+        //         this.state.workspace.users.map((user, i) => {
+        //             this.setState(prevState => ({
+        //                 workspace_users: Object.assign({}, prevState.workspace_users, {
+        //                     [user.id]: {
+        //                         is_admin: user.pivot.is_admin,
+        //                         fullname: user.fullname,
+        //                         name: user.name,
+        //                         avatar_pic: user.avatar_pic
+        //                     } // we have a clear object in our states that tells us all the informations that we need about users
+        //                 }),
+        //             }))
+        //         })
+        //     })
+        // })
     }
 
     render() {
@@ -182,19 +165,30 @@ export default class MixedDemands extends Component {
 
         return (
             <div>
-                <nav className="demands-tabs-titles col-12">
-                    <a href="#demands" className="demand-tab-title-small-arrow active" ref={this.tabTitlesRef[0]} onClick={this.changeTab.bind(this, 0)}>
-                        <i className="fas fa-arrow-circle-down animated heartBeat"></i>
+                <nav className="demands-tabs-titles col-12 mt-2">
+                    <a className="demand-tab-title-small-arrow active" ref={this.tabTitlesRefs[0]} onClick={this.changeTab.bind(this, 0)}>
+                        <i className="fas fa-arrow-circle-down animated tada delay-1s"></i>
                         <span>درخواست</span>
                     </a>
-                    <a href="#needs" className="demand-tab-title-small-arrow" ref={this.tabTitlesRef[1]} onClick={this.changeTab.bind(this, 1)}>
-                        <i className="fas fa-arrow-circle-up animated heartBeat"></i>
+                    <a className="demand-tab-title-small-arrow" ref={this.tabTitlesRefs[1]} onClick={this.changeTab.bind(this, 1)}>
+                        <i className="fas fa-arrow-circle-up animated tada delay-1s"></i>
                         <span>نیاز</span>
                     </a>
                 </nav>
-                <div className="col-12 mt-4 float-right demand-tab-result active" ref={this.tabResultsRef[0]}>
-                    <div className="filter-box demand-bg-color mb-4 p-2 col-12 animated fadeIn">
-                        <div className="filter-option col-12 col-md-6 col-lg-3 mb-3 mb-lg-0 text-center">
+                <div className="col-12 mt-4 float-right demand-tab-result active pr-0 pl-0 pr-md-3 pl-md-3" ref={this.tabResultsRefs[0]}>
+                    <div className="search-box p-2 p-md-4">
+                        <div className="input-group">
+                            <div className="input-group-prepend">
+                                <button className="btn btn-primary" onClick={this.handleMore.bind(this, true)}>جستجو</button>
+                            </div>
+                            <input type="text" className="form-control" placeholder="جستجو در خواسته ها"/>
+                            <div className="input-group-append">
+                                <button className="btn btn-info" onClick={this.toggleFilterBox.bind(this, 0)}>فیلتر ها<i className="fas fa-filter"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div ref={this.filterBoxRefs[0]} className="filter-box mixed-demands-filter-box mt-2 p-2 col-12 d-none animated fadeIn">
+                        <div className="filter-option mb-4 mb-lg-0 text-center col-12 col-md-6 col-lg-3">
                             <span>جستجو در: </span>
                             <select id="mixed_demands_relation_select" defaultValue="all">
                                 <option container_class="select-option-big" value="all" icon_name="fas fa-tasks">همه</option>
@@ -202,7 +196,7 @@ export default class MixedDemands extends Component {
                                 <option container_class="select-option-big" value="unfinished" icon_name="fas fa-times-circle">انجام نشده</option>
                             </select>
                         </div>
-                        <div className="filter-option col-12 col-md-6 col-lg-3 mb-3 mb-lg-0 text-center">
+                        <div className="filter-option mb-4 mb-lg-0 text-center col-12 col-md-6 col-lg-3">
                             <span>مرتب سازی بر اساس:</span>
                             <select id="mixed_demands_order_by_select" defaultValue="createdw">
                                 <option container_class="select-option-big" value="created_at" icon_name="fas fa-calendar-plus">تاریخ ایجاد</option>
@@ -210,22 +204,20 @@ export default class MixedDemands extends Component {
                                 <option container_class="select-option-big" value="finished_at" icon_name="fas fa-calendar-check">تاریخ اتمام</option>
                             </select>
                         </div>
-                        <div className="filter-option col-12 col-md-6 col-lg-3 mb-3 mb-lg-0 text-center">
+                        <div className="filter-option mb-4 mb-lg-0 text-center col-12 col-md-6 col-lg-3">
                             <span>نحوه مرتب سازی:</span>
                             <select id="mixed_demands_order_select" defaultValue="desc">
                                 <option container_class="select-option-big" value="asc" icon_name="fas fa-sort-amount-up">صعودی</option>
                                 <option container_class="select-option-big" value="desc" icon_name="fas fa-sort-amount-down">نزولی</option>
                             </select>
                         </div>
-                        <div className="text-center">
-                            <button className="btn btn-outline-info" onClick={this.handleMore.bind(this, true)}>مرتب سازی</button>
-                        </div>
                     </div>
-                    <table className="col-12 table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right animated bounce">
+                    <table className="col-12 table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right animated bounce mt-4">
                         <thead className="thead-dark">
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">عنوان</th>
+                                <th scope="col">پروژه مربوطه</th>
                                 <th scope="col">درخواست کننده</th>
                                 <th scope="col">تسک مربوطه</th>
                                 <th scope="col">اولویت</th>
@@ -240,6 +232,10 @@ export default class MixedDemands extends Component {
                                     <tr key={i} className="animated fadeIn" onClick={() => redirectTo(getDemand(demand.id))}>
                                         <th scope="row">{i + 1}</th>
                                         <td>{ title }</td>
+                                        <td className="text-right">
+                                            <img className="workspace_avatar" src={APP_PATH + demand.workspace.avatar_pic} />
+                                            <a href={getWorkspace(demand.workspace.id)}>{demand.workspace.title}</a>
+                                        </td>
                                         <td>
                                             <div className="employees-container horizontal-centerlize">
                                                 <span>{ from.fullname }</span>
@@ -288,7 +284,7 @@ export default class MixedDemands extends Component {
                         )
                     }
                     {
-                        demands && demands.data.length <= 0 && !isGetting &&
+                        demands && demands.data.length === 0 && !isGetting &&
                             <p className="text-center text-secondary">موردی برای نمایش وجود ندارد</p>
                     }
                     {
@@ -298,8 +294,8 @@ export default class MixedDemands extends Component {
                             </div>
                     }
                 </div>
-                <div className="col-12 mt-4 float-right demand-tab-result" ref={this.tabResultsRef[1]}>
-                <div className="workspace-add-task mb-2 col-12 pl-0 pr-0 pr-md-3 pl-md-3">
+                <div className="col-12 mt-4 float-right demand-tab-result pr-0 pl-0 pr-md-3 pl-md-3" ref={this.tabResultsRefs[1]}>
+                    <div className="workspace-add-task mb-2 col-12 pl-0 pr-0 pr-md-3 pl-md-3">
                         <div className="workspace-title-section title-section" onClick={this.toggleAddBox}>
                             <i className="fas fa-plus" ref={this.addIconRef}></i>
                             <h5>نیاز جدید</h5>
@@ -322,7 +318,18 @@ export default class MixedDemands extends Component {
                                     <option value="4" icon_name="fas fa-hourglass">غیر ضروری و غیر مهم</option>
                                 </select>
                             </div>
-                            <div className="input-group col-12 col-md-6 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line">
+                            <div className="input-group col-12 col-md-6 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line-all">
+                                <div className="input-group-prepend">
+                                    <span className="input-group-text">پروژه مربوطه</span>
+                                </div>
+                                <select id="new-demand-project-select" placeholder="انتخاب پروژه اجباری">
+                                    <option value="1" img_address={APP_PATH + 'images/elnovel-logo.jpg'}>کس</option>
+                                    <option value="2" img_address={APP_PATH + 'images/elnovel-logo.jpg'}>کس</option>
+                                    <option value="3" img_address={APP_PATH + 'images/elnovel-logo.jpg'}>کس</option>
+                                    <option value="4" img_address={APP_PATH + 'images/elnovel-logo.jpg'}>کس</option>
+                                </select>
+                            </div>
+                            <div className="input-group col-12 col-md-6 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line-all">
                                 <div className="input-group-prepend">
                                     <span className="input-group-text">کار مربوطه</span>
                                 </div>
@@ -333,7 +340,7 @@ export default class MixedDemands extends Component {
                                     <option value="2">جق زدن رو قرآن</option>
                                 </select>
                             </div>
-                            <div className="input-group col-12 col-md-6 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line">
+                            <div className="input-group col-12 col-md-6 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line-all">
                                 <div className="input-group-prepend">
                                     <span className="input-group-text">مخاطب نیاز</span>
                                 </div>
@@ -360,8 +367,19 @@ export default class MixedDemands extends Component {
                             </div>
                         </div>
                     </div>
-                    <div className="filter-box demand-bg-color mb-4 p-2 col-12 animated fadeIn">
-                        <div className="filter-option col-12 col-md-6 col-lg-3 mb-3 mb-lg-0 text-center">
+                    <div className="search-box p-2 p-md-4 float-right col-12">
+                        <div className="input-group">
+                            <div className="input-group-prepend">
+                                <button className="btn btn-primary" onClick={this.handleMore.bind(this, true)}>جستجو</button>
+                            </div>
+                            <input type="text" className="form-control" placeholder="جستجو در نیاز ها"/>
+                            <div className="input-group-append">
+                                <button className="btn btn-info" onClick={this.toggleFilterBox.bind(this, 1)}>فیلتر ها<i className="fas fa-filter"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div ref={this.filterBoxRefs[1]} className="filter-box mixed-demands-filter-box mt-2 p-2 col-12 d-none animated fadeIn">
+                        <div className="filter-option col-12 col-md-6 col-lg-4 mb-3 mb-lg-0 text-center">
                             <span>جستجو در: </span>
                             <select id="mixed_needs_relation_select" defaultValue="all">
                                 <option container_class="select-option-big" value="all" icon_name="fas fa-tasks">همه</option>
@@ -369,7 +387,7 @@ export default class MixedDemands extends Component {
                                 <option container_class="select-option-big" value="unfinished" icon_name="fas fa-times-circle">انجام نشده</option>
                             </select>
                         </div>
-                        <div className="filter-option col-12 col-md-6 col-lg-3 mb-3 mb-lg-0 text-center">
+                        <div className="filter-option col-12 col-md-6 col-lg-4 mb-3 mb-lg-0 text-center">
                             <span>مرتب سازی بر اساس:</span>
                             <select id="mixed_needs_order_by_select" defaultValue="createdw">
                                 <option container_class="select-option-big" value="created_at" icon_name="fas fa-calendar-plus">تاریخ ایجاد</option>
@@ -377,22 +395,20 @@ export default class MixedDemands extends Component {
                                 <option container_class="select-option-big" value="finished_at" icon_name="fas fa-calendar-check">تاریخ اتمام</option>
                             </select>
                         </div>
-                        <div className="filter-option col-12 col-md-6 col-lg-3 mb-3 mb-lg-0 text-center">
+                        <div className="filter-option col-12 col-md-6 col-lg-4 mb-3 mb-lg-0 text-center">
                             <span>نحوه مرتب سازی:</span>
                             <select id="mixed_needs_order_select" defaultValue="desc">
                                 <option container_class="select-option-big" value="asc" icon_name="fas fa-sort-amount-up">صعودی</option>
                                 <option container_class="select-option-big" value="desc" icon_name="fas fa-sort-amount-down">نزولی</option>
                             </select>
                         </div>
-                        <div className="text-center">
-                            <button className="btn btn-outline-info" onClick={this.handleMore.bind(this, true)}>مرتب سازی</button>
-                        </div>
                     </div>
-                    <table className="col-12 table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right animated bounce">
+                    <table className="col-12 table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right animated bounce mt-4">
                         <thead className="thead-dark">
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">عنوان</th>
+                                <th scope="col">پروژه مربوطه</th>
                                 <th scope="col">مخاطب</th>
                                 <th scope="col">تسک مربوطه</th>
                                 <th scope="col">اولویت</th>
@@ -404,9 +420,13 @@ export default class MixedDemands extends Component {
                             {needs && needs.data.length > 0 && needs.data.map((need, i) => {
                                 let { title, task, priority, due_to, finished_at, to, id } = need
                                 return (
-                                    <tr key={i} className="animated fadeIn" onClick={() => redirectTo(getDemand(demand.id))}>
+                                    <tr key={i} className="animated fadeIn" onClick={() => redirectTo(getDemand(need.id))}>
                                         <th scope="row">{i + 1}</th>
                                         <td>{ title }</td>
+                                        <td className="text-right">
+                                            <img className="workspace_avatar" src={APP_PATH + need.workspace.avatar_pic} />
+                                            <a href={getWorkspace(need.workspace.id)}>{need.workspace.title}</a>
+                                        </td>
                                         <td>
                                             <div className="employees-container horizontal-centerlize">
                                                 <span>{ to.fullname }</span>
@@ -454,7 +474,7 @@ export default class MixedDemands extends Component {
                         )
                     }
                     {
-                        needs && needs.length <= 0 && !isGetting &&
+                        needs && needs.data.length === 0 && !isGetting &&
                             <p className="text-center text-secondary">موردی برای نمایش وجود ندارد</p>
                     }
                     {

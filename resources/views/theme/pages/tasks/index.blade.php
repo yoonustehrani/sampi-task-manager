@@ -5,5 +5,9 @@
 @endsection
 
 @section('page-content')
-    @component('theme.tools.title', ['title' => 'وظایف من']) @endcomponent
+    
 @endsection
+
+@push('scripts')
+    
+@endpush

@@ -11425,7 +11425,7 @@ div.input-group-single-line-all {
   flex-wrap: nowrap !important;
 }
 
-div.select-option img.member-img {
+div.select-option img.option-img {
   width: 30px;
   height: 30px;
   border-radius: 50px;
@@ -11727,8 +11727,7 @@ div.dashboard-tab-container {
 }
 
 .tab-title-bar a.tab-link:hover {
-  padding-right: 8px;
-  padding-left: 8px;
+  transform: scale(1.1);
   color: #ec2F4B;
 }
 
@@ -12185,6 +12184,7 @@ nav.demands-tabs-titles .demand-tab-title.active {
 }
 
 nav.demands-tabs-titles .demand-tab-title:hover {
+  transform: scale(1.1);
   color: #d9534f;
 }
 
@@ -12206,7 +12206,7 @@ nav.demands-tabs-titles .demand-tab-title-small-arrow {
 
 nav.demands-tabs-titles .demand-tab-title-small-arrow i {
   transition: 0.3s;
-  font-size: 18px;
+  font-size: 20px;
 }
 
 nav.demands-tabs-titles .demand-tab-title-small-arrow.active {
@@ -12219,8 +12219,7 @@ nav.demands-tabs-titles .demand-tab-title-small-arrow.active {
 
 nav.demands-tabs-titles .demand-tab-title-small-arrow:hover {
   color: #d9534f;
-  padding-right: 8px;
-  padding-left: 8px;
+  transform: scale(1.1);
 }
 
 nav.demands-tabs-titles .demand-tab-title-small-arrow:hover i {
@@ -12233,6 +12232,20 @@ div.demand-tab-result {
 
 div.demand-tab-result.active {
   display: block !important;
+}
+
+.search-box {
+  background-color: #D7DDE8;
+}
+
+.search-box input {
+  background-color: #ffffff;
+  direction: rtl;
+  text-align: right;
+}
+
+.mixed-demands-filter-box {
+  background-color: #D7DDE8 !important;
 }
 
 .ticket-info-section p {
