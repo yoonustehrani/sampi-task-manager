@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -54832,7 +54832,7 @@ module.exports = function(module) {
 /*!***************************************!*\
   !*** ./resources/js/helpers/index.js ***!
   \***************************************/
-/*! exports provided: setPriority, redirectTo, getUser, getTask, getWorkspace */
+/*! exports provided: setPriority, redirectTo, getUser, getTask, getWorkspace, getDemand, sweetError */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -54842,6 +54842,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getUser", function() { return getUser; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getTask", function() { return getTask; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getWorkspace", function() { return getWorkspace; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getDemand", function() { return getDemand; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "sweetError", function() { return sweetError; });
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 var setPriority = function setPriority(id) {
   switch (parseInt(id)) {
     case 1:
@@ -54871,6 +54885,48 @@ var getTask = function getTask(taskId) {
 };
 var getWorkspace = function getWorkspace(workspaceId) {
   return WORKSPACE_ROUTE.replace('workspaceId', workspaceId);
+};
+var getDemand = function getDemand(workspaceId, demandId) {
+  return DEMAND_ROUTE.replace('workspaceId', workspaceId).replace('demandId', demandId);
+};
+var sweetError = function sweetError(errObject) {
+  if (!errObject.response) {
+    Swal["default"].fire({
+      icon: "error",
+      title: "خطا",
+      html: 'خطا در برقراری ارتباط',
+      confirmButtonText: "تایید",
+      customClass: {
+        content: 'persian-text'
+      }
+    });
+    return;
+  }
+
+  var _errObject$response = errObject.response,
+      status = _errObject$response.status,
+      data = _errObject$response.data;
+
+  if (status === 422) {
+    var errors = data.errors,
+        err_html = "";
+    Object.entries(errors).map(function (_ref) {
+      var _ref2 = _slicedToArray(_ref, 2),
+          param = _ref2[0],
+          message = _ref2[1];
+
+      err_html += "<p class=\"float-right text-center col-12\">".concat(message, "</p>");
+    });
+    Swal["default"].fire({
+      icon: "error",
+      title: "خطا",
+      html: err_html,
+      confirmButtonText: "تایید",
+      customClass: {
+        content: 'persian-text'
+      }
+    });
+  }
 };
 
 /***/ }),
@@ -55888,20 +55944,20 @@ var Dashboard = /*#__PURE__*/function (_Component) {
           mixedTasksApi = _this$props2.mixedTasksApi,
           mixedDemandsApi = _this$props2.mixedDemandsApi;
 
-      var sendReq = function sendReq(tab, api) {
+      var sendReq = function sendReq(tab_name, api) {
         _this.setState({
           isGetting: true
         });
 
-        var order_by = $("#".concat(tab, "_order_by_select")).val(),
-            order = $("#".concat(tab, "_order_select")).val(),
-            relation = $("#".concat(tab, "_relation_select")).val();
-        axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("".concat(api, "&order_by=").concat(order_by, "&order=").concat(order, "&relation=").concat(tab === "mixed_tasks" ? relation : tab === "mixed_demands" ? "asked" : "mixed_need").concat(tab === "mixed_tasks" ? "" : "&filter=".concat(relation))).then(function (res) {
+        var order_by = $("#".concat(tab_name, "_order_by_select")).val(),
+            order = $("#".concat(tab_name, "_order_select")).val(),
+            relation = $("#".concat(tab_name, "_relation_select")).val();
+        axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("".concat(api, "&limit=15&order_by=").concat(order_by, "&order=").concat(order, "&relation=").concat(tab_name === "mixed_tasks" ? relation : tab_name === "mixed_demands" ? "asked" : "mixed_need").concat(tab_name === "mixed_tasks" ? "" : "&filter=".concat(relation))).then(function (res) {
           var _this$setState2;
 
           var data = res.data;
 
-          _this.setState((_this$setState2 = {}, _defineProperty(_this$setState2, tab, data), _defineProperty(_this$setState2, "isGetting", false), _this$setState2));
+          _this.setState((_this$setState2 = {}, _defineProperty(_this$setState2, tab_name, data), _defineProperty(_this$setState2, "isGetting", false), _this$setState2));
         });
       };
 
@@ -56251,14 +56307,26 @@ $('#new-demand-member').select2({
 
 /***/ }),
 
-/***/ 1:
-/*!***********************************************!*\
-  !*** multi ./resources/js/react/dashboard.js ***!
-  \***********************************************/
+/***/ "./resources/sass/app.scss":
+/*!*********************************!*\
+  !*** ./resources/sass/app.scss ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ 0:
+/*!*************************************************************************!*\
+  !*** multi ./resources/js/react/dashboard.js ./resources/sass/app.scss ***!
+  \*************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! I:\projects\task-manager\resources\js\react\dashboard.js */"./resources/js/react/dashboard.js");
+__webpack_require__(/*! I:\projects\task-manager\resources\js\react\dashboard.js */"./resources/js/react/dashboard.js");
+module.exports = __webpack_require__(/*! I:\projects\task-manager\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

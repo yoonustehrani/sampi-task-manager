@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -60319,14 +60319,14 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
         ref: this.tabTitlesRef[0],
         onClick: this.changeTab.bind(this, 0)
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-arrow-circle-down animated bounce"
+        className: "fas fa-arrow-circle-down animated heartBeat"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u062F\u0631\u062E\u0648\u0627\u0633\u062A")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         href: "#needs",
         className: "demand-tab-title-small-arrow",
         ref: this.tabTitlesRef[1],
         onClick: this.changeTab.bind(this, 1)
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-arrow-circle-up animated bounce"
+        className: "fas fa-arrow-circle-up animated heartBeat"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0646\u06CC\u0627\u0632"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-12 mt-4 float-right demand-tab-result active",
         ref: this.tabResultsRef[0]
@@ -60861,26 +60861,14 @@ react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEB
 
 /***/ }),
 
-/***/ "./resources/sass/app.scss":
-/*!*********************************!*\
-  !*** ./resources/sass/app.scss ***!
-  \*********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
-/***/ 0:
-/*!****************************************************************************!*\
-  !*** multi ./resources/js/react/mixedDemands.js ./resources/sass/app.scss ***!
-  \****************************************************************************/
+/***/ 1:
+/*!**************************************************!*\
+  !*** multi ./resources/js/react/mixedDemands.js ***!
+  \**************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! I:\projects\task-manager\resources\js\react\mixedDemands.js */"./resources/js/react/mixedDemands.js");
-module.exports = __webpack_require__(/*! I:\projects\task-manager\resources\sass\app.scss */"./resources/sass/app.scss");
+module.exports = __webpack_require__(/*! I:\projects\task-manager\resources\js\react\mixedDemands.js */"./resources/js/react/mixedDemands.js");
 
 
 /***/ })
