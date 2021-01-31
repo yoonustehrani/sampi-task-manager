@@ -8,7 +8,7 @@ export const formatOptionWithIcon = (option) => {
 export const formatOptionWithImage = (option) => {
     if (option.element) {
         let img_src = option.element.attributes.img_address.nodeValue
-        return $(`<div class="select-option"><img src="${img_src}" class="member-img" />${option.text}</div>`)
+        return $(`<div class="select-option"><img src="${img_src}" class="option-img" />${option.text}</div>`)
     }
 }
 
@@ -24,14 +24,6 @@ $('#new-task-priority, #tasks_order_select, #tasks_order_by_select, #tasks_relat
     width: '100%',
     dir: "rtl",
 })
-
-$("#new-task-members").select2({
-    templateResult: formatOptionWithImage,
-    placeholder: "انجام دهندگان این کار",
-    width: "100%",
-    dir: 'rtl',
-    multiple: true,
-})
 $('.select2-search__field').css('width', '100%')
 
 $('#task-select').select2({
@@ -41,9 +33,15 @@ $('#task-select').select2({
     dir: "rtl"
 })
 
-$('#new-demand-member').select2({
-    templateResult: formatOptionWithImage,
-    placeholder: "نیاز به کمک چه کسی دارید؟",
-    width: "100%",
-    dir: "rtl"
-})
+const renderWithImg = (ids, placeholder, multiple) => {
+    $(ids).select2({
+        templateResult: formatOptionWithImage,
+        placeholder: placeholder,
+        width: "100%",
+        dir: "rtl",
+        multiple: multiple
+    })
+}
+renderWithImg("#new-demand-member", "نیاز به کمک چه کسی دارید؟", false)
+renderWithImg("#new-demand-project-select", "پروژه مربوطه را انتخاب کنید", false)
+renderWithImg("#new-task-members", "انجام دهندگان این کار", true)
