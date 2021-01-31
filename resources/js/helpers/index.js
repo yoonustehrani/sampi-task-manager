@@ -36,3 +36,34 @@ export const getWorkspace = (workspaceId) => {
 export const getDemand = (workspaceId, demandId) => {
     return DEMAND_ROUTE.replace('workspaceId', workspaceId).replace('demandId', demandId)
 }
+
+export const sweetError = (errObject) => {
+    if (! errObject.response) {
+        Swal.default.fire({
+            icon: "error",
+            title: "خطا",
+            html: 'خطا در برقراری ارتباط',
+            confirmButtonText: "تایید",
+            customClass: {
+                content: 'persian-text',
+            },
+        })
+        return;
+    }
+    let { status, data } = errObject.response
+    if (status === 422) {
+        let { errors } = data, err_html = ""
+        Object.entries(errors).map(([param, message]) => {
+            err_html += `<p class="float-right text-center col-12">${message}</p>`
+        })
+        Swal.default.fire({
+            icon: "error",
+            title: "خطا",
+            html: err_html,
+            confirmButtonText: "تایید",
+            customClass: {
+                content: 'persian-text',
+            },
+        })
+    }
+}
