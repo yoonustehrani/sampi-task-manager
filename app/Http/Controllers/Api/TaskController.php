@@ -69,9 +69,11 @@ class TaskController extends BaseController
         ]);
         $user = ($request->user_id) ? \App\User::find($request->user_id) : $request->user();
         $relationship = $this->model_relationship($request->relationship, $user, '_tasks', 'tasks');
-        $tasks = $user->{$relationship}()->search($request->q, null, true);
+        $tasks = $user->{$relationship}()->select('id','title','group', 'workspace_id')->search($request->q, null, true);
         if ($request->workspace) {
             $tasks = $tasks->where('workspace_id', $request->workspace);
+        } else {
+            $tasks = $tasks->with('workspace:id,title,avatar_pic');
         }
         if ($request->parent_only) {
             $tasks = $tasks->whereNull('parent_id');
