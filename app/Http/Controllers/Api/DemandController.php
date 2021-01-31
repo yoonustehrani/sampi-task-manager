@@ -47,6 +47,29 @@ class DemandController extends BaseController
                             ->with($with, 'task', 'priority:id,title', 'workspace');                  
         return $request->limit ? $user_demands->limit((int) $request->limit)->get() : $user_demands->paginate(10);
     }
+    public function search(Request $request)
+    {
+        $request->validate([
+            'q' => 'required|min:3|max:60',
+            'order_by' => 'nullable|string',
+            'limit' => 'required|integer|min:3|max:30'
+        ]);
+        $user = ($request->user_id) ? \App\User::find($request->user_id) : $request->user();
+        $relationship = $this->model_relationship($request->relationship, $user, '_demands', 'demands');
+        $user_demands = $user->{$relationship}();
+        switch ($request->filter) {
+            case 'finished':
+                $user_demands = $user_demands->whereNotNull('finished_at');
+                break;
+            case 'unfinished':
+                $user_demands = $user_demands->whereNull('finished_at');
+                break;
+        }
+        return $this->decide_ordered($request, $user_demands)
+                    ->search($request->q, null, true)
+                    ->limit((int) $request->limit)
+                    ->get();
+    }
     public function store(Request $request, Workspace $workspace)
     {
         $user = $request->user();
