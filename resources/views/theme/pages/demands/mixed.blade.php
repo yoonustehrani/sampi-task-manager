@@ -13,7 +13,8 @@
         data-show="{{ route('api.task-manager.demands.show', ['workspace' => 'workspaceId', 'demand' => 'demandId']) }}"
         data-destroy="{{ route('api.task-manager.demands.destroy', ['workspace' => 'workspaceId', 'demand' => 'demandId']) }}"
         logged-in-user-id = "{{ auth()->user()->id }}"
-        {{-- data-search="{{ route('api.task-manager.demands.mixed.search', ['api_token' => auth()->user()->api_token]) }}" --}}
+        data-search="{{ route('api.task-manager.demands.search', ['api_token' => auth()->user()->api_token]) }}"
+        workspaces-api="{{ route('api.task-manager.workspaces.index', ['api_token' => auth()->user()->api_token]) }}"
     >
     </div>
 @endsection

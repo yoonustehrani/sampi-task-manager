@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -56401,16 +56401,16 @@ var sweetError = function sweetError(errObject) {
 
 /***/ }),
 
-/***/ "./resources/js/react/components/mixed-demands/index.jsx":
-/*!***************************************************************!*\
-  !*** ./resources/js/react/components/mixed-demands/index.jsx ***!
-  \***************************************************************/
+/***/ "./resources/js/react/components/mixed-tasks/index.jsx":
+/*!*************************************************************!*\
+  !*** ./resources/js/react/components/mixed-tasks/index.jsx ***!
+  \*************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return MixedDemands; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return MixedTasks; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
@@ -56634,90 +56634,45 @@ function _defineProperty(obj, key, value) {
 
 moment__WEBPACK_IMPORTED_MODULE_6___default.a.locale('fa');
 
-var MixedDemands = /*#__PURE__*/function (_Component) {
-  _inherits(MixedDemands, _Component);
+var MixedTasks = /*#__PURE__*/function (_Component) {
+  _inherits(MixedTasks, _Component);
 
-  var _super = _createSuper(MixedDemands);
+  var _super = _createSuper(MixedTasks);
 
-  function MixedDemands(props) {
+  function MixedTasks(props) {
     var _this;
 
-    _classCallCheck(this, MixedDemands);
+    _classCallCheck(this, MixedTasks);
 
     _this = _super.call(this, props);
 
-    _defineProperty(_assertThisInitialized(_this), "changeTab", function (tab_index) {
-      _this.tabTitlesRefs.map(function (titleRef, i) {
-        if (tab_index === i) {
-          _this.tabTitlesRefs[i].current.classList.add("active");
-
-          _this.tabResultsRefs[i].current.classList.add("active");
-        } else {
-          _this.tabTitlesRefs[i].current.classList.remove("active");
-
-          _this.tabResultsRefs[i].current.classList.remove("active");
-        }
-      });
-
-      var activeTab;
-
-      _this.setState(function (prevState) {
-        switch (tab_index) {
-          case 0:
-            activeTab = "demands";
-            break;
-
-          case 1:
-            activeTab = "needs";
-            break;
-
-          default:
-            break;
-        }
-
-        return {
-          current_tab: activeTab
-        };
-      }, function () {
-        if (typeof _this.state[activeTab] === 'undefined') {
-          _this.setState(_defineProperty({}, activeTab, {
-            data: [],
-            nextPage: 1,
-            hasMore: true
-          }), function () {
-            return _this.getData();
-          });
-        }
-      });
-    });
-
     _defineProperty(_assertThisInitialized(_this), "getData", function () {
-      var get_mixed_demands_api = _this.props.get_mixed_demands_api,
-          _this$state = _this.state,
-          current_tab = _this$state.current_tab,
-          already_added_needs = _this$state.already_added_needs;
-      var order_by = $("#mixed_".concat(current_tab, "_order_by_select")).val(),
-          order = $("#mixed_".concat(current_tab, "_order_select")).val(),
-          filter = $("#mixed_".concat(current_tab, "_relation_select")).val();
+      var _this$props = _this.props,
+          mixed_tasks_api = _this$props.mixed_tasks_api,
+          mixed_tasks_search_api = _this$props.mixed_tasks_search_api,
+          already_added_tasks = _this.state.already_added_tasks;
+      var order_by = $("#mixed_tasks_order_by_select").val(),
+          order = $("#mixed_tasks_order_select").val(),
+          relationship = $("#mixed_tasks_relation_select").val();
 
       _this.setState({
         isGetting: true
       });
 
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("".concat(get_mixed_demands_api).concat(current_tab === "demands" ? "&relationship=asked" : "", "&order_by=").concat(order_by ? order_by : "created_at", "&order=").concat(order ? order : "desc", "&filter=").concat(filter ? filter : "all", "&page=").concat(_this.state[current_tab].nextPage)).then(function (res) {
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("".concat(mixed_tasks_api, "&relationship=").concat(relationship ? relationship : "all", "&order_by=").concat(order_by ? order_by : "created_at", "&order=").concat(order ? order : "desc", "&page=").concat(_this.state.mixed_tasks.nextPage)).then(function (res) {
         var _res$data = res.data,
             data = _res$data.data,
             current_page = _res$data.current_page,
             last_page = _res$data.last_page;
         var filteredArray = data.filter(function (item) {
-          return already_added_needs && typeof already_added_needs[item.id] === "undefined";
+          return already_added_tasks && typeof already_added_tasks[item.id] === "undefined";
         });
 
         _this.setState(function (prevState) {
           var _ref;
 
           return _ref = {}, _defineProperty(_ref, current_tab, {
-            data: [].concat(_toConsumableArray(prevState[current_tab].data), _toConsumableArray(filteredArray)),
+            data: [].concat(_toConsumableArray(prevState.mixed_tasks.data), _toConsumableArray(filteredArray)),
             nextPage: current_page + 1,
             hasMore: current_page === last_page ? false : true
           }), _defineProperty(_ref, "isGetting", false), _ref;
@@ -56726,14 +56681,14 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "handleMore", function (filtering) {
-      var _this$setState2;
+      var _this$setState;
 
       var current_tab = _this.state.current_tab;
-      filtering ? _this.setState((_this$setState2 = {}, _defineProperty(_this$setState2, current_tab, {
+      filtering ? _this.setState((_this$setState = {}, _defineProperty(_this$setState, current_tab, {
         data: [],
         nextPage: 1,
         hasMore: true
-      }), _defineProperty(_this$setState2, "already_added_needs", {}), _this$setState2), function () {
+      }), _defineProperty(_this$setState, "already_added_needs", {}), _this$setState), function () {
         return _this.getData();
       }) : _this.getData();
     });
@@ -56758,9 +56713,9 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
 
     _defineProperty(_assertThisInitialized(_this), "addDemand", function () {
       var post_demand_api = _this.props.post_demand_api,
-          _this$state2 = _this.state,
-          new_demand_description = _this$state2.new_demand_description,
-          workspace_users = _this$state2.workspace_users;
+          _this$state = _this.state,
+          new_demand_description = _this$state.new_demand_description,
+          workspace_users = _this$state.workspace_users;
       var title = $("#new-demand-title").val(),
           priority = parseInt($("#new-task-priority").val()),
           toUser = $("#new-demand-member").val(),
@@ -56808,88 +56763,62 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
       });
     });
 
-    _this.tabTitlesRefs = [];
-    _this.tabResultsRefs = [];
-    _this.filterBoxRefs = [];
+    _this.filterBoxRef = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
     _this.addIconRef = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
-    _this.addDemandRef = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
-
-    for (var index = 0; index < 2; index++) {
-      _this.tabTitlesRefs.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef());
-
-      _this.tabResultsRefs.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef());
-
-      _this.filterBoxRefs.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef());
-    }
-
+    _this.addTaskRef = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
     _this.state = {
-      current_tab: 'demands',
       isGetting: false,
-      new_demand_description: "",
-      already_added_needs: {}
+      new_task_description: "",
+      already_added_tasks: {},
+      search_value: ""
     };
     return _this;
   }
 
-  _createClass(MixedDemands, [{
+  _createClass(MixedTasks, [{
     key: "componentDidMount",
     value: function componentDidMount() {
       var _this2 = this;
 
       var current_tab = this.state.current_tab,
-          get_workspaces_api = this.props.get_workspaces_api;
+          get_workspace_api = this.props.get_workspace_api;
       this.setState(_defineProperty({}, current_tab, {
         data: [],
         nextPage: 1,
         hasMore: true
       }), function () {
         return _this2.getData();
-      });
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(get_workspaces_api).then(function (res) {
-        var data = res.data;
-
-        _this2.setState({
-          workspaces: data
-        }, function () {
-          _this2.state.workspaces.map(function (workspace, i) {
-            var current_workspace;
-            workspace.users.map(function (user, index) {
-              current_workspace = Object.assign({}, current_workspace, _defineProperty({}, user.id, {
-                id: user.id,
-                fullname: user.fullname,
-                avatar_pic: user.avatar_pic,
-                is_admin: user.pivot.is_admin
-              }));
-            });
-
-            _this2.setState(function (prevState) {
-              return {
-                workspaces_users: Object.assign({}, prevState.workspaces_users, _defineProperty({}, workspace.id, current_workspace))
-              };
-            });
-          });
-        });
-      });
-      $("#new-demand-project-select").on("select2:select", function () {
-        return _this2.setState({
-          selectedProject: $("#new-demand-project-select").val()
-        });
-      });
+      }); // axios.get(get_workspace_api).then(res => {
+      //     let { data } = res
+      //     this.setState({workspace: data}, () => {
+      //         this.state.workspace.users.map((user, i) => {
+      //             this.setState(prevState => ({
+      //                 workspace_users: Object.assign({}, prevState.workspace_users, {
+      //                     [user.id]: {
+      //                         is_admin: user.pivot.is_admin,
+      //                         fullname: user.fullname,
+      //                         name: user.name,
+      //                         avatar_pic: user.avatar_pic
+      //                     } // we have a clear object in our states that tells us all the informations that we need about users
+      //                 }),
+      //             }))
+      //         })
+      //     })
+      // })
     }
   }, {
     key: "render",
     value: function render() {
-      var _this$state3 = this.state,
-          demands = _this$state3.demands,
-          needs = _this$state3.needs,
-          isGetting = _this$state3.isGetting,
-          already_added_needs = _this$state3.already_added_needs,
-          workspaces = _this$state3.workspaces,
-          workspaces_users = _this$state3.workspaces_users,
-          selectedProject = _this$state3.selectedProject,
-          _this$props = this.props,
-          logged_in_user_id = _this$props.logged_in_user_id,
-          demand_show_route = _this$props.demand_show_route;
+      var _this$state2 = this.state,
+          demands = _this$state2.demands,
+          needs = _this$state2.needs,
+          isGetting = _this$state2.isGetting,
+          already_added_needs = _this$state2.already_added_needs,
+          workspace = _this$state2.workspace,
+          workspace_users = _this$state2.workspace_users,
+          _this$props2 = this.props,
+          logged_in_user_id = _this$props2.logged_in_user_id,
+          demand_show_route = _this$props2.demand_show_route;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
         className: "demands-tabs-titles col-12 mt-2"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
@@ -57007,7 +56936,7 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
           key: i,
           className: "animated fadeIn",
           onClick: function onClick() {
-            return Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["redirectTo"])(Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["getDemand"])(demand.id));
+            return Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["redirectTo"])(getDemand(demand.id));
           }
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
           scope: "row"
@@ -57039,7 +56968,7 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
           href: Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["getUser"])(from.id)
         }, "@", from.name))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "user-label-container"
-        }, workspaces_users && workspaces_users[demand.workspace.id][from.id].is_admin === 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        }, workspace_users && workspace_users[from.id].is_admin === 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           className: "btn btn-sm btn-success rtl admin p-1"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0627\u062F\u0645\u06CC\u0646", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-user-tie mr-1"
@@ -57124,14 +57053,20 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
         className: "input-group-text"
       }, "\u067E\u0631\u0648\u0698\u0647 \u0645\u0631\u0628\u0648\u0637\u0647")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
         id: "new-demand-project-select",
-        placeholder: "(\u0627\u0646\u062A\u062E\u0627\u0628 \u067E\u0631\u0648\u0698\u0647 (\u0627\u062C\u0628\u0627\u0631\u06CC"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null), workspaces && workspaces.map(function (workspace, i) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-          key: i,
-          value: workspace.id,
-          img_address: APP_PATH + workspace.avatar_pic
-        }, workspace.title);
-      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        placeholder: "\u0627\u0646\u062A\u062E\u0627\u0628 \u067E\u0631\u0648\u0698\u0647 \u0627\u062C\u0628\u0627\u0631\u06CC"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "1",
+        img_address: APP_PATH + 'images/elnovel-logo.jpg'
+      }, "\u06A9\u0633"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "2",
+        img_address: APP_PATH + 'images/elnovel-logo.jpg'
+      }, "\u06A9\u0633"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "3",
+        img_address: APP_PATH + 'images/elnovel-logo.jpg'
+      }, "\u06A9\u0633"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "4",
+        img_address: APP_PATH + 'images/elnovel-logo.jpg'
+      }, "\u06A9\u0633"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "input-group col-12 col-md-6 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line-all"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "input-group-prepend"
@@ -57154,13 +57089,12 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
       }, "\u0645\u062E\u0627\u0637\u0628 \u0646\u06CC\u0627\u0632")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
         id: "new-demand-member",
         className: "form-control text-right"
-      }, workspaces_users && selectedProject ? Object.values(workspaces_users[parseInt(selectedProject)]).map(function (user, i) {
+      }, workspace ? workspace.users.map(function (user, i) {
         if (user.id !== logged_in_user_id) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
             key: i,
             value: user.id,
-            img_address: user.avatar_pic !== null ? APP_PATH + user.avatar_pic : APP_PATH + 'images/male-avatar.svg',
-            is_admin: user.is_admin
+            img_address: user.avatar_pic !== null ? APP_PATH + user.avatar_pic : APP_PATH + 'images/male-avatar.svg'
           }, user.fullname);
         }
       }) : null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -57279,7 +57213,7 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
           key: i,
           className: "animated fadeIn",
           onClick: function onClick() {
-            return Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["redirectTo"])(Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["getDemand"])(need.id));
+            return Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["redirectTo"])(getDemand(need.id));
           }
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
           scope: "row"
@@ -57311,7 +57245,7 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
           href: Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["getUser"])(to.id)
         }, "@", to.name))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "user-label-container"
-        }, workspaces_users && workspaces_users[need.workspace.id][to.id].is_admin === 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        }, workspace_users && workspace_users[to.id].is_admin === 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           className: "btn btn-sm btn-success rtl admin p-1"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0627\u062F\u0645\u06CC\u0646", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-user-tie mr-1"
@@ -57346,7 +57280,7 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
     }
   }]);
 
-  return MixedDemands;
+  return MixedTasks;
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
 
@@ -57583,10 +57517,10 @@ var TinymcEditor = /*#__PURE__*/function (_React$Component) {
 
 /***/ }),
 
-/***/ "./resources/js/react/mixedDemands.js":
-/*!********************************************!*\
-  !*** ./resources/js/react/mixedDemands.js ***!
-  \********************************************/
+/***/ "./resources/js/react/mixedTasks.js":
+/*!******************************************!*\
+  !*** ./resources/js/react/mixedTasks.js ***!
+  \******************************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -57596,34 +57530,28 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _components_mixed_demands__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/mixed-demands */ "./resources/js/react/components/mixed-demands/index.jsx");
+/* harmony import */ var _components_mixed_tasks__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/mixed-tasks */ "./resources/js/react/components/mixed-tasks/index.jsx");
 
 
 
-var target = document.getElementById("mixed-demands-react");
-var data_index = target.getAttribute("data-index");
-var data_store = target.getAttribute("data-store");
-var logged_in_user_id = parseInt(target.getAttribute("logged-in-user-id"));
-var search_index = target.getAttribute("data-search");
-var get_workspaces_api = target.getAttribute("workspaces-api");
-react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_mixed_demands__WEBPACK_IMPORTED_MODULE_2__["default"], {
-  get_mixed_demands_api: data_index,
-  post_demand_api: data_store,
-  logged_in_user_id: logged_in_user_id,
-  mixed_demands_search: search_index,
-  get_workspaces_api: get_workspaces_api
+var target = document.getElementById("mixed-tasks-react");
+var mixed_tasks_api = target.getAttribute("get-mixed-tasks-api");
+var mixed_tasks_search_api = target.getAttribute("data-search");
+react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_mixed_tasks__WEBPACK_IMPORTED_MODULE_2__["default"], {
+  mixed_tasks_api: mixed_tasks_api,
+  mixed_tasks_search_api: mixed_tasks_search_api
 }), target);
 
 /***/ }),
 
-/***/ 3:
-/*!**************************************************!*\
-  !*** multi ./resources/js/react/mixedDemands.js ***!
-  \**************************************************/
+/***/ 4:
+/*!************************************************!*\
+  !*** multi ./resources/js/react/mixedTasks.js ***!
+  \************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! I:\projects\task-manager\resources\js\react\mixedDemands.js */"./resources/js/react/mixedDemands.js");
+module.exports = __webpack_require__(/*! I:\projects\task-manager\resources\js\react\mixedTasks.js */"./resources/js/react/mixedTasks.js");
 
 
 /***/ })

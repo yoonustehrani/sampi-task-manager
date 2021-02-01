@@ -47,4 +47,5 @@ mix.sass(res.sass + 'app.scss', pub.css)
     // .react(res.react + "demands.js", pub.js)
     // .js(res.js + 'tinymce/langs/fa.js', pub.js + 'tinymce/langs')`
     .react(res.react + "mixedDemands.js", pub.js)
+    .react(res.react + "mixedTasks.js", pub.js)
     

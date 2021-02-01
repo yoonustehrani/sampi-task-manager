@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import { getTask, getDemand, getUser, getWorkspace, sweetError } from '../../../helpers'
+import { getTask, getUser, getWorkspace, sweetError } from '../../../helpers'
 import { Digital } from 'react-activity'
 import 'react-activity/lib/Digital/Digital.css'
 import TinymcEditor from '../tinymce-editor/index'
@@ -8,72 +8,31 @@ import { setPriority, redirectTo } from '../../../helpers'
 import moment from 'moment'
 moment.locale('fa')
 
-export default class MixedDemands extends Component {
+export default class MixedTasks extends Component {
     constructor(props) {
         super(props)
-        this.tabTitlesRefs = []
-        this.tabResultsRefs = []
-        this.filterBoxRefs = []
+        this.filterBoxRef = React.createRef()
         this.addIconRef = React.createRef()
-        this.addDemandRef = React.createRef()
-        for (let index = 0; index < 2; index++) {
-            this.tabTitlesRefs.push(React.createRef())
-            this.tabResultsRefs.push(React.createRef())
-            this.filterBoxRefs.push(React.createRef())
-        }
+        this.addTaskRef = React.createRef()
         this.state = {
-            current_tab: 'demands',
             isGetting: false,
-            new_demand_description: "",
-            already_added_needs: {}
+            new_task_description: "",
+            already_added_tasks: {},
+            search_value: ""
         }
-    }
-
-    changeTab = (tab_index) => {
-        this.tabTitlesRefs.map((titleRef, i) => {
-            if (tab_index === i) {
-                this.tabTitlesRefs[i].current.classList.add("active")
-                this.tabResultsRefs[i].current.classList.add("active")
-            } else {
-                this.tabTitlesRefs[i].current.classList.remove("active")
-                this.tabResultsRefs[i].current.classList.remove("active")
-            }
-        })
-        let activeTab
-        this.setState(prevState => {
-            switch (tab_index) {
-                case 0:
-                    activeTab = "demands"
-                    break;
-            
-                case 1:
-                    activeTab = "needs"
-                    break;
-
-                default:
-                    break;
-            }
-            return ({
-                current_tab: activeTab
-            })
-        }, () => {
-            if (typeof this.state[activeTab] === 'undefined') {
-                this.setState({[activeTab]: {data: [], nextPage: 1, hasMore: true}}, () => this.getData())
-            }
-        })
     }
 
     getData = () => {            
-        let { get_mixed_demands_api } = this.props, { current_tab, already_added_needs } = this.state
-        let order_by = $(`#mixed_${current_tab}_order_by_select`).val(), order = $(`#mixed_${current_tab}_order_select`).val(), filter = $(`#mixed_${current_tab}_relation_select`).val()
+        let { mixed_tasks_api, mixed_tasks_search_api } = this.props, { already_added_tasks } = this.state
+        let order_by = $(`#mixed_tasks_order_by_select`).val(), order = $(`#mixed_tasks_order_select`).val(), relationship = $(`#mixed_tasks_relation_select`).val()
         this.setState({ isGetting: true })
-        axios.get(`${get_mixed_demands_api}${current_tab === "demands" ? "&relationship=asked" : ""}&order_by=${order_by ? order_by : "created_at"}&order=${order ? order : "desc"}&filter=${filter ? filter : "all"}&page=${this.state[current_tab].nextPage}`).then(res => {
+        axios.get(`${mixed_tasks_api}&relationship=${relationship ? relationship : "all"}&order_by=${order_by ? order_by : "created_at"}&order=${order ? order : "desc"}&page=${this.state.mixed_tasks.nextPage}`).then(res => {
             let { data, current_page, last_page } = res.data
-            let filteredArray = data.filter((item) => already_added_needs && typeof already_added_needs[item.id] === "undefined")
+            let filteredArray = data.filter((item) => already_added_tasks && typeof already_added_tasks[item.id] === "undefined")
             this.setState(prevState => {
             return ({
                 [current_tab]: {
-                    data: [...prevState[current_tab].data, ...filteredArray],
+                    data: [...prevState.mixed_tasks.data, ...filteredArray],
                     nextPage: current_page + 1,
                     hasMore: current_page === last_page ? false : true
                 },
@@ -139,36 +98,29 @@ export default class MixedDemands extends Component {
     }
 
     componentDidMount() {
-        let { current_tab } = this.state, { get_workspaces_api } = this.props
+        let { current_tab } = this.state, { get_workspace_api } = this.props
         this.setState({[current_tab]: {data: [], nextPage: 1, hasMore: true}}, () => this.getData())
-        axios.get(get_workspaces_api).then(res => {
-            let { data } = res
-            this.setState({workspaces: data}, () => {
-                this.state.workspaces.map((workspace, i) => {
-                    let current_workspace
-                    workspace.users.map((user, index) => {
-                        current_workspace = Object.assign({}, current_workspace, {
-                            [user.id]: {
-                                id: user.id,
-                                fullname: user.fullname,
-                                avatar_pic: user.avatar_pic,
-                                is_admin: user.pivot.is_admin
-                            }
-                        })
-                    })
-                    this.setState(prevState => ({
-                        workspaces_users: Object.assign({}, prevState.workspaces_users, {
-                            [workspace.id]: current_workspace
-                        })
-                    }))
-                })
-            })
-        })
-        $("#new-demand-project-select").on("select2:select", () => this.setState({selectedProject: $("#new-demand-project-select").val()}))
+        // axios.get(get_workspace_api).then(res => {
+        //     let { data } = res
+        //     this.setState({workspace: data}, () => {
+        //         this.state.workspace.users.map((user, i) => {
+        //             this.setState(prevState => ({
+        //                 workspace_users: Object.assign({}, prevState.workspace_users, {
+        //                     [user.id]: {
+        //                         is_admin: user.pivot.is_admin,
+        //                         fullname: user.fullname,
+        //                         name: user.name,
+        //                         avatar_pic: user.avatar_pic
+        //                     } // we have a clear object in our states that tells us all the informations that we need about users
+        //                 }),
+        //             }))
+        //         })
+        //     })
+        // })
     }
 
     render() {
-        let { demands, needs, isGetting, already_added_needs, workspaces, workspaces_users, selectedProject } = this.state, { logged_in_user_id, demand_show_route } = this.props
+        let { demands, needs, isGetting, already_added_needs, workspace, workspace_users } = this.state, { logged_in_user_id, demand_show_route } = this.props
 
         return (
             <div>
@@ -259,7 +211,7 @@ export default class MixedDemands extends Component {
                                                         </div>
                                                         <div className="user-label-container">
                                                             {
-                                                                workspaces_users && workspaces_users[demand.workspace.id][from.id].is_admin === 1 
+                                                                workspace_users && workspace_users[from.id].is_admin === 1 
                                                                 ? <button className="btn btn-sm btn-success rtl admin p-1"><span>ادمین<i className="fas fa-user-tie mr-1"></i></span></button>
                                                                 : <button className="btn btn-sm btn-primary rtl"><span>عضو<i className="fas fa-user mr-1"></i></span></button>
                                                             } 
@@ -329,13 +281,11 @@ export default class MixedDemands extends Component {
                                 <div className="input-group-prepend">
                                     <span className="input-group-text">پروژه مربوطه</span>
                                 </div>
-                                <select id="new-demand-project-select" placeholder="(انتخاب پروژه (اجباری">
-                                    <option></option>
-                                    {
-                                        workspaces && workspaces.map((workspace, i) => (
-                                            <option key={i} value={workspace.id} img_address={APP_PATH + workspace.avatar_pic}>{workspace.title}</option>
-                                        ))
-                                    }
+                                <select id="new-demand-project-select" placeholder="انتخاب پروژه اجباری">
+                                    <option value="1" img_address={APP_PATH + 'images/elnovel-logo.jpg'}>کس</option>
+                                    <option value="2" img_address={APP_PATH + 'images/elnovel-logo.jpg'}>کس</option>
+                                    <option value="3" img_address={APP_PATH + 'images/elnovel-logo.jpg'}>کس</option>
+                                    <option value="4" img_address={APP_PATH + 'images/elnovel-logo.jpg'}>کس</option>
                                 </select>
                             </div>
                             <div className="input-group col-12 col-md-6 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line-all">
@@ -354,10 +304,10 @@ export default class MixedDemands extends Component {
                                     <span className="input-group-text">مخاطب نیاز</span>
                                 </div>
                                 <select id="new-demand-member" className="form-control text-right">
-                                    { workspaces_users && selectedProject ? Object.values(workspaces_users[parseInt(selectedProject)]).map((user, i) => {
+                                    { workspace ? workspace.users.map((user, i) => {
                                         if (user.id !== logged_in_user_id) {
                                             return (
-                                                <option key={i} value={user.id} img_address={user.avatar_pic !== null ? APP_PATH + user.avatar_pic : APP_PATH + 'images/male-avatar.svg'} is_admin={user.is_admin}>{user.fullname}</option>
+                                                <option key={i} value={user.id} img_address={user.avatar_pic !== null ? APP_PATH + user.avatar_pic : APP_PATH + 'images/male-avatar.svg'}>{user.fullname}</option>
                                             )                                            
                                         }
                                     }) : null }
@@ -452,7 +402,7 @@ export default class MixedDemands extends Component {
                                                         </div>
                                                         <div className="user-label-container">
                                                             {
-                                                                workspaces_users && workspaces_users[need.workspace.id][to.id].is_admin === 1 
+                                                                workspace_users && workspace_users[to.id].is_admin === 1 
                                                                 ? <button className="btn btn-sm btn-success rtl admin p-1"><span>ادمین<i className="fas fa-user-tie mr-1"></i></span></button>
                                                                 : <button className="btn btn-sm btn-primary rtl"><span>عضو<i className="fas fa-user mr-1"></i></span></button>
                                                             } 

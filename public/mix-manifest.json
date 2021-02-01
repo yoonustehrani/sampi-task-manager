@@ -2,6 +2,7 @@
     "/js/dashboard.js": "/js/dashboard.js",
     "/js/demand.js": "/js/demand.js",
     "/js/mixedDemands.js": "/js/mixedDemands.js",
+    "/js/mixedTasks.js": "/js/mixedTasks.js",
     "/js/select2.js": "/js/select2.js",
     "/css/app.css": "/css/app.css"
 }

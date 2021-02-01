@@ -57170,8 +57170,10 @@ var formatOptionWithIcon = function formatOptionWithIcon(option) {
 };
 var formatOptionWithImage = function formatOptionWithImage(option) {
   if (option.element) {
-    var img_src = option.element.attributes.img_address.nodeValue;
-    return $("<div class=\"select-option\"><img src=\"".concat(img_src, "\" class=\"option-img\" />").concat(option.text, "</div>"));
+    var img_src = option.element.attributes.img_address.nodeValue,
+        is_user_admin = option.element.attributes.is_admin;
+    console.log(is_user_admin);
+    return $("\n            <div class=\"select-option\">\n                <img src=\"".concat(img_src, "\" class=\"option-img\"/>\n                ").concat(option.text, "\n                ").concat(typeof is_user_admin !== "undefined" ? "<span class=\"badge badge-pill mr-1 ".concat(is_user_admin === 1 ? "bade-success" : "badge-primary", "\">").concat(is_user_admin === 1 ? "ادمین" : "کاربر", "</span>") : "", "  \n            </div>\n        "));
   }
 };
 var formatOption = function formatOption(option) {

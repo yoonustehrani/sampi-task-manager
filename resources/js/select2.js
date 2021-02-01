@@ -7,8 +7,15 @@ export const formatOptionWithIcon = (option) => {
 }
 export const formatOptionWithImage = (option) => {
     if (option.element) {
-        let img_src = option.element.attributes.img_address.nodeValue
-        return $(`<div class="select-option"><img src="${img_src}" class="option-img" />${option.text}</div>`)
+        let img_src = option.element.attributes.img_address.nodeValue, is_user_admin = option.element.attributes.is_admin
+        console.log(is_user_admin)
+        return $(`
+            <div class="select-option">
+                <img src="${img_src}" class="option-img"/>
+                ${option.text}
+                ${typeof is_user_admin !== "undefined" ? `<span class="badge badge-pill mr-1 ${is_user_admin === 1 ? "bade-success" : "badge-primary"}">${is_user_admin === 1 ? "ادمین" : "کاربر"}</span>` : "" }  
+            </div>
+        `)
     }
 }
 
