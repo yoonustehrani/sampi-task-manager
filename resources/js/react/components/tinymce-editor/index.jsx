@@ -21,7 +21,7 @@ export default class TinymcEditor extends React.Component {
                     height: 350,
                     menubar: false,
                     branding: false,
-                    placeholder: "توضیحات تکمیلی کار را در این قسمت وارد نمایید",
+                    placeholder: "توضیحات تکمیلی را در این قسمت وارد نمایید",
                     directionality: 'rtl',
                     language: "fa",
                     language_url: APP_PATH + "js/tinymce/langs/fa.js",

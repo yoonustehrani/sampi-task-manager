@@ -90,40 +90,61 @@
 /*!*********************************!*\
   !*** ./resources/js/select2.js ***!
   \*********************************/
-/*! exports provided: formatOption, formatMemberOption */
+/*! exports provided: formatOptionWithIcon, formatOptionWithImage, formatOption */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "formatOptionWithIcon", function() { return formatOptionWithIcon; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "formatOptionWithImage", function() { return formatOptionWithImage; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "formatOption", function() { return formatOption; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "formatMemberOption", function() { return formatMemberOption; });
-var formatOption = function formatOption(option) {
+var formatOptionWithIcon = function formatOptionWithIcon(option) {
   if (option.element) {
     var icon_name = option.element.attributes.icon_name.nodeValue;
     var containerClass = option.element.attributes.container_class ? option.element.attributes.container_class.nodeValue : null;
     return $("<div class=\"select-option ".concat(containerClass !== null ? containerClass : "", "\"><i class=\"").concat(icon_name, "\"></i>").concat(option.text, "</div>"));
   }
 };
-var formatMemberOption = function formatMemberOption(option) {
+var formatOptionWithImage = function formatOptionWithImage(option) {
   if (option.element) {
-    var img_src = option.element.attributes.img_address.nodeValue;
-    return $("<div class=\"select-option\"><img src=\"".concat(img_src, "\" class=\"member-img\" />").concat(option.text, "</div>"));
+    var img_src = option.element.attributes.img_address.nodeValue,
+        is_user_admin = option.element.attributes.is_admin;
+    console.log(is_user_admin);
+    return $("\n            <div class=\"select-option\">\n                <img src=\"".concat(img_src, "\" class=\"option-img\"/>\n                ").concat(option.text, "\n                ").concat(typeof is_user_admin !== "undefined" ? "<span class=\"badge badge-pill mr-1 ".concat(is_user_admin === 1 ? "bade-success" : "badge-primary", "\">").concat(is_user_admin === 1 ? "ادمین" : "کاربر", "</span>") : "", "  \n            </div>\n        "));
   }
 };
-$('#new-task-priority, #tasks_order_select, #tasks_order_by_select, #tasks_relation_select').select2({
-  templateResult: formatOption,
+var formatOption = function formatOption(option) {
+  if (option.element) {
+    return $("<div class=\"select-option\">".concat(option.text, "</div>"));
+  }
+};
+$('#new-task-priority, #tasks_order_select, #tasks_order_by_select, #tasks_relation_select, #mixed_tasks_order_select, #mixed_tasks_order_by_select, #mixed_tasks_relation_select, #mixed_demands_order_select, #mixed_demands_order_by_select, #mixed_demands_relation_select, #mixed_needs_order_select, #mixed_needs_order_by_select, #mixed_needs_relation_select').select2({
+  templateResult: formatOptionWithIcon,
   minimumResultsForSearch: Infinity,
   width: '100%',
   dir: "rtl"
 });
-$("#new-task-members").select2({
-  placeholder: "انجام دهندگان این کار",
-  width: "100%",
-  dir: 'rtl',
-  multiple: true,
-  templateResult: formatMemberOption
-});
 $('.select2-search__field').css('width', '100%');
+$('#task-select').select2({
+  templateResult: formatOption,
+  placeholder: 'کار مربوطه را انتخاب کنید',
+  width: "100%",
+  dir: "rtl"
+});
+
+var renderWithImg = function renderWithImg(ids, placeholder, multiple) {
+  $(ids).select2({
+    templateResult: formatOptionWithImage,
+    placeholder: placeholder,
+    width: "100%",
+    dir: "rtl",
+    multiple: multiple
+  });
+};
+
+renderWithImg("#new-demand-member", "نیاز به کمک چه کسی دارید؟", false);
+renderWithImg("#new-demand-project-select", "پروژه مربوطه را انتخاب کنید", false);
+renderWithImg("#new-task-members", "انجام دهندگان این کار", true);
 
 /***/ }),
 

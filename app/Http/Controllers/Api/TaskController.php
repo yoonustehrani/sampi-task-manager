@@ -15,13 +15,17 @@ class TaskController extends BaseController
             'limit' => 'nullable|numeric',
             'order' => 'nullable|string',
             'group' => 'nullable|string',
-            'order_by' => 'nullable|string|min:3'
+            'order_by' => 'nullable|string'
         ]);
         $user = ($request->user_id) ? \App\User::find($request->user_id) : $request->user();
         $relationship = $this->model_relationship($request->relationship, $user, '_tasks', 'tasks');
-        $user_tasks = $user->{$relationship}()->with('users')->withCount('demands')->where('workspace_id', $workspace);
-        $group = $request->group ?: $this->default_group;
-        $user_tasks = $user_tasks->where('group', '=', $group);
+        $user_tasks = $user->{$relationship}()
+                    ->whereNull('parent_id')
+                    ->with('users')
+                    ->withCount('demands', 'children')
+                    ->where('workspace_id', $workspace);
+        // $group = $request->group ?: $this->default_group;
+        // $user_tasks = $user_tasks->where('group', '=', $group);
         return $request->limit
                 ? $this->decide_ordered($request, $user_tasks)->limit((int) $request->limit)->get()
                 : $this->decide_ordered($request, $user_tasks)->latest()->paginate(10);
@@ -31,11 +35,14 @@ class TaskController extends BaseController
         $request->validate([
             'limit' => 'nullable|numeric',
             'order' => 'nullable|string',
-            'order_by' => 'nullable|string|min:3'
+            'order_by' => 'nullable|string'
         ]);
         $user = ($request->user_id) ? \App\User::find($request->user_id) : $request->user();
         $relationship = $this->model_relationship($request->relationship, $user, '_tasks', 'tasks');
-        $user_tasks = $user->{$relationship}()->with(['users','workspace:id,title,avatar_pic'])->withCount('demands');
+        $user_tasks = $user->{$relationship}()
+                    ->whereNull('parent_id')
+                    ->with(['users','workspace:id,title,avatar_pic'])
+                    ->withCount('demands', 'children');
         return $request->limit
             ? $this->decide_ordered($request, $user_tasks)->limit((int) $request->limit)->get()
             : $this->decide_ordered($request, $user_tasks)->paginate(10);
@@ -44,27 +51,52 @@ class TaskController extends BaseController
     {
         $request->validate([
             'q' => 'required|min:3|max:60',
-            'order_by' => 'nullable|string|min:3',
-            'limit' => 'required|integer|min:3|max:30'
+            'order_by' => 'nullable|string',
+            'limit' => 'nullable|integer|min:3|max:30'
         ]);
         $user = ($request->user_id) ? \App\User::find($request->user_id) : $request->user();
         $relationship = $this->model_relationship($request->relationship, $user, '_tasks', 'tasks');
-        $tasks = $user->{$relationship}()->with(['workspace:id,title,avatar_pic'])->withCount('users');
-        return $this->decide_ordered($request, $tasks)->search($request->q, null, true)->limit((int) $request->limit)->get();
+        $tasks = $tasks = $user->{$relationship}()->with(['workspace:id,title,avatar_pic', 'parent'])->withCount('users', 'children');
+        return $request->limit
+                ? $this->decide_ordered($request, $tasks)->search($request->q, null, true)->limit((int) $request->limit)->get()
+                : $this->decide_ordered($request, $tasks)->search($request->q, null, true)->paginate(10);
+    }
+    public function simple_search(Request $request)
+    {
+        $request->validate([
+            'q' => 'required|min:3|max:60',
+            'workspace' => 'nullable|numeric|min:1'
+        ]);
+        $user = ($request->user_id) ? \App\User::find($request->user_id) : $request->user();
+        $relationship = $this->model_relationship($request->relationship, $user, '_tasks', 'tasks');
+        $tasks = $user->{$relationship}()->select('id','title','group', 'workspace_id')->search($request->q, null, true);
+        if ($request->workspace) {
+            $tasks = $tasks->where('workspace_id', $request->workspace);
+        } else {
+            $tasks = $tasks->with('workspace:id,title,avatar_pic');
+        }
+        if ($request->parent_only) {
+            $tasks = $tasks->whereNull('parent_id');
+        }
+        return $tasks->limit(5)->get();
     }
     public function show(Request $request, $workspace, $task)
     {
         $task = Task::where('workspace_id', $workspace)->with([
-            'users'
+            'users',
         ])->findOrFail($task);
         $this->authorize('view', $task);
-        $task->load(['demands' => function($q) { $q->with('from', 'to'); }]);
+        $relationship = $task->parent_id ? 'parent.users' : 'children.users';
+        $task->load([
+            'demands' => function($q) { $q->with('from', 'to'); },
+            $relationship
+        ]);
         return $task;
     }
     public function store(Request $request, $workspace)
     {
         $request->validate([
-            'parent_id' => 'nullable|numeric',
+            'parent' => 'nullable|numeric',
             'title' => 'required|string',
             'group' => 'nullable|string|min:3|max:100',
             'priority' => 'required|numeric',
@@ -78,7 +110,7 @@ class TaskController extends BaseController
                 $task = new Task();
                 $task->title = $request->title;
                 $task->description = $request->description;
-                $task->parent_id = $request->parent_id;
+                $task->parent = $request->parent;
                 $task->group = $request->group ?: $this->default_group;
                 $task->priority_id = $request->priority;
                 $due_to = $request->due_to ? (new \Carbon\Carbon(((int) $request->due_to)))->timezone('Asia/Tehran')->seconds(0) : now();
@@ -116,6 +148,10 @@ class TaskController extends BaseController
                 $task->priority_id = $request->priority;
                 $due_to = $request->due_to ? (new \Carbon\Carbon(((int) $request->due_to)))->timezone('Asia/Tehran')->seconds(0) : now();
                 $task->due_to = $due_to;
+                if ($request->finished) {
+                    $task->finished_at = $task->finished_at ? null : now();
+                    $task->finisher_id = $request->user()->id;
+                }
                 $task->save();
                 $users = $request->input('users') ?: [];
                 $task->users()->sync(
@@ -141,6 +177,7 @@ class TaskController extends BaseController
         $user = ($request->user_id) ? \App\User::find($request->user_id) : $request->user();
         $task = $user->tasks()->findOrFail($task);
         $task->finished_at = $task->finished_at ? null : now();
+        $task->finisher_id = $user->id;
         if ($task->save()) {
             return $task;
         }

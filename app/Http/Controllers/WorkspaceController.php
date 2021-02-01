@@ -16,9 +16,9 @@ class WorkspaceController extends Controller
     public function index()
     {
         if (\Gate::allows('viewAny', Workspace::class)) {
-            $workspaces = Workspace::withCount(['tasks', 'finished_tasks', 'demands_left', 'users'])->paginate(5);
+            $workspaces = Workspace::withCount(['tasks', 'finished_tasks', 'demands_left'])->with('users')->paginate(5);
         } else {
-            $workspaces = auth()->user()->workspaces()->withCount(['tasks', 'finished_tasks', 'demands_left', 'users'])->paginate(5);
+            $workspaces = auth()->user()->workspaces()->withCount(['tasks', 'finished_tasks', 'demands_left'])->with('users')->paginate(5);
         }
         return view('theme.pages.workspaces.index', compact('workspaces'));
     }
@@ -70,7 +70,7 @@ class WorkspaceController extends Controller
                     'asked_demands' => function($q) use($workspace) {$q->where('workspace_id', $workspace);}
                 ])->with('roles');
             }
-        ])->withCount(['tasks', 'demands'])->findOrFail($workspace);
+        ])->withCount(['tasks', 'demands', 'finished_tasks', 'demands_left'])->findOrFail($workspace);
         $this->authorize('view', $workspace);
         return view('theme.pages.workspaces.show', compact('workspace'));
     }

@@ -3,7 +3,7 @@ import TinymcEditor from '../tinymce-editor/index'
 import Axios from 'axios'
 import moment from 'moment'
 moment.locale('fa')
-import { Squares  } from 'react-activity'
+import { Squares } from 'react-activity'
 import 'react-activity/dist/react-activity.css'
 import Swal from 'sweetalert2'
 import { setPriority, redirectTo } from '../../../helpers'
@@ -19,8 +19,9 @@ export default class Workspace extends Component {
             tasks: {
                 data: [],
                 nextPage: 1,
-                hasMore: true
-            }
+                hasMore: true,
+            },
+            already_added_tasks: {}
         }
     }
 
@@ -38,16 +39,16 @@ export default class Workspace extends Component {
 
     handleMore = (table, filtering) => {
         let { list_tasks_api } = this.props
-        let { tasks } = this.state
+        let { tasks, already_added_tasks } = this.state
         let tasks_order_by = $('#tasks_order_by_select').val(), tasks_order = $('#tasks_order_select').val(), tasks_relation = $('#tasks_relation_select').val()
-        this.setState({ isGetting: true })
         const getList = (table) => {            
-            Axios.get(`${eval("list_" + table + "_api")}&order_by=${eval(table + "_order_by")}&order=${eval(table + "_order")}&relationship=${eval(table + "_relation")}&page=${this.state.tasks.nextPage}`).then(res => {
+            Axios.get(`${eval("list_" + table + "_api")}&order_by=${eval(table + "_order_by")}&order=${eval(table + "_order")}&relationship=${eval(table + "_relation")}&page=${this.state[table].nextPage}`).then(res => {
                 let { data, current_page, last_page } = res.data
+                let filteredArray = data.filter((item) => already_added_tasks && typeof already_added_tasks[item.id] === "undefined")
                 this.setState(prevState => {
                 return ({
                     [table]: {
-                        data: [...prevState[table].data, ...data],
+                        data: [...prevState[table].data, ...filteredArray],
                         nextPage: current_page + 1,
                         hasMore: current_page === last_page ? false : true
                     },
@@ -55,6 +56,12 @@ export default class Workspace extends Component {
                 })})
             })
         }
+        this.setState(prevState => { 
+            return ({
+                isGetting: true,
+                already_added_tasks: filtering ? {} : prevState.already_added_tasks
+            })
+        })
         switch (table) {
             case "tasks":
                 filtering ? this.setState({tasks: {data: [], nextPage: 1, hasMore: true}}, () => {getList("tasks")}) : getList("tasks")
@@ -68,67 +75,58 @@ export default class Workspace extends Component {
     addTask = () => {
         let { add_task_api, logged_in_user_id } = this.props, { new_task_description, workspace_users } = this.state
         let title = $("#new-task-title").val(), group = $("#new-task-group").val(), priority = parseInt($("#new-task-priority").val()), users = $("#new-task-members").val(), description = new_task_description
-        if (title.length === 0 || group.length === 0 || priority === null) {
+        Axios.post(add_task_api, {
+            title: title,
+            priority: priority,
+            group: group,
+            users: users,
+            description: new_task_description
+        }).then(res => {
+            this.setState(prevState => {
+                let new_task_users = users.map((userId, i) => {
+                    return ({
+                        id: userId,
+                        fullname: workspace_users[userId].fullname,
+                        name: workspace_users[userId].name,
+                    })
+                })
+                new_task_users.unshift({id: logged_in_user_id, fullname: workspace_users[logged_in_user_id].fullname, name: workspace_users[logged_in_user_id].name})
+                return ({
+                    tasks: Object.assign({}, prevState.tasks, {
+                        data: [{...res.data, users: new_task_users, finished_at: null, finisher_id: null}, ...prevState.tasks.data]
+                    }),
+                    already_added_tasks: Object.assign({}, prevState.already_added_tasks, {
+                        [res.data.id]: res.data.id
+                    })
+                })
+            })
             Swal.fire({
-                title: 'خطا',
-                text: "فیلد های مورد نیاز به درستی پر نشدند",
-                icon: 'error',
-                confirmButtonText: 'بستن',
+                icon: 'success',
+                title: "موفقیت",
+                text: "کار شما به لیست افزوده شد",
+                showConfirmButton: true,
                 customClass: {
-                    content: 'persian-text'
+                    content: "persian-text"
                 }
             })
-        } else {
-            Axios.post(add_task_api, {
-                title: title,
-                priority: priority,
-                group: group,
-                users: users,
-                description: new_task_description
-            }).then(res => {
-                this.setState(prevState => {
-                    let new_task_users = users.map((userId, i) => {
-                        return ({
-                            id: userId,
-                            fullname: workspace_users[userId].fullname,
-                            name: workspace_users[userId].name,
-                        })
-                    })
-                    new_task_users.unshift({id: logged_in_user_id, fullname: workspace_users[logged_in_user_id].fullname, name: workspace_users[logged_in_user_id].name})
-                    return ({
-                        tasks: Object.assign({}, prevState.tasks, {
-                            data: [{...res.data, users: new_task_users, finished_at: null, finisher_id: null}, ...prevState.tasks.data]
-                        })
-                    })
+        }).catch(err => {
+            let {status, data} = err.response
+            if (status === 422) {
+                let {errors} = data, err_html = ""
+                Object.entries(errors).map(([param, message]) => {
+                    err_html += `<p class="float-right text-center col-12">${message}</p><br>`
                 })
                 Swal.fire({
-                    icon: 'success',
-                    title: "موفقیت",
-                    text: "کار شما به لیست افزوده شد",
-                    showConfirmButton: true,
+                    title: 'خطا',
+                    html: err_html,
+                    icon: 'error',
+                    confirmButtonText: 'تایید',
                     customClass: {
-                        content: "persian-text"
+                        content: 'persian-text'
                     }
                 })
-            }).catch(err => {
-                let {status, data} = err.response
-                if (status === 422) {
-                    let {errors} = data, err_html = ""
-                    Object.entries(errors).map(([param, message]) => {
-                        err_html += `<p class="float-right text-center col-12">${message}</p><br>`
-                    })
-                    Swal.fire({
-                        title: 'خطا',
-                        text: err_htlm,
-                        icon: 'error',
-                        confirmButtonText: 'تایید',
-                        customClass: {
-                            content: 'persian-text'
-                        }
-                    })
-                }
-            })
-        }
+            }
+        })
     }
 
     componentDidMount() {
@@ -165,19 +163,19 @@ export default class Workspace extends Component {
                         <i className="fas fa-clipboard-list"></i>
                         <h4 className="">وظایف :</h4>      
                     </div>  
-                    <div className="workspace-add-task mb-2 col-12">
+                    <div className="workspace-add-task mb-2 col-12 pl-0 pr-0 pr-md-3 pl-md-3">
                         <div className="workspace-title-section title-section" onClick={this.toggleAddBox}>
                             <i className="fas fa-plus" ref={this.addIconRef}></i>
                             <h5>افزودن کار</h5>
                         </div>
-                        <div className="add-task-section d-none col-12 p-1 pt-2 pb-2 p-md-3 animated fadeIn" ref={this.addTaskRef}>
-                            <div className="input-group col-12 col-md-6 mb-0 mb-md-0 pl-2 pr-2 pr-lg-3 pl-lg-3">
+                        <div className="add-task-section d-none col-12 p-3 animated fadeIn" ref={this.addTaskRef}>
+                            <div className="input-group col-12 col-md-6 pl-0 pr-0 mb-2 mb-md-0">
                                 <div className="input-group-prepend">
                                     <span className="input-group-text">عنوان</span>
                                 </div>
                                 <input type="text" id="new-task-title" className="form-control" placeholder="عنوان کار را در این قسمت وارد کنید" />
                             </div>
-                            <div className="input-group col-12 col-md-6 mb-0 mb-md-0 pl-2 pr-2 pr-lg-3 pl-lg-3 input-group-single-line">
+                            <div className="input-group col-12 col-md-6 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line-all">
                                 <div className="input-group-prepend">
                                     <span className="input-group-text">اولویت</span>
                                 </div>
@@ -188,13 +186,13 @@ export default class Workspace extends Component {
                                     <option value="4" icon_name="fas fa-hourglass">غیر ضروری و غیر مهم</option>
                                 </select>
                             </div>
-                            <div className="input-group col-12 col-md-6 mb-0 mb-md-0 pl-2 pr-2 pr-lg-3 pl-lg-3">
+                            <div className="input-group col-12 col-md-6 pl-0 pr-0 mb-2 mb-md-0">
                                 <div className="input-group-prepend">
                                     <span className="input-group-text">دسته بندی</span>
                                 </div>
                                 <input type="text" id="new-task-group" className="form-control" placeholder="این کار در چه گروهی قرار میگیرد؟" />
                             </div>
-                            <div className="input-group col-12 col-md-6 mb-0 mb-md-0 pl-2 pr-2 pr-lg-3 pl-lg-3 input-group-single-line">
+                            <div className="input-group col-12 col-md-6 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line">
                                 <div className="input-group-prepend">
                                     <span className="input-group-text">مسئولین</span>
                                 </div>
@@ -208,7 +206,7 @@ export default class Workspace extends Component {
                                     }) : null }
                                 </select>
                             </div>
-                            <div className="input-group col-12 input-group-single-line pl-2 pr-2 pr-lg-3 pl-lg-3">
+                            <div className="input-group col-12 pl-0 pr-0">
                                 {/* <div className="input-group-prepend">
                                     <span className="input-group-text">توضیحات</span>
                                 </div> */}

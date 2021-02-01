@@ -1,5 +1,3 @@
-@import 'dashboard';
-
 body,html {
     width: 100%;
     height: 100%;
@@ -64,7 +62,7 @@ a {
     float: left;
     .navbar-top {
         background: $white;
-        height: 71px;
+        height: 10%;
         // padding: 15px 10px;
         display: flex;
         flex-direction: column;
@@ -73,8 +71,7 @@ a {
 }
 .contentbar {
     overflow-y: auto;
-    height: 100%;
-    padding-bottom: 100px !important;
+    height: 87%;
 }
 nav {
     a:hover {
@@ -265,7 +262,7 @@ div.user-info-workspace {
     justify-content: flex-start;
     align-items: center;
     flex-wrap: wrap;
-    width: min-content;
+    // width: min-content;
     > img {
         width: 50px;
         height: 50px;
@@ -276,19 +273,9 @@ div.user-info-workspace {
     }
 }
 
-div.name-row-user-workspace {
-    width: min-content;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-}
-
-@media (min-width: 567px) {
-    div.name-row-user-workspace {
-        flex-direction: row;
-        width: max-content;
+div.name-col-user-workspace {
+    span {
+        width: 100%;
     }
 }
 
@@ -308,14 +295,12 @@ div.workspace-sub-info {
         align-items: flex-start;
     }
     div.user-info-workspace {
-        flex-direction: row;
-        justify-content: flex-start;
-        align-items: center;
-        flex-wrap: nowrap;
-        width: max-content;
+        display: initial;
     }
-    div.name-row-user-workspace {
-        align-items: flex-start;
+    div.name-col-user-workspace {
+        span {
+            width: initial;
+        }
     }
 }
 
@@ -401,13 +386,18 @@ div.add-task-section, div.task-info-container {
         }
     }
 }
+@media(min-width: 576px) {
+    div.input-group-single-line {
+        flex-wrap: nowrap !important;
+    }
+}
 
-div.input-group-single-line {
+div.input-group-single-line-all {
     flex-wrap: nowrap !important;
 }
 
 div.select-option {
-    img.member-img {
+    img.option-img {
         width: 30px;
         height: 30px;
         border-radius: 50px;
@@ -508,7 +498,7 @@ div.show-tasks-container {
     justify-content: space-evenly;
     align-items: flex-start;
     flex-wrap: wrap;
-    box-shadow: 5px 5px 14px 0 #2c3e50;
+    box-shadow: 0px 2px 5px 2px rgb(156 156 156 / 10%);
     div.task-title-section {
         flex-direction: row !important;
         float: right;
@@ -579,6 +569,32 @@ div.show-tasks-container {
 }
 
 div.edit-tasks-container {
-    box-shadow: 5px 5px 14px 0 #2c3e50;
+    box-shadow: 0px 2px 5px 2px rgb(156 156 156 / 10%);
     float: right;
+}
+
+@media(max-width: 567px) {
+    .no-break {
+        white-space: nowrap;
+        span {
+            width: 60%;
+            margin-right: 50%;
+            transform: translateX(50%)
+        }
+    }
+}
+
+@import 'dashboard';
+@import 'userprofile.scss';
+@import 'demands.scss';
+@import 'demand.scss';
+
+.circle-avatar-pic {
+    img {
+        height: 30px;
+        width: 30px;
+        border-radius: 50%;
+        padding: 2px;
+        box-shadow: 0 0 2px 1px #999999;
+    }
 }

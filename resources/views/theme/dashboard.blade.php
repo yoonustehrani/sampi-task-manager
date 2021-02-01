@@ -14,23 +14,12 @@
         task_counter = "{{ route('api.task-manager.counter.tasks', ['api_token' => auth()->user()->api_token]) }}"
         demand_counter = "{{ route('api.task-manager.counter.demands', ['api_token' => auth()->user()->api_token]) }}"
         workspaces = "{{ route('api.task-manager.workspaces.index', ['api_token' => auth()->user()->api_token]) }}"
+        mixed_demands = "{{ route('api.task-manager.demands.mixed', ['api_token' => auth()->user()->api_token]) }}"
+        demand-show-route="{{ route('task-manager.demands.show', ['workspace' => 'workspaceId', 'demand' => 'demandId']) }}"
+        user-profile-route="{{ route('task-manager.users.show', ['user' => 'userId']) }}"
     ></div>
 @endsection
 
 @push('scripts')
     <script src="{{ asset('/js/dashboard.js') }}"></script>
-    <script>
-        let formatOption = (option) => {
-            if (option.element) {
-                let icon_name = option.element.attributes.icon_name.nodeValue
-                return $(`<div class="select-option"><i class="${icon_name}"></i>${option.text}</div>`)
-            }
-        }
-        $('#mixed_tasks_order_select, #mixed_tasks_order_by_select, #mixed_tasks_relation_select').select2({
-            templateResult: formatOption,
-            minimumResultsForSearch: Infinity,
-            width: '100%',
-            dir: "rtl"
-        })
-    </script>
 @endpush
