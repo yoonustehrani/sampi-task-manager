@@ -56368,6 +56368,7 @@ var sweetError = function sweetError(errObject) {
       break;
 
     case 403:
+    case 401:
       Swal["default"].fire({
         icon: "error",
         title: "خطا",
@@ -56377,6 +56378,7 @@ var sweetError = function sweetError(errObject) {
           content: 'persian-text'
         }
       });
+      break;
 
     default:
       if (status !== 200) {

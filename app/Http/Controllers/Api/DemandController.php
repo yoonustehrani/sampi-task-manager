@@ -107,6 +107,12 @@ class DemandController extends BaseController
             ];
         }
     }
+    public function show(Workspace $workspace, $demand)
+    {
+        $demand = $workspace->demands()->with('from', 'to')->findOrFail($demand);
+        $this->authorize('view', $demand);
+        return $demand;
+    }
     public function update(Request $request, Workspace $workspace, $demand)
     {
         $demand = $workspace->demands()->findOrFail($demand);
@@ -146,6 +152,7 @@ class DemandController extends BaseController
         $this->authorize('toggle_state', $demand);
         $demand->finished_at = $demand->finished_at ? null : now();
         $demand->save();
+        return ['okay' => true, 'value' => $demand->finished_at];
     }
     public function new_message(Request $request, Demand $demand)
     {

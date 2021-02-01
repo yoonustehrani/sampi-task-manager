@@ -7,6 +7,7 @@ import 'react-activity/lib/Spinner/Spinner.css'
 import CreateMessage from './CreateMessage';
 import { sweetError } from '../../../helpers';
 import EditForm from './EditForm';
+import Swal from 'sweetalert2';
 
 class DemandMessages extends Component {
     constructor(props) {
@@ -17,8 +18,17 @@ class DemandMessages extends Component {
             currentPage: 0,
             hasMore: true,
             loading: true,
-            api_token: this.props.apiKey
+            api_token: this.props.apiKey,
+            demand: null
         }
+        setTimeout(() => {
+            axios.get(this.props.getDemand + `?api_token=${this.state.api_token}`).then(res => {
+                let demand = res.data;
+                this.setState(prevState => ({
+                    demand: demand
+                }));
+            }).catch(e => sweetError(e));
+        }, 1000);
     }
     handleLoadMore = () => {
         let {getMessages} = this.props;
@@ -57,16 +67,53 @@ class DemandMessages extends Component {
             })]
         }))
     }
+    handleToggleDemand = () => {
+        let {toggleDemand} = this.props;
+        let {api_token} = this.state;
+        axios.put(toggleDemand + `?api_token=${api_token}`).then(res => {
+            if (res.data.okay) {
+                let {value} = res.data;
+                let demand = this.state.demand;
+                demand.finished_at = value;
+                this.setState(prevState => ({
+                    demand: demand
+                }));
+                Swal.default.fire({
+                    icon: "success",
+                    title: "موفقیت",
+                    html: 'اطلاعات با موفقیت تغییر پیدا کرد',
+                    confirmButtonText: "تایید",
+                    customClass: {
+                        content: 'persian-text',
+                    },
+                });
+            }
+        }).catch(err => sweetError(err));
+    }
     componentDidMount() {
         this.handleLoadMore(); 
     }
     render() {
-        let {messages, hasMore, loading, api_token} = this.state;
+        let {messages, hasMore, loading, api_token, demand} = this.state;
         let {updateDemand} = this.props;
         return (
             <div className="h-100">
-                <CreateMessage addMessage={this.handleAddMessage.bind(this)} editMessage={this.handleEditMessage.bind(this)} Target={this.props.newMessage + '?api_token=' + api_token}/>
-                <EditForm Target={updateDemand + '?api_token=' + api_token}/>
+                {demand && demand.to.id == CurrentUser.id && ! demand.finished_at &&
+                    <div className="col-12 float-left text-center p-3">
+                        <button onClick={this.handleToggleDemand} className="btn btn-sm btn-danger"><i className="far fa-check-circle"></i> اعلام اتمام</button>
+                    </div>
+                }
+                {demand && demand.finished_at && demand.to.id == CurrentUser.id &&
+                    <div className="col-12 float-left text-center p-3">
+                        <button onClick={this.handleToggleDemand} className="btn btn-sm btn-success"><i className="fas fa-redo-alt"></i> از سر گیری</button>
+                    </div>
+                }
+                {demand && ! demand.finished_at &&
+                    <CreateMessage addMessage={this.handleAddMessage.bind(this)} editMessage={this.handleEditMessage.bind(this)} Target={this.props.newMessage + '?api_token=' + api_token}/>
+                }
+                {demand && demand.from.id == CurrentUser.id &&
+                    <EditForm Target={updateDemand + '?api_token=' + api_token}/>
+                }
                 <div className="col-12 float-left" style={
                     {
                         height:'700px',
