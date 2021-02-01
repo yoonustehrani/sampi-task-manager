@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import { getTask, getDemand, getUser, getWorkspace, sweetError } from '../../../helpers'
-import { Digital } from 'react-activity'
+import { Digital, Dots, Spinner } from 'react-activity'
 import 'react-activity/lib/Digital/Digital.css'
+import 'react-activity/lib/Spinner/Spinner.css'
+import 'react-activity/lib/Dots/Dots.css'
 import TinymcEditor from '../tinymce-editor/index'
 import { setPriority, redirectTo } from '../../../helpers'
 import moment from 'moment'
@@ -139,7 +141,7 @@ export default class MixedDemands extends Component {
     }
 
     componentDidMount() {
-        let { current_tab } = this.state, { get_workspaces_api } = this.props
+        let { current_tab } = this.state, { get_workspaces_api, simple_search } = this.props
         this.setState({[current_tab]: {data: [], nextPage: 1, hasMore: true}}, () => this.getData())
         axios.get(get_workspaces_api).then(res => {
             let { data } = res
@@ -165,10 +167,38 @@ export default class MixedDemands extends Component {
             })
         })
         $("#new-demand-project-select").on("select2:select", () => this.setState({selectedProject: $("#new-demand-project-select").val()}))
+        let task_search_field = null
+        $("#task-select").on("select2:open", () => {
+            $(".select2-search__field").addClass("task-select-search-field")
+            task_search_field = document.getElementsByClassName("task-select-search-field")[0]
+        })
+        document.addEventListener("keyup", (e) => {
+            if (e.target.classList.contains("task-select-search-field")) {
+                let searchValue
+                $("input.task-select-search-field").each(function () {
+                    searchValue = $(this).val()
+                })
+                this.setState({
+                    searchValue: searchValue
+                }, () => {
+                    if (this.state.searchValue.length >= 3 && this.state.selectedProject) {
+                        this.setState({is_searching_tasks: true})
+                        axios.get(`${simple_search}&q=${this.state.searchValue.replace(/ /, '+')}&workspace=${this.state.selectedProject}`).then(res => {
+                            let { data } = res
+                            this.setState({
+                                searched_tasks_results: data,
+                                is_searching_tasks: false
+                            })
+                        })
+                    }
+                })
+            }
+        }, true)
+
     }
 
     render() {
-        let { demands, needs, isGetting, already_added_needs, workspaces, workspaces_users, selectedProject } = this.state, { logged_in_user_id, demand_show_route } = this.props
+        let { demands, needs, isGetting, already_added_needs, workspaces, workspaces_users, selectedProject, searched_tasks_results, is_searching_tasks } = this.state, { logged_in_user_id, demand_show_route } = this.props
 
         return (
             <div>
@@ -325,7 +355,7 @@ export default class MixedDemands extends Component {
                                     <option value="4" icon_name="fas fa-hourglass">غیر ضروری و غیر مهم</option>
                                 </select>
                             </div>
-                            <div className="input-group col-12 col-md-6 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line-all">
+                            <div className="input-group col-12 col-md-4 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line-all">
                                 <div className="input-group-prepend">
                                     <span className="input-group-text">پروژه مربوطه</span>
                                 </div>
@@ -338,22 +368,34 @@ export default class MixedDemands extends Component {
                                     }
                                 </select>
                             </div>
-                            <div className="input-group col-12 col-md-6 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line-all">
+                            <div className="input-group col-12 col-md-4 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line-all">
                                 <div className="input-group-prepend">
                                     <span className="input-group-text">کار مربوطه</span>
                                 </div>
                                 <select id="task-select">
                                     <option></option>
                                     <option value="0">هیچکدام</option>
-                                    <option value="1">کیر تو کون کردن</option>
-                                    <option value="2">جق زدن رو قرآن</option>
+                                    {
+                                        searched_tasks_results && searched_tasks_results.map((task, i) => {
+                                            let { title, id, group } = task
+                                            return (
+                                                <option key={i} value={id}>{ title } ({ group })</option>
+                                            )
+                                        })
+                                    }
                                 </select>
+                                {is_searching_tasks &&
+                                    <div className="searching-indicator h-12">
+                                        <Spinner color="#000000" size={16} />
+                                    </div>
+                                }
                             </div>
-                            <div className="input-group col-12 col-md-6 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line-all">
+                            <div className="input-group col-12 col-md-4 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line-all">
                                 <div className="input-group-prepend">
                                     <span className="input-group-text">مخاطب نیاز</span>
                                 </div>
                                 <select id="new-demand-member" className="form-control text-right">
+                                    <option></option>
                                     { workspaces_users && selectedProject ? Object.values(workspaces_users[parseInt(selectedProject)]).map((user, i) => {
                                         if (user.id !== logged_in_user_id) {
                                             return (

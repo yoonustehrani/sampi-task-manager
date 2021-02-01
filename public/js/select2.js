@@ -109,8 +109,7 @@ var formatOptionWithImage = function formatOptionWithImage(option) {
   if (option.element) {
     var img_src = option.element.attributes.img_address.nodeValue,
         is_user_admin = option.element.attributes.is_admin;
-    console.log(is_user_admin);
-    return $("\n            <div class=\"select-option\">\n                <img src=\"".concat(img_src, "\" class=\"option-img\"/>\n                ").concat(option.text, "\n                ").concat(typeof is_user_admin !== "undefined" ? "<span class=\"badge badge-pill mr-1 ".concat(is_user_admin === 1 ? "bade-success" : "badge-primary", "\">").concat(is_user_admin === 1 ? "ادمین" : "کاربر", "</span>") : "", "  \n            </div>\n        "));
+    return $("\n            <div class=\"select-option circle-avatar-pic\">\n                <img src=\"".concat(img_src, "\"/>\n                ").concat(option.text, "\n                ").concat(typeof is_user_admin !== "undefined" ? "<span class=\"badge badge-pill mr-1 ".concat(is_user_admin === 1 ? "bade-success" : "badge-primary", "\">").concat(is_user_admin === 1 ? "ادمین" : "کاربر", "</span>") : "", "  \n            </div>\n        "));
   }
 };
 var formatOption = function formatOption(option) {
@@ -118,6 +117,10 @@ var formatOption = function formatOption(option) {
     return $("<div class=\"select-option\">".concat(option.text, "</div>"));
   }
 };
+
+function matchCustom(params, data) {// return null
+}
+
 $('#new-task-priority, #tasks_order_select, #tasks_order_by_select, #tasks_relation_select, #mixed_tasks_order_select, #mixed_tasks_order_by_select, #mixed_tasks_relation_select, #mixed_demands_order_select, #mixed_demands_order_by_select, #mixed_demands_relation_select, #mixed_needs_order_select, #mixed_needs_order_by_select, #mixed_needs_relation_select').select2({
   templateResult: formatOptionWithIcon,
   minimumResultsForSearch: Infinity,
@@ -127,9 +130,11 @@ $('#new-task-priority, #tasks_order_select, #tasks_order_by_select, #tasks_relat
 $('.select2-search__field').css('width', '100%');
 $('#task-select').select2({
   templateResult: formatOption,
-  placeholder: 'کار مربوطه را انتخاب کنید',
+  placeholder: 'کار مربوطه را جستجو و انتخاب کنید',
   width: "100%",
-  dir: "rtl"
+  dir: "rtl",
+  minimumInputLength: 3,
+  matcher: matchCustom
 });
 
 var renderWithImg = function renderWithImg(ids, placeholder, multiple) {

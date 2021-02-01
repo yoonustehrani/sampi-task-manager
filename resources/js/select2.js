@@ -8,10 +8,9 @@ export const formatOptionWithIcon = (option) => {
 export const formatOptionWithImage = (option) => {
     if (option.element) {
         let img_src = option.element.attributes.img_address.nodeValue, is_user_admin = option.element.attributes.is_admin
-        console.log(is_user_admin)
         return $(`
-            <div class="select-option">
-                <img src="${img_src}" class="option-img"/>
+            <div class="select-option circle-avatar-pic">
+                <img src="${img_src}"/>
                 ${option.text}
                 ${typeof is_user_admin !== "undefined" ? `<span class="badge badge-pill mr-1 ${is_user_admin === 1 ? "bade-success" : "badge-primary"}">${is_user_admin === 1 ? "ادمین" : "کاربر"}</span>` : "" }  
             </div>
@@ -25,6 +24,10 @@ export const formatOption = (option) => {
     }
 }
 
+function matchCustom(params, data) {
+    // return null
+}
+
 $('#new-task-priority, #tasks_order_select, #tasks_order_by_select, #tasks_relation_select, #mixed_tasks_order_select, #mixed_tasks_order_by_select, #mixed_tasks_relation_select, #mixed_demands_order_select, #mixed_demands_order_by_select, #mixed_demands_relation_select, #mixed_needs_order_select, #mixed_needs_order_by_select, #mixed_needs_relation_select').select2({
     templateResult: formatOptionWithIcon,
     minimumResultsForSearch: Infinity,
@@ -35,9 +38,11 @@ $('.select2-search__field').css('width', '100%')
 
 $('#task-select').select2({
     templateResult: formatOption,
-    placeholder: 'کار مربوطه را انتخاب کنید',
+    placeholder: 'کار مربوطه را جستجو و انتخاب کنید',
     width: "100%",
-    dir: "rtl"
+    dir: "rtl",
+    minimumInputLength: 3,
+    matcher: matchCustom
 })
 
 const renderWithImg = (ids, placeholder, multiple) => {

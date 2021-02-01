@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -2479,6 +2479,44 @@ exports = module.exports = __webpack_require__(/*! ../../../css-loader/lib/css-b
 
 // module
 exports.push([module.i, "@-webkit-keyframes digital-pulse {\n  0%, 40%, 100% {\n    transform: scaleY(0.4); }\n  20% {\n    transform: scaleY(1); } }\n@keyframes digital-pulse {\n  0%, 40%, 100% {\n    transform: scaleY(0.4); }\n  20% {\n    transform: scaleY(1); } }\n.rai-digital {\n  height: 1em;\n  text-align: center; }\n  .rai-digital > div {\n    display: inline-block;\n    margin-right: 0.125em;\n    background-color: #727981;\n    width: 0.25em;\n    height: 100%;\n    -webkit-animation-name: digital-pulse;\n            animation-name: digital-pulse;\n    -webkit-animation-duration: inherit;\n            animation-duration: inherit;\n    -webkit-animation-timing-function: ease-in-out;\n            animation-timing-function: ease-in-out;\n    -webkit-animation-iteration-count: infinite;\n            animation-iteration-count: infinite; }\n    .rai-digital > div:last-child {\n      margin-right: 0; }\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/react-activity/lib/Dots/Dots.css":
+/*!***************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--7-1!./node_modules/postcss-loader/src??ref--7-2!./node_modules/react-activity/lib/Dots/Dots.css ***!
+  \***************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "@-webkit-keyframes dots-pulse {\n  0% {\n    opacity: 0.1; }\n  15% {\n    opacity: 1; }\n  100% {\n    opacity: 0.1; } }\n@keyframes dots-pulse {\n  0% {\n    opacity: 0.1; }\n  15% {\n    opacity: 1; }\n  100% {\n    opacity: 0.1; } }\n.rai-dots .rai-circle {\n  border-radius: 100%;\n  display: inline-block;\n  margin-right: 0.1875em;\n  background-color: #727981;\n  width: 0.5em;\n  height: 0.5em;\n  -webkit-animation-name: dots-pulse;\n          animation-name: dots-pulse;\n  -webkit-animation-duration: inherit;\n          animation-duration: inherit;\n  -webkit-animation-timing-function: ease-in-out;\n          animation-timing-function: ease-in-out;\n  -webkit-animation-iteration-count: infinite;\n          animation-iteration-count: infinite; }\n  .rai-dots .rai-circle:last-child {\n    margin-right: 0; }\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/react-activity/lib/Spinner/Spinner.css":
+/*!*********************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--7-1!./node_modules/postcss-loader/src??ref--7-2!./node_modules/react-activity/lib/Spinner/Spinner.css ***!
+  \*********************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "@-webkit-keyframes rai-spinner {\n  from {\n    transform: rotate(0deg); }\n  to {\n    transform: rotate(360deg); } }\n@keyframes rai-spinner {\n  from {\n    transform: rotate(0deg); }\n  to {\n    transform: rotate(360deg); } }\n.rai-spinner {\n  width: 1.5em;\n  height: 1.5em;\n  position: relative;\n  margin: 0; }\n  .rai-spinner-inner, .rai-spinner-outer {\n    position: absolute;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    border-radius: 100%;\n    margin-left: -0.0625em;\n    margin-top: -0.0625em; }\n  .rai-spinner-outer {\n    border: 0.125em solid #727981;\n    opacity: 0.2; }\n  .rai-spinner-inner {\n    position: absolute;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    border-radius: 100%;\n    border-top: 0.125em solid #727981;\n    border-right: 0.125em solid transparent !important;\n    border-bottom: 0.125em solid transparent !important;\n    border-left: 0.125em solid transparent !important;\n    -webkit-animation-name: rai-spinner;\n            animation-name: rai-spinner;\n    -webkit-animation-iteration-count: infinite;\n            animation-iteration-count: infinite;\n    -webkit-animation-timing-function: linear;\n            animation-timing-function: linear;\n    -webkit-animation-duration: inherit;\n            animation-duration: inherit; }\n", ""]);
 
 // exports
 
@@ -27139,6 +27177,66 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 var content = __webpack_require__(/*! !../../../css-loader??ref--7-1!../../../postcss-loader/src??ref--7-2!./Digital.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/react-activity/lib/Digital/Digital.css");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ "./node_modules/react-activity/lib/Dots/Dots.css":
+/*!*******************************************************!*\
+  !*** ./node_modules/react-activity/lib/Dots/Dots.css ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../css-loader??ref--7-1!../../../postcss-loader/src??ref--7-2!./Dots.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/react-activity/lib/Dots/Dots.css");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ "./node_modules/react-activity/lib/Spinner/Spinner.css":
+/*!*************************************************************!*\
+  !*** ./node_modules/react-activity/lib/Spinner/Spinner.css ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../css-loader??ref--7-1!../../../postcss-loader/src??ref--7-2!./Spinner.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/react-activity/lib/Spinner/Spinner.css");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -56422,9 +56520,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_activity__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_activity__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var react_activity_lib_Digital_Digital_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-activity/lib/Digital/Digital.css */ "./node_modules/react-activity/lib/Digital/Digital.css");
 /* harmony import */ var react_activity_lib_Digital_Digital_css__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_activity_lib_Digital_Digital_css__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _tinymce_editor_index__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../tinymce-editor/index */ "./resources/js/react/components/tinymce-editor/index.jsx");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var react_activity_lib_Spinner_Spinner_css__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-activity/lib/Spinner/Spinner.css */ "./node_modules/react-activity/lib/Spinner/Spinner.css");
+/* harmony import */ var react_activity_lib_Spinner_Spinner_css__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react_activity_lib_Spinner_Spinner_css__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var react_activity_lib_Dots_Dots_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-activity/lib/Dots/Dots.css */ "./node_modules/react-activity/lib/Dots/Dots.css");
+/* harmony import */ var react_activity_lib_Dots_Dots_css__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(react_activity_lib_Dots_Dots_css__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _tinymce_editor_index__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../tinymce-editor/index */ "./resources/js/react/components/tinymce-editor/index.jsx");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_8__);
 function _typeof(obj) {
   "@babel/helpers - typeof";
 
@@ -56634,7 +56736,9 @@ function _defineProperty(obj, key, value) {
 
 
 
-moment__WEBPACK_IMPORTED_MODULE_6___default.a.locale('fa');
+
+
+moment__WEBPACK_IMPORTED_MODULE_8___default.a.locale('fa');
 
 var MixedDemands = /*#__PURE__*/function (_Component) {
   _inherits(MixedDemands, _Component);
@@ -56839,7 +56943,9 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
       var _this2 = this;
 
       var current_tab = this.state.current_tab,
-          get_workspaces_api = this.props.get_workspaces_api;
+          _this$props = this.props,
+          get_workspaces_api = _this$props.get_workspaces_api,
+          simple_search = _this$props.simple_search;
       this.setState(_defineProperty({}, current_tab, {
         data: [],
         nextPage: 1,
@@ -56877,6 +56983,38 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
           selectedProject: $("#new-demand-project-select").val()
         });
       });
+      var task_search_field = null;
+      $("#task-select").on("select2:open", function () {
+        $(".select2-search__field").addClass("task-select-search-field");
+        task_search_field = document.getElementsByClassName("task-select-search-field")[0];
+      });
+      document.addEventListener("keyup", function (e) {
+        if (e.target.classList.contains("task-select-search-field")) {
+          var searchValue;
+          $("input.task-select-search-field").each(function () {
+            searchValue = $(this).val();
+          });
+
+          _this2.setState({
+            searchValue: searchValue
+          }, function () {
+            if (_this2.state.searchValue.length >= 3 && _this2.state.selectedProject) {
+              _this2.setState({
+                is_searching_tasks: true
+              });
+
+              axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("".concat(simple_search, "&q=").concat(_this2.state.searchValue.replace(/ /, '+'), "&workspace=").concat(_this2.state.selectedProject)).then(function (res) {
+                var data = res.data;
+
+                _this2.setState({
+                  searched_tasks_results: data,
+                  is_searching_tasks: false
+                });
+              });
+            }
+          });
+        }
+      }, true);
     }
   }, {
     key: "render",
@@ -56889,9 +57027,11 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
           workspaces = _this$state3.workspaces,
           workspaces_users = _this$state3.workspaces_users,
           selectedProject = _this$state3.selectedProject,
-          _this$props = this.props,
-          logged_in_user_id = _this$props.logged_in_user_id,
-          demand_show_route = _this$props.demand_show_route;
+          searched_tasks_results = _this$state3.searched_tasks_results,
+          is_searching_tasks = _this$state3.is_searching_tasks,
+          _this$props2 = this.props,
+          logged_in_user_id = _this$props2.logged_in_user_id,
+          demand_show_route = _this$props2.demand_show_route;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
         className: "demands-tabs-titles col-12 mt-2"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
@@ -57059,7 +57199,7 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
           className: "fas fa-check-circle fa-3x"
         })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, finished_at === null ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-calendar-times fa-3x"
-        }) : moment__WEBPACK_IMPORTED_MODULE_6___default()(finished_at).fromNow()));
+        }) : moment__WEBPACK_IMPORTED_MODULE_8___default()(finished_at).fromNow()));
       }))), demands && demands.data.length > 0 && !isGetting && demands.hasMore && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "text-center"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
@@ -57119,7 +57259,7 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
         value: "4",
         icon_name: "fas fa-hourglass"
       }, "\u063A\u06CC\u0631 \u0636\u0631\u0648\u0631\u06CC \u0648 \u063A\u06CC\u0631 \u0645\u0647\u0645"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "input-group col-12 col-md-6 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line-all"
+        className: "input-group col-12 col-md-4 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line-all"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "input-group-prepend"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
@@ -57134,7 +57274,7 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
           img_address: APP_PATH + workspace.avatar_pic
         }, workspace.title);
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "input-group col-12 col-md-6 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line-all"
+        className: "input-group col-12 col-md-4 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line-all"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "input-group-prepend"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
@@ -57143,12 +57283,21 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
         id: "task-select"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
         value: "0"
-      }, "\u0647\u06CC\u0686\u06A9\u062F\u0627\u0645"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        value: "1"
-      }, "\u06A9\u06CC\u0631 \u062A\u0648 \u06A9\u0648\u0646 \u06A9\u0631\u062F\u0646"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        value: "2"
-      }, "\u062C\u0642 \u0632\u062F\u0646 \u0631\u0648 \u0642\u0631\u0622\u0646"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "input-group col-12 col-md-6 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line-all"
+      }, "\u0647\u06CC\u0686\u06A9\u062F\u0627\u0645"), searched_tasks_results && searched_tasks_results.map(function (task, i) {
+        var title = task.title,
+            id = task.id,
+            group = task.group;
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+          key: i,
+          value: id
+        }, title, " (", group, ")");
+      })), is_searching_tasks && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "searching-indicator h-12"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_activity__WEBPACK_IMPORTED_MODULE_3__["Spinner"], {
+        color: "#000000",
+        size: 16
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "input-group col-12 col-md-4 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line-all"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "input-group-prepend"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
@@ -57156,7 +57305,7 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
       }, "\u0645\u062E\u0627\u0637\u0628 \u0646\u06CC\u0627\u0632")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
         id: "new-demand-member",
         className: "form-control text-right"
-      }, workspaces_users && selectedProject ? Object.values(workspaces_users[parseInt(selectedProject)]).map(function (user, i) {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null), workspaces_users && selectedProject ? Object.values(workspaces_users[parseInt(selectedProject)]).map(function (user, i) {
         if (user.id !== logged_in_user_id) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
             key: i,
@@ -57169,7 +57318,7 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
         className: "input-group col-12 pl-0 pr-0"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "tinymc-container"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_tinymce_editor_index__WEBPACK_IMPORTED_MODULE_5__["default"], {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_tinymce_editor_index__WEBPACK_IMPORTED_MODULE_7__["default"], {
         changeContent: this.onDescriptionChange
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "text-center mt-2"
@@ -57331,7 +57480,7 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
           className: "fas fa-check-circle fa-3x"
         })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, finished_at === null ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-calendar-times fa-3x"
-        }) : moment__WEBPACK_IMPORTED_MODULE_6___default()(finished_at).fromNow()));
+        }) : moment__WEBPACK_IMPORTED_MODULE_8___default()(finished_at).fromNow()));
       }))), needs && needs.data.length > 0 && !isGetting && needs.hasMore && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "text-center"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
@@ -57608,17 +57757,19 @@ var data_store = target.getAttribute("data-store");
 var logged_in_user_id = parseInt(target.getAttribute("logged-in-user-id"));
 var search_index = target.getAttribute("data-search");
 var get_workspaces_api = target.getAttribute("workspaces-api");
+var simple_search = target.getAttribute("simple-search");
 react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_mixed_demands__WEBPACK_IMPORTED_MODULE_2__["default"], {
   get_mixed_demands_api: data_index,
   post_demand_api: data_store,
   logged_in_user_id: logged_in_user_id,
   mixed_demands_search: search_index,
-  get_workspaces_api: get_workspaces_api
+  get_workspaces_api: get_workspaces_api,
+  simple_search: simple_search
 }), target);
 
 /***/ }),
 
-/***/ 3:
+/***/ 2:
 /*!**************************************************!*\
   !*** multi ./resources/js/react/mixedDemands.js ***!
   \**************************************************/

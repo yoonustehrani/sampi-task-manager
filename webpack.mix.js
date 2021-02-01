@@ -42,14 +42,10 @@ mix.sass(res.sass + 'app.scss', pub.css)
     // .react(res.react + 'dashboard.js', pub.js)
     // .react(res.react + 'workspace.js', pub.js)
     // .react(res.react + "task.js", pub.js)
-    // .js(res.js + "select2.js", pub.js)
+    .js(res.js + "select2.js", pub.js)
     // .react(res.react + "user-profile.js", pub.js)
     // .react(res.react + "demands.js", pub.js)
     // .js(res.js + 'tinymce/langs/fa.js', pub.js + 'tinymce/langs')`
-<<<<<<< HEAD
     .react(res.react + "mixedDemands.js", pub.js)
     .react(res.react + "mixedTasks.js", pub.js)
     
-=======
-    // .react(res.react + "mixedDemands.js", pub.js)
->>>>>>> c9b0034c72b7e8f6ad668f21a96765898f6090a8

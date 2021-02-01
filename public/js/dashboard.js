@@ -57255,7 +57255,6 @@ var formatOptionWithImage = function formatOptionWithImage(option) {
   if (option.element) {
     var img_src = option.element.attributes.img_address.nodeValue,
         is_user_admin = option.element.attributes.is_admin;
-    console.log(is_user_admin);
     return $("\n            <div class=\"select-option\">\n                <img src=\"".concat(img_src, "\" class=\"option-img\"/>\n                ").concat(option.text, "\n                ").concat(typeof is_user_admin !== "undefined" ? "<span class=\"badge badge-pill mr-1 ".concat(is_user_admin === 1 ? "bade-success" : "badge-primary", "\">").concat(is_user_admin === 1 ? "ادمین" : "کاربر", "</span>") : "", "  \n            </div>\n        "));
   }
 };
@@ -57273,7 +57272,7 @@ $('#new-task-priority, #tasks_order_select, #tasks_order_by_select, #tasks_relat
 $('.select2-search__field').css('width', '100%');
 $('#task-select').select2({
   templateResult: formatOption,
-  placeholder: 'کار مربوطه را انتخاب کنید',
+  placeholder: 'کار مربوطه را جستجو و انتخاب کنید',
   width: "100%",
   dir: "rtl"
 });
