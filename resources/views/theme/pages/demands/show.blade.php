@@ -95,13 +95,14 @@
                         {{ $demand->updated_at->diffForHumans() }}
                     </div>
                     @if (count($demand->messages) > 0)
-                    <div class="box-body-row col-12">
+                    <div id="last-message" class="box-body-row col-12">
                         <b>آخرین پیام :</b>
-                        {{ $demand->messages[0]->updated_at->diffForHumans() }}
+                        <span>{{ $demand->messages[0]->updated_at->diffForHumans() }}</span>
                     </div>
                     @else
                     <div id="last-message" class="box-body-row col-12 d-none">
                         <b>آخرین پیام :</b>
+                        <span></span>
                     </div>
                     @endif
                     @if ($demand->finished_at)

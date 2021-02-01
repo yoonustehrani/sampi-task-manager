@@ -29,6 +29,8 @@ class CreateMessage extends Component {
         let id = addMessage(message);
         axios.post(this.state.target, {text: message.text}).then(res => {
             let message = res.data;
+            $('#last-message').removeClass('d-none');
+            $('#last-message > span').html(moment(message.created_at).locale('fa').fromNow());
             editMessage(id, message);
         }).catch(err => {
             let {code} = sweetError(err);

@@ -61641,6 +61641,8 @@ var CreateMessage = /*#__PURE__*/function (_Component) {
         text: message.text
       }).then(function (res) {
         var message = res.data;
+        $('#last-message').removeClass('d-none');
+        $('#last-message > span').html(moment(message.created_at).locale('fa').fromNow());
         editMessage(id, message);
       })["catch"](function (err) {
         var _sweetError = Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["sweetError"])(err),
