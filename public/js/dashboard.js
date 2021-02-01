@@ -55358,7 +55358,8 @@ var Demand = /*#__PURE__*/function (_Component) {
           finished_at = _this$props.finished_at,
           messages_count = _this$props.messages_count,
           index = _this$props.index,
-          priority = _this$props.priority;
+          priority = _this$props.priority,
+          workspaces_users = _this$props.workspaces_users;
       var targetUser = from ? from : to;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
         className: "animated fadeIn",
@@ -55386,7 +55387,7 @@ var Demand = /*#__PURE__*/function (_Component) {
           return e.stopPropagation();
         }
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "user-dropdown-item border-sharp animated jackInTheBox"
+        className: "user-dropdown-item animated jackInTheBox"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "user-right-flex"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -55397,7 +55398,17 @@ var Demand = /*#__PURE__*/function (_Component) {
         className: "user-info ml-2"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, targetUser.fullname), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         href: user_profile_route.replace("userId", targetUser.id)
-      }, "@", targetUser.name))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, messages_count), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, priority.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, finished_at === null ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+      }, "@", targetUser.name))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "user-label-container"
+      }, workspaces_users && workspaces_users[workspace.id][targetUser.id].is_admin === 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "btn btn-sm btn-success rtl admin p-1"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0627\u062F\u0645\u06CC\u0646", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-user-tie mr-1"
+      }))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "btn btn-sm btn-primary rtl"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0639\u0636\u0648", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-user mr-1"
+      })))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, messages_count), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, priority.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, finished_at === null ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-times-circle fa-3x"
       }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-check-circle fa-3x"
@@ -55592,7 +55603,8 @@ var Demands = /*#__PURE__*/function (_Component) {
           workspace_route = _this$props.workspace_route,
           task_route = _this$props.task_route,
           user_profile_route = _this$props.user_profile_route,
-          isGetting = _this$props.isGetting;
+          isGetting = _this$props.isGetting,
+          workspaces_users = _this$props.workspaces_users;
       var tab = mixed_demands ? "mixed_demands" : "mixed_needs";
       var data = tab === "mixed_demands" ? mixed_demands : mixed_needs;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -55671,7 +55683,9 @@ var Demands = /*#__PURE__*/function (_Component) {
           workspace_route: workspace_route,
           user_profile_route: user_profile_route,
           index: i
-        }, demand));
+        }, demand, {
+          workspaces_users: workspaces_users
+        }));
       }))), data.length <= 0 && !isGetting && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "text-center text-secondary"
       }, "\u0645\u0648\u0631\u062F\u06CC \u0628\u0631\u0627\u06CC \u0646\u0645\u0627\u06CC\u0634 \u0648\u062C\u0648\u062F \u0646\u062F\u0627\u0631\u062F"), isGetting && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -55845,7 +55859,9 @@ var Task = /*#__PURE__*/function (_Component) {
           due_to = _this$props.due_to,
           workspace = _this$props.workspace,
           workspace_id = _this$props.workspace_id,
-          workspace_route = _this$props.workspace_route;
+          workspace_route = _this$props.workspace_route,
+          workspaces_users = _this$props.workspaces_users,
+          users = _this$props.users;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
         className: "animated fadeIn",
         onClick: this.props.onClick
@@ -55858,7 +55874,45 @@ var Task = /*#__PURE__*/function (_Component) {
         src: APP_PATH + workspace.avatar_pic
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         href: workspace_route.replace('workspaceId', workspace_id)
-      }, workspace.title)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, group), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, Object(_helpers__WEBPACK_IMPORTED_MODULE_1__["setPriority"])(priority_id)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, due_to !== null ? moment(due_to).fromNow() : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+      }, workspace.title)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, group), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "employees-container horizontal-centerlize"
+      }, users.length === 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-user-slash"
+      }), users.length === 1 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, users.length, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-user mr-2"
+      })), users.length > 1 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, users.length, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-users mr-2"
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "dropdown-users d-none",
+        onClick: function onClick(e) {
+          return e.stopPropagation();
+        }
+      }, users.length >= 1 && users.map(function (user, i) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          key: i,
+          className: "user-dropdown-item animated jackInTheBox"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "user-right-flex"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "user-img-container ml-2"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+          src: user.avatar_pic !== null ? APP_PATH + user.avatar_pic : APP_PATH + 'images/male-avatar.svg'
+        })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "user-info ml-2"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, user.fullname), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+          href: "#user"
+        }, "@", user.name))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "user-label-container"
+        }, workspaces_users && workspaces_users[workspace.id][user.id].is_admin === 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          className: "btn btn-sm btn-success rtl admin"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0627\u062F\u0645\u06CC\u0646", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fas fa-user-tie mr-1"
+        }))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          className: "btn btn-sm btn-primary rtl"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0639\u0636\u0648", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fas fa-user mr-1"
+        })))));
+      })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, Object(_helpers__WEBPACK_IMPORTED_MODULE_1__["setPriority"])(priority_id)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, due_to !== null ? moment(due_to).fromNow() : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-calendar-minus  fa-3x"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, finished_at === null ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-times-circle fa-3x"
@@ -56071,7 +56125,9 @@ var Tasks = /*#__PURE__*/function (_Component) {
       var _this2 = this;
 
       var tasks = this.props.AllTasks,
-          isGetting = this.props.isGetting;
+          _this$props = this.props,
+          isGetting = _this$props.isGetting,
+          workspaces_users = _this$props.workspaces_users;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "filter-box mt-2 mb-2 p-3 col-12 animated fadeIn"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -56138,6 +56194,8 @@ var Tasks = /*#__PURE__*/function (_Component) {
         scope: "col"
       }, "\u062F\u0633\u062A\u0647 \u0628\u0646\u062F\u06CC"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
         scope: "col"
+      }, "\u0627\u0646\u062C\u0627\u0645 \u062F\u0647\u0646\u062F\u06AF\u0627\u0646"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+        scope: "col"
       }, "\u0627\u0648\u0644\u0648\u06CC\u062A"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
         scope: "col"
       }, "\u0645\u0648\u0639\u062F \u062A\u062D\u0648\u06CC\u0644"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
@@ -56151,7 +56209,8 @@ var Tasks = /*#__PURE__*/function (_Component) {
           workspace_route: _this2.state.workspace_route,
           onClick: function onClick() {
             return Object(_helpers__WEBPACK_IMPORTED_MODULE_1__["redirectTo"])(_this2.state.route.replace("taskId", task.id));
-          }
+          },
+          workspaces_users: workspaces_users
         }, task));
       }) : null)), tasks.length <= 0 && !isGetting && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "text-center text-secondary"
@@ -56977,8 +57036,26 @@ var Dashboard = /*#__PURE__*/function (_Component) {
         var data = res.data;
 
         _this2.setState({
-          workspaces: data,
-          isGetting: false
+          workspaces: data
+        }, function () {
+          _this2.state.workspaces.map(function (workspace, i) {
+            var current_workspace;
+            workspace.users.map(function (user, index) {
+              current_workspace = Object.assign({}, current_workspace, _defineProperty({}, user.id, {
+                id: user.id,
+                fullname: user.fullname,
+                avatar_pic: user.avatar_pic,
+                is_admin: user.pivot.is_admin
+              }));
+            });
+
+            _this2.setState(function (prevState) {
+              return {
+                workspaces_users: Object.assign({}, prevState.workspaces_users, _defineProperty({}, workspace.id, current_workspace)),
+                isGetting: false
+              };
+            });
+          });
         });
       });
       this.tabTitlesRef[0].current.classList.add("active");
@@ -56995,7 +57072,8 @@ var Dashboard = /*#__PURE__*/function (_Component) {
           workspaces = _this$state2.workspaces,
           navbar = _this$state2.navbar,
           mixed_demands = _this$state2.mixed_demands,
-          mixed_needs = _this$state2.mixed_needs;
+          mixed_needs = _this$state2.mixed_needs,
+          workspaces_users = _this$state2.workspaces_users;
       var _this$props4 = this.props,
           workspace_route = _this$props4.workspace_route,
           task_route = _this$props4.task_route,
@@ -57067,7 +57145,8 @@ var Dashboard = /*#__PURE__*/function (_Component) {
         sortData: function sortData(tab) {
           return _this3.sortData.bind(_this3, tab);
         },
-        isGetting: isGetting
+        isGetting: isGetting,
+        workspaces_users: workspaces_users
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "result-container col-12 mt-3",
         ref: this.tabResultsRef[2]
@@ -57080,7 +57159,8 @@ var Dashboard = /*#__PURE__*/function (_Component) {
           return _this3.sortData.bind(_this3, tab);
         },
         user_profile_route: user_profile_route,
-        isGetting: isGetting
+        isGetting: isGetting,
+        workspaces_users: workspaces_users
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "result-container col-12 mt-3",
         ref: this.tabResultsRef[3]
@@ -57093,7 +57173,8 @@ var Dashboard = /*#__PURE__*/function (_Component) {
           return _this3.sortData.bind(_this3, tab);
         },
         user_profile_route: user_profile_route,
-        isGetting: isGetting
+        isGetting: isGetting,
+        workspaces_users: workspaces_users
       }))));
     }
   }]);
