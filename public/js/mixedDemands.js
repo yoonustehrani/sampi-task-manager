@@ -56977,44 +56977,33 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
             });
           });
         });
+      }); // here we will use select2, jquery and react states to make a connection between three select2s and the options inside them(warning: do not move this code to another js file(like select2.js) or out of this order)
+
+      var setWorkspaceId = function setWorkspaceId() {
+        var id = $("#new-demand-project-select").val();
+
+        _this2.setState({
+          selected_workspace: id
+        });
+      };
+
+      function setSelectValue(id, value) {
+        var selected_task_workspace = $("#task-select").find("option:selected").attr('workspace_id'),
+            selectedProject = $("#new-demand-project-select").val();
+
+        if (selectedProject !== selected_task_workspace) {
+          $(id).val(eval(value)).change();
+        }
+      }
+
+      $("#task-select").on("select2:select", function () {
+        setSelectValue("#new-demand-project-select", "selected_task_workspace");
+        setWorkspaceId();
       });
       $("#new-demand-project-select").on("select2:select", function () {
-        return _this2.setState({
-          selectedProject: $("#new-demand-project-select").val()
-        });
+        setSelectValue("#task-select", null);
+        setWorkspaceId();
       });
-      var task_search_field = null;
-      $("#task-select").on("select2:open", function () {
-        $(".select2-search__field").addClass("task-select-search-field");
-        task_search_field = document.getElementsByClassName("task-select-search-field")[0];
-      });
-      document.addEventListener("keyup", function (e) {
-        if (e.target.classList.contains("task-select-search-field")) {
-          var searchValue;
-          $("input.task-select-search-field").each(function () {
-            searchValue = $(this).val();
-          });
-
-          _this2.setState({
-            searchValue: searchValue
-          }, function () {
-            if (_this2.state.searchValue.length >= 3 && _this2.state.selectedProject) {
-              _this2.setState({
-                is_searching_tasks: true
-              });
-
-              axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("".concat(simple_search, "&q=").concat(_this2.state.searchValue.replace(/ /, '+'), "&workspace=").concat(_this2.state.selectedProject)).then(function (res) {
-                var data = res.data;
-
-                _this2.setState({
-                  searched_tasks_results: data,
-                  is_searching_tasks: false
-                });
-              });
-            }
-          });
-        }
-      }, true);
     }
   }, {
     key: "render",
@@ -57026,9 +57015,7 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
           already_added_needs = _this$state3.already_added_needs,
           workspaces = _this$state3.workspaces,
           workspaces_users = _this$state3.workspaces_users,
-          selectedProject = _this$state3.selectedProject,
-          searched_tasks_results = _this$state3.searched_tasks_results,
-          is_searching_tasks = _this$state3.is_searching_tasks,
+          selected_workspace = _this$state3.selected_workspace,
           _this$props2 = this.props,
           logged_in_user_id = _this$props2.logged_in_user_id,
           demand_show_route = _this$props2.demand_show_route;
@@ -57281,22 +57268,7 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
         className: "input-group-text"
       }, "\u06A9\u0627\u0631 \u0645\u0631\u0628\u0648\u0637\u0647")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
         id: "task-select"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        value: "0"
-      }, "\u0647\u06CC\u0686\u06A9\u062F\u0627\u0645"), searched_tasks_results && searched_tasks_results.map(function (task, i) {
-        var title = task.title,
-            id = task.id,
-            group = task.group;
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-          key: i,
-          value: id
-        }, title, " (", group, ")");
-      })), is_searching_tasks && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "searching-indicator h-12"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_activity__WEBPACK_IMPORTED_MODULE_3__["Spinner"], {
-        color: "#000000",
-        size: 16
-      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "input-group col-12 col-md-4 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line-all"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "input-group-prepend"
@@ -57305,7 +57277,7 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
       }, "\u0645\u062E\u0627\u0637\u0628 \u0646\u06CC\u0627\u0632")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
         id: "new-demand-member",
         className: "form-control text-right"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null), workspaces_users && selectedProject ? Object.values(workspaces_users[parseInt(selectedProject)]).map(function (user, i) {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null), workspaces_users && selected_workspace ? Object.values(workspaces_users[parseInt(selected_workspace)]).map(function (user, i) {
         if (user.id !== logged_in_user_id) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
             key: i,

@@ -12,20 +12,19 @@ export const formatOptionWithImage = (option) => {
             <div class="select-option circle-avatar-pic">
                 <img src="${img_src}"/>
                 ${option.text}
-                ${typeof is_user_admin !== "undefined" ? `<span class="badge badge-pill mr-1 ${is_user_admin === 1 ? "bade-success" : "badge-primary"}">${is_user_admin === 1 ? "ادمین" : "کاربر"}</span>` : "" }  
+                ${typeof is_user_admin !== "undefined" ? `<span class="badge badge-pill mr-1 ${is_user_admin.nodeValue === "1" ? "badge-success" : "badge-primary"}">${is_user_admin.nodeValue === "1" ? "ادمین" : "کاربر"}</span>` : "" }  
             </div>
         `)
     }
 }
 
 export const formatOption = (option) => {
-    if (option.element) {
-        return $(`<div class="select-option">${option.text}</div>`)
-    }
-}
-
-function matchCustom(params, data) {
-    // return null
+    return $(`
+        <div class="select-option">
+            ${option.workspace ? `<div class="circle-avatar-pic small-avatar mb-1"><img src="${APP_PATH + option.workspace.avatar_pic}"/><span class="badge badge-light mr-1">${option.workspace.title}</span></div>` : ""}
+            ${option.text}${option.group ? ` (${option.group})` : ""}
+        </div>
+    `)
 }
 
 $('#new-task-priority, #tasks_order_select, #tasks_order_by_select, #tasks_relation_select, #mixed_tasks_order_select, #mixed_tasks_order_by_select, #mixed_tasks_relation_select, #mixed_demands_order_select, #mixed_demands_order_by_select, #mixed_demands_relation_select, #mixed_needs_order_select, #mixed_needs_order_by_select, #mixed_needs_relation_select').select2({
@@ -38,11 +37,33 @@ $('.select2-search__field').css('width', '100%')
 
 $('#task-select').select2({
     templateResult: formatOption,
+    templateSelection: function (data, container) {
+        $(data.element).attr('workspace_id', data.workspace_id)
+        return data.text
+    },
     placeholder: 'کار مربوطه را جستجو و انتخاب کنید',
     width: "100%",
     dir: "rtl",
     minimumInputLength: 3,
-    matcher: matchCustom
+    delay: 250,
+    ajax: {
+        url: simple_search_url,
+        data: function (params) {
+            return {
+                q: params.term,
+                workspace: $("#new-demand-project-select").val()
+            }
+        },
+        processResults: function (res) {
+            var data = $.map(res, function (obj) {
+                obj.text = obj.text || obj.title; // replace name with the property used for the text
+                return obj;
+            });
+            return {
+                results: data
+            }
+        }
+    }
 })
 
 const renderWithImg = (ids, placeholder, multiple) => {
