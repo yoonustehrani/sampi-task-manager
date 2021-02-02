@@ -32,6 +32,14 @@ $('#new-task-priority, #tasks_order_select, #tasks_order_by_select, #tasks_relat
     minimumResultsForSearch: Infinity,
     width: '100%',
     dir: "rtl",
+    language: {
+        searching: function () {
+            return "درحال جستجو ..."
+        },
+        noResults: function () {
+            return "نتیجه ای یافت نشد"
+        }
+    }
 })
 $('.select2-search__field').css('width', '100%')
 
@@ -62,6 +70,14 @@ $('#task-select').select2({
             return {
                 results: data
             }
+        },
+    },
+    language: {
+        searching: function () {
+            return "درحال جستجو ..."
+        },
+        noResults: function () {
+            return "نتیجه ای یافت نشد"
         }
     }
 })
@@ -72,7 +88,15 @@ const renderWithImg = (ids, placeholder, multiple) => {
         placeholder: placeholder,
         width: "100%",
         dir: "rtl",
-        multiple: multiple
+        multiple: multiple,
+        language: {
+            searching: function () {
+                return "درحال جستجو ..."
+            },
+            noResults: function () {
+                return "نتیجه ای یافت نشد"
+            }
+        }
     })
 }
 renderWithImg("#new-demand-member", "نیاز به کمک چه کسی دارید؟", false)

@@ -119,7 +119,15 @@ $('#new-task-priority, #tasks_order_select, #tasks_order_by_select, #tasks_relat
   templateResult: formatOptionWithIcon,
   minimumResultsForSearch: Infinity,
   width: '100%',
-  dir: "rtl"
+  dir: "rtl",
+  language: {
+    searching: function searching() {
+      return "درحال جستجو ...";
+    },
+    noResults: function noResults() {
+      return "نتیجه ای یافت نشد";
+    }
+  }
 });
 $('.select2-search__field').css('width', '100%');
 $('#task-select').select2({
@@ -151,6 +159,14 @@ $('#task-select').select2({
         results: data
       };
     }
+  },
+  language: {
+    searching: function searching() {
+      return "درحال جستجو ...";
+    },
+    noResults: function noResults() {
+      return "نتیجه ای یافت نشد";
+    }
   }
 });
 
@@ -160,7 +176,15 @@ var renderWithImg = function renderWithImg(ids, placeholder, multiple) {
     placeholder: placeholder,
     width: "100%",
     dir: "rtl",
-    multiple: multiple
+    multiple: multiple,
+    language: {
+      searching: function searching() {
+        return "درحال جستجو ...";
+      },
+      noResults: function noResults() {
+        return "نتیجه ای یافت نشد";
+      }
+    }
   });
 };
 
