@@ -3,55 +3,67 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Traits\ChartTrait;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
 class ChartController extends Controller
 {
+    use ChartTrait;
+
     public function monthly(Request $request)
     {
+        // $request->validate([
+        //     'start_date' => 'required|date',
+        //     'end_date' => 'required|date'
+        // ]);
         $user = $request->user(); 
-        $dt_from = Carbon::createFromFormat('Y-m-d', '2020-12-21')->setTime(0,0);
-        $dt_to = Carbon::createFromFormat('Y-m-d', '2021-01-20')->setTime(0,0);
-        $craeted_tasks = $user->tasks()
-            ->where('created_at', '<', $dt_to)
-            ->where('created_at', '>=', $dt_from)
-            ->groupBy('date')
-            ->orderBy('date', 'asc')
-            ->get([
-                \DB::raw("COUNT(*) tasks, DATE_FORMAT(created_at, '%Y-%m-%e') date")
-            ]);
-        $finished_tasks = $user->tasks()
-        ->where('finished_at', '<', $dt_to)
-        ->where('finished_at', '>=', $dt_from)
-        ->whereNotNull('finished_at')
-        ->groupBy('date')
-        ->orderBy('date', 'asc')
-        ->get([
-            \DB::raw("COUNT(*) tasks, DATE_FORMAT(finished_at, '%Y-%m-%e') date")
-        ]);
-        $total_count = 0;
-        $finished_count = 0;
-        $target_task_days = collect([]);
-        foreach ($craeted_tasks as $task_day) {
-            $total_count += $task_day->tasks;
-            $task_day->total = $total_count;
-            foreach ($finished_tasks as $finished) {
-                if ($finished->date->diffInSeconds($task_day->date) == 0) {
-                    $finished_count += $finished->tasks;
-                    break;
-                }
-            }
-            $task_day->finished = $finished_count;
-            $task_day->percentage = round($finished_count / $total_count, 2) * 100;
-            $target_task_days->push($task_day);
+        $dt_from = $this->carbon_date('2020-12-21'); // $request->start_date
+        $dt_to = $this->carbon_date('2021-1-20'); // $request->end_date
+        $craeted_tasks = $this->created_tasks($user, $dt_from, $dt_to);
+        $finished_tasks = $this->finished_tasks($user, $dt_from, $dt_to);
+        /**
+         * Creating Month days Array
+         * Runs a loop and add days to the $dt_from using as Array Key
+         */
+        $target_days = collect([]);
+        $first_date = Carbon::createFromFormat('Y-m-d', '2020-12-21')->setTime(0,0);
+        for ($i=0; $i < $dt_from->diffInDays($dt_to); $i++) { 
+            $days_to_add = $i == 0 ? 0 : 1;
+            $target_days->put($first_date->addDays($days_to_add)->format('Y-m-d'), ['created' => 0, 'finished' => 0]);
         }
-        return $target_task_days;
+        $target_days = $target_days->toArray();
+        /**
+         * Loop $created_tasks and determines the created amount of the specified date
+         */
+        foreach ($craeted_tasks as $task_day) {
+            $target_days[$task_day->date->format('Y-m-d')]['created'] = $task_day->tasks;
+        }
+        /**
+         * Loop $finished_tasks and determines the finished amount of the specified date
+         */
+        foreach ($finished_tasks as $finished) {
+            $target_days[$finished->date->format('Y-m-d')]['finished'] = $finished->tasks;
+        }
+        $finished_count = 0;
+        $created_count = 0;
+        foreach ($target_days as $date => $value) {
+            $created_count += $value['created'];
+            $finished_count += $value['finished'];
+            $target_days[$date]['created'] = $created_count;
+            $target_days[$date]['finished'] = $finished_count;
+            $target_days[$date]['percentage'] = round($finished_count / $created_count, 3) * 100;
+        }
+        return $target_days;
     }
     public function yearly(Request $request)
     {
-        $dt_from = Carbon::createFromFormat('Y-m-d', '2020-3-20')->setTime(0,0);
-        $dt_to = Carbon::createFromFormat('Y-m-d', '2021-03-21')->setTime(0,0);
+        // $request->validate([
+        //     'start_date' => 'required|date',
+        //     'end_date' => 'required|date'
+        // ]);
+        $dt_from = $this->carbon_date('2020-3-20'); // '2020-3-20' // Carbon::createFromFormat('Y-m-d', '2020-3-20')->setTime(0,0)
+        $dt_to = $this->carbon_date('2021-03-21'); // '2021-03-21'
         $month_day_numbers = [31,31,31,31,31,31,30,30,30,30,30,29];
         $month_day_numbers[11] = ($dt_from->diffInDays($dt_to) == 366) ? 30 : 29;
         $month = collect([
@@ -69,14 +81,7 @@ class ChartController extends Controller
             'اسفند' => 0,
         ]);
         $month_name = $month->keys();
-        $tasks = $request->user()->tasks()
-        ->where('created_at', '<', $dt_to)
-        ->where('created_at', '>=', $dt_from)
-        ->groupBy('date')
-        ->orderBy('date', 'asc')
-        ->get([
-            \DB::raw("COUNT(*) tasks, DATE_FORMAT(created_at, '%Y-%m-%e') date")
-        ]);
+        $tasks = $this->created_tasks($request->user(), $dt_from, $dt_to);
         foreach ($tasks as $task) {
             $a = $month_day_numbers[0];
             for ($i=0; $i < 12; $i++) { 
