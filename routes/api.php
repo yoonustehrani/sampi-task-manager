@@ -51,7 +51,8 @@ Route::group(['prefix' => 'task-manager', 'as' => 'api.task-manager.'], function
         });
         Route::group(['prefix' => 'chart'], function () use($api_controllers) {
             Route::get('tasks/yearly', $api_controllers . 'ChartController@yearly');
-            Route::get('tasks/monthly', $api_controllers . 'ChartController@monthly');
+            Route::get('tasks/type/completed', $api_controllers . 'ChartController@completed');
+            Route::get('tasks/type/ontime', $api_controllers . 'ChartController@ontime');
         });
     });
 });
