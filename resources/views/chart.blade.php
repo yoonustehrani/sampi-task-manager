@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
 <body>
+    <p>
+        {{ route('api.task-manager.chart.tasks', ['type' => 'completed']) }}
+    </p>
     <div class="col-md-6 float-left p-3">
         <canvas id="myChart" aria-label="Hello ARIA World" role="img"></canvas>
     </div>

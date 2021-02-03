@@ -10,23 +10,27 @@ use Carbon\Carbon;
 class ChartController extends Controller
 {
     use ChartTrait;
-
+    public function tasks(Request $request, $type)
+    {
+        abort_if(! method_exists($this, $type), 404, 'Not Found');
+        return $this->{$type}($request);
+    }
     public function completed(Request $request)
     {
-        // $request->validate([
-        //     'start_date' => 'required|date',
-        //     'end_date' => 'required|date'
-        // ]);
+        $request->validate([
+            'start_date' => 'required|date',
+            'end_date' => 'required|date'
+        ]);
         $user = $request->user(); 
-        $dt_from = $this->carbon_date('2020-12-21');
-        $dt_to = $this->carbon_date('2021-1-20');
+        $dt_from = $this->carbon_date($request->start_date);
+        $dt_to = $this->carbon_date($request->end_date);
         $craeted_tasks = $this->created_tasks($user, $dt_from, $dt_to);
         $finished_tasks = $this->finished_tasks($user, $dt_from, $dt_to);
         /**
          * Creating Month days Array
          * Runs a loop and add days to the $dt_from using as Array Key
          */
-        $target_days = $this->month_days('2020-12-21', $dt_from->diffInDays($dt_to), ['created' => 0, 'finished' => 0]);
+        $target_days = $this->month_days($request->start_date, $dt_from->diffInDays($dt_to), ['created' => 0, 'finished' => 0]);
         /**
          * Loop $created_tasks and determines the created amount of the specified date
          */
@@ -52,12 +56,16 @@ class ChartController extends Controller
     }
     public function ontime(Request $request)
     {
+        $request->validate([
+            'start_date' => 'required|date',
+            'end_date' => 'required|date'
+        ]);
         $user = $request->user(); 
-        $dt_from = $this->carbon_date('2020-12-21');
-        $dt_to = $this->carbon_date('2021-1-20');
+        $dt_from = $this->carbon_date($request->start_date);
+        $dt_to = $this->carbon_date($request->end_date);
         $craeted_tasks = $this->created_tasks($user, $dt_from, $dt_to);
         $ontime_tasks  = $this->ontime_tasks($user, $dt_from, $dt_to);
-        $target_days = $this->month_days('2020-12-21', $dt_from->diffInDays($dt_to), ['created' => 0, 'ontime' => 0]);
+        $target_days = $this->month_days($request->start_date, $dt_from->diffInDays($dt_to), ['created' => 0, 'ontime' => 0]);
         /**
          * Loop $created_tasks and determines the created amount of the specified date
          */
@@ -83,12 +91,12 @@ class ChartController extends Controller
     }
     public function yearly(Request $request)
     {
-        // $request->validate([
-        //     'start_date' => 'required|date',
-        //     'end_date' => 'required|date'
-        // ]);
-        $dt_from = $this->carbon_date('2020-3-20');
-        $dt_to = $this->carbon_date('2021-3-21');
+        $request->validate([
+            'start_date' => 'required|date',
+            'end_date' => 'required|date'
+        ]);
+        $dt_from = $this->carbon_date($request->start_date);
+        $dt_to = $this->carbon_date($request->end_date);
         $month_day_numbers = [31,31,31,31,31,31,30,30,30,30,30,29];
         $month_day_numbers[11] = ($dt_from->diffInDays($dt_to) == 366) ? 30 : 29;
         $month = [
