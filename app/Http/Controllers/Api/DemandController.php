@@ -56,7 +56,10 @@ class DemandController extends BaseController
         ]);
         $user = ($request->user_id) ? \App\User::find($request->user_id) : $request->user();
         $relationship = $this->model_relationship($request->relationship, $user, '_demands', 'demands');
-        $user_demands = $user->{$relationship}()->search($request->q, null, true);
+        $with = $relationship == 'demands' ? 'to' : 'from';
+        $user_demands = $user->{$relationship}()->search($request->q, null, true)
+                            ->withCount('messages')
+                            ->with($with, 'task', 'priority:id,title', 'workspace');
         switch ($request->filter) {
             case 'finished':
                 $user_demands = $user_demands->whereNotNull('finished_at');
