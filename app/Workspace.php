@@ -20,14 +20,24 @@ class Workspace extends Model
     {
         return $this->users()->wherePivot('is_admin', false)->withPivotValue('is_admin', false);
     }
+    
     public function tasks()
     {
         return $this->hasMany(Task::class);
     }
     public function finished_tasks()
     {
-        return $this->hasMany(Task::class)->whereNotNull('finished_at');
+        return $this->tasks()->whereNotNull('finished_at');
     }
+    public function unfinished_tasks()
+    {
+        return $this->tasks()->whereNull('finished_at');
+    }
+    public function expired_tasks()
+    {
+        return $this->tasks()->whereNotNull('due_to')->where('due_to', '<', now('Asia/Tehran'));
+    }
+    
     public function demands()
     {
         return $this->hasMany(Demand::class);
