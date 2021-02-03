@@ -10,7 +10,7 @@ export const formatOptionWithImage = (option) => {
         let img_src = option.element.attributes.img_address.nodeValue, is_user_admin = option.element.attributes.is_admin
         return $(`
             <div class="select-option circle-avatar-pic">
-                <img src="${img_src}"/>
+                <img class="ml-1" src="${img_src}"/>
                 ${option.text}
                 ${typeof is_user_admin !== "undefined" ? `<span class="badge badge-pill mr-1 ${is_user_admin.nodeValue === "1" ? "badge-success" : "badge-primary"}">${is_user_admin.nodeValue === "1" ? "ادمین" : "کاربر"}</span>` : "" }  
             </div>

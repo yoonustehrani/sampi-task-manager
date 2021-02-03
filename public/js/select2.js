@@ -109,7 +109,7 @@ var formatOptionWithImage = function formatOptionWithImage(option) {
   if (option.element) {
     var img_src = option.element.attributes.img_address.nodeValue,
         is_user_admin = option.element.attributes.is_admin;
-    return $("\n            <div class=\"select-option circle-avatar-pic\">\n                <img src=\"".concat(img_src, "\"/>\n                ").concat(option.text, "\n                ").concat(typeof is_user_admin !== "undefined" ? "<span class=\"badge badge-pill mr-1 ".concat(is_user_admin.nodeValue === "1" ? "badge-success" : "badge-primary", "\">").concat(is_user_admin.nodeValue === "1" ? "ادمین" : "کاربر", "</span>") : "", "  \n            </div>\n        "));
+    return $("\n            <div class=\"select-option circle-avatar-pic\">\n                <img class=\"ml-1\" src=\"".concat(img_src, "\"/>\n                ").concat(option.text, "\n                ").concat(typeof is_user_admin !== "undefined" ? "<span class=\"badge badge-pill mr-1 ".concat(is_user_admin.nodeValue === "1" ? "badge-success" : "badge-primary", "\">").concat(is_user_admin.nodeValue === "1" ? "ادمین" : "کاربر", "</span>") : "", "  \n            </div>\n        "));
   }
 };
 var formatOption = function formatOption(option) {

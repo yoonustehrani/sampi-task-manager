@@ -27,7 +27,8 @@ export default class MixedDemands extends Component {
             current_tab: 'demands',
             isGetting: false,
             new_demand_description: "",
-            already_added_needs: {}
+            already_added_needs: {},
+            api_target: 'mixed'
         }
     }
 
@@ -65,28 +66,44 @@ export default class MixedDemands extends Component {
         })
     }
 
-    getData = () => {            
-        let { get_mixed_demands_api } = this.props, { current_tab, already_added_needs } = this.state
-        let order_by = $(`#mixed_${current_tab}_order_by_select`).val(), order = $(`#mixed_${current_tab}_order_select`).val(), filter = $(`#mixed_${current_tab}_relation_select`).val()
-        this.setState({ isGetting: true })
-        axios.get(`${get_mixed_demands_api}${current_tab === "demands" ? "&relationship=asked" : ""}&order_by=${order_by ? order_by : "created_at"}&order=${order ? order : "desc"}&filter=${filter ? filter : "all"}&page=${this.state[current_tab].nextPage}`).then(res => {
-            let { data, current_page, last_page } = res.data
-            let filteredArray = data.filter((item) => already_added_needs && typeof already_added_needs[item.id] === "undefined")
-            this.setState(prevState => {
-            return ({
-                [current_tab]: {
-                    data: [...prevState[current_tab].data, ...filteredArray],
-                    nextPage: current_page + 1,
-                    hasMore: current_page === last_page ? false : true
-                },
-                isGetting: false
-            })})
+    getData = (filtering=false) => {            
+        let { get_mixed_demands_api, mixed_demands_search } = this.props, { current_tab, already_added_needs, api_target } = this.state
+        let order_by = $(`#mixed_${current_tab}_order_by_select`).val(), order = $(`#mixed_${current_tab}_order_select`).val(), filter = $(`#mixed_${current_tab}_relation_select`).val(), search_value = $(`#${current_tab}-search-input`).val()
+        this.setState(prevState => {
+            if (filtering && search_value.length >= 3) {
+                return {
+                    isGetting: true,
+                    api_target: "search"
+                }
+            } else if(filtering && search_value.length < 3) {
+                return { 
+                    isGetting: true,
+                    api_target: "mixed"
+                }
+            } else {
+                return({isGetting: true})
+            }
+        }, () => {
+            this.state.api_target === "mixed" ? console.log('mixed') : console.log("search")
+            axios.get(`${this.state.api_target === "mixed" ? get_mixed_demands_api : mixed_demands_search}${current_tab === "demands" ? "&relationship=asked" : ""}&order_by=${order_by ? order_by : "created_at"}&order=${order ? order : "desc"}&filter=${filter ? filter : "all"}&page=${this.state[current_tab].nextPage}${this.state.api_target === "search" ? `&q=${search_value}` : ""}`).then(res => {
+                let { data, current_page, last_page } = res.data
+                let filteredArray = data.filter((item) => already_added_needs && typeof already_added_needs[item.id] === "undefined")
+                this.setState(prevState => {
+                return ({
+                    [current_tab]: {
+                        data: [...prevState[current_tab].data, ...filteredArray],
+                        nextPage: current_page + 1,
+                        hasMore: current_page === last_page ? false : true
+                    },
+                    isGetting: false
+                })})
+            })
         })
     }
 
     handleMore = (filtering) => {
         let { current_tab } = this.state
-        filtering ? this.setState({[current_tab]: {data: [], nextPage: 1, hasMore: true}, already_added_needs: {}}, () => this.getData()) : this.getData()
+        filtering ? this.setState({[current_tab]: {data: [], nextPage: 1, hasMore: true}, already_added_needs: {}}, () => this.getData(true)) : this.getData()
     }
 
     toggleAddBox = () => {
@@ -107,7 +124,7 @@ export default class MixedDemands extends Component {
 
     addDemand = () => {
         let { post_demand_api } = this.props, { new_demand_description, workspace_users } = this.state
-        let title = $("#new-demand-title").val(), priority = parseInt($("#new-task-priority").val()), toUser = $("#new-demand-member").val(), related_task = $("#task-select").val() === "0" ? "" : $("#task-select").val(), workspaceId = $("#new-demand-project-select").val()
+        let title = $("#new-demand-title").val(), priority = parseInt($("#new-task-priority").val()), toUser = $("#new-demand-member").val(), related_task = $("#task-select").val() === "0" ? "" : $("#task-select").val(), workspaceId = $("#new-demand-project-select").val(), search_value = $("#")
         axios.post(post_demand_api.replace("workspaceId", workspaceId), {
             title: title,
             priority: priority,
@@ -210,7 +227,7 @@ export default class MixedDemands extends Component {
                             <div className="input-group-prepend">
                                 <button className="btn btn-primary" onClick={this.handleMore.bind(this, true)}>جستجو</button>
                             </div>
-                            <input type="text" className="form-control" placeholder="جستجو در خواسته ها"/>
+                            <input type="text" id="demands-search-input" className="form-control" placeholder="جستجو در خواسته ها"/>
                             <div className="input-group-append">
                                 <button className="btn btn-info" onClick={this.toggleFilterBox.bind(this, 0)}>فیلتر ها<i className="fas fa-filter"></i></button>
                             </div>
@@ -256,14 +273,14 @@ export default class MixedDemands extends Component {
                         </thead>
                         <tbody>
                             {demands && demands.data.length > 0 && demands.data.map((demand, i) => {
-                                let { title, task, priority, finished_at, from } = demand
+                                let { title, task, priority, finished_at, from, workspace_id } = demand
                                 return (
                                     <tr key={i} className="animated fadeIn" onClick={() => redirectTo(getDemand(demand.id))}>
                                         <th scope="row">{i + 1}</th>
                                         <td>{ title }</td>
                                         <td className="text-right">
                                             <img className="workspace_avatar" src={APP_PATH + demand.workspace.avatar_pic} />
-                                            <a href={getWorkspace(demand.workspace.id)}>{demand.workspace.title}</a>
+                                            <a href={getWorkspace(workspace_id)}>{demand.workspace.title}</a>
                                         </td>
                                         <td>
                                             <div className="employees-container horizontal-centerlize">
@@ -281,7 +298,7 @@ export default class MixedDemands extends Component {
                                                         </div>
                                                         <div className="user-label-container">
                                                             {
-                                                                workspaces_users && workspaces_users[demand.workspace.id][from.id].is_admin === 1 
+                                                                workspaces_users && workspaces_users[demand.workspace_id][from.id].is_admin === 1 
                                                                 ? <button className="btn btn-sm btn-success rtl admin p-1"><span>ادمین<i className="fas fa-user-tie mr-1"></i></span></button>
                                                                 : <button className="btn btn-sm btn-primary rtl"><span>عضو<i className="fas fa-user mr-1"></i></span></button>
                                                             } 
@@ -401,7 +418,7 @@ export default class MixedDemands extends Component {
                             <div className="input-group-prepend">
                                 <button className="btn btn-primary" onClick={this.handleMore.bind(this, true)}>جستجو</button>
                             </div>
-                            <input type="text" className="form-control" placeholder="جستجو در نیاز ها"/>
+                            <input type="text" id="needs-search-input" className="form-control" placeholder="جستجو در نیاز ها"/>
                             <div className="input-group-append">
                                 <button className="btn btn-info" onClick={this.toggleFilterBox.bind(this, 1)}>فیلتر ها<i className="fas fa-filter"></i></button>
                             </div>
@@ -447,14 +464,14 @@ export default class MixedDemands extends Component {
                         </thead>
                         <tbody>
                             {needs && needs.data.length > 0 && needs.data.map((need, i) => {
-                                let { title, task, priority, due_to, finished_at, to, id } = need
+                                let { title, task, priority, due_to, finished_at, to, id, workspace_id } = need
                                 return (
                                     <tr key={i} className="animated fadeIn" onClick={() => redirectTo(getDemand(need.id))}>
                                         <th scope="row">{i + 1}</th>
                                         <td>{ title }</td>
                                         <td className="text-right">
                                             <img className="workspace_avatar" src={APP_PATH + need.workspace.avatar_pic} />
-                                            <a href={getWorkspace(need.workspace.id)}>{need.workspace.title}</a>
+                                            <a href={getWorkspace(workspace_id)}>{need.workspace.title}</a>
                                         </td>
                                         <td>
                                             <div className="employees-container horizontal-centerlize">
@@ -472,7 +489,7 @@ export default class MixedDemands extends Component {
                                                         </div>
                                                         <div className="user-label-container">
                                                             {
-                                                                workspaces_users && workspaces_users[need.workspace.id][to.id].is_admin === 1 
+                                                                workspaces_users && workspaces_users[workspace_id][to.id].is_admin === 1 
                                                                 ? <button className="btn btn-sm btn-success rtl admin p-1"><span>ادمین<i className="fas fa-user-tie mr-1"></i></span></button>
                                                                 : <button className="btn btn-sm btn-primary rtl"><span>عضو<i className="fas fa-user mr-1"></i></span></button>
                                                             } 

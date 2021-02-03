@@ -56798,35 +56798,55 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "getData", function () {
-      var get_mixed_demands_api = _this.props.get_mixed_demands_api,
+      var filtering = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+      var _this$props = _this.props,
+          get_mixed_demands_api = _this$props.get_mixed_demands_api,
+          mixed_demands_search = _this$props.mixed_demands_search,
           _this$state = _this.state,
           current_tab = _this$state.current_tab,
-          already_added_needs = _this$state.already_added_needs;
+          already_added_needs = _this$state.already_added_needs,
+          api_target = _this$state.api_target;
       var order_by = $("#mixed_".concat(current_tab, "_order_by_select")).val(),
           order = $("#mixed_".concat(current_tab, "_order_select")).val(),
-          filter = $("#mixed_".concat(current_tab, "_relation_select")).val();
+          filter = $("#mixed_".concat(current_tab, "_relation_select")).val(),
+          search_value = $("#".concat(current_tab, "-search-input")).val();
 
-      _this.setState({
-        isGetting: true
-      });
+      _this.setState(function (prevState) {
+        if (filtering && search_value.length >= 3) {
+          return {
+            isGetting: true,
+            api_target: "search"
+          };
+        } else if (filtering && search_value.length < 3) {
+          return {
+            isGetting: true,
+            api_target: "mixed"
+          };
+        } else {
+          return {
+            isGetting: true
+          };
+        }
+      }, function () {
+        _this.state.api_target === "mixed" ? console.log('mixed') : console.log("search");
+        axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("".concat(_this.state.api_target === "mixed" ? get_mixed_demands_api : mixed_demands_search).concat(current_tab === "demands" ? "&relationship=asked" : "", "&order_by=").concat(order_by ? order_by : "created_at", "&order=").concat(order ? order : "desc", "&filter=").concat(filter ? filter : "all", "&page=").concat(_this.state[current_tab].nextPage).concat(_this.state.api_target === "search" ? "&q=".concat(search_value) : "")).then(function (res) {
+          var _res$data = res.data,
+              data = _res$data.data,
+              current_page = _res$data.current_page,
+              last_page = _res$data.last_page;
+          var filteredArray = data.filter(function (item) {
+            return already_added_needs && typeof already_added_needs[item.id] === "undefined";
+          });
 
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("".concat(get_mixed_demands_api).concat(current_tab === "demands" ? "&relationship=asked" : "", "&order_by=").concat(order_by ? order_by : "created_at", "&order=").concat(order ? order : "desc", "&filter=").concat(filter ? filter : "all", "&page=").concat(_this.state[current_tab].nextPage)).then(function (res) {
-        var _res$data = res.data,
-            data = _res$data.data,
-            current_page = _res$data.current_page,
-            last_page = _res$data.last_page;
-        var filteredArray = data.filter(function (item) {
-          return already_added_needs && typeof already_added_needs[item.id] === "undefined";
-        });
+          _this.setState(function (prevState) {
+            var _ref;
 
-        _this.setState(function (prevState) {
-          var _ref;
-
-          return _ref = {}, _defineProperty(_ref, current_tab, {
-            data: [].concat(_toConsumableArray(prevState[current_tab].data), _toConsumableArray(filteredArray)),
-            nextPage: current_page + 1,
-            hasMore: current_page === last_page ? false : true
-          }), _defineProperty(_ref, "isGetting", false), _ref;
+            return _ref = {}, _defineProperty(_ref, current_tab, {
+              data: [].concat(_toConsumableArray(prevState[current_tab].data), _toConsumableArray(filteredArray)),
+              nextPage: current_page + 1,
+              hasMore: current_page === last_page ? false : true
+            }), _defineProperty(_ref, "isGetting", false), _ref;
+          });
         });
       });
     });
@@ -56840,7 +56860,7 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
         nextPage: 1,
         hasMore: true
       }), _defineProperty(_this$setState2, "already_added_needs", {}), _this$setState2), function () {
-        return _this.getData();
+        return _this.getData(true);
       }) : _this.getData();
     });
 
@@ -56871,7 +56891,8 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
           priority = parseInt($("#new-task-priority").val()),
           toUser = $("#new-demand-member").val(),
           related_task = $("#task-select").val() === "0" ? "" : $("#task-select").val(),
-          workspaceId = $("#new-demand-project-select").val();
+          workspaceId = $("#new-demand-project-select").val(),
+          search_value = $("#");
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(post_demand_api.replace("workspaceId", workspaceId), {
         title: title,
         priority: priority,
@@ -56932,7 +56953,8 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
       current_tab: 'demands',
       isGetting: false,
       new_demand_description: "",
-      already_added_needs: {}
+      already_added_needs: {},
+      api_target: 'mixed'
     };
     return _this;
   }
@@ -56943,9 +56965,9 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
       var _this2 = this;
 
       var current_tab = this.state.current_tab,
-          _this$props = this.props,
-          get_workspaces_api = _this$props.get_workspaces_api,
-          simple_search = _this$props.simple_search;
+          _this$props2 = this.props,
+          get_workspaces_api = _this$props2.get_workspaces_api,
+          simple_search = _this$props2.simple_search;
       this.setState(_defineProperty({}, current_tab, {
         data: [],
         nextPage: 1,
@@ -57016,9 +57038,9 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
           workspaces = _this$state3.workspaces,
           workspaces_users = _this$state3.workspaces_users,
           selected_workspace = _this$state3.selected_workspace,
-          _this$props2 = this.props,
-          logged_in_user_id = _this$props2.logged_in_user_id,
-          demand_show_route = _this$props2.demand_show_route;
+          _this$props3 = this.props,
+          logged_in_user_id = _this$props3.logged_in_user_id,
+          demand_show_route = _this$props3.demand_show_route;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
         className: "demands-tabs-titles col-12 mt-2"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
@@ -57047,6 +57069,7 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
         onClick: this.handleMore.bind(this, true)
       }, "\u062C\u0633\u062A\u062C\u0648")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
+        id: "demands-search-input",
         className: "form-control",
         placeholder: "\u062C\u0633\u062A\u062C\u0648 \u062F\u0631 \u062E\u0648\u0627\u0633\u062A\u0647 \u0647\u0627"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -57131,7 +57154,8 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
             task = demand.task,
             priority = demand.priority,
             finished_at = demand.finished_at,
-            from = demand.from;
+            from = demand.from,
+            workspace_id = demand.workspace_id;
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
           key: i,
           className: "animated fadeIn",
@@ -57146,7 +57170,7 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
           className: "workspace_avatar",
           src: APP_PATH + demand.workspace.avatar_pic
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-          href: Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["getWorkspace"])(demand.workspace.id)
+          href: Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["getWorkspace"])(workspace_id)
         }, demand.workspace.title)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "employees-container horizontal-centerlize"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, from.fullname), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -57168,7 +57192,7 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
           href: Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["getUser"])(from.id)
         }, "@", from.name))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "user-label-container"
-        }, workspaces_users && workspaces_users[demand.workspace.id][from.id].is_admin === 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        }, workspaces_users && workspaces_users[demand.workspace_id][from.id].is_admin === 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           className: "btn btn-sm btn-success rtl admin p-1"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0627\u062F\u0645\u06CC\u0646", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-user-tie mr-1"
@@ -57311,6 +57335,7 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
         onClick: this.handleMore.bind(this, true)
       }, "\u062C\u0633\u062A\u062C\u0648")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
+        id: "needs-search-input",
         className: "form-control",
         placeholder: "\u062C\u0633\u062A\u062C\u0648 \u062F\u0631 \u0646\u06CC\u0627\u0632 \u0647\u0627"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -57397,7 +57422,8 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
             due_to = need.due_to,
             finished_at = need.finished_at,
             to = need.to,
-            id = need.id;
+            id = need.id,
+            workspace_id = need.workspace_id;
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
           key: i,
           className: "animated fadeIn",
@@ -57412,7 +57438,7 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
           className: "workspace_avatar",
           src: APP_PATH + need.workspace.avatar_pic
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-          href: Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["getWorkspace"])(need.workspace.id)
+          href: Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["getWorkspace"])(workspace_id)
         }, need.workspace.title)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "employees-container horizontal-centerlize"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, to.fullname), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -57434,7 +57460,7 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
           href: Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["getUser"])(to.id)
         }, "@", to.name))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "user-label-container"
-        }, workspaces_users && workspaces_users[need.workspace.id][to.id].is_admin === 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        }, workspaces_users && workspaces_users[workspace_id][to.id].is_admin === 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           className: "btn btn-sm btn-success rtl admin p-1"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0627\u062F\u0645\u06CC\u0646", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-user-tie mr-1"
