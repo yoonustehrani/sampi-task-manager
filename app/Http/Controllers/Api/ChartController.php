@@ -27,7 +27,7 @@ class ChartController extends Controller
          * Runs a loop and add days to the $dt_from using as Array Key
          */
         $target_days = collect([]);
-        $first_date = Carbon::createFromFormat('Y-m-d', '2020-12-21')->setTime(0,0);
+        $first_date = $this->carbon_date('2020-12-21');
         for ($i=0; $i < $dt_from->diffInDays($dt_to); $i++) { 
             $days_to_add = $i == 0 ? 0 : 1;
             $target_days->put($first_date->addDays($days_to_add)->format('Y-m-d'), ['created' => 0, 'finished' => 0]);
@@ -62,11 +62,11 @@ class ChartController extends Controller
         //     'start_date' => 'required|date',
         //     'end_date' => 'required|date'
         // ]);
-        $dt_from = $this->carbon_date('2020-3-20'); // '2020-3-20' // Carbon::createFromFormat('Y-m-d', '2020-3-20')->setTime(0,0)
-        $dt_to = $this->carbon_date('2021-03-21'); // '2021-03-21'
+        $dt_from = $this->carbon_date('2020-3-20');
+        $dt_to = $this->carbon_date('2021-3-21');
         $month_day_numbers = [31,31,31,31,31,31,30,30,30,30,30,29];
         $month_day_numbers[11] = ($dt_from->diffInDays($dt_to) == 366) ? 30 : 29;
-        $month = collect([
+        $month = [
             'فروردین' => 0,
             'اردیبهشت' => 0,
             'خرداد' => 0,
@@ -79,13 +79,14 @@ class ChartController extends Controller
             'دی' => 0,
             'بهمن' => 0,
             'اسفند' => 0,
-        ]);
-        $month_name = $month->keys();
+        ];
+        $month_name = array_keys($month);
         $tasks = $this->created_tasks($request->user(), $dt_from, $dt_to);
         foreach ($tasks as $task) {
             $a = $month_day_numbers[0];
             for ($i=0; $i < 12; $i++) { 
-                if ($dt_from->diffInDays($task->date) <= $a) {
+                $diff = $task->date->diffInDays($dt_from) + 1;
+                if ($diff < $a) {
                     $month[$month_name[$i]] += $task->tasks;
                     break;
                 }
@@ -94,7 +95,7 @@ class ChartController extends Controller
         }
         return [
             'labels' => $month_name,
-            'values' => $month->values()
+            'values' => array_values($month)
         ];
     }
 }
