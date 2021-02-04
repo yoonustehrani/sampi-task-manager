@@ -39,7 +39,7 @@ $('#new-task-priority, #tasks_order_select, #tasks_order_by_select, #tasks_relat
         noResults: function () {
             return "نتیجه ای یافت نشد"
         }
-    }
+    },
 })
 $('.select2-search__field').css('width', '100%')
 
@@ -81,7 +81,8 @@ const simpleSearch = (ids, parentOnly) => {
             noResults: function () {
                 return "نتیجه ای یافت نشد"
             }
-        }
+        },
+        allowClear: true
     })
 }
 
@@ -102,7 +103,8 @@ const renderWithImg = (ids, placeholder, multiple) => {
             noResults: function () {
                 return "نتیجه ای یافت نشد"
             }
-        }
+        },
+        allowClear: true
     })
 }
 renderWithImg("#new-demand-member", "نیاز به کمک چه کسی دارید؟", false)

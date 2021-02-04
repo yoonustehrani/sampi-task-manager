@@ -170,7 +170,8 @@ var simpleSearch = function simpleSearch(ids, parentOnly) {
       noResults: function noResults() {
         return "نتیجه ای یافت نشد";
       }
-    }
+    },
+    allowClear: true
   });
 };
 
@@ -191,7 +192,8 @@ var renderWithImg = function renderWithImg(ids, placeholder, multiple) {
       noResults: function noResults() {
         return "نتیجه ای یافت نشد";
       }
-    }
+    },
+    allowClear: true
   });
 };
 

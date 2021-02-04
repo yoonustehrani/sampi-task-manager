@@ -56886,7 +56886,7 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-plus",
         ref: this.addIconRef
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, "\u0646\u06CC\u0627\u0632 \u062C\u062F\u06CC\u062F")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, "\u0645\u0633\u0626\u0648\u0644\u06CC\u062A \u062C\u062F\u06CC\u062F")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "add-task-section mb-4 d-none col-12 p-3 animated fadeIn",
         ref: this.addTaskRef
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -56963,23 +56963,17 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
         className: "input-group-text"
       }, "\u0645\u0633\u0626\u0648\u0644\u06CC\u0646")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
         id: "new-task-members",
-        className: "form-control text-right",
         multiple: true
       }, workspaces_users && selected_workspace ? Object.values(workspaces_users[parseInt(selected_workspace)]).map(function (user, i) {
         if (user.id !== logged_in_user_id) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
             key: i,
             value: user.id,
-            img_address: APP_PATH + user.avatar_pic
+            img_address: APP_PATH + user.avatar_pic,
+            is_admin: user.is_admin
           }, user.fullname);
         }
       }) : null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "input-group col-12 pl-0 pr-0"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "tinymc-container"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_tinymce_editor_index__WEBPACK_IMPORTED_MODULE_5__["default"], {
-        changeContent: this.onDescriptionChange
-      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "text-center mt-2"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         type: "button",

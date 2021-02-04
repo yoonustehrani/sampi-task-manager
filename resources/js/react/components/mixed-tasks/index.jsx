@@ -172,7 +172,7 @@ export default class MixedTasks extends Component {
                     <div className="workspace-add-task mb-2 col-12 pl-0 pr-0 pr-md-3 pl-md-3">
                         <div className="workspace-title-section title-section" onClick={this.toggleAddBox}>
                             <i className="fas fa-plus" ref={this.addIconRef}></i>
-                            <h5>نیاز جدید</h5>
+                            <h5>مسئولیت جدید</h5>
                         </div>
                         <div className="add-task-section mb-4 d-none col-12 p-3 animated fadeIn" ref={this.addTaskRef}>
                             <div className="input-group col-12 col-md-6 pl-0 pr-0 mb-2 mb-md-0">
@@ -223,24 +223,21 @@ export default class MixedTasks extends Component {
                                 <div className="input-group-prepend">
                                     <span className="input-group-text">مسئولین</span>
                                 </div>
-                                <select id="new-task-members" className="form-control text-right" multiple>
+                                <select id="new-task-members" multiple>
                                     { workspaces_users && selected_workspace ? Object.values(workspaces_users[parseInt(selected_workspace)]).map((user, i) => {
                                         if (user.id !== logged_in_user_id) {
                                             return (
-                                                <option key={i} value={user.id} img_address={APP_PATH + user.avatar_pic}>{user.fullname}</option>
+                                                <option key={i} value={user.id} img_address={APP_PATH + user.avatar_pic} is_admin={user.is_admin}>{user.fullname}</option>
                                             )                                            
                                         }
                                     }) : null }
                                 </select>
                             </div>
-                            <div className="input-group col-12 pl-0 pr-0">
-                                {/* <div className="input-group-prepend">
-                                    <span className="input-group-text">توضیحات</span>
-                                </div> */}
+                            {/* <div className="input-group col-12 pl-0 pr-0">
                                 <div className="tinymc-container">
                                     <TinymcEditor changeContent={this.onDescriptionChange} />
                                 </div>
-                            </div>
+                            </div> */}
                             <div className="text-center mt-2">
                                 <button type="button" className="btn btn-outline-primary" onClick={this.addtask}>ارسال <i className="fas fa-paper-plane"></i></button>
                             </div>
