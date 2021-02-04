@@ -152,16 +152,33 @@ export default class Dashboard extends Component {
         })
         Axios.get(workspacesApi).then(res => {
             let { data } = res
-            this.setState({
-                workspaces: data,
-                isGetting: false
+            this.setState({workspaces: data}, () => {
+                this.state.workspaces.map((workspace, i) => {
+                    let current_workspace
+                    workspace.users.map((user, index) => {
+                        current_workspace = Object.assign({}, current_workspace, {
+                            [user.id]: {
+                                id: user.id,
+                                fullname: user.fullname,
+                                avatar_pic: user.avatar_pic,
+                                is_admin: user.pivot.is_admin
+                            }
+                        })
+                    })
+                    this.setState(prevState => ({
+                        workspaces_users: Object.assign({}, prevState.workspaces_users, {
+                            [workspace.id]: current_workspace
+                        }),
+                        isGetting: false
+                    }))
+                })
             })
         })
         this.tabTitlesRef[0].current.classList.add("active")
     }
 
     render() {
-        let { mixed_tasks, statistics, isGetting, workspaces, navbar, mixed_demands, mixed_needs } = this.state
+        let { mixed_tasks, statistics, isGetting, workspaces, navbar, mixed_demands, mixed_needs, workspaces_users } = this.state
         let { workspace_route, task_route, demand_show_route, user_profile_route } = this.props
         return (
             <div>
@@ -191,14 +208,14 @@ export default class Dashboard extends Component {
                         }
                     </div>
                     <div className="result-container col-12 mt-3" ref={this.tabResultsRef[1]}>
-                        <Tasks AllTasks={mixed_tasks} Route={task_route} workspace_route={workspace_route} sortData={(tab) => this.sortData.bind(this, tab)} isGetting={isGetting} />
+                        <Tasks AllTasks={mixed_tasks} Route={task_route} workspace_route={workspace_route} sortData={(tab) => this.sortData.bind(this, tab)} isGetting={isGetting} workspaces_users={workspaces_users} />
                     </div>
                     <div className="result-container col-12 mt-3" ref={this.tabResultsRef[2]}>
-                        <Demands mixed_demands={mixed_demands} demand_show_route={demand_show_route} task_route={task_route} workspace_route={workspace_route} sortData={(tab) => this.sortData.bind(this, tab)} user_profile_route={user_profile_route} isGetting={isGetting} />
+                        <Demands mixed_demands={mixed_demands} demand_show_route={demand_show_route} task_route={task_route} workspace_route={workspace_route} sortData={(tab) => this.sortData.bind(this, tab)} user_profile_route={user_profile_route} isGetting={isGetting} workspaces_users={workspaces_users} />
                     </div>
 
                     <div className="result-container col-12 mt-3" ref={this.tabResultsRef[3]}>
-                        <Demands mixed_needs={mixed_needs} demand_show_route={demand_show_route} task_route={task_route} workspace_route={workspace_route} sortData={(tab) => this.sortData.bind(this, tab)} user_profile_route={user_profile_route} isGetting={isGetting} />
+                        <Demands mixed_needs={mixed_needs} demand_show_route={demand_show_route} task_route={task_route} workspace_route={workspace_route} sortData={(tab) => this.sortData.bind(this, tab)} user_profile_route={user_profile_route} isGetting={isGetting} workspaces_users={workspaces_users} />
                     </div>
                 </div>
             </div>

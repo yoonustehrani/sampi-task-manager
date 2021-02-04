@@ -52,11 +52,16 @@ class DemandController extends BaseController
         $request->validate([
             'q' => 'required|min:3|max:60',
             'order_by' => 'nullable|string',
-            'limit' => 'required|integer|min:3|max:30'
+            'limit' => 'nullable|integer|min:3|max:30'
         ]);
         $user = ($request->user_id) ? \App\User::find($request->user_id) : $request->user();
         $relationship = $this->model_relationship($request->relationship, $user, '_demands', 'demands');
+        $with = $relationship == 'demands' ? 'to' : 'from';
         $user_demands = $user->{$relationship}();
+        $user_demands = $this->decide_ordered($request, $user_demands)
+                        ->withCount('messages')
+                        ->with($with, 'task', 'priority:id,title', 'workspace')
+                        ->search($request->q, null, true);
         switch ($request->filter) {
             case 'finished':
                 $user_demands = $user_demands->whereNotNull('finished_at');
@@ -65,10 +70,9 @@ class DemandController extends BaseController
                 $user_demands = $user_demands->whereNull('finished_at');
                 break;
         }
-        return $this->decide_ordered($request, $user_demands)
-                    ->search($request->q, null, true)
-                    ->limit((int) $request->limit)
-                    ->get();
+        return $request->limit
+                ? $user_demands->limit((int) $request->limit)->get()
+                : $user_demands->paginate(10);
     }
     public function store(Request $request, Workspace $workspace)
     {
@@ -107,6 +111,12 @@ class DemandController extends BaseController
                 'message' => $e->getMessage()
             ];
         }
+    }
+    public function show(Workspace $workspace, $demand)
+    {
+        $demand = $workspace->demands()->with('from', 'to')->findOrFail($demand);
+        $this->authorize('view', $demand);
+        return $demand;
     }
     public function update(Request $request, Workspace $workspace, $demand)
     {
@@ -147,6 +157,7 @@ class DemandController extends BaseController
         $this->authorize('toggle_state', $demand);
         $demand->finished_at = $demand->finished_at ? null : now();
         $demand->save();
+        return ['okay' => true, 'value' => $demand->finished_at];
     }
     public function new_message(Request $request, Demand $demand)
     {

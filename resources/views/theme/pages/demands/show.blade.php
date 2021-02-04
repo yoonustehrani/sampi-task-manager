@@ -43,6 +43,15 @@
                             @if($demand->to->id == auth()->user()->id) من @else {{ $demand->to->fullname }} @endif
                         </a>
                     </div>
+                    @can('delete', $demand)
+                    <div class="box-body-row col-12 text-center">
+                        <form action="{{ route('task-manager.demands.destroy', ['demand' => $demand->id, 'workspace' => $workspace->id]) }}" method="post">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-outline-danger btn-sm">حذف <i class="fas fa-trash"></i></button>
+                        </form>
+                    </div>
+                    @endcan
                 </div>
             </div>
             <div class="box-section mt-3 p-0">
@@ -86,13 +95,14 @@
                         {{ $demand->updated_at->diffForHumans() }}
                     </div>
                     @if (count($demand->messages) > 0)
-                    <div class="box-body-row col-12">
+                    <div id="last-message" class="box-body-row col-12">
                         <b>آخرین پیام :</b>
-                        {{ $demand->messages[0]->updated_at->diffForHumans() }}
+                        <span>{{ $demand->messages[0]->updated_at->diffForHumans() }}</span>
                     </div>
                     @else
                     <div id="last-message" class="box-body-row col-12 d-none">
                         <b>آخرین پیام :</b>
+                        <span></span>
                     </div>
                     @endif
                     @if ($demand->finished_at)
@@ -107,6 +117,7 @@
             @php
                 $demand->load('task.workspace')
             @endphp
+            @can('view', $demand)
             <div class="box-section mt-3 p-0">
                 <div class="box-header p-0 col-12 float-left">
                     <div class="box-icon">
@@ -130,6 +141,7 @@
                     </div>
                 </div>
             </div>
+            @endcan
             @endif
         </div>
         <div class="col-lg-9 col-md-7 col-sm-12 col-12 float-right p-3 mb-3 h-100">
@@ -139,6 +151,7 @@
                 data-apiKey="{{ auth()->user()->api_token }}"
                 data-messages="{{ route('api.task-manager.demands.messages.index', ['demand' => $demand->id]) }}"
                 data-message="{{ route('api.task-manager.demands.messages.store', ['demand' => $demand->id]) }}"
+                data-show="{{ route('api.task-manager.demands.show', ['demand' => $demand->id, 'workspace' => $workspace->id]) }}"
                 data-update="{{ route('api.task-manager.demands.update', ['workspace' => $workspace->id, 'demand' => $demand->id]) }}"
                 data-toggle="{{ route('api.task-manager.demands.toggle_state', ['demand' => $demand->id]) }}">
             </div>

@@ -68,6 +68,7 @@ export const sweetError = (errObject) => {
             })
             break;
         case 403:
+        case 401:
             Swal.default.fire({
                 icon: "error",
                 title: "خطا",
@@ -77,6 +78,7 @@ export const sweetError = (errObject) => {
                     content: 'persian-text',
                 },
             })
+            break;
         default:
             if (status !== 200) {
                 Swal.default.fire({

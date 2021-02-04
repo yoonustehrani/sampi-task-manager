@@ -45,4 +45,18 @@ class Task extends Model
     {
         return $this->belongsTo(Priority::class);
     }
+
+
+    public function finished()
+    {
+        return $this->whereNotNull('finished_at');
+    }
+    public function unfinished()
+    {
+        return $this->whereNull('finished_at');
+    }
+    public function expired()
+    {
+        return $this->whereNotNull('due_to')->where('due_to', '<', now('Asia/Tehran'));
+    }
 }

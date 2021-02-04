@@ -5,7 +5,7 @@ import 'react-activity/dist/react-activity.css'
 
 export default class Demands extends Component {
     render() {
-        let { mixed_demands, mixed_needs, demand_show_route, workspace_route, task_route, user_profile_route, isGetting } = this.props
+        let { mixed_demands, mixed_needs, demand_show_route, workspace_route, task_route, user_profile_route, isGetting, workspaces_users } = this.props
         let tab = mixed_demands ? "mixed_demands" : "mixed_needs"
         let data = tab === "mixed_demands" ? mixed_demands : mixed_needs
         return (
@@ -56,7 +56,7 @@ export default class Demands extends Component {
                         {
                             data.length > 0 && !isGetting && data.map((demand, i) => {
                                 return (
-                                    <Demand key={i} demand_show_route={demand_show_route} task_route={task_route} workspace_route={workspace_route} user_profile_route={user_profile_route} index={i} {...demand} />
+                                    <Demand key={i} demand_show_route={demand_show_route} task_route={task_route} workspace_route={workspace_route} user_profile_route={user_profile_route} index={i} {...demand} workspaces_users={workspaces_users} />
                                 )
                             })
                         }

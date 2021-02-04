@@ -197,6 +197,7 @@ export default class Workspace extends Component {
                                     <span className="input-group-text">مسئولین</span>
                                 </div>
                                 <select id="new-task-members" className="form-control text-right" multiple>
+                                    <option></option>
                                     { workspace ? workspace.users.map((user, i) => {
                                         if (user.id !== logged_in_user_id) {
                                             return (

@@ -12,8 +12,6 @@ class Demand extends Model
     public $searchable = [
         'columns' => [
             'title' => 10,
-            'description' => 8,
-            'group' => 6
         ]
     ];
     public function from()

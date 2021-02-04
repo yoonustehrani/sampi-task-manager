@@ -78,12 +78,14 @@
             add_task_api = "{{ route('api.task-manager.tasks.store', ['workspace' => $workspace->id, 'api_token' => auth()->user()->api_token]) }}"
             task_route = "{{ route('task-manager.tasks.show', ['task' => 'taskId']) }}"
             workspace_api = "{{ route('api.task-manager.workspaces.show', ['workspace' => $workspace->id, 'api_token' => auth()->user()->api_token]) }}"
-            logged_in_user_id = "{{ auth()->user()->id }}"
         ></div>
     </div>
 @endsection
 
 @push('scripts')
+    <script>
+        var simple_search_url = "{{ route('api.task-manager.tasks.search.simple', ['api_token' => auth()->user()->api_token]) }}"
+    </script>
     <script src="{{ asset('js/workspace.js') }}"></script>   
     <script src="{{ asset('js/select2.js') }}"></script>
 @endpush
