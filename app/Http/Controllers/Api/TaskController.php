@@ -17,9 +17,14 @@ class TaskController extends BaseController
             'group' => 'nullable|string',
             'order_by' => 'nullable|string'
         ]);
-        $user = ($request->user_id) ? \App\User::find($request->user_id) : $request->user();
-        $relationship = $this->model_relationship($request->relationship, $user, '_tasks', 'tasks');
-        $user_tasks = $user->{$relationship}()
+        $model = $request->user();
+        if ($request->view_as_admin == 'true') {
+            $workspace = Workspace::findOrFail($workspace);
+            $this->authorize('update', $workspace);
+            $model = ($request->user_id) ? \App\User::find($request->user_id) : $workspace;
+        }
+        $relationship = $this->model_relationship($request->relationship, $model, '_tasks', 'tasks');
+        $user_tasks = $model->{$relationship}()
                     ->whereNull('parent_id')
                     ->with('users')
                     ->withCount('demands', 'children')
@@ -37,15 +42,24 @@ class TaskController extends BaseController
             'order' => 'nullable|string',
             'order_by' => 'nullable|string'
         ]);
-        $user = ($request->user_id) ? \App\User::find($request->user_id) : $request->user();
-        $relationship = $this->model_relationship($request->relationship, $user, '_tasks', 'tasks');
-        $user_tasks = $user->{$relationship}()
-                    ->whereNull('parent_id')
-                    ->with(['users','workspace:id,title,avatar_pic'])
-                    ->withCount('demands', 'children');
+        if ($request->view_as_admin == 'true') {
+            $model = app(Task::class);
+            $this->authorize('viewAny', Task::class);
+            if ($request->user_id) {
+                $user = \App\User::find($request->user_id);
+                $this->authorize('viewAny', User::class);
+                $relationship = $this->model_relationship($request->relationship, $user, '_tasks', 'tasks');
+                $model = $user->{$relationship}();
+            }
+        } else {
+            $user = $request->user();
+            $relationship = $this->model_relationship($request->relationship, $user, '_tasks', 'tasks');
+            $model = $user->{$relationship}();
+        }
+        $model = $model->whereNull('parent_id')->with(['users','workspace:id,title,avatar_pic'])->withCount('demands', 'children');
         return $request->limit
-            ? $this->decide_ordered($request, $user_tasks)->limit((int) $request->limit)->get()
-            : $this->decide_ordered($request, $user_tasks)->paginate(10);
+            ? $this->decide_ordered($request, $model)->limit((int) $request->limit)->get()
+            : $this->decide_ordered($request, $model)->paginate(10);
     }
     public function search(Request $request)
     {

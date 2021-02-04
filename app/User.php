@@ -51,22 +51,24 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Workspace::class)->withPivot('is_admin');
     }
+
     public function tasks()
     {
         return $this->belongsToMany(Task::class);
     }
     public function finished_tasks()
     {
-        return $this->belongsToMany(Task::class)->whereNotNull('finished_at');
+        return $this->tasks()->whereNotNull('finished_at');
     }
     public function unfinished_tasks()
     {
-        return $this->belongsToMany(Task::class)->whereNull('finished_at');
+        return $this->tasks()->whereNull('finished_at');
     }
     public function expired_tasks()
     {
-        return $this->belongsToMany(Task::class)->whereNotNull('due_to')->where('due_to', '<', now('Asia/Tehran'));
+        return $this->tasks()->whereNotNull('due_to')->where('due_to', '<', now('Asia/Tehran'));
     }
+    
     public function demands()
     {
         return $this->hasMany(Demand::class, 'from_id');
