@@ -70,7 +70,7 @@ class TaskController extends BaseController
         ]);
         $user = ($request->user_id) ? \App\User::find($request->user_id) : $request->user();
         $relationship = $this->model_relationship($request->relationship, $user, '_tasks', 'tasks');
-        $tasks = $tasks = $user->{$relationship}()->with(['workspace:id,title,avatar_pic', 'parent'])->withCount('users', 'children');
+        $tasks = $tasks = $user->{$relationship}()->with(['workspace:id,title,avatar_pic', 'parent', 'users'])->withCount('children');
         return $request->limit
                 ? $this->decide_ordered($request, $tasks)->search($request->q, null, true)->limit((int) $request->limit)->get()
                 : $this->decide_ordered($request, $tasks)->search($request->q, null, true)->paginate(10);
