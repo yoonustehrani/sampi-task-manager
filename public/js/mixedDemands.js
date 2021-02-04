@@ -56828,7 +56828,6 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
           };
         }
       }, function () {
-        _this.state.api_target === "mixed" ? console.log('mixed') : console.log("search");
         axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("".concat(_this.state.api_target === "mixed" ? get_mixed_demands_api : mixed_demands_search).concat(current_tab === "demands" ? "&relationship=asked" : "", "&order_by=").concat(order_by ? order_by : "created_at", "&order=").concat(order ? order : "desc", "&filter=").concat(filter ? filter : "all", "&page=").concat(_this.state[current_tab].nextPage).concat(_this.state.api_target === "search" ? "&q=".concat(search_value) : "")).then(function (res) {
           var _res$data = res.data,
               data = _res$data.data,
@@ -56965,9 +56964,7 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
       var _this2 = this;
 
       var current_tab = this.state.current_tab,
-          _this$props2 = this.props,
-          get_workspaces_api = _this$props2.get_workspaces_api,
-          simple_search = _this$props2.simple_search;
+          get_workspaces_api = this.props.get_workspaces_api;
       this.setState(_defineProperty({}, current_tab, {
         data: [],
         nextPage: 1,
@@ -57038,9 +57035,9 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
           workspaces = _this$state3.workspaces,
           workspaces_users = _this$state3.workspaces_users,
           selected_workspace = _this$state3.selected_workspace,
-          _this$props3 = this.props,
-          logged_in_user_id = _this$props3.logged_in_user_id,
-          demand_show_route = _this$props3.demand_show_route;
+          _this$props2 = this.props,
+          logged_in_user_id = _this$props2.logged_in_user_id,
+          demand_show_route = _this$props2.demand_show_route;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
         className: "demands-tabs-titles col-12 mt-2"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
@@ -57755,14 +57752,12 @@ var data_store = target.getAttribute("data-store");
 var logged_in_user_id = parseInt(target.getAttribute("logged-in-user-id"));
 var search_index = target.getAttribute("data-search");
 var get_workspaces_api = target.getAttribute("workspaces-api");
-var simple_search = target.getAttribute("simple-search");
 react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_mixed_demands__WEBPACK_IMPORTED_MODULE_2__["default"], {
   get_mixed_demands_api: data_index,
   post_demand_api: data_store,
   logged_in_user_id: logged_in_user_id,
   mixed_demands_search: search_index,
-  get_workspaces_api: get_workspaces_api,
-  simple_search: simple_search
+  get_workspaces_api: get_workspaces_api
 }), target);
 
 /***/ }),

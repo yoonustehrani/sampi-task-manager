@@ -43,44 +43,50 @@ $('#new-task-priority, #tasks_order_select, #tasks_order_by_select, #tasks_relat
 })
 $('.select2-search__field').css('width', '100%')
 
-$('#task-select').select2({
-    templateResult: formatOption,
-    templateSelection: function (data, container) {
-        $(data.element).attr('workspace_id', data.workspace_id)
-        return data.text
-    },
-    placeholder: 'کار مربوطه را جستجو و انتخاب کنید',
-    width: "100%",
-    dir: "rtl",
-    minimumInputLength: 3,
-    delay: 250,
-    ajax: {
-        url: simple_search_url,
-        data: function (params) {
-            return {
-                q: params.term,
-                workspace: $("#new-demand-project-select").val()
+const simpleSearch = (ids, parentOnly) => {
+    $(ids).select2({
+        templateResult: formatOption,
+        templateSelection: function (data, container) {
+            $(data.element).attr('workspace_id', data.workspace_id)
+            return data.text
+        },
+        placeholder: 'کار مربوطه را جستجو و انتخاب کنید',
+        width: "100%",
+        dir: "rtl",
+        minimumInputLength: 3,
+        delay: 250,
+        ajax: {
+            url: simple_search_url,
+            data: function (params) {
+                return {
+                    q: params.term,
+                    workspace: $("#new-demand-project-select").val(),
+                    parentOnly: parentOnly
+                }
+            },
+            processResults: function (res) {
+                var data = $.map(res, function (obj) {
+                    obj.text = obj.text || obj.title; // replace name with the property used for the text
+                    return obj;
+                });
+                return {
+                    results: data
+                }
+            },
+        },
+        language: {
+            searching: function () {
+                return "درحال جستجو ..."
+            },
+            noResults: function () {
+                return "نتیجه ای یافت نشد"
             }
-        },
-        processResults: function (res) {
-            var data = $.map(res, function (obj) {
-                obj.text = obj.text || obj.title; // replace name with the property used for the text
-                return obj;
-            });
-            return {
-                results: data
-            }
-        },
-    },
-    language: {
-        searching: function () {
-            return "درحال جستجو ..."
-        },
-        noResults: function () {
-            return "نتیجه ای یافت نشد"
         }
-    }
-})
+    })
+}
+
+simpleSearch('#task-select', false)
+simpleSearch("#parent-task-select", true)
 
 const renderWithImg = (ids, placeholder, multiple) => {
     $(ids).select2({
@@ -102,3 +108,4 @@ const renderWithImg = (ids, placeholder, multiple) => {
 renderWithImg("#new-demand-member", "نیاز به کمک چه کسی دارید؟", false)
 renderWithImg("#new-demand-project-select", "پروژه مربوطه را انتخاب کنید", false)
 renderWithImg("#new-task-members", "انجام دهندگان این کار", true)
+renderWithImg("#new-task-project-select", "پروژه مربوطه را انتخاب کنید", false)

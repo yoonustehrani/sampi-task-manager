@@ -56649,49 +56649,67 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
     _this = _super.call(this, props);
 
     _defineProperty(_assertThisInitialized(_this), "getData", function () {
+      var filtering = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
       var _this$props = _this.props,
-          mixed_tasks_api = _this$props.mixed_tasks_api,
-          mixed_tasks_search_api = _this$props.mixed_tasks_search_api,
+          get_mixed_tasks_api = _this$props.get_mixed_tasks_api,
+          mixed_tasks_search = _this$props.mixed_tasks_search,
           already_added_tasks = _this.state.already_added_tasks;
       var order_by = $("#mixed_tasks_order_by_select").val(),
           order = $("#mixed_tasks_order_select").val(),
-          relationship = $("#mixed_tasks_relation_select").val();
+          relationship = $("#mixed_tasks_relation_select").val(),
+          search_value = $("#tasks-search-input").val();
 
-      _this.setState({
-        isGetting: true
-      });
+      _this.setState(function (prevState) {
+        if (filtering && search_value.length >= 3) {
+          return {
+            isGetting: true,
+            api_target: "search"
+          };
+        } else if (filtering && search_value.length < 3) {
+          return {
+            isGetting: true,
+            api_target: "mixed"
+          };
+        } else {
+          return {
+            isGetting: true
+          };
+        }
+      }, function () {
+        console.log(_this.state.api_target);
+        axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("".concat(_this.state.api_target === "mixed" ? get_mixed_tasks_api : mixed_tasks_search, "&order_by=").concat(order_by ? order_by : "created_at", "&order=").concat(order ? order : "desc", "&relationship=").concat(relationship ? relationship : "all", "&page=").concat(_this.state.tasks.nextPage).concat(_this.state.api_target === "search" ? "&q=".concat(search_value) : "")).then(function (res) {
+          var _res$data = res.data,
+              data = _res$data.data,
+              current_page = _res$data.current_page,
+              last_page = _res$data.last_page;
+          var filteredArray = data.filter(function (item) {
+            return already_added_tasks && typeof already_added_tasks[item.id] === "undefined";
+          });
 
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("".concat(mixed_tasks_api, "&relationship=").concat(relationship ? relationship : "all", "&order_by=").concat(order_by ? order_by : "created_at", "&order=").concat(order ? order : "desc", "&page=").concat(_this.state.mixed_tasks.nextPage)).then(function (res) {
-        var _res$data = res.data,
-            data = _res$data.data,
-            current_page = _res$data.current_page,
-            last_page = _res$data.last_page;
-        var filteredArray = data.filter(function (item) {
-          return already_added_tasks && typeof already_added_tasks[item.id] === "undefined";
-        });
-
-        _this.setState(function (prevState) {
-          var _ref;
-
-          return _ref = {}, _defineProperty(_ref, current_tab, {
-            data: [].concat(_toConsumableArray(prevState.mixed_tasks.data), _toConsumableArray(filteredArray)),
-            nextPage: current_page + 1,
-            hasMore: current_page === last_page ? false : true
-          }), _defineProperty(_ref, "isGetting", false), _ref;
+          _this.setState(function (prevState) {
+            return {
+              tasks: {
+                data: [].concat(_toConsumableArray(prevState.tasks.data), _toConsumableArray(filteredArray)),
+                nextPage: current_page + 1,
+                hasMore: current_page === last_page ? false : true
+              },
+              isGetting: false
+            };
+          });
         });
       });
     });
 
     _defineProperty(_assertThisInitialized(_this), "handleMore", function (filtering) {
-      var _this$setState;
-
-      var current_tab = _this.state.current_tab;
-      filtering ? _this.setState((_this$setState = {}, _defineProperty(_this$setState, current_tab, {
-        data: [],
-        nextPage: 1,
-        hasMore: true
-      }), _defineProperty(_this$setState, "already_added_needs", {}), _this$setState), function () {
-        return _this.getData();
+      filtering ? _this.setState({
+        tasks: {
+          data: [],
+          nextPage: 1,
+          hasMore: true
+        },
+        already_added_tasks: {}
+      }, function () {
+        return _this.getData(true);
       }) : _this.getData();
     });
 
@@ -56700,41 +56718,43 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
 
       _this.addIconRef.current.classList.toggle("fa-minus");
 
-      _this.addDemandRef.current.classList.toggle("d-none");
+      _this.addTaskRef.current.classList.toggle("d-none");
     });
 
-    _defineProperty(_assertThisInitialized(_this), "toggleFilterBox", function (index) {
-      _this.filterBoxRefs[index].current.classList.toggle("d-none");
+    _defineProperty(_assertThisInitialized(_this), "toggleFilterBox", function () {
+      _this.filterBoxRef.current.classList.toggle("d-none");
     });
 
     _defineProperty(_assertThisInitialized(_this), "onDescriptionChange", function (content) {
       _this.setState({
-        new_demand_description: content
+        new_task_description: content
       });
     });
 
-    _defineProperty(_assertThisInitialized(_this), "addDemand", function () {
-      var post_demand_api = _this.props.post_demand_api,
+    _defineProperty(_assertThisInitialized(_this), "addtask", function () {
+      var post_task_api = _this.props.post_task_api,
           _this$state = _this.state,
-          new_demand_description = _this$state.new_demand_description,
+          new_task_description = _this$state.new_task_description,
           workspace_users = _this$state.workspace_users;
-      var title = $("#new-demand-title").val(),
+      var title = $("#new-task-title").val(),
           priority = parseInt($("#new-task-priority").val()),
-          toUser = $("#new-demand-member").val(),
-          related_task = $("#task-select").val() === "0" ? "" : $("#task-select").val(),
-          workspaceId = $("#new-demand-project-select").val();
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(post_demand_api.replace("workspaceId", workspaceId), {
+          users = $("#new-task-member").val(),
+          related_task = $("#parent-task-select").val() === "0" ? "" : $("#parent-task-select").val(),
+          workspaceId = $("#new-task-project-select").val(),
+          group = $("#new-task-group").val();
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(post_task_api.replace("workspaceId", workspaceId), {
         title: title,
         priority: priority,
-        task_id: related_task,
-        target_user: toUser,
-        text: new_demand_description
+        group: group,
+        parent_id: related_task,
+        users: users,
+        description: new_task_description
       }).then(function (res) {
         var data = res.data;
 
         _this.setState(function (prevState) {
           return {
-            needs: Object.assign(prevState.needs, {
+            tasks: Object.assign(prevState.tasks, {
               data: [_objectSpread(_objectSpread({}, data), {}, {
                 priority: {
                   title: Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["setPriority"])(data.priority_id)
@@ -56745,16 +56765,16 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
                   avatar_pic: workspace_users[data.to_id].avatar_pic
                 },
                 task: null
-              })].concat(_toConsumableArray(prevState.needs.data))
+              })].concat(_toConsumableArray(prevState.tasks.data))
             }),
-            already_added_needs: Object.assign({}, prevState.already_added_needs, _defineProperty({}, data.id, data.id))
+            already_added_tasks: Object.assign({}, prevState.already_added_tasks, _defineProperty({}, data.id, data.id))
           };
         });
 
         Swal.fire({
           icon: 'success',
           title: "موفقیت",
-          text: "درخواست شما ارسال شد",
+          text: "مسئولیت جدید ثبت شد",
           showConfirmButton: true,
           customClass: {
             content: 'persian-text'
@@ -56772,7 +56792,8 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
       isGetting: false,
       new_task_description: "",
       already_added_tasks: {},
-      search_value: ""
+      search_value: "",
+      api_target: 'mixed'
     };
     return _this;
   }
@@ -56782,228 +56803,81 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      var current_tab = this.state.current_tab,
-          get_workspace_api = this.props.get_workspace_api;
-      this.setState(_defineProperty({}, current_tab, {
-        data: [],
-        nextPage: 1,
-        hasMore: true
-      }), function () {
+      var get_workspaces_api = this.props.get_workspaces_api;
+      this.setState({
+        tasks: {
+          data: [],
+          nextPage: 1,
+          hasMore: true
+        }
+      }, function () {
         return _this2.getData();
-      }); // axios.get(get_workspace_api).then(res => {
-      //     let { data } = res
-      //     this.setState({workspace: data}, () => {
-      //         this.state.workspace.users.map((user, i) => {
-      //             this.setState(prevState => ({
-      //                 workspace_users: Object.assign({}, prevState.workspace_users, {
-      //                     [user.id]: {
-      //                         is_admin: user.pivot.is_admin,
-      //                         fullname: user.fullname,
-      //                         name: user.name,
-      //                         avatar_pic: user.avatar_pic
-      //                     } // we have a clear object in our states that tells us all the informations that we need about users
-      //                 }),
-      //             }))
-      //         })
-      //     })
-      // })
+      });
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(get_workspaces_api).then(function (res) {
+        var data = res.data;
+
+        _this2.setState({
+          workspaces: data
+        }, function () {
+          _this2.state.workspaces.map(function (workspace, i) {
+            var current_workspace;
+            workspace.users.map(function (user, index) {
+              current_workspace = Object.assign({}, current_workspace, _defineProperty({}, user.id, {
+                id: user.id,
+                fullname: user.fullname,
+                avatar_pic: user.avatar_pic,
+                is_admin: user.pivot.is_admin
+              }));
+            });
+
+            _this2.setState(function (prevState) {
+              return {
+                workspaces_users: Object.assign({}, prevState.workspaces_users, _defineProperty({}, workspace.id, current_workspace))
+              };
+            });
+          });
+        });
+      }); // here we will use select2, jquery and react states to make a connection between three select2s and the options inside them(warning: do not move this code to another js file(like select2.js) or out of this order)
+
+      var setWorkspaceId = function setWorkspaceId() {
+        var id = $("#new-task-project-select").val();
+
+        _this2.setState({
+          selected_workspace: id
+        });
+      };
+
+      function setSelectValue(id, value) {
+        var selected_task_workspace = $("#parent-task-select").find("option:selected").attr('workspace_id'),
+            selectedProject = $("#new-task-project-select").val();
+
+        if (selectedProject !== selected_task_workspace) {
+          $(id).val(eval(value)).change();
+        }
+      }
+
+      $("#parent-task-select").on("select2:select", function () {
+        setSelectValue("#new-task-project-select", "selected_task_workspace");
+        setWorkspaceId();
+      });
+      $("#new-task-project-select").on("select2:select", function () {
+        setSelectValue("#parent-task-select", null);
+        setWorkspaceId();
+      });
     }
   }, {
     key: "render",
     value: function render() {
       var _this$state2 = this.state,
-          demands = _this$state2.demands,
-          needs = _this$state2.needs,
           isGetting = _this$state2.isGetting,
-          already_added_needs = _this$state2.already_added_needs,
-          workspace = _this$state2.workspace,
-          workspace_users = _this$state2.workspace_users,
-          _this$props2 = this.props,
-          logged_in_user_id = _this$props2.logged_in_user_id,
-          demand_show_route = _this$props2.demand_show_route;
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
-        className: "demands-tabs-titles col-12 mt-2"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        className: "demand-tab-title-small-arrow active",
-        ref: this.tabTitlesRefs[0],
-        onClick: this.changeTab.bind(this, 0)
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-arrow-circle-down animated tada delay-1s"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u062F\u0631\u062E\u0648\u0627\u0633\u062A")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        className: "demand-tab-title-small-arrow",
-        ref: this.tabTitlesRefs[1],
-        onClick: this.changeTab.bind(this, 1)
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-arrow-circle-up animated tada delay-1s"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0646\u06CC\u0627\u0632"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-12 mt-4 float-right demand-tab-result active pr-0 pl-0 pr-md-3 pl-md-3",
-        ref: this.tabResultsRefs[0]
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "search-box p-2 p-md-4"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "input-group"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "input-group-prepend"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "btn btn-primary",
-        onClick: this.handleMore.bind(this, true)
-      }, "\u062C\u0633\u062A\u062C\u0648")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "text",
-        className: "form-control",
-        placeholder: "\u062C\u0633\u062A\u062C\u0648 \u062F\u0631 \u062E\u0648\u0627\u0633\u062A\u0647 \u0647\u0627"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "input-group-append"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "btn btn-info",
-        onClick: this.toggleFilterBox.bind(this, 0)
-      }, "\u0641\u06CC\u0644\u062A\u0631 \u0647\u0627", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-filter"
-      }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        ref: this.filterBoxRefs[0],
-        className: "filter-box mixed-demands-filter-box mt-2 p-2 col-12 d-none animated fadeIn"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "filter-option mb-4 mb-lg-0 text-center col-12 col-md-6 col-lg-3"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u062C\u0633\u062A\u062C\u0648 \u062F\u0631: "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
-        id: "mixed_demands_relation_select",
-        defaultValue: "all"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        container_class: "select-option-big",
-        value: "all",
-        icon_name: "fas fa-tasks"
-      }, "\u0647\u0645\u0647"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        container_class: "select-option-big",
-        value: "finished",
-        icon_name: "fas fa-check-square"
-      }, "\u0627\u0646\u062C\u0627\u0645 \u0634\u062F\u0647"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        container_class: "select-option-big",
-        value: "unfinished",
-        icon_name: "fas fa-times-circle"
-      }, "\u0627\u0646\u062C\u0627\u0645 \u0646\u0634\u062F\u0647"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "filter-option mb-4 mb-lg-0 text-center col-12 col-md-6 col-lg-3"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0645\u0631\u062A\u0628 \u0633\u0627\u0632\u06CC \u0628\u0631 \u0627\u0633\u0627\u0633:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
-        id: "mixed_demands_order_by_select",
-        defaultValue: "createdw"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        container_class: "select-option-big",
-        value: "created_at",
-        icon_name: "fas fa-calendar-plus"
-      }, "\u062A\u0627\u0631\u06CC\u062E \u0627\u06CC\u062C\u0627\u062F"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        container_class: "select-option-big",
-        value: "updated_at",
-        icon_name: "fas fa-user-edit"
-      }, "\u062A\u0627\u0631\u06CC\u062E \u062A\u063A\u06CC\u06CC\u0631\u0627\u062A"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        container_class: "select-option-big",
-        value: "finished_at",
-        icon_name: "fas fa-calendar-check"
-      }, "\u062A\u0627\u0631\u06CC\u062E \u0627\u062A\u0645\u0627\u0645"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "filter-option mb-4 mb-lg-0 text-center col-12 col-md-6 col-lg-3"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0646\u062D\u0648\u0647 \u0645\u0631\u062A\u0628 \u0633\u0627\u0632\u06CC:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
-        id: "mixed_demands_order_select",
-        defaultValue: "desc"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        container_class: "select-option-big",
-        value: "asc",
-        icon_name: "fas fa-sort-amount-up"
-      }, "\u0635\u0639\u0648\u062F\u06CC"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        container_class: "select-option-big",
-        value: "desc",
-        icon_name: "fas fa-sort-amount-down"
-      }, "\u0646\u0632\u0648\u0644\u06CC")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
-        className: "col-12 table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right animated bounce mt-4"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", {
-        className: "thead-dark"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
-        scope: "col"
-      }, "#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
-        scope: "col"
-      }, "\u0639\u0646\u0648\u0627\u0646"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
-        scope: "col"
-      }, "\u067E\u0631\u0648\u0698\u0647 \u0645\u0631\u0628\u0648\u0637\u0647"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
-        scope: "col"
-      }, "\u062F\u0631\u062E\u0648\u0627\u0633\u062A \u06A9\u0646\u0646\u062F\u0647"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
-        scope: "col"
-      }, "\u062A\u0633\u06A9 \u0645\u0631\u0628\u0648\u0637\u0647"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
-        scope: "col"
-      }, "\u0627\u0648\u0644\u0648\u06CC\u062A"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
-        scope: "col"
-      }, "\u0648\u0636\u0639\u06CC\u062A \u0627\u062A\u0645\u0627\u0645"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
-        scope: "col"
-      }, "\u062A\u0627\u0631\u06CC\u062E \u0627\u062A\u0645\u0627\u0645"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, demands && demands.data.length > 0 && demands.data.map(function (demand, i) {
-        var title = demand.title,
-            task = demand.task,
-            priority = demand.priority,
-            finished_at = demand.finished_at,
-            from = demand.from;
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
-          key: i,
-          className: "animated fadeIn",
-          onClick: function onClick() {
-            return Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["redirectTo"])(getDemand(demand.id));
-          }
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
-          scope: "row"
-        }, i + 1), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
-          className: "text-right"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-          className: "workspace_avatar",
-          src: APP_PATH + demand.workspace.avatar_pic
-        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-          href: Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["getWorkspace"])(demand.workspace.id)
-        }, demand.workspace.title)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "employees-container horizontal-centerlize"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, from.fullname), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "dropdown-users d-none",
-          onClick: function onClick(e) {
-            return e.stopPropagation();
-          }
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "user-dropdown-item animated jackInTheBox"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "user-right-flex"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "user-img-container ml-2"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-          src: from.avatar_pic !== null ? APP_PATH + from.avatar_pic : APP_PATH + 'images/male-avatar.svg'
-        })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "user-info ml-2"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, from.fullname), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-          href: Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["getUser"])(from.id)
-        }, "@", from.name))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "user-label-container"
-        }, workspace_users && workspace_users[from.id].is_admin === 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-          className: "btn btn-sm btn-success rtl admin p-1"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0627\u062F\u0645\u06CC\u0646", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-          className: "fas fa-user-tie mr-1"
-        }))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-          className: "btn btn-sm btn-primary rtl"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0639\u0636\u0648", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-          className: "fas fa-user mr-1"
-        })))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, task !== null ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-          href: Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["getTask"])(task.id)
-        }, task.title) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-          className: "fas fa-minus fa-3x"
-        })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, priority.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, finished_at === null ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-          className: "fas fa-times-circle fa-3x"
-        }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-          className: "fas fa-check-circle fa-3x"
-        })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, finished_at === null ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-          className: "fas fa-calendar-times fa-3x"
-        }) : moment__WEBPACK_IMPORTED_MODULE_6___default()(finished_at).fromNow()));
-      }))), demands && demands.data.length > 0 && !isGetting && demands.hasMore && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "text-center"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "btn btn-outline-dark text-center",
-        onClick: this.handleMore.bind(this, false)
-      }, "\u0628\u06CC\u0634\u062A\u0631")), demands && demands.data.length === 0 && !isGetting && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-        className: "text-center text-secondary"
-      }, "\u0645\u0648\u0631\u062F\u06CC \u0628\u0631\u0627\u06CC \u0646\u0645\u0627\u06CC\u0634 \u0648\u062C\u0648\u062F \u0646\u062F\u0627\u0631\u062F"), isGetting && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "text-center"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_activity__WEBPACK_IMPORTED_MODULE_3__["Digital"], {
-        color: "#000000",
-        size: 24
-      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-12 mt-4 float-right demand-tab-result pr-0 pl-0 pr-md-3 pl-md-3",
-        ref: this.tabResultsRefs[1]
+          already_added_tasks = _this$state2.already_added_tasks,
+          workspaces = _this$state2.workspaces,
+          workspaces_users = _this$state2.workspaces_users,
+          selected_workspace = _this$state2.selected_workspace,
+          tasks = _this$state2.tasks,
+          logged_in_user_id = this.props.logged_in_user_id;
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-12 mt-4 float-right task-tab-result pr-0 pl-0 pr-md-3 pl-md-3"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "workspace-add-task mb-2 col-12 pl-0 pr-0 pr-md-3 pl-md-3"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -57014,7 +56888,7 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
         ref: this.addIconRef
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, "\u0646\u06CC\u0627\u0632 \u062C\u062F\u06CC\u062F")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "add-task-section mb-4 d-none col-12 p-3 animated fadeIn",
-        ref: this.addDemandRef
+        ref: this.addTaskRef
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "input-group col-12 col-md-6 pl-0 pr-0 mb-2 mb-md-0"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -57023,7 +56897,7 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
         className: "input-group-text"
       }, "\u0639\u0646\u0648\u0627\u0646")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
-        id: "new-demand-title",
+        id: "new-task-title",
         className: "form-control",
         placeholder: "\u0639\u0646\u0648\u0627\u0646 \u0646\u06CC\u0627\u0632 \u0631\u0627 \u062F\u0631 \u0627\u06CC\u0646 \u0642\u0633\u0645\u062A \u0648\u0627\u0631\u062F \u06A9\u0646\u06CC\u062F"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -57054,49 +56928,49 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "input-group-text"
       }, "\u067E\u0631\u0648\u0698\u0647 \u0645\u0631\u0628\u0648\u0637\u0647")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
-        id: "new-demand-project-select",
+        id: "new-task-project-select",
         placeholder: "\u0627\u0646\u062A\u062E\u0627\u0628 \u067E\u0631\u0648\u0698\u0647 \u0627\u062C\u0628\u0627\u0631\u06CC"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        value: "1",
-        img_address: APP_PATH + 'images/elnovel-logo.jpg'
-      }, "\u06A9\u0633"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        value: "2",
-        img_address: APP_PATH + 'images/elnovel-logo.jpg'
-      }, "\u06A9\u0633"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        value: "3",
-        img_address: APP_PATH + 'images/elnovel-logo.jpg'
-      }, "\u06A9\u0633"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        value: "4",
-        img_address: APP_PATH + 'images/elnovel-logo.jpg'
-      }, "\u06A9\u0633"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null), workspaces && workspaces.map(function (workspace, i) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+          key: i,
+          value: workspace.id,
+          img_address: APP_PATH + workspace.avatar_pic
+        }, workspace.title);
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "input-group col-12 col-md-6 pl-0 pr-0 mb-2 mb-md-0"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "input-group-prepend"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "input-group-text"
+      }, "\u062F\u0633\u062A\u0647 \u0628\u0646\u062F\u06CC")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        id: "new-task-group",
+        className: "form-control",
+        placeholder: "\u0627\u06CC\u0646 \u0645\u0633\u0626\u0648\u0644\u06CC\u062A \u062F\u0631 \u0686\u0647 \u06AF\u0631\u0648\u0647\u06CC \u0642\u0631\u0627\u0631 \u0645\u06CC\u06AF\u06CC\u0631\u062F\u061F"
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "input-group col-12 col-md-6 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line-all"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "input-group-prepend"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "input-group-text"
-      }, "\u06A9\u0627\u0631 \u0645\u0631\u0628\u0648\u0637\u0647")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
-        id: "task-select"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        value: "0"
-      }, "\u0647\u06CC\u0686\u06A9\u062F\u0627\u0645"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        value: "1"
-      }, "\u06A9\u06CC\u0631 \u062A\u0648 \u06A9\u0648\u0646 \u06A9\u0631\u062F\u0646"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        value: "2"
-      }, "\u062C\u0642 \u0632\u062F\u0646 \u0631\u0648 \u0642\u0631\u0622\u0646"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "\u0632\u06CC\u0631 \u0645\u062C\u0645\u0648\u0639\u0647")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+        id: "parent-task-select"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "input-group col-12 col-md-6 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line-all"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "input-group-prepend"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "input-group-text"
-      }, "\u0645\u062E\u0627\u0637\u0628 \u0646\u06CC\u0627\u0632")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
-        id: "new-demand-member",
-        className: "form-control text-right"
-      }, workspace ? workspace.users.map(function (user, i) {
+      }, "\u0645\u0633\u0626\u0648\u0644\u06CC\u0646")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+        id: "new-task-members",
+        className: "form-control text-right",
+        multiple: true
+      }, workspaces_users && selected_workspace ? Object.values(workspaces_users[parseInt(selected_workspace)]).map(function (user, i) {
         if (user.id !== logged_in_user_id) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
             key: i,
             value: user.id,
-            img_address: user.avatar_pic !== null ? APP_PATH + user.avatar_pic : APP_PATH + 'images/male-avatar.svg'
+            img_address: APP_PATH + user.avatar_pic
           }, user.fullname);
         }
       }) : null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -57110,7 +56984,7 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         type: "button",
         className: "btn btn-outline-primary",
-        onClick: this.addDemand
+        onClick: this.addtask
       }, "\u0627\u0631\u0633\u0627\u0644 ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-paper-plane"
       }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -57124,22 +56998,23 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
         onClick: this.handleMore.bind(this, true)
       }, "\u062C\u0633\u062A\u062C\u0648")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
+        id: "tasks-search-input",
         className: "form-control",
-        placeholder: "\u062C\u0633\u062A\u062C\u0648 \u062F\u0631 \u0646\u06CC\u0627\u0632 \u0647\u0627"
+        placeholder: "\u062C\u0633\u062A\u062C\u0648 \u062F\u0631 \u0645\u0633\u0626\u0648\u0644\u06CC\u062A \u0647\u0627"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "input-group-append"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "btn btn-info",
-        onClick: this.toggleFilterBox.bind(this, 1)
+        onClick: this.toggleFilterBox
       }, "\u0641\u06CC\u0644\u062A\u0631 \u0647\u0627", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-filter"
       }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        ref: this.filterBoxRefs[1],
-        className: "filter-box mixed-demands-filter-box mt-2 p-2 col-12 d-none animated fadeIn"
+        ref: this.filterBoxRef,
+        className: "filter-box mixed-tasks-filter-box mt-2 p-2 col-12 d-none animated fadeIn"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "filter-option col-12 col-md-6 col-lg-4 mb-3 mb-lg-0 text-center"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u062C\u0633\u062A\u062C\u0648 \u062F\u0631: "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
-        id: "mixed_needs_relation_select",
+        id: "mixed_tasks_relation_select",
         defaultValue: "all"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
         container_class: "select-option-big",
@@ -57153,12 +57028,20 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
         container_class: "select-option-big",
         value: "unfinished",
         icon_name: "fas fa-times-circle"
-      }, "\u0627\u0646\u062C\u0627\u0645 \u0646\u0634\u062F\u0647"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "\u0627\u0646\u062C\u0627\u0645 \u0646\u0634\u062F\u0647"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        container_class: "select-option-big",
+        value: "expired",
+        icon_name: "fas fa-calendar-minus"
+      }, "\u0645\u0646\u0642\u0636\u06CC"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "filter-option col-12 col-md-6 col-lg-4 mb-3 mb-lg-0 text-center"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0645\u0631\u062A\u0628 \u0633\u0627\u0632\u06CC \u0628\u0631 \u0627\u0633\u0627\u0633:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
-        id: "mixed_needs_order_by_select",
-        defaultValue: "createdw"
+        id: "mixed_tasks_order_by_select",
+        defaultValue: "due_to"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        container_class: "select-option-big",
+        value: "due_to",
+        icon_name: "fas fa-hourglass-start"
+      }, "\u062A\u0627\u0631\u06CC\u062E \u062A\u062D\u0648\u06CC\u0644"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
         container_class: "select-option-big",
         value: "created_at",
         icon_name: "fas fa-calendar-plus"
@@ -57173,7 +57056,7 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
       }, "\u062A\u0627\u0631\u06CC\u062E \u0627\u062A\u0645\u0627\u0645"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "filter-option col-12 col-md-6 col-lg-4 mb-3 mb-lg-0 text-center"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0646\u062D\u0648\u0647 \u0645\u0631\u062A\u0628 \u0633\u0627\u0632\u06CC:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
-        id: "mixed_needs_order_select",
+        id: "mixed_tasks_order_select",
         defaultValue: "desc"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
         container_class: "select-option-big",
@@ -57193,29 +57076,32 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
         scope: "col"
       }, "\u0639\u0646\u0648\u0627\u0646"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
         scope: "col"
-      }, "\u067E\u0631\u0648\u0698\u0647 \u0645\u0631\u0628\u0648\u0637\u0647"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+      }, "\u067E\u0631\u0648\u0698\u0647"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
         scope: "col"
-      }, "\u0645\u062E\u0627\u0637\u0628"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+      }, "\u062F\u0633\u062A\u0647 \u0628\u0646\u062F\u06CC"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
         scope: "col"
-      }, "\u062A\u0633\u06A9 \u0645\u0631\u0628\u0648\u0637\u0647"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+      }, "\u0627\u0646\u062C\u0627\u0645 \u062F\u0647\u0646\u062F\u06AF\u0627\u0646"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
         scope: "col"
       }, "\u0627\u0648\u0644\u0648\u06CC\u062A"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
         scope: "col"
+      }, "\u0645\u0648\u0639\u062F \u062A\u062D\u0648\u06CC\u0644"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+        scope: "col"
       }, "\u0648\u0636\u0639\u06CC\u062A \u0627\u062A\u0645\u0627\u0645"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
         scope: "col"
-      }, "\u062A\u0627\u0631\u06CC\u062E \u0627\u062A\u0645\u0627\u0645"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, needs && needs.data.length > 0 && needs.data.map(function (need, i) {
-        var title = need.title,
-            task = need.task,
-            priority = need.priority,
-            due_to = need.due_to,
-            finished_at = need.finished_at,
-            to = need.to,
-            id = need.id;
+      }, "\u062A\u0627\u0631\u06CC\u062E \u0627\u062A\u0645\u0627\u0645"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, tasks && tasks.data.length > 0 && tasks.data.map(function (task, i) {
+        var title = task.title,
+            priority_id = task.priority_id,
+            due_to = task.due_to,
+            finished_at = task.finished_at,
+            id = task.id,
+            users = task.users,
+            workspace = task.workspace,
+            group = task.group;
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
           key: i,
           className: "animated fadeIn",
           onClick: function onClick() {
-            return Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["redirectTo"])(getDemand(need.id));
+            return Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["redirectTo"])(Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["getTask"])(id));
           }
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
           scope: "row"
@@ -57223,55 +57109,64 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
           className: "text-right"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
           className: "workspace_avatar",
-          src: APP_PATH + need.workspace.avatar_pic
+          src: APP_PATH + task.workspace.avatar_pic
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-          href: Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["getWorkspace"])(need.workspace.id)
-        }, need.workspace.title)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          href: Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["getWorkspace"])(task.workspace.id)
+        }, task.workspace.title)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, group), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "employees-container horizontal-centerlize"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, to.fullname), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }, users.length === 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fas fa-user-slash"
+        }), users.length === 1 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, users.length, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fas fa-user mr-2"
+        })), users.length > 1 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, users.length, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fas fa-users mr-2"
+        })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "dropdown-users d-none",
           onClick: function onClick(e) {
             return e.stopPropagation();
           }
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "user-dropdown-item animated jackInTheBox"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "user-right-flex"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "user-img-container ml-2"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-          src: to.avatar_pic !== null ? APP_PATH + to.avatar_pic : APP_PATH + 'images/male-avatar.svg'
-        })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "user-info ml-2"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, to.fullname), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-          href: Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["getUser"])(to.id)
-        }, "@", to.name))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "user-label-container"
-        }, workspace_users && workspace_users[to.id].is_admin === 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-          className: "btn btn-sm btn-success rtl admin p-1"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0627\u062F\u0645\u06CC\u0646", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-          className: "fas fa-user-tie mr-1"
-        }))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-          className: "btn btn-sm btn-primary rtl"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0639\u0636\u0648", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-          className: "fas fa-user mr-1"
-        })))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, task !== null ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        }, users.length >= 1 && users.map(function (user, i) {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            key: i,
+            className: "user-dropdown-item animated jackInTheBox"
+          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: "user-right-flex"
+          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: "user-img-container ml-2"
+          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+            src: user.avatar_pic !== null ? APP_PATH + user.avatar_pic : APP_PATH + 'images/male-avatar.svg'
+          })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: "user-info ml-2"
+          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, user.fullname), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+            href: "#user"
+          }, "@", user.name))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: "user-label-container"
+          }, workspaces_users && workspaces_users[workspace.id][user.id].is_admin === 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+            className: "btn btn-sm btn-success rtl admin"
+          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0627\u062F\u0645\u06CC\u0646", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+            className: "fas fa-user-tie mr-1"
+          }))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+            className: "btn btn-sm btn-primary rtl"
+          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0639\u0636\u0648", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+            className: "fas fa-user mr-1"
+          })))));
+        })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, task !== null ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
           href: Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["getTask"])(task.id)
         }, task.title) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-minus fa-3x"
-        })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, priority.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, finished_at === null ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["setPriority"])(priority_id)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, finished_at === null ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-times-circle fa-3x"
         }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-check-circle fa-3x"
         })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, finished_at === null ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-calendar-times fa-3x"
         }) : moment__WEBPACK_IMPORTED_MODULE_6___default()(finished_at).fromNow()));
-      }))), needs && needs.data.length > 0 && !isGetting && needs.hasMore && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }))), tasks && tasks.data.length > 0 && !isGetting && tasks.hasMore && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "text-center"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "btn btn-outline-dark text-center",
         onClick: this.handleMore.bind(this, false)
-      }, "\u0628\u06CC\u0634\u062A\u0631")), needs && needs.data.length === 0 && !isGetting && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+      }, "\u0628\u06CC\u0634\u062A\u0631")), tasks && tasks.data.length === 0 && !isGetting && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "text-center text-secondary"
       }, "\u0645\u0648\u0631\u062F\u06CC \u0628\u0631\u0627\u06CC \u0646\u0645\u0627\u06CC\u0634 \u0648\u062C\u0648\u062F \u0646\u062F\u0627\u0631\u062F"), isGetting && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "text-center"
@@ -57539,9 +57434,15 @@ __webpack_require__.r(__webpack_exports__);
 var target = document.getElementById("mixed-tasks-react");
 var mixed_tasks_api = target.getAttribute("get-mixed-tasks-api");
 var mixed_tasks_search_api = target.getAttribute("data-search");
+var get_workspaces_api = target.getAttribute("workspaces-api");
+var post_task_api = target.getAttribute("add_task_api");
+var logged_in_user_id = target.getAttribute("logged-in-user-id");
 react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_mixed_tasks__WEBPACK_IMPORTED_MODULE_2__["default"], {
-  mixed_tasks_api: mixed_tasks_api,
-  mixed_tasks_search_api: mixed_tasks_search_api
+  get_mixed_tasks_api: mixed_tasks_api,
+  mixed_tasks_search: mixed_tasks_search_api,
+  logged_in_user_id: logged_in_user_id,
+  post_task_api: post_task_api,
+  get_workspaces_api: get_workspaces_api
 }), target);
 
 /***/ }),
