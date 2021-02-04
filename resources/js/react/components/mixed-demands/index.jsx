@@ -84,7 +84,6 @@ export default class MixedDemands extends Component {
                 return({isGetting: true})
             }
         }, () => {
-            this.state.api_target === "mixed" ? console.log('mixed') : console.log("search")
             axios.get(`${this.state.api_target === "mixed" ? get_mixed_demands_api : mixed_demands_search}${current_tab === "demands" ? "&relationship=asked" : ""}&order_by=${order_by ? order_by : "created_at"}&order=${order ? order : "desc"}&filter=${filter ? filter : "all"}&page=${this.state[current_tab].nextPage}${this.state.api_target === "search" ? `&q=${search_value}` : ""}`).then(res => {
                 let { data, current_page, last_page } = res.data
                 let filteredArray = data.filter((item) => already_added_needs && typeof already_added_needs[item.id] === "undefined")
@@ -158,7 +157,7 @@ export default class MixedDemands extends Component {
     }
 
     componentDidMount() {
-        let { current_tab } = this.state, { get_workspaces_api, simple_search } = this.props
+        let { current_tab } = this.state, { get_workspaces_api } = this.props
         this.setState({[current_tab]: {data: [], nextPage: 1, hasMore: true}}, () => this.getData())
         axios.get(get_workspaces_api).then(res => {
             let { data } = res
