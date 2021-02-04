@@ -104,7 +104,11 @@ const renderWithImg = (ids, placeholder, multiple) => {
                 return "نتیجه ای یافت نشد"
             }
         },
+<<<<<<< HEAD
         allowClear: true,
+=======
+        allowClear: true
+>>>>>>> 20034ea9fb328b92b04b6686411339d1a8f52aca
     })
 }
 renderWithImg("#new-demand-member", "نیاز به کمک چه کسی دارید؟", false)
