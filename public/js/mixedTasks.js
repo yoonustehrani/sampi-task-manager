@@ -56676,6 +56676,7 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
           };
         }
       }, function () {
+        console.log(_this.state.api_target);
         axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("".concat(_this.state.api_target === "mixed" ? get_mixed_tasks_api : mixed_tasks_search, "&order_by=").concat(order_by ? order_by : "created_at", "&order=").concat(order ? order : "desc", "&relationship=").concat(relationship ? relationship : "all", "&page=").concat(_this.state.tasks.nextPage).concat(_this.state.api_target === "search" ? "&q=".concat(search_value) : "")).then(function (res) {
           var _res$data = res.data,
               data = _res$data.data,
@@ -56708,7 +56709,7 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
         },
         already_added_tasks: {}
       }, function () {
-        return _this.getData();
+        return _this.getData(true);
       }) : _this.getData();
     });
 
@@ -56720,8 +56721,8 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
       _this.addTaskRef.current.classList.toggle("d-none");
     });
 
-    _defineProperty(_assertThisInitialized(_this), "toggleFilterBox", function (index) {
-      _this.filterBoxRefs[index].current.classList.toggle("d-none");
+    _defineProperty(_assertThisInitialized(_this), "toggleFilterBox", function () {
+      _this.filterBoxRef.current.classList.toggle("d-none");
     });
 
     _defineProperty(_assertThisInitialized(_this), "onDescriptionChange", function (content) {
@@ -57004,7 +57005,7 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
         className: "input-group-append"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "btn btn-info",
-        onClick: this.toggleFilterBox.bind(this, 1)
+        onClick: this.toggleFilterBox
       }, "\u0641\u06CC\u0644\u062A\u0631 \u0647\u0627", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-filter"
       }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {

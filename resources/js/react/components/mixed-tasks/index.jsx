@@ -41,6 +41,7 @@ export default class MixedTasks extends Component {
                 return({isGetting: true})
             }
         }, () => {
+            console.log(this.state.api_target)
             axios.get(`${this.state.api_target === "mixed" ? get_mixed_tasks_api : mixed_tasks_search}&order_by=${order_by ? order_by : "created_at"}&order=${order ? order : "desc"}&relationship=${relationship ? relationship : "all"}&page=${this.state.tasks.nextPage}${this.state.api_target === "search" ? `&q=${search_value}` : ""}`).then(res => {
                 let { data, current_page, last_page } = res.data
                 let filteredArray = data.filter((item) => already_added_tasks && typeof already_added_tasks[item.id] === "undefined")
@@ -58,7 +59,7 @@ export default class MixedTasks extends Component {
     }
 
     handleMore = (filtering) => {
-        filtering ? this.setState({tasks: {data: [], nextPage: 1, hasMore: true}, already_added_tasks: {}}, () => this.getData()) : this.getData()
+        filtering ? this.setState({tasks: {data: [], nextPage: 1, hasMore: true}, already_added_tasks: {}}, () => this.getData(true)) : this.getData()
     }
 
     toggleAddBox = () => {
@@ -67,8 +68,8 @@ export default class MixedTasks extends Component {
         this.addTaskRef.current.classList.toggle("d-none")
     }
 
-    toggleFilterBox = (index) => {
-        this.filterBoxRefs[index].current.classList.toggle("d-none")
+    toggleFilterBox = () => {
+        this.filterBoxRef.current.classList.toggle("d-none")
     }
 
     onDescriptionChange = (content) => {
@@ -252,7 +253,7 @@ export default class MixedTasks extends Component {
                             </div>
                             <input type="text" id="tasks-search-input" className="form-control" placeholder="جستجو در مسئولیت ها"/>
                             <div className="input-group-append">
-                                <button className="btn btn-info" onClick={this.toggleFilterBox.bind(this, 1)}>فیلتر ها<i className="fas fa-filter"></i></button>
+                                <button className="btn btn-info" onClick={this.toggleFilterBox}>فیلتر ها<i className="fas fa-filter"></i></button>
                             </div>
                         </div>
                     </div>
