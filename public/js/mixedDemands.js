@@ -56883,6 +56883,8 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
       });
     });
 
+    _defineProperty(_assertThisInitialized(_this), "setRightTab", function () {});
+
     _this.tabTitlesRefs = [];
     _this.tabResultsRefs = [];
     _this.filterBoxRefs = [];
@@ -56912,71 +56914,79 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      var current_tab = this.state.current_tab,
-          get_workspaces_api = this.props.get_workspaces_api;
-      this.setState(_defineProperty({}, current_tab, {
-        data: [],
-        nextPage: 1,
-        hasMore: true
-      }), function () {
-        return _this2.getData();
-      });
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(get_workspaces_api).then(function (res) {
-        var data = res.data;
+      var get_workspaces_api = this.props.get_workspaces_api;
+      var url = window.location.href;
+      var tab = url.split("?tab=")[1];
+      this.setState({
+        current_tab: tab === "demand" ? "needs" : "demands"
+      }, function () {
+        var current_tab = _this2.state.current_tab;
 
-        _this2.setState(function (prevState) {
-          var workspace_obj = {};
-          data.map(function (workspace, i) {
-            workspace_obj[workspace.id] = workspace;
-          });
-          return {
-            workspaces: workspace_obj
-          };
-        }, function () {
-          data.map(function (workspace, i) {
-            var current_workspace;
-            workspace.users.map(function (user, index) {
-              current_workspace = Object.assign({}, current_workspace, _defineProperty({}, user.id, {
-                id: user.id,
-                fullname: user.fullname,
-                avatar_pic: user.avatar_pic,
-                is_admin: user.pivot.is_admin
-              }));
-            });
-
-            _this2.setState(function (prevState) {
-              return {
-                workspaces_users: Object.assign({}, prevState.workspaces_users, _defineProperty({}, workspace.id, current_workspace))
-              };
-            });
-          });
+        _this2.setState(_defineProperty({}, current_tab, {
+          data: [],
+          nextPage: 1,
+          hasMore: true
+        }), function () {
+          return _this2.getData();
         });
-      }); // here we will use select2, jquery and react states to make a connection between three select2s and the options inside them(warning: do not move this code to another js file(like select2.js) or out of this order)
 
-      var setWorkspaceId = function setWorkspaceId() {
-        var id = $("#new-demand-project-select").val();
+        axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(get_workspaces_api).then(function (res) {
+          var data = res.data;
 
-        _this2.setState({
-          selected_workspace: id
-        });
-      };
+          _this2.setState(function (prevState) {
+            var workspace_obj = {};
+            data.map(function (workspace, i) {
+              workspace_obj[workspace.id] = workspace;
+            });
+            return {
+              workspaces: workspace_obj
+            };
+          }, function () {
+            data.map(function (workspace, i) {
+              var current_workspace;
+              workspace.users.map(function (user, index) {
+                current_workspace = Object.assign({}, current_workspace, _defineProperty({}, user.id, {
+                  id: user.id,
+                  fullname: user.fullname,
+                  avatar_pic: user.avatar_pic,
+                  is_admin: user.pivot.is_admin
+                }));
+              });
 
-      function setSelectValue(id, value) {
-        var selected_task_workspace = $("#task-select").find("option:selected").attr('workspace_id'),
-            selectedProject = $("#new-demand-project-select").val();
+              _this2.setState(function (prevState) {
+                return {
+                  workspaces_users: Object.assign({}, prevState.workspaces_users, _defineProperty({}, workspace.id, current_workspace))
+                };
+              });
+            });
+          });
+        }); // here we will use select2, jquery and react states to make a connection between three select2s and the options inside them(warning: do not move this code to another js file(like select2.js) or out of this order)
 
-        if (selectedProject !== selected_task_workspace) {
-          $(id).val(eval(value)).change();
+        var setWorkspaceId = function setWorkspaceId() {
+          var id = $("#new-demand-project-select").val();
+
+          _this2.setState({
+            selected_workspace: id
+          });
+        };
+
+        function setSelectValue(id, value) {
+          var selected_task_workspace = $("#task-select").find("option:selected").attr('workspace_id'),
+              selectedProject = $("#new-demand-project-select").val();
+
+          if (selectedProject !== selected_task_workspace) {
+            $(id).val(eval(value)).change();
+          }
         }
-      }
 
-      $("#task-select").on("select2:select", function () {
-        setSelectValue("#new-demand-project-select", "selected_task_workspace");
-        setWorkspaceId();
-      });
-      $("#new-demand-project-select").on("select2:select", function () {
-        setSelectValue("#task-select", null);
-        setWorkspaceId();
+        $("#task-select").on("select2:select", function () {
+          setSelectValue("#new-demand-project-select", "selected_task_workspace");
+          setWorkspaceId();
+        });
+        $("#new-demand-project-select").on("select2:select", function () {
+          setSelectValue("#task-select", null);
+          setWorkspaceId();
+        });
       });
     }
   }, {
@@ -56990,25 +57000,26 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
           workspaces = _this$state3.workspaces,
           workspaces_users = _this$state3.workspaces_users,
           selected_workspace = _this$state3.selected_workspace,
+          current_tab = _this$state3.current_tab,
           _this$props2 = this.props,
           logged_in_user_id = _this$props2.logged_in_user_id,
           demand_show_route = _this$props2.demand_show_route;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
         className: "demands-tabs-titles col-12 mt-2"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        className: "demand-tab-title-small-arrow active",
+        className: "demand-tab-title-small-arrow " + "".concat(current_tab === "demands" ? "active" : ""),
         ref: this.tabTitlesRefs[0],
         onClick: this.changeTab.bind(this, 0)
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-arrow-circle-down animated tada delay-1s"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u062F\u0631\u062E\u0648\u0627\u0633\u062A")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        className: "demand-tab-title-small-arrow",
+        className: "demand-tab-title-small-arrow " + "".concat(current_tab === "needs" ? "active" : ""),
         ref: this.tabTitlesRefs[1],
         onClick: this.changeTab.bind(this, 1)
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-arrow-circle-up animated tada delay-1s"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0646\u06CC\u0627\u0632"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-12 mt-4 float-right demand-tab-result active pr-0 pl-0 pr-md-3 pl-md-3",
+        className: "col-12 mt-4 float-right demand-tab-result pr-0 pl-0 pr-md-3 pl-md-3 " + "".concat(current_tab === "demands" ? "active" : ""),
         ref: this.tabResultsRefs[0]
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "search-box p-2 p-md-4"
@@ -57176,7 +57187,7 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
         color: "#000000",
         size: 24
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-12 mt-4 float-right demand-tab-result pr-0 pl-0 pr-md-3 pl-md-3",
+        className: "col-12 mt-4 float-right demand-tab-result pr-0 pl-0 pr-md-3 pl-md-3 " + "".concat(current_tab === "needs" ? "active" : ""),
         ref: this.tabResultsRefs[1]
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "workspace-add-task mb-2 col-12 pl-0 pr-0 pr-md-3 pl-md-3"
