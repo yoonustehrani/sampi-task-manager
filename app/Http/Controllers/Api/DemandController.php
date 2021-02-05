@@ -91,7 +91,7 @@ class DemandController extends BaseController
             $demand = new Demand();
             $task = null;
             if ($request->task) {
-                $task = $user->tasks()->with('users')->findOrFail($request->task);
+                $task = $user->tasks()->findOrFail($request->task);
                 $demand->task_id = $task->id;
             }
             $demand->title = $request->title;

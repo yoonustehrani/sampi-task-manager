@@ -136,7 +136,8 @@ class TaskController extends BaseController
                     array_merge($users, [(string) $request->user()->id])
                 );
             \DB::commit();
-            return $task;
+            // $task['users'] = array_merge($users, [(string) $request->user()->id]);
+            return $task->load('users');
         } catch(\Exception $e) {
             \DB::rollback();
             throw $e;
