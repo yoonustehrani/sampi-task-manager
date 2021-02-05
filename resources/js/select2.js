@@ -39,7 +39,7 @@ $('#new-task-priority, #tasks_order_select, #tasks_order_by_select, #tasks_relat
         noResults: function () {
             return "نتیجه ای یافت نشد"
         }
-    }
+    },
 })
 $('.select2-search__field').css('width', '100%')
 
@@ -81,7 +81,8 @@ const simpleSearch = (ids, parentOnly) => {
             noResults: function () {
                 return "نتیجه ای یافت نشد"
             }
-        }
+        },
+        allowClear: true
     })
 }
 
@@ -102,7 +103,12 @@ const renderWithImg = (ids, placeholder, multiple) => {
             noResults: function () {
                 return "نتیجه ای یافت نشد"
             }
-        }
+        },
+<<<<<<< HEAD
+        allowClear: true,
+=======
+        allowClear: true
+>>>>>>> 20034ea9fb328b92b04b6686411339d1a8f52aca
     })
 }
 renderWithImg("#new-demand-member", "نیاز به کمک چه کسی دارید؟", false)
