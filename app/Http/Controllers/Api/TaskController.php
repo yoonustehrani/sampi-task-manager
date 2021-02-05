@@ -100,9 +100,9 @@ class TaskController extends BaseController
             'users',
         ])->findOrFail($task);
         $this->authorize('view', $task);
-        $relationship = $task->parent_id ? 'parent.users' : 'children.users';
+        $relationship = $task->parent_id ? 'parent' : 'children';
         $task->load([
-            'demands' => function($q) { $q->with('from', 'to'); },
+            'demands',
             $relationship
         ]);
         return $task;
