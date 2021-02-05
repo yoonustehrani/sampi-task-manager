@@ -7,7 +7,7 @@ const mixed_tasks_api = target.getAttribute("get-mixed-tasks-api")
 const mixed_tasks_search_api = target.getAttribute("data-search")
 const get_workspaces_api = target.getAttribute("workspaces-api")
 const post_task_api = target.getAttribute("add_task_api")
-const logged_in_user_id = target.getAttribute("logged-in-user-id")
+const logged_in_user_id = parseInt(target.getAttribute("logged-in-user-id"))
 
 ReactDOM.render(
     <MixedTasks 

@@ -138,7 +138,12 @@ export default class MixedDemands extends Component {
                             {
                                 ...data,
                                 priority: {title: setPriority(data.priority_id)},
-                                to: {id: data.to_id, fullname: workspaces_users[data.workspace_id][data.to_id].fullname, avatar_pic: workspaces_users[data.workspace_id][data.to_id].avatar_pic},
+                                to: {
+                                    id: data.to_id, 
+                                    fullname: workspaces_users[data.workspace_id][data.to_id].fullname, 
+                                    avatar_pic: workspaces_users[data.workspace_id][data.to_id].avatar_pic, 
+                                    name: workspaces_users[data.workspace_id][data.to_id].name
+                                },
                                 finished_at: null
                             }, 
                         ...prevState.needs.data],
@@ -195,7 +200,8 @@ export default class MixedDemands extends Component {
                                     id: user.id,
                                     fullname: user.fullname,
                                     avatar_pic: user.avatar_pic,
-                                    is_admin: user.pivot.is_admin
+                                    is_admin: user.pivot.is_admin,
+                                    name: user.name
                                 }
                             })
                         })
@@ -298,9 +304,9 @@ export default class MixedDemands extends Component {
                         </thead>
                         <tbody>
                             {demands && demands.data.length > 0 && demands.data.map((demand, i) => {
-                                let { title, task, priority, finished_at, from, workspace_id } = demand
+                                let { title, task, priority, finished_at, from, workspace_id, id } = demand
                                 return (
-                                    <tr key={i} className="animated fadeIn" onClick={() => redirectTo(getDemand(demand.id))}>
+                                    <tr key={i} className="animated fadeIn" onClick={() => redirectTo(getDemand(workspace_id, id))}>
                                         <th scope="row">{i + 1}</th>
                                         <td>{ title }</td>
                                         <td className="text-right">
@@ -491,7 +497,7 @@ export default class MixedDemands extends Component {
                             {needs && needs.data.length > 0 && needs.data.map((need, i) => {
                                 let { title, task, priority, due_to, finished_at, to, id, workspace_id } = need
                                 return (
-                                    <tr key={i} className="animated fadeIn" onClick={() => redirectTo(getDemand(need.id))}>
+                                    <tr key={i} className="animated fadeIn" onClick={() => redirectTo(getDemand(workspace_id, id))}>
                                         <th scope="row">{i + 1}</th>
                                         <td>{ title }</td>
                                         <td className="text-right">

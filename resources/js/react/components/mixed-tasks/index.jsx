@@ -79,7 +79,8 @@ export default class MixedTasks extends Component {
 
     addtask = () => {
         let { post_task_api } = this.props, { new_task_description, workspace_users } = this.state
-        let title = $("#new-task-title").val(), priority = parseInt($("#new-task-priority").val()), users = $("#new-task-member").val(), related_task = $("#parent-task-select").val() === "0" ? "" : $("#parent-task-select").val(), workspaceId = $("#new-task-project-select").val(), group = $("#new-task-group").val()
+        let title = $("#new-task-title").val(), priority = parseInt($("#new-task-priority").val()), users = $("#new-task-members").val(), related_task = $("#parent-task-select").val() === "0" ? "" : $("#parent-task-select").val(), workspaceId = $("#new-task-project-select").val(), group = $("#new-task-group").val()
+        console.log(users)
         axios.post(post_task_api.replace("workspaceId", workspaceId), {
             title: title,
             priority: priority,
@@ -92,14 +93,21 @@ export default class MixedTasks extends Component {
             this.setState(prevState => {
                 return ({
                     tasks: Object.assign(prevState.tasks, {
-                        data: [{...data, priority: {title: setPriority(data.priority_id)}, to: {id: data.to_id, fullname: workspace_users[data.to_id].fullname, avatar_pic: workspace_users[data.to_id].avatar_pic}, task: null}, ...prevState.tasks.data],
+                        data: [
+                        {
+                            ...data,
+                            priority: {title: setPriority(data.priority_id)},
+                            users: data.users,
+                            finished_at: null
+                        },
+                        ...prevState.tasks.data],
                     }),
                     already_added_tasks: Object.assign({}, prevState.already_added_tasks, {
                         [data.id]: data.id
                     })
                 })
             })
-            Swal.fire({
+            Swal.default.fire({
                 icon: 'success',
                 title: "موفقیت",
                 text: "مسئولیت جدید ثبت شد",
@@ -118,8 +126,16 @@ export default class MixedTasks extends Component {
         this.setState({tasks: {data: [], nextPage: 1, hasMore: true}}, () => this.getData())
         axios.get(get_workspaces_api).then(res => {
             let { data } = res
-            this.setState({workspaces: data}, () => {
-                this.state.workspaces.map((workspace, i) => {
+            this.setState(prevState => {
+                let workspace_obj = {}
+                data.map((workspace, i) => {
+                    workspace_obj[workspace.id] = workspace
+                })
+                return {
+                    workspaces: workspace_obj
+                }
+            }, () => {
+                data.map((workspace, i) => {
                     let current_workspace
                     workspace.users.map((user, index) => {
                         current_workspace = Object.assign({}, current_workspace, {
@@ -198,7 +214,7 @@ export default class MixedTasks extends Component {
                                 <select id="new-task-project-select" placeholder="انتخاب پروژه اجباری">
                                     <option></option>
                                     {
-                                        workspaces && workspaces.map((workspace, i) => (
+                                        workspaces && Object.values(workspaces).length > 0 && Object.values(workspaces).map((workspace, i) => (
                                             <option key={i} value={workspace.id} img_address={APP_PATH + workspace.avatar_pic}>{workspace.title}</option>
                                         ))
                                     }
@@ -296,14 +312,14 @@ export default class MixedTasks extends Component {
                         </thead>
                         <tbody>
                             {tasks && tasks.data.length > 0 && tasks.data.map((task, i) => {
-                                let { title, priority_id, due_to, finished_at, id, users, workspace, group } = task
+                                let { title, priority_id, due_to, finished_at, id, users, workspace, group, workspace_id } = task
                                 return (
                                     <tr key={i} className="animated fadeIn" onClick={() => redirectTo(getTask(id))}>
                                         <th scope="row">{i + 1}</th>
                                         <td>{ title }</td>
                                         <td className="text-right">
-                                            <img className="workspace_avatar" src={APP_PATH + task.workspace.avatar_pic} />
-                                            <a href={getWorkspace(task.workspace.id)}>{task.workspace.title}</a>
+                                            <img className="workspace_avatar" src={APP_PATH + workspaces[workspace_id].avatar_pic} />
+                                            <a href={getWorkspace(workspace_id)}>{workspaces[workspace_id].title}</a>
                                         </td>
                                         <td>{ group }</td>
                                         <td>
@@ -336,7 +352,7 @@ export default class MixedTasks extends Component {
                                                                 </div>
                                                                 <div className="user-label-container">
                                                                         {
-                                                                        workspaces_users && workspaces_users[workspace.id][user.id].is_admin === 1 
+                                                                        workspaces_users && workspaces_users[workspace_id][user.id].is_admin === 1 
                                                                             ? <button className="btn btn-sm btn-success rtl admin"><span>ادمین<i className="fas fa-user-tie mr-1"></i></span></button>
                                                                             : <button className="btn btn-sm btn-primary rtl"><span>عضو<i className="fas fa-user mr-1"></i></span></button>
                                                                         } 
@@ -347,8 +363,10 @@ export default class MixedTasks extends Component {
                                                 </div>
                                             </div>
                                         </td>
-                                        <td>{task !== null ? <a href={getTask(task.id)}>{ task.title }</a> : <i className="fas fa-minus fa-3x"></i>}</td>
                                         <td>{ setPriority(priority_id) }</td>
+                                        <td>
+                                            {due_to !== null ? moment(due_to).fromNow() : <i className="fas fa-calendar-minus  fa-3x"></i>}
+                                        </td>
                                         <td>
                                             {finished_at === null ? <i className="fas fa-times-circle fa-3x"></i> : <i className="fas fa-check-circle fa-3x"></i>}
                                         </td>
