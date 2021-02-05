@@ -89,8 +89,10 @@ class DemandController extends BaseController
             \DB::beginTransaction();
             $target_user = \App\User::findOrFail($request->target_user);
             $demand = new Demand();
+            $task = null;
             if ($request->task) {
-                $demand->task_id = optional($user->tasks()->findOrFail($request->task))->id;
+                $task = $user->tasks()->findOrFail($request->task);
+                $demand->task_id = $task->id;
             }
             $demand->title = $request->title;
             $demand->priority_id = $request->priority;
@@ -104,6 +106,7 @@ class DemandController extends BaseController
                 $demand->messages()->create($message->toArray());
             }
             \DB::commit();
+            $demand['task'] = $task ? $task->toArray() : null;
             return $demand;
         } catch (\Exception $e){
             \DB::rollback();
