@@ -41,7 +41,6 @@ export default class MixedTasks extends Component {
                 return({isGetting: true})
             }
         }, () => {
-            console.log(this.state.api_target)
             axios.get(`${this.state.api_target === "mixed" ? get_mixed_tasks_api : mixed_tasks_search}&order_by=${order_by ? order_by : "created_at"}&order=${order ? order : "desc"}&relationship=${relationship ? relationship : "all"}&page=${this.state.tasks.nextPage}${this.state.api_target === "search" ? `&q=${search_value}` : ""}`).then(res => {
                 let { data, current_page, last_page } = res.data
                 let filteredArray = data.filter((item) => already_added_tasks && typeof already_added_tasks[item.id] === "undefined")

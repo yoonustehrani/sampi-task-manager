@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import { getTask, getDemand, getUser, getWorkspace, sweetError } from '../../../helpers'
-import { Digital, Dots, Spinner } from 'react-activity'
+import { Digital, Spinner } from 'react-activity'
 import 'react-activity/lib/Digital/Digital.css'
 import 'react-activity/lib/Spinner/Spinner.css'
-import 'react-activity/lib/Dots/Dots.css'
 import TinymcEditor from '../tinymce-editor/index'
 import { setPriority, redirectTo } from '../../../helpers'
 import moment from 'moment'
@@ -122,12 +121,12 @@ export default class MixedDemands extends Component {
     }
 
     addDemand = () => {
-        let { post_demand_api } = this.props, { new_demand_description, workspace_users } = this.state
-        let title = $("#new-demand-title").val(), priority = parseInt($("#new-task-priority").val()), toUser = $("#new-demand-member").val(), related_task = $("#task-select").val() === "0" ? "" : $("#task-select").val(), workspaceId = $("#new-demand-project-select").val(), search_value = $("#")
+        let { post_demand_api } = this.props, { new_demand_description, workspaces_users } = this.state
+        let title = $("#new-demand-title").val(), priority = parseInt($("#new-task-priority").val()), toUser = $("#new-demand-member").val(), related_task = $("#task-select").val() === "0" ? "" : $("#task-select").val(), workspaceId = $("#new-demand-project-select").val()
         axios.post(post_demand_api.replace("workspaceId", workspaceId), {
             title: title,
             priority: priority,
-            task_id: related_task,
+            task: related_task,
             target_user: toUser,
             text: new_demand_description 
         }).then(res => {
@@ -135,14 +134,21 @@ export default class MixedDemands extends Component {
             this.setState(prevState => {
                 return ({
                     needs: Object.assign(prevState.needs, {
-                        data: [{...data, priority: {title: setPriority(data.priority_id)}, to: {id: data.to_id, fullname: workspace_users[data.to_id].fullname, avatar_pic: workspace_users[data.to_id].avatar_pic}, task: null}, ...prevState.needs.data],
+                        data: [
+                            {
+                                ...data,
+                                priority: {title: setPriority(data.priority_id)},
+                                to: {id: data.to_id, fullname: workspaces_users[data.workspace_id][data.to_id].fullname, avatar_pic: workspaces_users[data.workspace_id][data.to_id].avatar_pic},
+                                finished_at: null
+                            }, 
+                        ...prevState.needs.data],
                     }),
                     already_added_needs: Object.assign({}, prevState.already_added_needs, {
                         [data.id]: data.id
                     })
                 })
             })
-            Swal.fire({
+            Swal.default.fire({
                 icon: 'success',
                 title: "موفقیت",
                 text: "درخواست شما ارسال شد",
@@ -156,71 +162,91 @@ export default class MixedDemands extends Component {
         })
     }
 
+    setRightTab = () => {
+
+
+    }
+
     componentDidMount() {
-        let { current_tab } = this.state, { get_workspaces_api } = this.props
-        this.setState({[current_tab]: {data: [], nextPage: 1, hasMore: true}}, () => this.getData())
-        axios.get(get_workspaces_api).then(res => {
-            let { data } = res
-            this.setState({workspaces: data}, () => {
-                this.state.workspaces.map((workspace, i) => {
-                    let current_workspace
-                    workspace.users.map((user, index) => {
-                        current_workspace = Object.assign({}, current_workspace, {
-                            [user.id]: {
-                                id: user.id,
-                                fullname: user.fullname,
-                                avatar_pic: user.avatar_pic,
-                                is_admin: user.pivot.is_admin
-                            }
-                        })
+        let { get_workspaces_api } = this.props
+        const url = window.location.href
+        const tab = url.split("?tab=")[1]
+        this.setState({
+            current_tab: tab === "demand" ? "needs" : "demands"
+        }, () => {
+            let { current_tab } = this.state
+            this.setState({[current_tab]: {data: [], nextPage: 1, hasMore: true}}, () => this.getData())
+            axios.get(get_workspaces_api).then(res => {
+                let { data } = res
+                this.setState(prevState => {
+                    let workspace_obj = {}
+                    data.map((workspace, i) => {
+                        workspace_obj[workspace.id] = workspace
                     })
-                    this.setState(prevState => ({
-                        workspaces_users: Object.assign({}, prevState.workspaces_users, {
-                            [workspace.id]: current_workspace
+                    return {
+                        workspaces: workspace_obj
+                    }
+                }, () => {
+                    data.map((workspace, i) => {
+                        let current_workspace
+                        workspace.users.map((user, index) => {
+                            current_workspace = Object.assign({}, current_workspace, {
+                                [user.id]: {
+                                    id: user.id,
+                                    fullname: user.fullname,
+                                    avatar_pic: user.avatar_pic,
+                                    is_admin: user.pivot.is_admin
+                                }
+                            })
                         })
-                    }))
+                        this.setState(prevState => ({
+                            workspaces_users: Object.assign({}, prevState.workspaces_users, {
+                                [workspace.id]: current_workspace
+                            })
+                        }))
+                    })
                 })
             })
-        })
-        // here we will use select2, jquery and react states to make a connection between three select2s and the options inside them(warning: do not move this code to another js file(like select2.js) or out of this order)
-        const setWorkspaceId = () => {
-            let id = $("#new-demand-project-select").val()
-            this.setState({
-                selected_workspace: id
-            })
-        }
-        function setSelectValue (id, value) {
-            let selected_task_workspace = $("#task-select").find("option:selected").attr('workspace_id'), selectedProject = $("#new-demand-project-select").val()
-            if (selectedProject !== selected_task_workspace) {
-                $(id).val(eval(value)).change()
+            // here we will use select2, jquery and react states to make a connection between three select2s and the options inside them(warning: do not move this code to another js file(like select2.js) or out of this order)
+            const setWorkspaceId = () => {
+                let id = $("#new-demand-project-select").val()
+                this.setState({
+                    selected_workspace: id
+                })
             }
-        }
-        $("#task-select").on("select2:select", function () {
-            setSelectValue("#new-demand-project-select", "selected_task_workspace")
-            setWorkspaceId()
-        })
-        $("#new-demand-project-select").on("select2:select", function () {
-            setSelectValue("#task-select", null)
-            setWorkspaceId()
+            function setSelectValue (id, value) {
+                let selected_task_workspace = $("#task-select").find("option:selected").attr('workspace_id'), selectedProject = $("#new-demand-project-select").val()
+                if (selectedProject !== selected_task_workspace) {
+                    $(id).val(eval(value)).change()
+                }
+            }
+            $("#task-select").on("select2:select", function () {
+                setSelectValue("#new-demand-project-select", "selected_task_workspace")
+                setWorkspaceId()
+            })
+            $("#new-demand-project-select").on("select2:select", function () {
+                setSelectValue("#task-select", null)
+                setWorkspaceId()
+            })
+    
         })
     }
 
     render() {
-        let { demands, needs, isGetting, already_added_needs, workspaces, workspaces_users, selected_workspace } = this.state, { logged_in_user_id, demand_show_route } = this.props
-
+        let { demands, needs, isGetting, already_added_needs, workspaces, workspaces_users, selected_workspace, current_tab } = this.state, { logged_in_user_id, demand_show_route } = this.props
         return (
             <div>
                 <nav className="demands-tabs-titles col-12 mt-2">
-                    <a className="demand-tab-title-small-arrow active" ref={this.tabTitlesRefs[0]} onClick={this.changeTab.bind(this, 0)}>
+                    <a className={"demand-tab-title-small-arrow " + `${current_tab === "demands" ? "active" : ""}`} ref={this.tabTitlesRefs[0]} onClick={this.changeTab.bind(this, 0)}>
                         <i className="fas fa-arrow-circle-down animated tada delay-1s"></i>
                         <span>درخواست</span>
                     </a>
-                    <a className="demand-tab-title-small-arrow" ref={this.tabTitlesRefs[1]} onClick={this.changeTab.bind(this, 1)}>
+                    <a className={"demand-tab-title-small-arrow " + `${current_tab === "needs" ? "active" : ""}`} ref={this.tabTitlesRefs[1]} onClick={this.changeTab.bind(this, 1)}>
                         <i className="fas fa-arrow-circle-up animated tada delay-1s"></i>
                         <span>نیاز</span>
                     </a>
                 </nav>
-                <div className="col-12 mt-4 float-right demand-tab-result active pr-0 pl-0 pr-md-3 pl-md-3" ref={this.tabResultsRefs[0]}>
+                <div className={"col-12 mt-4 float-right demand-tab-result pr-0 pl-0 pr-md-3 pl-md-3 " + `${current_tab === "demands" ? "active" : ""}`} ref={this.tabResultsRefs[0]}>
                     <div className="search-box p-2 p-md-4">
                         <div className="input-group">
                             <div className="input-group-prepend">
@@ -339,7 +365,7 @@ export default class MixedDemands extends Component {
                             </div>
                     }
                 </div>
-                <div className="col-12 mt-4 float-right demand-tab-result pr-0 pl-0 pr-md-3 pl-md-3" ref={this.tabResultsRefs[1]}>
+                <div className={"col-12 mt-4 float-right demand-tab-result pr-0 pl-0 pr-md-3 pl-md-3 " + `${current_tab === "needs" ? "active" : ""}`} ref={this.tabResultsRefs[1]}>
                     <div className="workspace-add-task mb-2 col-12 pl-0 pr-0 pr-md-3 pl-md-3">
                         <div className="workspace-title-section title-section" onClick={this.toggleAddBox}>
                             <i className="fas fa-plus" ref={this.addIconRef}></i>
@@ -370,7 +396,7 @@ export default class MixedDemands extends Component {
                                 <select id="new-demand-project-select" placeholder="(انتخاب پروژه (اجباری">
                                     <option></option>
                                     {
-                                        workspaces && workspaces.map((workspace, i) => (
+                                        workspaces && Object.values(workspaces).length > 0 &&  Object.values(workspaces).map((workspace, i) => (
                                             <option key={i} value={workspace.id} img_address={APP_PATH + workspace.avatar_pic}>{workspace.title}</option>
                                         ))
                                     }
@@ -390,7 +416,7 @@ export default class MixedDemands extends Component {
                                 </div>
                                 <select id="new-demand-member" className="form-control text-right">
                                     <option></option>
-                                    { workspaces_users && selected_workspace ? Object.values(workspaces_users[parseInt(selected_workspace)]).map((user, i) => {
+                                    { selected_workspace ? Object.values(workspaces_users[parseInt(selected_workspace)]).map((user, i) => {
                                         if (user.id !== logged_in_user_id) {
                                             return (
                                                 <option key={i} value={user.id} img_address={user.avatar_pic !== null ? APP_PATH + user.avatar_pic : APP_PATH + 'images/male-avatar.svg'} is_admin={user.is_admin}>{user.fullname}</option>
@@ -469,8 +495,8 @@ export default class MixedDemands extends Component {
                                         <th scope="row">{i + 1}</th>
                                         <td>{ title }</td>
                                         <td className="text-right">
-                                            <img className="workspace_avatar" src={APP_PATH + need.workspace.avatar_pic} />
-                                            <a href={getWorkspace(workspace_id)}>{need.workspace.title}</a>
+                                            <img className="workspace_avatar" src={APP_PATH + workspaces[workspace_id].avatar_pic} />
+                                            <a href={getWorkspace(workspace_id)}>{workspaces[need.workspace_id].title}</a>
                                         </td>
                                         <td>
                                             <div className="employees-container horizontal-centerlize">
@@ -530,6 +556,6 @@ export default class MixedDemands extends Component {
                     }
                 </div>
             </div>
-        )
+        )   
     }
 }

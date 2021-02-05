@@ -2485,25 +2485,6 @@ exports.push([module.i, "@-webkit-keyframes digital-pulse {\n  0%, 40%, 100% {\n
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/react-activity/lib/Dots/Dots.css":
-/*!***************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader??ref--7-1!./node_modules/postcss-loader/src??ref--7-2!./node_modules/react-activity/lib/Dots/Dots.css ***!
-  \***************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(/*! ../../../css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, "@-webkit-keyframes dots-pulse {\n  0% {\n    opacity: 0.1; }\n  15% {\n    opacity: 1; }\n  100% {\n    opacity: 0.1; } }\n@keyframes dots-pulse {\n  0% {\n    opacity: 0.1; }\n  15% {\n    opacity: 1; }\n  100% {\n    opacity: 0.1; } }\n.rai-dots .rai-circle {\n  border-radius: 100%;\n  display: inline-block;\n  margin-right: 0.1875em;\n  background-color: #727981;\n  width: 0.5em;\n  height: 0.5em;\n  -webkit-animation-name: dots-pulse;\n          animation-name: dots-pulse;\n  -webkit-animation-duration: inherit;\n          animation-duration: inherit;\n  -webkit-animation-timing-function: ease-in-out;\n          animation-timing-function: ease-in-out;\n  -webkit-animation-iteration-count: infinite;\n          animation-iteration-count: infinite; }\n  .rai-dots .rai-circle:last-child {\n    margin-right: 0; }\n", ""]);
-
-// exports
-
-
-/***/ }),
-
 /***/ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/react-activity/lib/Spinner/Spinner.css":
 /*!*********************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader??ref--7-1!./node_modules/postcss-loader/src??ref--7-2!./node_modules/react-activity/lib/Spinner/Spinner.css ***!
@@ -27177,36 +27158,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 var content = __webpack_require__(/*! !../../../css-loader??ref--7-1!../../../postcss-loader/src??ref--7-2!./Digital.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/react-activity/lib/Digital/Digital.css");
-
-if(typeof content === 'string') content = [[module.i, content, '']];
-
-var transform;
-var insertInto;
-
-
-
-var options = {"hmr":true}
-
-options.transform = transform
-options.insertInto = undefined;
-
-var update = __webpack_require__(/*! ../../../style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
-
-if(content.locals) module.exports = content.locals;
-
-if(false) {}
-
-/***/ }),
-
-/***/ "./node_modules/react-activity/lib/Dots/Dots.css":
-/*!*******************************************************!*\
-  !*** ./node_modules/react-activity/lib/Dots/Dots.css ***!
-  \*******************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-
-var content = __webpack_require__(/*! !../../../css-loader??ref--7-1!../../../postcss-loader/src??ref--7-2!./Dots.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/react-activity/lib/Dots/Dots.css");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -56424,6 +56375,8 @@ var getDemand = function getDemand(workspaceId, demandId) {
   return DEMAND_ROUTE.replace('workspaceId', workspaceId).replace('demandId', demandId);
 };
 var sweetError = function sweetError(errObject) {
+  console.log(errObject);
+
   if (!errObject.response) {
     Swal["default"].fire({
       icon: "error",
@@ -56522,11 +56475,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_activity_lib_Digital_Digital_css__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_activity_lib_Digital_Digital_css__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var react_activity_lib_Spinner_Spinner_css__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-activity/lib/Spinner/Spinner.css */ "./node_modules/react-activity/lib/Spinner/Spinner.css");
 /* harmony import */ var react_activity_lib_Spinner_Spinner_css__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react_activity_lib_Spinner_Spinner_css__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var react_activity_lib_Dots_Dots_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-activity/lib/Dots/Dots.css */ "./node_modules/react-activity/lib/Dots/Dots.css");
-/* harmony import */ var react_activity_lib_Dots_Dots_css__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(react_activity_lib_Dots_Dots_css__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _tinymce_editor_index__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../tinymce-editor/index */ "./resources/js/react/components/tinymce-editor/index.jsx");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _tinymce_editor_index__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../tinymce-editor/index */ "./resources/js/react/components/tinymce-editor/index.jsx");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_7__);
 function _typeof(obj) {
   "@babel/helpers - typeof";
 
@@ -56737,8 +56688,7 @@ function _defineProperty(obj, key, value) {
 
 
 
-
-moment__WEBPACK_IMPORTED_MODULE_8___default.a.locale('fa');
+moment__WEBPACK_IMPORTED_MODULE_7___default.a.locale('fa');
 
 var MixedDemands = /*#__PURE__*/function (_Component) {
   _inherits(MixedDemands, _Component);
@@ -56885,17 +56835,16 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
       var post_demand_api = _this.props.post_demand_api,
           _this$state2 = _this.state,
           new_demand_description = _this$state2.new_demand_description,
-          workspace_users = _this$state2.workspace_users;
+          workspaces_users = _this$state2.workspaces_users;
       var title = $("#new-demand-title").val(),
           priority = parseInt($("#new-task-priority").val()),
           toUser = $("#new-demand-member").val(),
           related_task = $("#task-select").val() === "0" ? "" : $("#task-select").val(),
-          workspaceId = $("#new-demand-project-select").val(),
-          search_value = $("#");
+          workspaceId = $("#new-demand-project-select").val();
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(post_demand_api.replace("workspaceId", workspaceId), {
         title: title,
         priority: priority,
-        task_id: related_task,
+        task: related_task,
         target_user: toUser,
         text: new_demand_description
       }).then(function (res) {
@@ -56910,17 +56859,17 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
                 },
                 to: {
                   id: data.to_id,
-                  fullname: workspace_users[data.to_id].fullname,
-                  avatar_pic: workspace_users[data.to_id].avatar_pic
+                  fullname: workspaces_users[data.workspace_id][data.to_id].fullname,
+                  avatar_pic: workspaces_users[data.workspace_id][data.to_id].avatar_pic
                 },
-                task: null
+                finished_at: null
               })].concat(_toConsumableArray(prevState.needs.data))
             }),
             already_added_needs: Object.assign({}, prevState.already_added_needs, _defineProperty({}, data.id, data.id))
           };
         });
 
-        Swal.fire({
+        Swal["default"].fire({
           icon: 'success',
           title: "موفقیت",
           text: "درخواست شما ارسال شد",
@@ -56933,6 +56882,8 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
         Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["sweetError"])(err);
       });
     });
+
+    _defineProperty(_assertThisInitialized(_this), "setRightTab", function () {});
 
     _this.tabTitlesRefs = [];
     _this.tabResultsRefs = [];
@@ -56963,65 +56914,79 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      var current_tab = this.state.current_tab,
-          get_workspaces_api = this.props.get_workspaces_api;
-      this.setState(_defineProperty({}, current_tab, {
-        data: [],
-        nextPage: 1,
-        hasMore: true
-      }), function () {
-        return _this2.getData();
-      });
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(get_workspaces_api).then(function (res) {
-        var data = res.data;
+      var get_workspaces_api = this.props.get_workspaces_api;
+      var url = window.location.href;
+      var tab = url.split("?tab=")[1];
+      this.setState({
+        current_tab: tab === "demand" ? "needs" : "demands"
+      }, function () {
+        var current_tab = _this2.state.current_tab;
 
-        _this2.setState({
-          workspaces: data
-        }, function () {
-          _this2.state.workspaces.map(function (workspace, i) {
-            var current_workspace;
-            workspace.users.map(function (user, index) {
-              current_workspace = Object.assign({}, current_workspace, _defineProperty({}, user.id, {
-                id: user.id,
-                fullname: user.fullname,
-                avatar_pic: user.avatar_pic,
-                is_admin: user.pivot.is_admin
-              }));
+        _this2.setState(_defineProperty({}, current_tab, {
+          data: [],
+          nextPage: 1,
+          hasMore: true
+        }), function () {
+          return _this2.getData();
+        });
+
+        axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(get_workspaces_api).then(function (res) {
+          var data = res.data;
+
+          _this2.setState(function (prevState) {
+            var workspace_obj = {};
+            data.map(function (workspace, i) {
+              workspace_obj[workspace.id] = workspace;
             });
+            return {
+              workspaces: workspace_obj
+            };
+          }, function () {
+            data.map(function (workspace, i) {
+              var current_workspace;
+              workspace.users.map(function (user, index) {
+                current_workspace = Object.assign({}, current_workspace, _defineProperty({}, user.id, {
+                  id: user.id,
+                  fullname: user.fullname,
+                  avatar_pic: user.avatar_pic,
+                  is_admin: user.pivot.is_admin
+                }));
+              });
 
-            _this2.setState(function (prevState) {
-              return {
-                workspaces_users: Object.assign({}, prevState.workspaces_users, _defineProperty({}, workspace.id, current_workspace))
-              };
+              _this2.setState(function (prevState) {
+                return {
+                  workspaces_users: Object.assign({}, prevState.workspaces_users, _defineProperty({}, workspace.id, current_workspace))
+                };
+              });
             });
           });
-        });
-      }); // here we will use select2, jquery and react states to make a connection between three select2s and the options inside them(warning: do not move this code to another js file(like select2.js) or out of this order)
+        }); // here we will use select2, jquery and react states to make a connection between three select2s and the options inside them(warning: do not move this code to another js file(like select2.js) or out of this order)
 
-      var setWorkspaceId = function setWorkspaceId() {
-        var id = $("#new-demand-project-select").val();
+        var setWorkspaceId = function setWorkspaceId() {
+          var id = $("#new-demand-project-select").val();
 
-        _this2.setState({
-          selected_workspace: id
-        });
-      };
+          _this2.setState({
+            selected_workspace: id
+          });
+        };
 
-      function setSelectValue(id, value) {
-        var selected_task_workspace = $("#task-select").find("option:selected").attr('workspace_id'),
-            selectedProject = $("#new-demand-project-select").val();
+        function setSelectValue(id, value) {
+          var selected_task_workspace = $("#task-select").find("option:selected").attr('workspace_id'),
+              selectedProject = $("#new-demand-project-select").val();
 
-        if (selectedProject !== selected_task_workspace) {
-          $(id).val(eval(value)).change();
+          if (selectedProject !== selected_task_workspace) {
+            $(id).val(eval(value)).change();
+          }
         }
-      }
 
-      $("#task-select").on("select2:select", function () {
-        setSelectValue("#new-demand-project-select", "selected_task_workspace");
-        setWorkspaceId();
-      });
-      $("#new-demand-project-select").on("select2:select", function () {
-        setSelectValue("#task-select", null);
-        setWorkspaceId();
+        $("#task-select").on("select2:select", function () {
+          setSelectValue("#new-demand-project-select", "selected_task_workspace");
+          setWorkspaceId();
+        });
+        $("#new-demand-project-select").on("select2:select", function () {
+          setSelectValue("#task-select", null);
+          setWorkspaceId();
+        });
       });
     }
   }, {
@@ -57035,25 +57000,26 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
           workspaces = _this$state3.workspaces,
           workspaces_users = _this$state3.workspaces_users,
           selected_workspace = _this$state3.selected_workspace,
+          current_tab = _this$state3.current_tab,
           _this$props2 = this.props,
           logged_in_user_id = _this$props2.logged_in_user_id,
           demand_show_route = _this$props2.demand_show_route;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
         className: "demands-tabs-titles col-12 mt-2"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        className: "demand-tab-title-small-arrow active",
+        className: "demand-tab-title-small-arrow " + "".concat(current_tab === "demands" ? "active" : ""),
         ref: this.tabTitlesRefs[0],
         onClick: this.changeTab.bind(this, 0)
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-arrow-circle-down animated tada delay-1s"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u062F\u0631\u062E\u0648\u0627\u0633\u062A")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        className: "demand-tab-title-small-arrow",
+        className: "demand-tab-title-small-arrow " + "".concat(current_tab === "needs" ? "active" : ""),
         ref: this.tabTitlesRefs[1],
         onClick: this.changeTab.bind(this, 1)
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-arrow-circle-up animated tada delay-1s"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0646\u06CC\u0627\u0632"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-12 mt-4 float-right demand-tab-result active pr-0 pl-0 pr-md-3 pl-md-3",
+        className: "col-12 mt-4 float-right demand-tab-result pr-0 pl-0 pr-md-3 pl-md-3 " + "".concat(current_tab === "demands" ? "active" : ""),
         ref: this.tabResultsRefs[0]
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "search-box p-2 p-md-4"
@@ -57207,7 +57173,7 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
           className: "fas fa-check-circle fa-3x"
         })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, finished_at === null ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-calendar-times fa-3x"
-        }) : moment__WEBPACK_IMPORTED_MODULE_8___default()(finished_at).fromNow()));
+        }) : moment__WEBPACK_IMPORTED_MODULE_7___default()(finished_at).fromNow()));
       }))), demands && demands.data.length > 0 && !isGetting && demands.hasMore && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "text-center"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
@@ -57221,7 +57187,7 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
         color: "#000000",
         size: 24
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-12 mt-4 float-right demand-tab-result pr-0 pl-0 pr-md-3 pl-md-3",
+        className: "col-12 mt-4 float-right demand-tab-result pr-0 pl-0 pr-md-3 pl-md-3 " + "".concat(current_tab === "needs" ? "active" : ""),
         ref: this.tabResultsRefs[1]
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "workspace-add-task mb-2 col-12 pl-0 pr-0 pr-md-3 pl-md-3"
@@ -57275,7 +57241,7 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
       }, "\u067E\u0631\u0648\u0698\u0647 \u0645\u0631\u0628\u0648\u0637\u0647")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
         id: "new-demand-project-select",
         placeholder: "(\u0627\u0646\u062A\u062E\u0627\u0628 \u067E\u0631\u0648\u0698\u0647 (\u0627\u062C\u0628\u0627\u0631\u06CC"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null), workspaces && workspaces.map(function (workspace, i) {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null), workspaces && Object.values(workspaces).length > 0 && Object.values(workspaces).map(function (workspace, i) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
           key: i,
           value: workspace.id,
@@ -57298,7 +57264,7 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
       }, "\u0645\u062E\u0627\u0637\u0628 \u0646\u06CC\u0627\u0632")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
         id: "new-demand-member",
         className: "form-control text-right"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null), workspaces_users && selected_workspace ? Object.values(workspaces_users[parseInt(selected_workspace)]).map(function (user, i) {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null), selected_workspace ? Object.values(workspaces_users[parseInt(selected_workspace)]).map(function (user, i) {
         if (user.id !== logged_in_user_id) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
             key: i,
@@ -57311,7 +57277,7 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
         className: "input-group col-12 pl-0 pr-0"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "tinymc-container"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_tinymce_editor_index__WEBPACK_IMPORTED_MODULE_7__["default"], {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_tinymce_editor_index__WEBPACK_IMPORTED_MODULE_6__["default"], {
         changeContent: this.onDescriptionChange
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "text-center mt-2"
@@ -57433,10 +57399,10 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
           className: "text-right"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
           className: "workspace_avatar",
-          src: APP_PATH + need.workspace.avatar_pic
+          src: APP_PATH + workspaces[workspace_id].avatar_pic
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
           href: Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["getWorkspace"])(workspace_id)
-        }, need.workspace.title)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }, workspaces[need.workspace_id].title)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "employees-container horizontal-centerlize"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, to.fullname), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "dropdown-users d-none",
@@ -57475,7 +57441,7 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
           className: "fas fa-check-circle fa-3x"
         })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, finished_at === null ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-calendar-times fa-3x"
-        }) : moment__WEBPACK_IMPORTED_MODULE_8___default()(finished_at).fromNow()));
+        }) : moment__WEBPACK_IMPORTED_MODULE_7___default()(finished_at).fromNow()));
       }))), needs && needs.data.length > 0 && !isGetting && needs.hasMore && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "text-center"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
