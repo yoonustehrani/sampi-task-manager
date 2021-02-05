@@ -56844,7 +56844,7 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(post_demand_api.replace("workspaceId", workspaceId), {
         title: title,
         priority: priority,
-        task_id: related_task,
+        task: related_task,
         target_user: toUser,
         text: new_demand_description
       }).then(function (res) {
@@ -56910,16 +56910,15 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
   _createClass(MixedDemands, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      var _this$setState3,
-          _this2 = this;
+      var _this2 = this;
 
       var current_tab = this.state.current_tab,
           get_workspaces_api = this.props.get_workspaces_api;
-      this.setState((_this$setState3 = {}, _defineProperty(_this$setState3, current_tab, {
+      this.setState(_defineProperty({}, current_tab, {
         data: [],
         nextPage: 1,
         hasMore: true
-      }), _defineProperty(_this$setState3, "gettingInitialData", true), _this$setState3), function () {
+      }), function () {
         return _this2.getData();
       });
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(get_workspaces_api).then(function (res) {
@@ -56947,8 +56946,7 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
 
             _this2.setState(function (prevState) {
               return {
-                workspaces_users: Object.assign({}, prevState.workspaces_users, _defineProperty({}, workspace.id, current_workspace)),
-                gettingInitialData: false
+                workspaces_users: Object.assign({}, prevState.workspaces_users, _defineProperty({}, workspace.id, current_workspace))
               };
             });
           });
@@ -56992,16 +56990,10 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
           workspaces = _this$state3.workspaces,
           workspaces_users = _this$state3.workspaces_users,
           selected_workspace = _this$state3.selected_workspace,
-          gettingInitialData = _this$state3.gettingInitialData,
           _this$props2 = this.props,
           logged_in_user_id = _this$props2.logged_in_user_id,
           demand_show_route = _this$props2.demand_show_route;
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, gettingInitialData ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-12 text-center mt-4"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_activity__WEBPACK_IMPORTED_MODULE_3__["Spinner"], {
-        size: 24,
-        color: "#000000"
-      })) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
         className: "demands-tabs-titles col-12 mt-2"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         className: "demand-tab-title-small-arrow active",
@@ -57451,7 +57443,7 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_activity__WEBPACK_IMPORTED_MODULE_3__["Digital"], {
         color: "#000000",
         size: 24
-      })))));
+      }))));
     }
   }]);
 
