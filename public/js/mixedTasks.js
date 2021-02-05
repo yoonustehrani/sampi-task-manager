@@ -56326,8 +56326,6 @@ var getDemand = function getDemand(workspaceId, demandId) {
   return DEMAND_ROUTE.replace('workspaceId', workspaceId).replace('demandId', demandId);
 };
 var sweetError = function sweetError(errObject) {
-  console.log(errObject);
-
   if (!errObject.response) {
     Swal["default"].fire({
       icon: "error",
@@ -56739,10 +56737,11 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
           workspace_users = _this$state.workspace_users;
       var title = $("#new-task-title").val(),
           priority = parseInt($("#new-task-priority").val()),
-          users = $("#new-task-member").val(),
+          users = $("#new-task-members").val(),
           related_task = $("#parent-task-select").val() === "0" ? "" : $("#parent-task-select").val(),
           workspaceId = $("#new-task-project-select").val(),
           group = $("#new-task-group").val();
+      console.log(users);
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(post_task_api.replace("workspaceId", workspaceId), {
         title: title,
         priority: priority,
@@ -56760,19 +56759,15 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
                 priority: {
                   title: Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["setPriority"])(data.priority_id)
                 },
-                to: {
-                  id: data.to_id,
-                  fullname: workspace_users[data.to_id].fullname,
-                  avatar_pic: workspace_users[data.to_id].avatar_pic
-                },
-                task: null
+                users: data.users,
+                finished_at: null
               })].concat(_toConsumableArray(prevState.tasks.data))
             }),
             already_added_tasks: Object.assign({}, prevState.already_added_tasks, _defineProperty({}, data.id, data.id))
           };
         });
 
-        Swal.fire({
+        Swal["default"].fire({
           icon: 'success',
           title: "موفقیت",
           text: "مسئولیت جدید ثبت شد",
@@ -56817,10 +56812,16 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(get_workspaces_api).then(function (res) {
         var data = res.data;
 
-        _this2.setState({
-          workspaces: data
+        _this2.setState(function (prevState) {
+          var workspace_obj = {};
+          data.map(function (workspace, i) {
+            workspace_obj[workspace.id] = workspace;
+          });
+          return {
+            workspaces: workspace_obj
+          };
         }, function () {
-          _this2.state.workspaces.map(function (workspace, i) {
+          data.map(function (workspace, i) {
             var current_workspace;
             workspace.users.map(function (user, index) {
               current_workspace = Object.assign({}, current_workspace, _defineProperty({}, user.id, {
@@ -56931,7 +56932,7 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
       }, "\u067E\u0631\u0648\u0698\u0647 \u0645\u0631\u0628\u0648\u0637\u0647")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
         id: "new-task-project-select",
         placeholder: "\u0627\u0646\u062A\u062E\u0627\u0628 \u067E\u0631\u0648\u0698\u0647 \u0627\u062C\u0628\u0627\u0631\u06CC"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null), workspaces && workspaces.map(function (workspace, i) {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null), workspaces && Object.values(workspaces).length > 0 && Object.values(workspaces).map(function (workspace, i) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
           key: i,
           value: workspace.id,
@@ -57097,7 +57098,8 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
             id = task.id,
             users = task.users,
             workspace = task.workspace,
-            group = task.group;
+            group = task.group,
+            workspace_id = task.workspace_id;
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
           key: i,
           className: "animated fadeIn",
@@ -57110,10 +57112,10 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
           className: "text-right"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
           className: "workspace_avatar",
-          src: APP_PATH + task.workspace.avatar_pic
+          src: APP_PATH + workspaces[workspace_id].avatar_pic
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-          href: Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["getWorkspace"])(task.workspace.id)
-        }, task.workspace.title)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, group), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          href: Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["getWorkspace"])(workspace_id)
+        }, workspaces[workspace_id].title)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, group), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "employees-container horizontal-centerlize"
         }, users.length === 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-user-slash"
@@ -57142,7 +57144,7 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
             href: "#user"
           }, "@", user.name))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             className: "user-label-container"
-          }, workspaces_users && workspaces_users[workspace.id][user.id].is_admin === 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          }, workspaces_users && workspaces_users[workspace_id][user.id].is_admin === 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
             className: "btn btn-sm btn-success rtl admin"
           }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0627\u062F\u0645\u06CC\u0646", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
             className: "fas fa-user-tie mr-1"
@@ -57151,11 +57153,9 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
           }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0639\u0636\u0648", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
             className: "fas fa-user mr-1"
           })))));
-        })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, task !== null ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-          href: Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["getTask"])(task.id)
-        }, task.title) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-          className: "fas fa-minus fa-3x"
-        })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["setPriority"])(priority_id)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, finished_at === null ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["setPriority"])(priority_id)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, due_to !== null ? moment__WEBPACK_IMPORTED_MODULE_6___default()(due_to).fromNow() : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fas fa-calendar-minus  fa-3x"
+        })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, finished_at === null ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-times-circle fa-3x"
         }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-check-circle fa-3x"
@@ -57437,7 +57437,7 @@ var mixed_tasks_api = target.getAttribute("get-mixed-tasks-api");
 var mixed_tasks_search_api = target.getAttribute("data-search");
 var get_workspaces_api = target.getAttribute("workspaces-api");
 var post_task_api = target.getAttribute("add_task_api");
-var logged_in_user_id = target.getAttribute("logged-in-user-id");
+var logged_in_user_id = parseInt(target.getAttribute("logged-in-user-id"));
 react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_mixed_tasks__WEBPACK_IMPORTED_MODULE_2__["default"], {
   get_mixed_tasks_api: mixed_tasks_api,
   mixed_tasks_search: mixed_tasks_search_api,

@@ -38,7 +38,6 @@ export const getDemand = (workspaceId, demandId) => {
 }
 
 export const sweetError = (errObject) => {
-    console.log(errObject)
     if (! errObject.response) {
         Swal.default.fire({
             icon: "error",

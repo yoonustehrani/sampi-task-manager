@@ -56375,8 +56375,6 @@ var getDemand = function getDemand(workspaceId, demandId) {
   return DEMAND_ROUTE.replace('workspaceId', workspaceId).replace('demandId', demandId);
 };
 var sweetError = function sweetError(errObject) {
-  console.log(errObject);
-
   if (!errObject.response) {
     Swal["default"].fire({
       icon: "error",
@@ -56860,7 +56858,8 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
                 to: {
                   id: data.to_id,
                   fullname: workspaces_users[data.workspace_id][data.to_id].fullname,
-                  avatar_pic: workspaces_users[data.workspace_id][data.to_id].avatar_pic
+                  avatar_pic: workspaces_users[data.workspace_id][data.to_id].avatar_pic,
+                  name: workspaces_users[data.workspace_id][data.to_id].name
                 },
                 finished_at: null
               })].concat(_toConsumableArray(prevState.needs.data))
@@ -56949,7 +56948,8 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
                   id: user.id,
                   fullname: user.fullname,
                   avatar_pic: user.avatar_pic,
-                  is_admin: user.pivot.is_admin
+                  is_admin: user.pivot.is_admin,
+                  name: user.name
                 }));
               });
 
@@ -57118,12 +57118,13 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
             priority = demand.priority,
             finished_at = demand.finished_at,
             from = demand.from,
-            workspace_id = demand.workspace_id;
+            workspace_id = demand.workspace_id,
+            id = demand.id;
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
           key: i,
           className: "animated fadeIn",
           onClick: function onClick() {
-            return Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["redirectTo"])(Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["getDemand"])(demand.id));
+            return Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["redirectTo"])(Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["getDemand"])(workspace_id, id));
           }
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
           scope: "row"
@@ -57391,7 +57392,7 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
           key: i,
           className: "animated fadeIn",
           onClick: function onClick() {
-            return Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["redirectTo"])(Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["getDemand"])(need.id));
+            return Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["redirectTo"])(Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["getDemand"])(workspace_id, id));
           }
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
           scope: "row"
