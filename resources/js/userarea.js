@@ -1,5 +1,3 @@
-import { functions } from "lodash";
-
 $('#logout-dropdown, #toggle-logout').on('click', function(e) {
     e.preventDefault();
     $('#logout-form').trigger('submit');

@@ -61530,6 +61530,8 @@ var getDemand = function getDemand(workspaceId, demandId) {
   return DEMAND_ROUTE.replace('workspaceId', workspaceId).replace('demandId', demandId);
 };
 var sweetError = function sweetError(errObject) {
+  console.log(errObject);
+
   if (!errObject.response) {
     Swal["default"].fire({
       icon: "error",
