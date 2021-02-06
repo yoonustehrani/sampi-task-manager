@@ -56885,6 +56885,23 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
       });
     });
 
+    _defineProperty(_assertThisInitialized(_this), "setViewAsAdmin", function () {
+      var viewing_as_admin = _this.state.viewing_as_admin,
+          get_all_users = _this.props.get_all_users;
+
+      if (!viewing_as_admin) {
+        axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("".concat(get_all_users, "&view_as_admin=true")).then(function (res) {
+          var data = res.data;
+        });
+      }
+
+      _this.setState(function (prevState) {
+        return {
+          viewing_as_admin: !prevState.viewing_as_admin
+        };
+      });
+    });
+
     _this.tabTitlesRefs = [];
     _this.tabResultsRefs = [];
     _this.filterBoxRefs = [];
@@ -57007,7 +57024,36 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
           _this$props2 = this.props,
           logged_in_user_id = _this$props2.logged_in_user_id,
           demand_show_route = _this$props2.demand_show_route;
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-check col-12 text-right"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: "form-check-input c-p",
+        type: "checkbox",
+        value: viewing_as_admin,
+        id: "flexCheckDefault",
+        onChange: this.setViewAsAdmin
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        className: "form-check-label c-p",
+        "for": "flexCheckDefault"
+      }, "\u0645\u0634\u0627\u0647\u062F\u0647 \u0628\u0647 \u0639\u0646\u0648\u0627\u0646 \u0627\u062F\u0645\u06CC\u0646"), viewing_as_admin && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "input-group col-12 col-md-4 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line-all"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "input-group-prepend"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "input-group-text"
+      }, "\u0645\u062E\u0627\u0637\u0628")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+        id: "new-demand-member",
+        className: "form-control text-right"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null), selected_workspace ? Object.values(workspaces_users[parseInt(selected_workspace)]).map(function (user, i) {
+        if (user.id !== logged_in_user_id) {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+            key: i,
+            value: user.id,
+            img_address: user.avatar_pic !== null ? APP_PATH + user.avatar_pic : APP_PATH + 'images/male-avatar.svg',
+            is_admin: user.is_admin
+          }, user.fullname);
+        }
+      }) : null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
         className: "demands-tabs-titles col-12 mt-2"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         className: "demand-tab-title-small-arrow " + "".concat(current_tab === "demands" ? "active" : ""),
@@ -57728,12 +57774,14 @@ var data_store = target.getAttribute("data-store");
 var logged_in_user_id = parseInt(target.getAttribute("logged-in-user-id"));
 var search_index = target.getAttribute("data-search");
 var get_workspaces_api = target.getAttribute("workspaces-api");
+var get_all_users = target.getAttribute("get-all-users");
 react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_mixed_demands__WEBPACK_IMPORTED_MODULE_2__["default"], {
   get_mixed_demands_api: data_index,
   post_demand_api: data_store,
   logged_in_user_id: logged_in_user_id,
   mixed_demands_search: search_index,
-  get_workspaces_api: get_workspaces_api
+  get_workspaces_api: get_workspaces_api,
+  get_all_users: get_all_users
 }), target);
 
 /***/ }),

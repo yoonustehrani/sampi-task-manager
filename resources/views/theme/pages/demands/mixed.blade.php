@@ -15,6 +15,7 @@
         logged-in-user-id = "{{ auth()->user()->id }}"
         data-search="{{ route('api.task-manager.demands.search', ['api_token' => auth()->user()->api_token]) }}"
         workspaces-api="{{ route('api.task-manager.workspaces.index', ['api_token' => auth()->user()->api_token]) }}"
+        get-all-users="{{ route('api.task-manager.users.index', ['api_token' => auth()->user()->api_token]) }}"
     >
     </div>
 @endsection

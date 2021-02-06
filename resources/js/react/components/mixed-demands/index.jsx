@@ -171,6 +171,18 @@ export default class MixedDemands extends Component {
         })
     }
 
+    setViewAsAdmin = () => {
+        let { viewing_as_admin } = this.state, { get_all_users } = this.props
+        if (!viewing_as_admin) {
+            axios.get(`${get_all_users}&view_as_admin=true`).then(res => {
+                let { data } = res
+            })
+        }
+        this.setState(prevState => ({
+            viewing_as_admin: !prevState.viewing_as_admin 
+        }))
+    }
+
     componentDidMount() {
         let { get_workspaces_api } = this.props
         const url = window.location.href
@@ -241,9 +253,30 @@ export default class MixedDemands extends Component {
         let { demands, needs, isGetting, already_added_needs, workspaces, workspaces_users, selected_workspace, current_tab, viewing_as_admin } = this.state, { logged_in_user_id, demand_show_route } = this.props
         return (
             <div>
-                <div>
-                    
+                <div className="form-check col-12 text-right">
+                    <input className="form-check-input c-p" type="checkbox" value={viewing_as_admin} id="flexCheckDefault" onChange={this.setViewAsAdmin} />
+                    <label className="form-check-label c-p" for="flexCheckDefault">
+                        مشاهده به عنوان ادمین
+                    </label>
+                    {viewing_as_admin &&
+                        <div className="input-group col-12 col-md-4 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line-all">
+                            <div className="input-group-prepend">
+                                <span className="input-group-text">مخاطب</span>
+                            </div>
+                            <select id="new-demand-member" className="form-control text-right">
+                                <option></option>
+                                { selected_workspace ? Object.values(workspaces_users[parseInt(selected_workspace)]).map((user, i) => {
+                                    if (user.id !== logged_in_user_id) {
+                                        return (
+                                            <option key={i} value={user.id} img_address={user.avatar_pic !== null ? APP_PATH + user.avatar_pic : APP_PATH + 'images/male-avatar.svg'} is_admin={user.is_admin}>{user.fullname}</option>
+                                        )                                            
+                                    }
+                                }) : null }
+                            </select>
+                        </div>
+                    }
                 </div>
+
                 <nav className="demands-tabs-titles col-12 mt-2">
                     <a className={"demand-tab-title-small-arrow " + `${current_tab === "demands" ? "active" : ""}`} ref={this.tabTitlesRefs[0]} onClick={this.changeTab.bind(this, 0)}>
                         <i className="fas fa-arrow-circle-down animated tada delay-1s"></i>
