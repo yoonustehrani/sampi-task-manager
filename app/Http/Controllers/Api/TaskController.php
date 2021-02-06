@@ -158,7 +158,9 @@ class TaskController extends BaseController
             \DB::beginTransaction();
                 $task->title = $request->title;
                 $task->description = $request->description;
-                $task->parent_id = $request->parent_id;
+                if ($task->parent_id) {
+                    $task->parent_id = $request->parent_id;
+                }
                 $task->group = $request->group ?: $this->default_group;
                 $task->priority_id = $request->priority;
                 $due_to = $request->due_to ? (new \Carbon\Carbon(((int) $request->due_to)))->timezone('Asia/Tehran')->seconds(0) : now();
