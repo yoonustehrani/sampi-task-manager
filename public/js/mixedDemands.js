@@ -2468,7 +2468,7 @@ module.exports = {
 
 /***/ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/react-activity/lib/Digital/Digital.css":
 /*!*********************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader??ref--6-1!./node_modules/postcss-loader/src??ref--6-2!./node_modules/react-activity/lib/Digital/Digital.css ***!
+  !*** ./node_modules/css-loader??ref--7-1!./node_modules/postcss-loader/src??ref--7-2!./node_modules/react-activity/lib/Digital/Digital.css ***!
   \*********************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -2478,7 +2478,7 @@ exports = module.exports = __webpack_require__(/*! ../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, "@keyframes digital-pulse {\n  0%, 40%, 100% {\n    transform: scaleY(0.4); }\n  20% {\n    transform: scaleY(1); } }\n.rai-digital {\n  height: 1em;\n  text-align: center; }\n  .rai-digital > div {\n    display: inline-block;\n    margin-right: 0.125em;\n    background-color: #727981;\n    width: 0.25em;\n    height: 100%;\n    animation-name: digital-pulse;\n    animation-duration: inherit;\n    animation-timing-function: ease-in-out;\n    animation-iteration-count: infinite; }\n    .rai-digital > div:last-child {\n      margin-right: 0; }\n", ""]);
+exports.push([module.i, "@-webkit-keyframes digital-pulse {\n  0%, 40%, 100% {\n    transform: scaleY(0.4); }\n  20% {\n    transform: scaleY(1); } }\n@keyframes digital-pulse {\n  0%, 40%, 100% {\n    transform: scaleY(0.4); }\n  20% {\n    transform: scaleY(1); } }\n.rai-digital {\n  height: 1em;\n  text-align: center; }\n  .rai-digital > div {\n    display: inline-block;\n    margin-right: 0.125em;\n    background-color: #727981;\n    width: 0.25em;\n    height: 100%;\n    -webkit-animation-name: digital-pulse;\n            animation-name: digital-pulse;\n    -webkit-animation-duration: inherit;\n            animation-duration: inherit;\n    -webkit-animation-timing-function: ease-in-out;\n            animation-timing-function: ease-in-out;\n    -webkit-animation-iteration-count: infinite;\n            animation-iteration-count: infinite; }\n    .rai-digital > div:last-child {\n      margin-right: 0; }\n", ""]);
 
 // exports
 
@@ -2487,7 +2487,7 @@ exports.push([module.i, "@keyframes digital-pulse {\n  0%, 40%, 100% {\n    tran
 
 /***/ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/react-activity/lib/Spinner/Spinner.css":
 /*!*********************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader??ref--6-1!./node_modules/postcss-loader/src??ref--6-2!./node_modules/react-activity/lib/Spinner/Spinner.css ***!
+  !*** ./node_modules/css-loader??ref--7-1!./node_modules/postcss-loader/src??ref--7-2!./node_modules/react-activity/lib/Spinner/Spinner.css ***!
   \*********************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -2497,7 +2497,7 @@ exports = module.exports = __webpack_require__(/*! ../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, "@keyframes rai-spinner {\n  from {\n    transform: rotate(0deg); }\n  to {\n    transform: rotate(360deg); } }\n.rai-spinner {\n  width: 1.5em;\n  height: 1.5em;\n  position: relative;\n  margin: 0; }\n  .rai-spinner-inner, .rai-spinner-outer {\n    position: absolute;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    border-radius: 100%;\n    margin-left: -0.0625em;\n    margin-top: -0.0625em; }\n  .rai-spinner-outer {\n    border: 0.125em solid #727981;\n    opacity: 0.2; }\n  .rai-spinner-inner {\n    position: absolute;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    border-radius: 100%;\n    border-top: 0.125em solid #727981;\n    border-right: 0.125em solid transparent !important;\n    border-bottom: 0.125em solid transparent !important;\n    border-left: 0.125em solid transparent !important;\n    animation-name: rai-spinner;\n    animation-iteration-count: infinite;\n    animation-timing-function: linear;\n    animation-duration: inherit; }\n", ""]);
+exports.push([module.i, "@-webkit-keyframes rai-spinner {\n  from {\n    transform: rotate(0deg); }\n  to {\n    transform: rotate(360deg); } }\n@keyframes rai-spinner {\n  from {\n    transform: rotate(0deg); }\n  to {\n    transform: rotate(360deg); } }\n.rai-spinner {\n  width: 1.5em;\n  height: 1.5em;\n  position: relative;\n  margin: 0; }\n  .rai-spinner-inner, .rai-spinner-outer {\n    position: absolute;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    border-radius: 100%;\n    margin-left: -0.0625em;\n    margin-top: -0.0625em; }\n  .rai-spinner-outer {\n    border: 0.125em solid #727981;\n    opacity: 0.2; }\n  .rai-spinner-inner {\n    position: absolute;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    border-radius: 100%;\n    border-top: 0.125em solid #727981;\n    border-right: 0.125em solid transparent !important;\n    border-bottom: 0.125em solid transparent !important;\n    border-left: 0.125em solid transparent !important;\n    -webkit-animation-name: rai-spinner;\n            animation-name: rai-spinner;\n    -webkit-animation-iteration-count: infinite;\n            animation-iteration-count: infinite;\n    -webkit-animation-timing-function: linear;\n            animation-timing-function: linear;\n    -webkit-animation-duration: inherit;\n            animation-duration: inherit; }\n", ""]);
 
 // exports
 
@@ -27157,7 +27157,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(/*! !../../../css-loader??ref--6-1!../../../postcss-loader/src??ref--6-2!./Digital.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/react-activity/lib/Digital/Digital.css");
+var content = __webpack_require__(/*! !../../../css-loader??ref--7-1!../../../postcss-loader/src??ref--7-2!./Digital.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/react-activity/lib/Digital/Digital.css");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -27187,7 +27187,7 @@ if(false) {}
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(/*! !../../../css-loader??ref--6-1!../../../postcss-loader/src??ref--6-2!./Spinner.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/react-activity/lib/Spinner/Spinner.css");
+var content = __webpack_require__(/*! !../../../css-loader??ref--7-1!../../../postcss-loader/src??ref--7-2!./Spinner.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/react-activity/lib/Spinner/Spinner.css");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -56467,15 +56467,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../helpers */ "./resources/js/helpers/index.js");
-/* harmony import */ var react_activity__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-activity */ "./node_modules/react-activity/dist/react-activity.js");
-/* harmony import */ var react_activity__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_activity__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var react_activity_lib_Digital_Digital_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-activity/lib/Digital/Digital.css */ "./node_modules/react-activity/lib/Digital/Digital.css");
-/* harmony import */ var react_activity_lib_Digital_Digital_css__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_activity_lib_Digital_Digital_css__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var react_activity_lib_Spinner_Spinner_css__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-activity/lib/Spinner/Spinner.css */ "./node_modules/react-activity/lib/Spinner/Spinner.css");
-/* harmony import */ var react_activity_lib_Spinner_Spinner_css__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react_activity_lib_Spinner_Spinner_css__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _tinymce_editor_index__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../tinymce-editor/index */ "./resources/js/react/components/tinymce-editor/index.jsx");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _select2__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../select2 */ "./resources/js/select2.js");
+/* harmony import */ var react_activity__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-activity */ "./node_modules/react-activity/dist/react-activity.js");
+/* harmony import */ var react_activity__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_activity__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var react_activity_lib_Digital_Digital_css__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-activity/lib/Digital/Digital.css */ "./node_modules/react-activity/lib/Digital/Digital.css");
+/* harmony import */ var react_activity_lib_Digital_Digital_css__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react_activity_lib_Digital_Digital_css__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var react_activity_lib_Spinner_Spinner_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-activity/lib/Spinner/Spinner.css */ "./node_modules/react-activity/lib/Spinner/Spinner.css");
+/* harmony import */ var react_activity_lib_Spinner_Spinner_css__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(react_activity_lib_Spinner_Spinner_css__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _tinymce_editor_index__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../tinymce-editor/index */ "./resources/js/react/components/tinymce-editor/index.jsx");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_8__);
 function _typeof(obj) {
   "@babel/helpers - typeof";
 
@@ -56686,7 +56687,7 @@ function _defineProperty(obj, key, value) {
 
 
 
-moment__WEBPACK_IMPORTED_MODULE_7___default.a.locale('fa');
+moment__WEBPACK_IMPORTED_MODULE_8___default.a.locale('fa');
 
 var MixedDemands = /*#__PURE__*/function (_Component) {
   _inherits(MixedDemands, _Component);
@@ -56756,7 +56757,8 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
           _this$state = _this.state,
           current_tab = _this$state.current_tab,
           already_added_needs = _this$state.already_added_needs,
-          api_target = _this$state.api_target;
+          api_target = _this$state.api_target,
+          viewing_as_admin = _this$state.viewing_as_admin;
       var order_by = $("#mixed_".concat(current_tab, "_order_by_select")).val(),
           order = $("#mixed_".concat(current_tab, "_order_select")).val(),
           filter = $("#mixed_".concat(current_tab, "_relation_select")).val(),
@@ -56779,7 +56781,7 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
           };
         }
       }, function () {
-        axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("".concat(_this.state.api_target === "mixed" ? get_mixed_demands_api : mixed_demands_search).concat(current_tab === "demands" ? "&relationship=asked" : "", "&order_by=").concat(order_by ? order_by : "created_at", "&order=").concat(order ? order : "desc", "&filter=").concat(filter ? filter : "all", "&page=").concat(_this.state[current_tab].nextPage).concat(_this.state.api_target === "search" ? "&q=".concat(search_value) : "")).then(function (res) {
+        axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("".concat(_this.state.api_target === "mixed" ? get_mixed_demands_api : mixed_demands_search).concat(current_tab === "demands" ? "&relationship=asked" : "", "&order_by=").concat(order_by ? order_by : "created_at", "&order=").concat(order ? order : "desc", "&filter=").concat(filter ? filter : "all", "&page=").concat(_this.state[current_tab].nextPage).concat(viewing_as_admin ? "&view_as_admin=true" : "").concat(_this.state.api_target === "search" ? "&q=".concat(search_value) : "")).then(function (res) {
           var _res$data = res.data,
               data = _res$data.data,
               current_page = _res$data.current_page,
@@ -56892,6 +56894,10 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
       if (!viewing_as_admin) {
         axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("".concat(get_all_users, "&view_as_admin=true")).then(function (res) {
           var data = res.data;
+
+          _this.setState({
+            allUsers: data
+          });
         });
       }
 
@@ -57021,9 +57027,12 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
           selected_workspace = _this$state3.selected_workspace,
           current_tab = _this$state3.current_tab,
           viewing_as_admin = _this$state3.viewing_as_admin,
+          allUsers = _this$state3.allUsers,
+          all = _this$state3.all,
           _this$props2 = this.props,
           logged_in_user_id = _this$props2.logged_in_user_id,
           demand_show_route = _this$props2.demand_show_route;
+      Object(_select2__WEBPACK_IMPORTED_MODULE_3__["renderWithImg"])("#select-user-target", "کاربر مورد نظر را انتخاب کنید", false);
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-check col-12 text-right"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
@@ -57034,26 +57043,27 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
         onChange: this.setViewAsAdmin
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         className: "form-check-label c-p",
-        "for": "flexCheckDefault"
+        htmlFor: "flexCheckDefault"
       }, "\u0645\u0634\u0627\u0647\u062F\u0647 \u0628\u0647 \u0639\u0646\u0648\u0627\u0646 \u0627\u062F\u0645\u06CC\u0646"), viewing_as_admin && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "add-task-section rtl mt-2 mb-4"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "input-group col-12 col-md-4 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line-all"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "input-group-prepend"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "input-group-text"
       }, "\u0645\u062E\u0627\u0637\u0628")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
-        id: "new-demand-member",
+        id: "select-user-target",
         className: "form-control text-right"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null), selected_workspace ? Object.values(workspaces_users[parseInt(selected_workspace)]).map(function (user, i) {
-        if (user.id !== logged_in_user_id) {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null), allUsers ? allUsers.map(function (user, i) {
+        if (user.id !== CurrentUser.id) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
             key: i,
             value: user.id,
-            img_address: user.avatar_pic !== null ? APP_PATH + user.avatar_pic : APP_PATH + 'images/male-avatar.svg',
-            is_admin: user.is_admin
+            img_address: user.avatar_pic !== null ? APP_PATH + user.avatar_pic : APP_PATH + 'images/male-avatar.svg'
           }, user.fullname);
         }
-      }) : null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
+      }) : null)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
         className: "demands-tabs-titles col-12 mt-2"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         className: "demand-tab-title-small-arrow " + "".concat(current_tab === "demands" ? "active" : ""),
@@ -57229,7 +57239,7 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
           className: "fas fa-check-circle fa-3x"
         })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, finished_at === null ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-calendar-times fa-3x"
-        }) : moment__WEBPACK_IMPORTED_MODULE_7___default()(finished_at).fromNow()));
+        }) : moment__WEBPACK_IMPORTED_MODULE_8___default()(finished_at).fromNow()));
       }))), demands && demands.data.length > 0 && !isGetting && demands.hasMore && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "text-center"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
@@ -57239,7 +57249,7 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
         className: "text-center text-secondary"
       }, "\u0645\u0648\u0631\u062F\u06CC \u0628\u0631\u0627\u06CC \u0646\u0645\u0627\u06CC\u0634 \u0648\u062C\u0648\u062F \u0646\u062F\u0627\u0631\u062F"), isGetting && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "text-center"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_activity__WEBPACK_IMPORTED_MODULE_3__["Digital"], {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_activity__WEBPACK_IMPORTED_MODULE_4__["Digital"], {
         color: "#000000",
         size: 24
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -57333,7 +57343,7 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
         className: "input-group col-12 pl-0 pr-0"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "tinymc-container"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_tinymce_editor_index__WEBPACK_IMPORTED_MODULE_6__["default"], {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_tinymce_editor_index__WEBPACK_IMPORTED_MODULE_7__["default"], {
         changeContent: this.onDescriptionChange
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "text-center mt-2"
@@ -57497,7 +57507,7 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
           className: "fas fa-check-circle fa-3x"
         })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, finished_at === null ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-calendar-times fa-3x"
-        }) : moment__WEBPACK_IMPORTED_MODULE_7___default()(finished_at).fromNow()));
+        }) : moment__WEBPACK_IMPORTED_MODULE_8___default()(finished_at).fromNow()));
       }))), needs && needs.data.length > 0 && !isGetting && needs.hasMore && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "text-center"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
@@ -57507,7 +57517,113 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
         className: "text-center text-secondary"
       }, "\u0645\u0648\u0631\u062F\u06CC \u0628\u0631\u0627\u06CC \u0646\u0645\u0627\u06CC\u0634 \u0648\u062C\u0648\u062F \u0646\u062F\u0627\u0631\u062F"), isGetting && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "text-center"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_activity__WEBPACK_IMPORTED_MODULE_3__["Digital"], {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_activity__WEBPACK_IMPORTED_MODULE_4__["Digital"], {
+        color: "#000000",
+        size: 24
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-12 mt-4 float-right demand-tab-result pr-0 pl-0 pr-md-3 pl-md-3 " + "".concat(current_tab === "all" ? "active" : ""),
+        ref: this.tabResultsRefs[2]
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "search-box p-2 p-md-4 float-right col-12"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "input-group"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "input-group-prepend"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "btn btn-primary",
+        onClick: this.handleMore.bind(this, true)
+      }, "\u062C\u0633\u062A\u062C\u0648")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        id: "all-search-input",
+        className: "form-control",
+        placeholder: "\u062C\u0633\u062A\u062C\u0648 \u062F\u0631 \u0647\u0645\u0647"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "input-group-append"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "btn btn-info",
+        onClick: this.toggleFilterBox.bind(this, 2)
+      }, "\u0641\u06CC\u0644\u062A\u0631 \u0647\u0627", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-filter"
+      }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        ref: this.filterBoxRefs[2],
+        className: "filter-box mixed-demands-filter-box mt-2 p-2 col-12 d-none animated fadeIn"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "filter-option col-12 col-md-6 col-lg-4 mb-3 mb-lg-0 text-center"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u062C\u0633\u062A\u062C\u0648 \u062F\u0631: "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+        id: "mixed_all_relation_select",
+        defaultValue: "all"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        container_class: "select-option-big",
+        value: "all",
+        icon_name: "fas fa-tasks"
+      }, "\u0647\u0645\u0647"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        container_class: "select-option-big",
+        value: "finished",
+        icon_name: "fas fa-check-square"
+      }, "\u0627\u0646\u062C\u0627\u0645 \u0634\u062F\u0647"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        container_class: "select-option-big",
+        value: "unfinished",
+        icon_name: "fas fa-times-circle"
+      }, "\u0627\u0646\u062C\u0627\u0645 \u0646\u0634\u062F\u0647"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "filter-option col-12 col-md-6 col-lg-4 mb-3 mb-lg-0 text-center"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0645\u0631\u062A\u0628 \u0633\u0627\u0632\u06CC \u0628\u0631 \u0627\u0633\u0627\u0633:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+        id: "mixed_all_order_by_select",
+        defaultValue: "createdw"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        container_class: "select-option-big",
+        value: "created_at",
+        icon_name: "fas fa-calendar-plus"
+      }, "\u062A\u0627\u0631\u06CC\u062E \u0627\u06CC\u062C\u0627\u062F"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        container_class: "select-option-big",
+        value: "updated_at",
+        icon_name: "fas fa-user-edit"
+      }, "\u062A\u0627\u0631\u06CC\u062E \u062A\u063A\u06CC\u06CC\u0631\u0627\u062A"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        container_class: "select-option-big",
+        value: "finished_at",
+        icon_name: "fas fa-calendar-check"
+      }, "\u062A\u0627\u0631\u06CC\u062E \u0627\u062A\u0645\u0627\u0645"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "filter-option col-12 col-md-6 col-lg-4 mb-3 mb-lg-0 text-center"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0646\u062D\u0648\u0647 \u0645\u0631\u062A\u0628 \u0633\u0627\u0632\u06CC:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+        id: "mixed_all_order_select",
+        defaultValue: "desc"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        container_class: "select-option-big",
+        value: "asc",
+        icon_name: "fas fa-sort-amount-up"
+      }, "\u0635\u0639\u0648\u062F\u06CC"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        container_class: "select-option-big",
+        value: "desc",
+        icon_name: "fas fa-sort-amount-down"
+      }, "\u0646\u0632\u0648\u0644\u06CC")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
+        className: "col-12 table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right animated bounce mt-4"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", {
+        className: "thead-dark"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+        scope: "col"
+      }, "#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+        scope: "col"
+      }, "\u0639\u0646\u0648\u0627\u0646"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+        scope: "col"
+      }, "\u067E\u0631\u0648\u0698\u0647 \u0645\u0631\u0628\u0648\u0637\u0647"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+        scope: "col"
+      }, "\u0645\u062E\u0627\u0637\u0628"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+        scope: "col"
+      }, "\u062A\u0633\u06A9 \u0645\u0631\u0628\u0648\u0637\u0647"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+        scope: "col"
+      }, "\u0627\u0648\u0644\u0648\u06CC\u062A"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+        scope: "col"
+      }, "\u0648\u0636\u0639\u06CC\u062A \u0627\u062A\u0645\u0627\u0645"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+        scope: "col"
+      }, "\u062A\u0627\u0631\u06CC\u062E \u0627\u062A\u0645\u0627\u0645")))), all && all.data.length > 0 && !isGetting && all.hasMore && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "text-center"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "btn btn-outline-dark text-center",
+        onClick: this.handleMore.bind(this, false)
+      }, "\u0628\u06CC\u0634\u062A\u0631")), all && all.data.length === 0 && !isGetting && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "text-center text-secondary"
+      }, "\u0645\u0648\u0631\u062F\u06CC \u0628\u0631\u0627\u06CC \u0646\u0645\u0627\u06CC\u0634 \u0648\u062C\u0648\u062F \u0646\u062F\u0627\u0631\u062F"), isGetting && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "text-center"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_activity__WEBPACK_IMPORTED_MODULE_4__["Digital"], {
         color: "#000000",
         size: 24
       }))));
@@ -57783,6 +57899,123 @@ react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEB
   get_workspaces_api: get_workspaces_api,
   get_all_users: get_all_users
 }), target);
+
+/***/ }),
+
+/***/ "./resources/js/select2.js":
+/*!*********************************!*\
+  !*** ./resources/js/select2.js ***!
+  \*********************************/
+/*! exports provided: formatOptionWithIcon, formatOptionWithImage, formatOption, simpleSearch, renderWithImg */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "formatOptionWithIcon", function() { return formatOptionWithIcon; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "formatOptionWithImage", function() { return formatOptionWithImage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "formatOption", function() { return formatOption; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "simpleSearch", function() { return simpleSearch; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "renderWithImg", function() { return renderWithImg; });
+var formatOptionWithIcon = function formatOptionWithIcon(option) {
+  if (option.element) {
+    var icon_name = option.element.attributes.icon_name.nodeValue;
+    var containerClass = option.element.attributes.container_class ? option.element.attributes.container_class.nodeValue : null;
+    return $("<div class=\"select-option ".concat(containerClass !== null ? containerClass : "", "\"><i class=\"").concat(icon_name, "\"></i>").concat(option.text, "</div>"));
+  }
+};
+var formatOptionWithImage = function formatOptionWithImage(option) {
+  if (option.element) {
+    var img_src = option.element.attributes.img_address.nodeValue,
+        is_user_admin = option.element.attributes.is_admin;
+    return $("\n            <div class=\"select-option circle-avatar-pic\">\n                <img class=\"ml-1\" src=\"".concat(img_src, "\"/>\n                ").concat(option.text, "\n                ").concat(typeof is_user_admin !== "undefined" ? "<span class=\"badge badge-pill mr-1 ".concat(is_user_admin.nodeValue === "1" ? "badge-success" : "badge-primary", "\">").concat(is_user_admin.nodeValue === "1" ? "ادمین" : "کاربر", "</span>") : "", "  \n            </div>\n        "));
+  }
+};
+var formatOption = function formatOption(option) {
+  return $("\n        <div class=\"select-option\">\n            ".concat(option.workspace ? "<div class=\"circle-avatar-pic small-avatar mb-1\"><img src=\"".concat(APP_PATH + option.workspace.avatar_pic, "\"/><span class=\"badge badge-light mr-1\">").concat(option.workspace.title, "</span></div>") : "", "\n            ").concat(option.text).concat(option.group ? " (".concat(option.group, ")") : "", "\n        </div>\n    "));
+};
+$('#new-task-priority, #tasks_order_select, #tasks_order_by_select, #tasks_relation_select, #mixed_tasks_order_select, #mixed_tasks_order_by_select, #mixed_tasks_relation_select, #mixed_demands_order_select, #mixed_demands_order_by_select, #mixed_demands_relation_select, #mixed_needs_order_select, #mixed_needs_order_by_select, #mixed_needs_relation_select').select2({
+  templateResult: formatOptionWithIcon,
+  minimumResultsForSearch: Infinity,
+  width: '100%',
+  dir: "rtl",
+  language: {
+    searching: function searching() {
+      return "درحال جستجو ...";
+    },
+    noResults: function noResults() {
+      return "نتیجه ای یافت نشد";
+    }
+  }
+});
+$('.select2-search__field').css('width', '100%');
+var simpleSearch = function simpleSearch(ids, parentOnly) {
+  var workspaceId = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : $("#new-demand-project-select").val();
+  $(ids).select2({
+    templateResult: formatOption,
+    templateSelection: function templateSelection(data, container) {
+      $(data.element).attr('workspace_id', data.workspace_id);
+      return data.text;
+    },
+    placeholder: 'کار مربوطه را جستجو و انتخاب کنید',
+    width: "100%",
+    dir: "rtl",
+    minimumInputLength: 3,
+    delay: 250,
+    ajax: {
+      url: typeof simple_search_url !== "undefined" ? simple_search_url : "",
+      data: function data(params) {
+        return {
+          q: params.term,
+          workspace: workspaceId,
+          parentOnly: parentOnly
+        };
+      },
+      processResults: function processResults(res) {
+        var data = $.map(res, function (obj) {
+          obj.text = obj.text || obj.title; // replace name with the property used for the text
+
+          return obj;
+        });
+        return {
+          results: data
+        };
+      }
+    },
+    language: {
+      searching: function searching() {
+        return "درحال جستجو ...";
+      },
+      noResults: function noResults() {
+        return "نتیجه ای یافت نشد";
+      }
+    },
+    allowClear: true
+  });
+};
+simpleSearch('#task-select', false);
+simpleSearch("#parent-task-select", true);
+var renderWithImg = function renderWithImg(ids, placeholder, multiple) {
+  $(ids).select2({
+    templateResult: formatOptionWithImage,
+    placeholder: placeholder,
+    width: "100%",
+    dir: "rtl",
+    multiple: multiple,
+    language: {
+      searching: function searching() {
+        return "درحال جستجو ...";
+      },
+      noResults: function noResults() {
+        return "نتیجه ای یافت نشد";
+      }
+    },
+    allowClear: true
+  });
+};
+renderWithImg("#new-demand-member", "نیاز به کمک چه کسی دارید؟", false);
+renderWithImg("#new-demand-project-select", "پروژه مربوطه را انتخاب کنید", false);
+renderWithImg("#new-task-members", "انجام دهندگان این کار", true);
+renderWithImg("#new-task-project-select", "پروژه مربوطه را انتخاب کنید", false);
 
 /***/ }),
 

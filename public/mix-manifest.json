@@ -1,10 +1,7 @@
 {
-<<<<<<< HEAD
     "/js/chart.js": "/js/chart.js",
+    "/css/app.css": "/css/app.css",
     "/js/demands.js": "/js/demands.js",
     "/js/mixedDemands.js": "/js/mixedDemands.js",
     "/js/mixedTasks.js": "/js/mixedTasks.js"
-=======
-    "/css/welcome.css": "/css/welcome.css"
->>>>>>> 942d728d5e33080437c3a37b5cf298cff897a922
 }

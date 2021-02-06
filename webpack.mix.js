@@ -27,7 +27,7 @@ mix.disableNotifications();
 
 var { res, pub } = src
 
-// mix.sass(res.sass + 'app.scss', pub.css)
+mix.sass(res.sass + 'app.scss', pub.css)
     // .react(res.react + 'demand.js', pub.js)
     // .js(res.js + 'tinymce/tinymce.js', pub.js + 'tinymce')
     // .sass(res.sass + 'tinytheme.scss', pub.css)

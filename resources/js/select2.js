@@ -89,7 +89,7 @@ export const simpleSearch = (ids, parentOnly, workspaceId=$("#new-demand-project
 simpleSearch('#task-select', false)
 simpleSearch("#parent-task-select", true)
 
-const renderWithImg = (ids, placeholder, multiple) => {
+export const renderWithImg = (ids, placeholder, multiple) => {
     $(ids).select2({
         templateResult: formatOptionWithImage,
         placeholder: placeholder,

@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import { getTask, getDemand, getUser, getWorkspace, sweetError } from '../../../helpers'
+import { getTask, getDemand, getUser, getWorkspace, sweetError, setPriority, redirectTo } from '../../../helpers'
+import { renderWithImg } from '../../../select2'
 import { Digital, Spinner } from 'react-activity'
 import 'react-activity/lib/Digital/Digital.css'
 import 'react-activity/lib/Spinner/Spinner.css'
 import TinymcEditor from '../tinymce-editor/index'
-import { setPriority, redirectTo } from '../../../helpers'
 import moment from 'moment'
 moment.locale('fa')
 
@@ -70,7 +70,7 @@ export default class MixedDemands extends Component {
     }
 
     getData = (filtering=false) => {            
-        let { get_mixed_demands_api, mixed_demands_search } = this.props, { current_tab, already_added_needs, api_target } = this.state
+        let { get_mixed_demands_api, mixed_demands_search } = this.props, { current_tab, already_added_needs, api_target, viewing_as_admin } = this.state
         let order_by = $(`#mixed_${current_tab}_order_by_select`).val(), order = $(`#mixed_${current_tab}_order_select`).val(), filter = $(`#mixed_${current_tab}_relation_select`).val(), search_value = $(`#${current_tab}-search-input`).val()
         this.setState(prevState => {
             if (filtering && search_value.length >= 3) {
@@ -87,7 +87,7 @@ export default class MixedDemands extends Component {
                 return({isGetting: true})
             }
         }, () => {
-            axios.get(`${this.state.api_target === "mixed" ? get_mixed_demands_api : mixed_demands_search}${current_tab === "demands" ? "&relationship=asked" : ""}&order_by=${order_by ? order_by : "created_at"}&order=${order ? order : "desc"}&filter=${filter ? filter : "all"}&page=${this.state[current_tab].nextPage}${this.state.api_target === "search" ? `&q=${search_value}` : ""}`).then(res => {
+            axios.get(`${this.state.api_target === "mixed" ? get_mixed_demands_api : mixed_demands_search}${current_tab === "demands" ? "&relationship=asked" : ""}&order_by=${order_by ? order_by : "created_at"}&order=${order ? order : "desc"}&filter=${filter ? filter : "all"}&page=${this.state[current_tab].nextPage}${viewing_as_admin ? "&view_as_admin=true" : ""}${this.state.api_target === "search" ? `&q=${search_value}` : ""}`).then(res => {
                 let { data, current_page, last_page } = res.data
                 let filteredArray = data.filter((item) => already_added_needs && typeof already_added_needs[item.id] === "undefined")
                 this.setState(prevState => {
@@ -176,6 +176,9 @@ export default class MixedDemands extends Component {
         if (!viewing_as_admin) {
             axios.get(`${get_all_users}&view_as_admin=true`).then(res => {
                 let { data } = res
+                this.setState({
+                    allUsers: data
+                })
             })
         }
         this.setState(prevState => ({
@@ -244,35 +247,37 @@ export default class MixedDemands extends Component {
             $("#new-demand-project-select").on("select2:select", function () {
                 setSelectValue("#task-select", null)
                 setWorkspaceId()
-            })
-    
+            })            
         })
     }
 
     render() {
-        let { demands, needs, isGetting, already_added_needs, workspaces, workspaces_users, selected_workspace, current_tab, viewing_as_admin } = this.state, { logged_in_user_id, demand_show_route } = this.props
+        let { demands, needs, isGetting, already_added_needs, workspaces, workspaces_users, selected_workspace, current_tab, viewing_as_admin, allUsers, all } = this.state, { logged_in_user_id, demand_show_route } = this.props
+        renderWithImg("#select-user-target", "کاربر مورد نظر را انتخاب کنید", false)
         return (
             <div>
                 <div className="form-check col-12 text-right">
                     <input className="form-check-input c-p" type="checkbox" value={viewing_as_admin} id="flexCheckDefault" onChange={this.setViewAsAdmin} />
-                    <label className="form-check-label c-p" for="flexCheckDefault">
+                    <label className="form-check-label c-p" htmlFor="flexCheckDefault">
                         مشاهده به عنوان ادمین
                     </label>
                     {viewing_as_admin &&
-                        <div className="input-group col-12 col-md-4 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line-all">
-                            <div className="input-group-prepend">
-                                <span className="input-group-text">مخاطب</span>
+                        <div className="add-task-section rtl mt-2 mb-4">
+                            <div className="input-group col-12 col-md-4 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line-all">
+                                <div className="input-group-prepend">
+                                    <span className="input-group-text">مخاطب</span>
+                                </div>
+                                <select id="select-user-target" className="form-control text-right">
+                                    <option></option>
+                                    { allUsers ? allUsers.map((user, i) => {
+                                        if (user.id !== CurrentUser.id) {
+                                            return (
+                                                <option key={i} value={user.id} img_address={user.avatar_pic !== null ? APP_PATH + user.avatar_pic : APP_PATH + 'images/male-avatar.svg'}>{user.fullname}</option>
+                                            )                                            
+                                        }
+                                    }) : null }
+                                </select>
                             </div>
-                            <select id="new-demand-member" className="form-control text-right">
-                                <option></option>
-                                { selected_workspace ? Object.values(workspaces_users[parseInt(selected_workspace)]).map((user, i) => {
-                                    if (user.id !== logged_in_user_id) {
-                                        return (
-                                            <option key={i} value={user.id} img_address={user.avatar_pic !== null ? APP_PATH + user.avatar_pic : APP_PATH + 'images/male-avatar.svg'} is_admin={user.is_admin}>{user.fullname}</option>
-                                        )                                            
-                                    }
-                                }) : null }
-                            </select>
                         </div>
                     }
                 </div>
@@ -595,6 +600,124 @@ export default class MixedDemands extends Component {
                     }
                     {
                         needs && needs.data.length === 0 && !isGetting &&
+                            <p className="text-center text-secondary">موردی برای نمایش وجود ندارد</p>
+                    }
+                    {
+                        isGetting &&
+                            <div className="text-center">
+                                <Digital color="#000000" size={24} />
+                            </div>
+                    }
+                </div>
+                <div className={"col-12 mt-4 float-right demand-tab-result pr-0 pl-0 pr-md-3 pl-md-3 " + `${current_tab === "all" ? "active" : ""}`} ref={this.tabResultsRefs[2]}>
+                    <div className="search-box p-2 p-md-4 float-right col-12">
+                        <div className="input-group">
+                            <div className="input-group-prepend">
+                                <button className="btn btn-primary" onClick={this.handleMore.bind(this, true)}>جستجو</button>
+                            </div>
+                            <input type="text" id="all-search-input" className="form-control" placeholder="جستجو در همه"/>
+                            <div className="input-group-append">
+                                <button className="btn btn-info" onClick={this.toggleFilterBox.bind(this, 2)}>فیلتر ها<i className="fas fa-filter"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div ref={this.filterBoxRefs[2]} className="filter-box mixed-demands-filter-box mt-2 p-2 col-12 d-none animated fadeIn">
+                        <div className="filter-option col-12 col-md-6 col-lg-4 mb-3 mb-lg-0 text-center">
+                            <span>جستجو در: </span>
+                            <select id="mixed_all_relation_select" defaultValue="all">
+                                <option container_class="select-option-big" value="all" icon_name="fas fa-tasks">همه</option>
+                                <option container_class="select-option-big" value="finished" icon_name="fas fa-check-square">انجام شده</option>
+                                <option container_class="select-option-big" value="unfinished" icon_name="fas fa-times-circle">انجام نشده</option>
+                            </select>
+                        </div>
+                        <div className="filter-option col-12 col-md-6 col-lg-4 mb-3 mb-lg-0 text-center">
+                            <span>مرتب سازی بر اساس:</span>
+                            <select id="mixed_all_order_by_select" defaultValue="createdw">
+                                <option container_class="select-option-big" value="created_at" icon_name="fas fa-calendar-plus">تاریخ ایجاد</option>
+                                <option container_class="select-option-big" value="updated_at" icon_name="fas fa-user-edit">تاریخ تغییرات</option>
+                                <option container_class="select-option-big" value="finished_at" icon_name="fas fa-calendar-check">تاریخ اتمام</option>
+                            </select>
+                        </div>
+                        <div className="filter-option col-12 col-md-6 col-lg-4 mb-3 mb-lg-0 text-center">
+                            <span>نحوه مرتب سازی:</span>
+                            <select id="mixed_all_order_select" defaultValue="desc">
+                                <option container_class="select-option-big" value="asc" icon_name="fas fa-sort-amount-up">صعودی</option>
+                                <option container_class="select-option-big" value="desc" icon_name="fas fa-sort-amount-down">نزولی</option>
+                            </select>
+                        </div>
+                    </div>
+                    <table className="col-12 table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right animated bounce mt-4">
+                        <thead className="thead-dark">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">عنوان</th>
+                                <th scope="col">پروژه مربوطه</th>
+                                <th scope="col">مخاطب</th>
+                                <th scope="col">تسک مربوطه</th>
+                                <th scope="col">اولویت</th>
+                                <th scope="col">وضعیت اتمام</th>
+                                <th scope="col">تاریخ اتمام</th>
+                            </tr>
+                        </thead>
+                        {/* <tbody>
+                            {all && all.data.length > 0 && all.data.map((item, i) => {
+                                let { title, task, priority, due_to, finished_at, to, from, id, workspace_id } = item
+                                return (
+                                    <tr key={i} className="animated fadeIn" onClick={() => redirectTo(getDemand(workspace_id, id))}>
+                                        <th scope="row">{i + 1}</th>
+                                        <td>{ title }</td>
+                                        <td className="text-right">
+                                            <img className="workspace_avatar" src={APP_PATH + workspaces[workspace_id].avatar_pic} />
+                                            <a href={getWorkspace(workspace_id)}>{workspaces[workspace_id].title}</a>
+                                        </td>
+                                        <td>
+                                            <div className="employees-container horizontal-centerlize">
+                                                <span>{ to.fullname }</span>
+                                                <div className="dropdown-users d-none" onClick={(e) => e.stopPropagation()}>
+                                                    <div className="user-dropdown-item animated jackInTheBox">
+                                                        <div className="user-right-flex">
+                                                            <div className="user-img-container ml-2">
+                                                                <img src={to.avatar_pic !== null ? APP_PATH + to.avatar_pic : APP_PATH + 'images/male-avatar.svg'} />
+                                                            </div>
+                                                            <div className="user-info ml-2">
+                                                                <p>{ to.fullname }</p>
+                                                                <a href={getUser(to.id)}>@{to.name}</a>
+                                                            </div>
+                                                        </div>
+                                                        <div className="user-label-container">
+                                                            {
+                                                                workspaces_users && workspaces_users[workspace_id][to.id].is_admin === 1 
+                                                                ? <button className="btn btn-sm btn-success rtl admin p-1"><span>ادمین<i className="fas fa-user-tie mr-1"></i></span></button>
+                                                                : <button className="btn btn-sm btn-primary rtl"><span>عضو<i className="fas fa-user mr-1"></i></span></button>
+                                                            } 
+                                                        </div>
+                                                    </div>                                                
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>{task !== null ? <a href={getTask(task.id)}>{ task.title }</a> : <i className="fas fa-minus fa-3x"></i>}</td>
+                                        <td>{ priority.title }</td>
+                                        <td>
+                                            {finished_at === null ? <i className="fas fa-times-circle fa-3x"></i> : <i className="fas fa-check-circle fa-3x"></i>}
+                                        </td>
+                                        <td>
+                                            {finished_at === null ? <i className="fas fa-calendar-times fa-3x"></i> : moment(finished_at).fromNow()}
+                                        </td>
+                                    </tr>
+                                )
+                            })
+                            }
+                        </tbody> */}
+                    </table> 
+                    {
+                        all && all.data.length > 0 && !isGetting && all.hasMore && (
+                            <div className="text-center">
+                                <button className="btn btn-outline-dark text-center" onClick={this.handleMore.bind(this, false)}>بیشتر</button>
+                            </div>
+                        )
+                    }
+                    {
+                        all && all.data.length === 0 && !isGetting &&
                             <p className="text-center text-secondary">موردی برای نمایش وجود ندارد</p>
                     }
                     {
