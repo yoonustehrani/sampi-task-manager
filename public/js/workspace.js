@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -2468,7 +2468,7 @@ module.exports = {
 
 /***/ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/react-activity/dist/react-activity.css":
 /*!*********************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader??ref--7-1!./node_modules/postcss-loader/src??ref--7-2!./node_modules/react-activity/dist/react-activity.css ***!
+  !*** ./node_modules/css-loader??ref--5-1!./node_modules/postcss-loader/src??ref--5-2!./node_modules/react-activity/dist/react-activity.css ***!
   \*********************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -2478,7 +2478,7 @@ exports = module.exports = __webpack_require__(/*! ../../css-loader/lib/css-base
 
 
 // module
-exports.push([module.i, "@-webkit-keyframes dots-pulse {\n  0% {\n    opacity: 0.1; }\n  15% {\n    opacity: 1; }\n  100% {\n    opacity: 0.1; } }\n@keyframes dots-pulse {\n  0% {\n    opacity: 0.1; }\n  15% {\n    opacity: 1; }\n  100% {\n    opacity: 0.1; } }\n.rai-dots .rai-circle {\n  border-radius: 100%;\n  display: inline-block;\n  margin-right: 0.1875em;\n  background-color: #727981;\n  width: 0.5em;\n  height: 0.5em;\n  -webkit-animation-name: dots-pulse;\n          animation-name: dots-pulse;\n  -webkit-animation-duration: inherit;\n          animation-duration: inherit;\n  -webkit-animation-timing-function: ease-in-out;\n          animation-timing-function: ease-in-out;\n  -webkit-animation-iteration-count: infinite;\n          animation-iteration-count: infinite; }\n  .rai-dots .rai-circle:last-child {\n    margin-right: 0; }\n\n@-webkit-keyframes levels-pulse {\n  0% {\n    height: 30%;\n    opacity: 0.5; }\n  20% {\n    height: 100%;\n    opacity: 1; }\n  35% {\n    height: 30%;\n    opacity: 0.5; }\n  55% {\n    height: 100%;\n    opacity: 1; }\n  70% {\n    height: 50%;\n    opacity: 0.5; }\n  80% {\n    height: 100%;\n    opacity: 1; }\n  100% {\n    height: 30%;\n    opacity: 0.5; } }\n\n@keyframes levels-pulse {\n  0% {\n    height: 30%;\n    opacity: 0.5; }\n  20% {\n    height: 100%;\n    opacity: 1; }\n  35% {\n    height: 30%;\n    opacity: 0.5; }\n  55% {\n    height: 100%;\n    opacity: 1; }\n  70% {\n    height: 50%;\n    opacity: 0.5; }\n  80% {\n    height: 100%;\n    opacity: 1; }\n  100% {\n    height: 30%;\n    opacity: 0.5; } }\n.rai-levels .rai-levels-container {\n  text-align: left;\n  display: inline-block;\n  height: 1em;\n  line-height: 1em;\n  -webkit-animation-duration: inherit;\n          animation-duration: inherit; }\n.rai-levels .rai-bar {\n  bottom: 0;\n  display: inline-block;\n  vertical-align: bottom;\n  width: 0.25em;\n  background: #727981;\n  margin-right: 0.125em;\n  height: 50%;\n  -webkit-animation-name: levels-pulse;\n          animation-name: levels-pulse;\n  -webkit-animation-duration: inherit;\n          animation-duration: inherit;\n  -webkit-animation-timing-function: ease-in-out;\n          animation-timing-function: ease-in-out;\n  -webkit-animation-iteration-count: infinite;\n          animation-iteration-count: infinite; }\n  .rai-levels .rai-bar:last-child {\n    margin-right: 0; }\n\n@-webkit-keyframes rai-sentry-pulse {\n  from {\n    transform: scale(0);\n    opacity: 1; }\n  to {\n    transform: scale(1);\n    opacity: 0; } }\n\n@keyframes rai-sentry-pulse {\n  from {\n    transform: scale(0);\n    opacity: 1; }\n  to {\n    transform: scale(1);\n    opacity: 0; } }\n.rai-sentry {\n  text-align: left;\n  display: inline-block;\n  position: relative;\n  width: 2em;\n  height: 2em; }\n  .rai-sentry .rai-wave-container {\n    display: inline-flex;\n    align-items: center;\n    justify-content: center;\n    width: 100%;\n    height: 100%;\n    position: absolute;\n    -webkit-animation-duration: inherit;\n            animation-duration: inherit; }\n  .rai-sentry .rai-wave {\n    display: inline-block;\n    border: 0.125em solid #727981;\n    border-radius: 100%;\n    box-sizing: border-box;\n    width: 100%;\n    height: 100%;\n    -webkit-animation-name: rai-sentry-pulse;\n            animation-name: rai-sentry-pulse;\n    -webkit-animation-duration: inherit;\n            animation-duration: inherit;\n    -webkit-animation-timing-function: linear;\n            animation-timing-function: linear;\n    -webkit-animation-iteration-count: infinite;\n            animation-iteration-count: infinite; }\n\n@-webkit-keyframes rai-spinner {\n  from {\n    transform: rotate(0deg); }\n  to {\n    transform: rotate(360deg); } }\n\n@keyframes rai-spinner {\n  from {\n    transform: rotate(0deg); }\n  to {\n    transform: rotate(360deg); } }\n.rai-spinner {\n  width: 1.5em;\n  height: 1.5em;\n  position: relative;\n  margin: 0; }\n  .rai-spinner-inner, .rai-spinner-outer {\n    position: absolute;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    border-radius: 100%;\n    margin-left: -0.0625em;\n    margin-top: -0.0625em; }\n  .rai-spinner-outer {\n    border: 0.125em solid #727981;\n    opacity: 0.2; }\n  .rai-spinner-inner {\n    position: absolute;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    border-radius: 100%;\n    border-top: 0.125em solid #727981;\n    border-right: 0.125em solid transparent !important;\n    border-bottom: 0.125em solid transparent !important;\n    border-left: 0.125em solid transparent !important;\n    -webkit-animation-name: rai-spinner;\n            animation-name: rai-spinner;\n    -webkit-animation-iteration-count: infinite;\n            animation-iteration-count: infinite;\n    -webkit-animation-timing-function: linear;\n            animation-timing-function: linear;\n    -webkit-animation-duration: inherit;\n            animation-duration: inherit; }\n\n@keyframes dots-pulse {\n  0% {\n    opacity: 0.1; }\n  15% {\n    opacity: 1; }\n  100% {\n    opacity: 0.1; } }\n.rai-squares .rai-square {\n  display: inline-block;\n  margin-right: 0.1875em;\n  background-color: #727981;\n  width: 0.5em;\n  height: 0.5em;\n  -webkit-animation-name: dots-pulse;\n          animation-name: dots-pulse;\n  -webkit-animation-duration: inherit;\n          animation-duration: inherit;\n  -webkit-animation-timing-function: ease-in-out;\n          animation-timing-function: ease-in-out;\n  -webkit-animation-iteration-count: infinite;\n          animation-iteration-count: infinite; }\n  .rai-squares .rai-square:last-child {\n    margin-right: 0; }\n\n@-webkit-keyframes digital-pulse {\n  0%, 40%, 100% {\n    transform: scaleY(0.4); }\n  20% {\n    transform: scaleY(1); } }\n\n@keyframes digital-pulse {\n  0%, 40%, 100% {\n    transform: scaleY(0.4); }\n  20% {\n    transform: scaleY(1); } }\n.rai-digital {\n  height: 1em;\n  text-align: center; }\n  .rai-digital > div {\n    display: inline-block;\n    margin-right: 0.125em;\n    background-color: #727981;\n    width: 0.25em;\n    height: 100%;\n    -webkit-animation-name: digital-pulse;\n            animation-name: digital-pulse;\n    -webkit-animation-duration: inherit;\n            animation-duration: inherit;\n    -webkit-animation-timing-function: ease-in-out;\n            animation-timing-function: ease-in-out;\n    -webkit-animation-iteration-count: infinite;\n            animation-iteration-count: infinite; }\n    .rai-digital > div:last-child {\n      margin-right: 0; }\n\n@-webkit-keyframes bounce-pulse {\n  0% {\n    transform: translateY(0.1875em); }\n  30% {\n    transform: translateY(-0.25em); }\n  50% {\n    transform: translateY(3); } }\n\n@keyframes bounce-pulse {\n  0% {\n    transform: translateY(0.1875em); }\n  30% {\n    transform: translateY(-0.25em); }\n  50% {\n    transform: translateY(3); } }\n.rai-bounce > div {\n  transform: translateY(0.1875em);\n  border-radius: 100%;\n  display: inline-block;\n  margin-right: 0.1875em;\n  background-color: #727981;\n  width: 0.5em;\n  height: 0.5em;\n  -webkit-animation-name: bounce-pulse;\n          animation-name: bounce-pulse;\n  -webkit-animation-duration: inherit;\n          animation-duration: inherit;\n  -webkit-animation-timing-function: ease-in-out;\n          animation-timing-function: ease-in-out;\n  -webkit-animation-iteration-count: infinite;\n          animation-iteration-count: infinite; }\n  .rai-bounce > div:last-child {\n    margin-right: 0; }\n\n@-webkit-keyframes windill-pulse {\n  0% {\n    transform: rotate(0deg); }\n  99% {\n    transform: rotate(356deg); } }\n\n@keyframes windill-pulse {\n  0% {\n    transform: rotate(0deg); }\n  99% {\n    transform: rotate(356deg); } }\n.rai-windill {\n  width: 1em;\n  height: 1em;\n  position: relative; }\n  .rai-windill > div {\n    border-radius: 0.125em;\n    position: absolute;\n    top: 0;\n    left: 50%;\n    margin-left: -0.0625em;\n    width: 0.125em;\n    height: 100%;\n    -webkit-animation-name: windill-pulse;\n            animation-name: windill-pulse;\n    -webkit-animation-duration: inherit;\n            animation-duration: inherit;\n    -webkit-animation-timing-function: linear;\n            animation-timing-function: linear;\n    -webkit-animation-iteration-count: infinite;\n            animation-iteration-count: infinite; }\n", ""]);
+exports.push([module.i, "@keyframes dots-pulse {\n  0% {\n    opacity: 0.1; }\n  15% {\n    opacity: 1; }\n  100% {\n    opacity: 0.1; } }\n.rai-dots .rai-circle {\n  border-radius: 100%;\n  display: inline-block;\n  margin-right: 0.1875em;\n  background-color: #727981;\n  width: 0.5em;\n  height: 0.5em;\n  animation-name: dots-pulse;\n  animation-duration: inherit;\n  animation-timing-function: ease-in-out;\n  animation-iteration-count: infinite; }\n  .rai-dots .rai-circle:last-child {\n    margin-right: 0; }\n\n@keyframes levels-pulse {\n  0% {\n    height: 30%;\n    opacity: 0.5; }\n  20% {\n    height: 100%;\n    opacity: 1; }\n  35% {\n    height: 30%;\n    opacity: 0.5; }\n  55% {\n    height: 100%;\n    opacity: 1; }\n  70% {\n    height: 50%;\n    opacity: 0.5; }\n  80% {\n    height: 100%;\n    opacity: 1; }\n  100% {\n    height: 30%;\n    opacity: 0.5; } }\n.rai-levels .rai-levels-container {\n  text-align: left;\n  display: inline-block;\n  height: 1em;\n  line-height: 1em;\n  animation-duration: inherit; }\n.rai-levels .rai-bar {\n  bottom: 0;\n  display: inline-block;\n  vertical-align: bottom;\n  width: 0.25em;\n  background: #727981;\n  margin-right: 0.125em;\n  height: 50%;\n  animation-name: levels-pulse;\n  animation-duration: inherit;\n  animation-timing-function: ease-in-out;\n  animation-iteration-count: infinite; }\n  .rai-levels .rai-bar:last-child {\n    margin-right: 0; }\n\n@keyframes rai-sentry-pulse {\n  from {\n    transform: scale(0);\n    opacity: 1; }\n  to {\n    transform: scale(1);\n    opacity: 0; } }\n.rai-sentry {\n  text-align: left;\n  display: inline-block;\n  position: relative;\n  width: 2em;\n  height: 2em; }\n  .rai-sentry .rai-wave-container {\n    display: inline-flex;\n    align-items: center;\n    justify-content: center;\n    width: 100%;\n    height: 100%;\n    position: absolute;\n    animation-duration: inherit; }\n  .rai-sentry .rai-wave {\n    display: inline-block;\n    border: 0.125em solid #727981;\n    border-radius: 100%;\n    box-sizing: border-box;\n    width: 100%;\n    height: 100%;\n    animation-name: rai-sentry-pulse;\n    animation-duration: inherit;\n    animation-timing-function: linear;\n    animation-iteration-count: infinite; }\n\n@keyframes rai-spinner {\n  from {\n    transform: rotate(0deg); }\n  to {\n    transform: rotate(360deg); } }\n.rai-spinner {\n  width: 1.5em;\n  height: 1.5em;\n  position: relative;\n  margin: 0; }\n  .rai-spinner-inner, .rai-spinner-outer {\n    position: absolute;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    border-radius: 100%;\n    margin-left: -0.0625em;\n    margin-top: -0.0625em; }\n  .rai-spinner-outer {\n    border: 0.125em solid #727981;\n    opacity: 0.2; }\n  .rai-spinner-inner {\n    position: absolute;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    border-radius: 100%;\n    border-top: 0.125em solid #727981;\n    border-right: 0.125em solid transparent !important;\n    border-bottom: 0.125em solid transparent !important;\n    border-left: 0.125em solid transparent !important;\n    animation-name: rai-spinner;\n    animation-iteration-count: infinite;\n    animation-timing-function: linear;\n    animation-duration: inherit; }\n\n@keyframes dots-pulse {\n  0% {\n    opacity: 0.1; }\n  15% {\n    opacity: 1; }\n  100% {\n    opacity: 0.1; } }\n.rai-squares .rai-square {\n  display: inline-block;\n  margin-right: 0.1875em;\n  background-color: #727981;\n  width: 0.5em;\n  height: 0.5em;\n  animation-name: dots-pulse;\n  animation-duration: inherit;\n  animation-timing-function: ease-in-out;\n  animation-iteration-count: infinite; }\n  .rai-squares .rai-square:last-child {\n    margin-right: 0; }\n\n@keyframes digital-pulse {\n  0%, 40%, 100% {\n    transform: scaleY(0.4); }\n  20% {\n    transform: scaleY(1); } }\n.rai-digital {\n  height: 1em;\n  text-align: center; }\n  .rai-digital > div {\n    display: inline-block;\n    margin-right: 0.125em;\n    background-color: #727981;\n    width: 0.25em;\n    height: 100%;\n    animation-name: digital-pulse;\n    animation-duration: inherit;\n    animation-timing-function: ease-in-out;\n    animation-iteration-count: infinite; }\n    .rai-digital > div:last-child {\n      margin-right: 0; }\n\n@keyframes bounce-pulse {\n  0% {\n    transform: translateY(0.1875em); }\n  30% {\n    transform: translateY(-0.25em); }\n  50% {\n    transform: translateY(3); } }\n.rai-bounce > div {\n  transform: translateY(0.1875em);\n  border-radius: 100%;\n  display: inline-block;\n  margin-right: 0.1875em;\n  background-color: #727981;\n  width: 0.5em;\n  height: 0.5em;\n  animation-name: bounce-pulse;\n  animation-duration: inherit;\n  animation-timing-function: ease-in-out;\n  animation-iteration-count: infinite; }\n  .rai-bounce > div:last-child {\n    margin-right: 0; }\n\n@keyframes windill-pulse {\n  0% {\n    transform: rotate(0deg); }\n  99% {\n    transform: rotate(356deg); } }\n.rai-windill {\n  width: 1em;\n  height: 1em;\n  position: relative; }\n  .rai-windill > div {\n    border-radius: 0.125em;\n    position: absolute;\n    top: 0;\n    left: 50%;\n    margin-left: -0.0625em;\n    width: 0.125em;\n    height: 100%;\n    animation-name: windill-pulse;\n    animation-duration: inherit;\n    animation-timing-function: linear;\n    animation-iteration-count: infinite; }\n", ""]);
 
 // exports
 
@@ -7790,7 +7790,7 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
             sameElse: 'L',
         },
         relativeTime: {
-            future: '%s دیگر',
+            future: 'در %s',
             past: '%s پیش',
             s: 'چند ثانیه',
             ss: '%d ثانیه',
@@ -25215,7 +25215,7 @@ module.exports = ReactPropTypesSecret;
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(/*! !../../css-loader??ref--7-1!../../postcss-loader/src??ref--7-2!./react-activity.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/react-activity/dist/react-activity.css");
+var content = __webpack_require__(/*! !../../css-loader??ref--5-1!../../postcss-loader/src??ref--5-2!./react-activity.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/react-activity/dist/react-activity.css");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -59861,30 +59861,43 @@ module.exports = function(module) {
 /*!***************************************!*\
   !*** ./resources/js/helpers/index.js ***!
   \***************************************/
-/*! exports provided: setPriority, redirectTo */
+/*! exports provided: setPriority, redirectTo, getUser, getTask, getWorkspace, getDemand, sweetError */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setPriority", function() { return setPriority; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "redirectTo", function() { return redirectTo; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getUser", function() { return getUser; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getTask", function() { return getTask; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getWorkspace", function() { return getWorkspace; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getDemand", function() { return getDemand; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "sweetError", function() { return sweetError; });
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 var setPriority = function setPriority(id) {
   switch (parseInt(id)) {
     case 1:
       return 'ضروری و مهم';
-      break;
 
     case 2:
       return 'ضروری و غیر مهم';
-      break;
 
     case 3:
       return 'غیر ضروری و مهم';
-      break;
 
     case 4:
       return 'غیر ضروری و غیر مهم';
-      break;
 
     default:
       break;
@@ -59892,6 +59905,93 @@ var setPriority = function setPriority(id) {
 };
 var redirectTo = function redirectTo(url) {
   window.location.href = url;
+};
+var getUser = function getUser(userId) {
+  return USER_ROUTE.replace('userId', userId);
+};
+var getTask = function getTask(taskId) {
+  return TASK_ROUTE.replace('taskId', taskId);
+};
+var getWorkspace = function getWorkspace(workspaceId) {
+  return WORKSPACE_ROUTE.replace('workspaceId', workspaceId);
+};
+var getDemand = function getDemand(workspaceId, demandId) {
+  return DEMAND_ROUTE.replace('workspaceId', workspaceId).replace('demandId', demandId);
+};
+var sweetError = function sweetError(errObject) {
+  if (!errObject.response) {
+    Swal["default"].fire({
+      icon: "error",
+      title: "خطا",
+      html: 'خطا در برقراری ارتباط',
+      confirmButtonText: "تایید",
+      customClass: {
+        content: 'persian-text'
+      }
+    });
+    return {
+      'code': 0
+    };
+  }
+
+  var _errObject$response = errObject.response,
+      status = _errObject$response.status,
+      data = _errObject$response.data;
+
+  switch (status) {
+    case 422:
+      var errors = data.errors,
+          err_html = "";
+      Object.entries(errors).map(function (_ref) {
+        var _ref2 = _slicedToArray(_ref, 2),
+            param = _ref2[0],
+            message = _ref2[1];
+
+        err_html += "<p class=\"float-right text-center col-12\">".concat(message, "</p>");
+      });
+      Swal["default"].fire({
+        icon: "error",
+        title: "خطا",
+        html: err_html,
+        confirmButtonText: "تایید",
+        customClass: {
+          content: 'persian-text'
+        }
+      });
+      break;
+
+    case 403:
+    case 401:
+      Swal["default"].fire({
+        icon: "error",
+        title: "خطا",
+        html: "اجازه دسترسی ندارید !",
+        confirmButtonText: "تایید",
+        customClass: {
+          content: 'persian-text'
+        }
+      });
+      break;
+
+    default:
+      if (status !== 200) {
+        Swal["default"].fire({
+          icon: "error",
+          title: "خطا",
+          html: "خطای سرور",
+          confirmButtonText: "تایید",
+          customClass: {
+            content: 'persian-text'
+          }
+        });
+      }
+
+      break;
+  }
+
+  return {
+    'code': status
+  };
 };
 
 /***/ }),
@@ -59920,245 +60020,53 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
 /* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../helpers */ "./resources/js/helpers/index.js");
-function _typeof(obj) {
-  "@babel/helpers - typeof";
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-    _typeof = function _typeof(obj) {
-      return typeof obj;
-    };
-  } else {
-    _typeof = function _typeof(obj) {
-      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    };
-  }
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
-  return _typeof(obj);
-}
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 
-function _slicedToArray(arr, i) {
-  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
-}
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
-function _nonIterableRest() {
-  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-function _iterableToArrayLimit(arr, i) {
-  if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;
-  var _arr = [];
-  var _n = true;
-  var _d = false;
-  var _e = undefined;
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-  try {
-    for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
-      _arr.push(_s.value);
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
-      if (i && _arr.length === i) break;
-    }
-  } catch (err) {
-    _d = true;
-    _e = err;
-  } finally {
-    try {
-      if (!_n && _i["return"] != null) _i["return"]();
-    } finally {
-      if (_d) throw _e;
-    }
-  }
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
-  return _arr;
-}
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 
-function _arrayWithHoles(arr) {
-  if (Array.isArray(arr)) return arr;
-}
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 
-function ownKeys(object, enumerableOnly) {
-  var keys = Object.keys(object);
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
 
-  if (Object.getOwnPropertySymbols) {
-    var symbols = Object.getOwnPropertySymbols(object);
-    if (enumerableOnly) symbols = symbols.filter(function (sym) {
-      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-    });
-    keys.push.apply(keys, symbols);
-  }
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
 
-  return keys;
-}
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
-function _objectSpread(target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i] != null ? arguments[i] : {};
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-    if (i % 2) {
-      ownKeys(Object(source), true).forEach(function (key) {
-        _defineProperty(target, key, source[key]);
-      });
-    } else if (Object.getOwnPropertyDescriptors) {
-      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
-    } else {
-      ownKeys(Object(source)).forEach(function (key) {
-        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-      });
-    }
-  }
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-  return target;
-}
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-function _toConsumableArray(arr) {
-  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
-}
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
-function _nonIterableSpread() {
-  throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-function _unsupportedIterableToArray(o, minLen) {
-  if (!o) return;
-  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
-  var n = Object.prototype.toString.call(o).slice(8, -1);
-  if (n === "Object" && o.constructor) n = o.constructor.name;
-  if (n === "Map" || n === "Set") return Array.from(o);
-  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
-}
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
-function _iterableToArray(iter) {
-  if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);
-}
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _arrayWithoutHoles(arr) {
-  if (Array.isArray(arr)) return _arrayLikeToArray(arr);
-}
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
-function _arrayLikeToArray(arr, len) {
-  if (len == null || len > arr.length) len = arr.length;
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
 
-  for (var i = 0, arr2 = new Array(len); i < len; i++) {
-    arr2[i] = arr[i];
-  }
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
-  return arr2;
-}
-
-function _classCallCheck(instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-}
-
-function _defineProperties(target, props) {
-  for (var i = 0; i < props.length; i++) {
-    var descriptor = props[i];
-    descriptor.enumerable = descriptor.enumerable || false;
-    descriptor.configurable = true;
-    if ("value" in descriptor) descriptor.writable = true;
-    Object.defineProperty(target, descriptor.key, descriptor);
-  }
-}
-
-function _createClass(Constructor, protoProps, staticProps) {
-  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
-  if (staticProps) _defineProperties(Constructor, staticProps);
-  return Constructor;
-}
-
-function _inherits(subClass, superClass) {
-  if (typeof superClass !== "function" && superClass !== null) {
-    throw new TypeError("Super expression must either be null or a function");
-  }
-
-  subClass.prototype = Object.create(superClass && superClass.prototype, {
-    constructor: {
-      value: subClass,
-      writable: true,
-      configurable: true
-    }
-  });
-  if (superClass) _setPrototypeOf(subClass, superClass);
-}
-
-function _setPrototypeOf(o, p) {
-  _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
-    o.__proto__ = p;
-    return o;
-  };
-
-  return _setPrototypeOf(o, p);
-}
-
-function _createSuper(Derived) {
-  var hasNativeReflectConstruct = _isNativeReflectConstruct();
-
-  return function _createSuperInternal() {
-    var Super = _getPrototypeOf(Derived),
-        result;
-
-    if (hasNativeReflectConstruct) {
-      var NewTarget = _getPrototypeOf(this).constructor;
-
-      result = Reflect.construct(Super, arguments, NewTarget);
-    } else {
-      result = Super.apply(this, arguments);
-    }
-
-    return _possibleConstructorReturn(this, result);
-  };
-}
-
-function _possibleConstructorReturn(self, call) {
-  if (call && (_typeof(call) === "object" || typeof call === "function")) {
-    return call;
-  }
-
-  return _assertThisInitialized(self);
-}
-
-function _assertThisInitialized(self) {
-  if (self === void 0) {
-    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-  }
-
-  return self;
-}
-
-function _isNativeReflectConstruct() {
-  if (typeof Reflect === "undefined" || !Reflect.construct) return false;
-  if (Reflect.construct.sham) return false;
-  if (typeof Proxy === "function") return true;
-
-  try {
-    Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
-    return true;
-  } catch (e) {
-    return false;
-  }
-}
-
-function _getPrototypeOf(o) {
-  _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
-    return o.__proto__ || Object.getPrototypeOf(o);
-  };
-  return _getPrototypeOf(o);
-}
-
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
 
@@ -60343,6 +60251,7 @@ var Workspace = /*#__PURE__*/function (_Component) {
         nextPage: 1,
         hasMore: true
       },
+      due_to: null,
       already_added_tasks: {}
     };
     return _this;
@@ -60461,7 +60370,7 @@ var Workspace = /*#__PURE__*/function (_Component) {
         id: "new-task-members",
         className: "form-control text-right",
         multiple: true
-      }, workspace ? workspace.users.map(function (user, i) {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null), workspace ? workspace.users.map(function (user, i) {
         if (user.id !== logged_in_user_id) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
             key: i,
@@ -60569,72 +60478,7 @@ var Workspace = /*#__PURE__*/function (_Component) {
         scope: "col"
       }, "\u0648\u0636\u0639\u06CC\u062A \u0627\u062A\u0645\u0627\u0645"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
         scope: "col"
-      }, "\u062A\u0627\u0631\u06CC\u062E \u0627\u062A\u0645\u0627\u0645"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, tasks.data.length > 0 ? tasks.data.map(function (task, i) {
-        var id = task.id,
-            title = task.title,
-            group = task.group,
-            finished_at = task.finished_at,
-            priority_id = task.priority_id,
-            due_to = task.due_to,
-            workspace = task.workspace,
-            workspace_id = task.workspace_id,
-            users = task.users;
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
-          key: i,
-          onClick: function onClick() {
-            return Object(_helpers__WEBPACK_IMPORTED_MODULE_7__["redirectTo"])(taskRoute.replace("taskId", id));
-          },
-          className: "animated fadeIn"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
-          scope: "row"
-        }, i + 1), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, group), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, Object(_helpers__WEBPACK_IMPORTED_MODULE_7__["setPriority"])(priority_id)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "employees-container horizontal-centerlize"
-        }, users.length === 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-          className: "fas fa-user-slash"
-        })), users.length === 1 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, users.length, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-          className: "fas fa-user mr-2"
-        })), users.length > 1 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, users.length, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-          className: "fas fa-users mr-2"
-        })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "dropdown-users d-none",
-          onClick: function onClick(e) {
-            return e.stopPropagation();
-          }
-        }, users.length >= 1 && users.map(function (user, i) {
-          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-            key: i,
-            className: "user-dropdown-item border-sharp animated jackInTheBox"
-          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-            className: "user-right-flex"
-          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-            className: "user-img-container ml-2"
-          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-            src: typeof workspace_users !== 'undefined' ? APP_PATH + workspace_users[user.id].avatar_pic : APP_PATH + 'images/male-avatar.svg'
-          })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-            className: "user-info ml-2"
-          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, user.fullname), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-            href: "#user"
-          }, "@", user.name))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-            className: "user-label-container"
-          }, typeof workspace_users !== 'undefined' && workspace_users[user.id].is_admin === 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-            className: "btn btn-sm btn-success rtl admin"
-          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0627\u062F\u0645\u06CC\u0646", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-            className: "fas fa-user-tie mr-1"
-          }))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-            className: "btn btn-sm btn-primary rtl"
-          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0639\u0636\u0648", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-            className: "fas fa-user mr-1"
-          })))));
-        })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, due_to !== null ? moment__WEBPACK_IMPORTED_MODULE_3___default()(due_to).fromNow() : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-          className: "fas fa-calendar-minus  fa-3x"
-        })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, finished_at === null ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-          className: "fas fa-times-circle fa-3x"
-        }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-          className: "fas fa-check-circle fa-3x"
-        })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, finished_at === null ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-          className: "fas fa-calendar-times fa-3x"
-        }) : moment__WEBPACK_IMPORTED_MODULE_3___default()(finished_at).fromNow()));
-      }) : null)), tasks.data.length > 0 && !isGetting && tasks.hasMore && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "\u062A\u0627\u0631\u06CC\u062E \u0627\u062A\u0645\u0627\u0645"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, tasks.data.length > 0 ? tasks.data.map(function (task, i) {}) : null)), tasks.data.length > 0 && !isGetting && tasks.hasMore && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "text-center"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "btn btn-outline-dark text-center",
@@ -60670,137 +60514,29 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _tinymce_tinymce_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @tinymce/tinymce-react */ "./node_modules/@tinymce/tinymce-react/lib/es2015/main/ts/index.js");
-function _typeof(obj) {
-  "@babel/helpers - typeof";
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-    _typeof = function _typeof(obj) {
-      return typeof obj;
-    };
-  } else {
-    _typeof = function _typeof(obj) {
-      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    };
-  }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-  return _typeof(obj);
-}
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-function _classCallCheck(instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-}
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-function _defineProperties(target, props) {
-  for (var i = 0; i < props.length; i++) {
-    var descriptor = props[i];
-    descriptor.enumerable = descriptor.enumerable || false;
-    descriptor.configurable = true;
-    if ("value" in descriptor) descriptor.writable = true;
-    Object.defineProperty(target, descriptor.key, descriptor);
-  }
-}
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
-function _createClass(Constructor, protoProps, staticProps) {
-  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
-  if (staticProps) _defineProperties(Constructor, staticProps);
-  return Constructor;
-}
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-function _inherits(subClass, superClass) {
-  if (typeof superClass !== "function" && superClass !== null) {
-    throw new TypeError("Super expression must either be null or a function");
-  }
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
-  subClass.prototype = Object.create(superClass && superClass.prototype, {
-    constructor: {
-      value: subClass,
-      writable: true,
-      configurable: true
-    }
-  });
-  if (superClass) _setPrototypeOf(subClass, superClass);
-}
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _setPrototypeOf(o, p) {
-  _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
-    o.__proto__ = p;
-    return o;
-  };
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
-  return _setPrototypeOf(o, p);
-}
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
 
-function _createSuper(Derived) {
-  var hasNativeReflectConstruct = _isNativeReflectConstruct();
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
-  return function _createSuperInternal() {
-    var Super = _getPrototypeOf(Derived),
-        result;
-
-    if (hasNativeReflectConstruct) {
-      var NewTarget = _getPrototypeOf(this).constructor;
-
-      result = Reflect.construct(Super, arguments, NewTarget);
-    } else {
-      result = Super.apply(this, arguments);
-    }
-
-    return _possibleConstructorReturn(this, result);
-  };
-}
-
-function _possibleConstructorReturn(self, call) {
-  if (call && (_typeof(call) === "object" || typeof call === "function")) {
-    return call;
-  }
-
-  return _assertThisInitialized(self);
-}
-
-function _assertThisInitialized(self) {
-  if (self === void 0) {
-    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-  }
-
-  return self;
-}
-
-function _isNativeReflectConstruct() {
-  if (typeof Reflect === "undefined" || !Reflect.construct) return false;
-  if (Reflect.construct.sham) return false;
-  if (typeof Proxy === "function") return true;
-
-  try {
-    Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
-    return true;
-  } catch (e) {
-    return false;
-  }
-}
-
-function _getPrototypeOf(o) {
-  _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
-    return o.__proto__ || Object.getPrototypeOf(o);
-  };
-  return _getPrototypeOf(o);
-}
-
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
 
@@ -60923,14 +60659,14 @@ if (target) {
 
 /***/ }),
 
-/***/ 2:
+/***/ 0:
 /*!***********************************************!*\
   !*** multi ./resources/js/react/workspace.js ***!
   \***********************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! I:\projects\task-manager\resources\js\react\workspace.js */"./resources/js/react/workspace.js");
+module.exports = __webpack_require__(/*! W:\php\sampies\resources\js\react\workspace.js */"./resources/js/react/workspace.js");
 
 
 /***/ })

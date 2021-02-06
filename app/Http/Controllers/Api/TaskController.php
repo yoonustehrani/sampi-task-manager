@@ -175,7 +175,7 @@ class TaskController extends BaseController
                     array_merge($users, [(string) $request->user()->id])
                 );
             \DB::commit();
-            return $task->load('users');
+            return $task->parent_id ? $task->load('parent') : $task->load('users');
         } catch(\Exception $e) {
             \DB::rollback();
             throw $e;
