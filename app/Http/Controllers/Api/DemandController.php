@@ -42,6 +42,7 @@ class DemandController extends BaseController
     }
     public function mixed(Request $request)
     {
+        $with = null;
         if ($request->view_as_admin == 'true') {
             $model = app(Demand::class);
             $this->authorize('viewAny', Demand::class);
@@ -73,9 +74,10 @@ class DemandController extends BaseController
                 $user_demands = $user_demands->whereNull('finished_at');
                 break;
         }
-        $user_demands = $this->decide_ordered($request, $user_demands)
-                            ->withCount('messages')
-                            ->with($with, 'task', 'priority:id,title', 'workspace');                  
+        $user_demands = $this->decide_ordered($request, $user_demands)->withCount('messages'); 
+        if ($with) {
+            $user_demands = $user_demands->with($with, 'task', 'priority:id,title', 'workspace');
+        }
         return $request->limit ? $user_demands->limit((int) $request->limit)->get() : $user_demands->paginate(10);
     }
     public function search(Request $request)
