@@ -5,6 +5,8 @@ import moment from 'moment'
 moment.locale('fa')
 import { Sentry } from 'react-activity'
 import 'react-activity/lib/Sentry/Sentry.css'
+import { CircularProgressbar } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
 
 export default class UserProfile extends Component {
     constructor(props) {
@@ -379,14 +381,27 @@ export default class UserProfile extends Component {
                             <i className="fas fa-handshake"></i>
                             <h5>مسئولیت ها</h5>
                         </div>
-                        <div className="col-12 col-md-7 wide-chart">
-                            
-                        </div>
-                        <div className="col-12 col-md-5">
-
+                        <div className="col-12 wide-section-charts">
+                            <div className="col-12 col-md-9 wide-chart">
+                                <div className="col-12 p-3 mt-3 mb-4">
+                                    <canvas id="myChart" aria-label="Hello ARIA World" role="img"></canvas>
+                                </div>                            
+                            </div>
+                            <div className="col-12 col-md-3">
+                                <CircularProgressbar value={74} text={`74%`} />
+                            </div>
                         </div>
                     </div>
-
+                    <div className="col-12 col-md-6 text-center">
+                        <div className="col-12 col-md-3">
+                            <CircularProgressbar value={43} text={`43%`} />
+                        </div>
+                    </div>
+                    <div className="col-12 col-md-6">
+                        <div className="col-12 p-3 mt-3 mb-4">
+                            <canvas id="myChart2" aria-label="Hello ARIA World" role="img"></canvas>
+                        </div>
+                    </div>
                 </div>
             </div>
         )
