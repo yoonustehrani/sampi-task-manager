@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Task;
+use App\User;
 use App\Workspace;
 use Illuminate\Http\Request;
 
@@ -48,15 +49,18 @@ class TaskController extends BaseController
             if ($request->user_id) {
                 $user = \App\User::find($request->user_id);
                 $this->authorize('viewAny', User::class);
-                $relationship = $this->model_relationship($request->relationship, $user, '_tasks', 'tasks');
-                $model = $user->{$relationship}();
+                $model = $user;
             }
         } else {
-            $user = $request->user();
-            $relationship = $this->model_relationship($request->relationship, $user, '_tasks', 'tasks');
-            $model = $user->{$relationship}();
+            $model = $request->user();
+            if ($request->user_id) {
+                $target_user = User::findOrFail($request->user_id);
+                $this->authorize('view', $target_user);
+                $model = $target_user;
+            }
         }
-        $model = $model->whereNull('parent_id')->with(['users','workspace:id,title,avatar_pic'])->withCount('demands', 'children');
+        $relationship = $this->model_relationship($request->relationship, $model, '_tasks', 'tasks');
+        $model = $model->{$relationship}()->whereNull('parent_id')->with(['users','workspace:id,title,avatar_pic'])->withCount('demands', 'children');
         return $request->limit
             ? $this->decide_ordered($request, $model)->limit((int) $request->limit)->get()
             : $this->decide_ordered($request, $model)->paginate(10);

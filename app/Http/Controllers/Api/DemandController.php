@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Demand;
 use App\DemandMessage;
+use App\User;
 use App\Workspace;
 use Illuminate\Http\Request;
 
@@ -11,10 +12,15 @@ class DemandController extends BaseController
 {
     public function index(Request $request, $workspace)
     {
-        $user = $request->user();
-        $relationship = $this->model_relationship($request->relationship, $user, '_demands', 'demands');
+        $model = $request->user();
+        if ($request->view_as_admin == 'true') {
+            $workspace = Workspace::findOrFail($workspace);
+            $this->authorize('update', $workspace);
+            $model = ($request->user_id) ? \App\User::find($request->user_id) : $workspace;
+        }
+        $relationship = $this->model_relationship($request->relationship, $model, '_demands', 'demands');
         $with = $relationship == 'demands' ? 'to' : 'from';
-        $user_demands = $user->{$relationship}()->where('workspace_id', $workspace);
+        $user_demands = $model->{$relationship}()->where('workspace_id', $workspace);
         switch ($request->filter) {
             case 'finished':
                 $user_demands = $user_demands->whereNotNull('finished_at');
@@ -30,10 +36,25 @@ class DemandController extends BaseController
     }
     public function mixed(Request $request)
     {
-        $user = $request->user();
-        $relationship = $this->model_relationship($request->relationship, $user, '_demands', 'demands');
+        if ($request->view_as_admin == 'true') {
+            $model = app(Task::class);
+            $this->authorize('viewAny', Task::class);
+            if ($request->user_id) {
+                $user = \App\User::find($request->user_id);
+                $this->authorize('viewAny', User::class);
+                $model = $user;
+            }
+        } else {
+            $model = $request->user();
+            if ($request->user_id) {
+                $target_user = User::findOrFail($request->user_id);
+                $this->authorize('view', $target_user);
+                $model = $target_user;
+            }
+        }
+        $relationship = $this->model_relationship($request->relationship, $model, '_demands', 'demands');
         $with = $relationship == 'demands' ? 'to' : 'from';
-        $user_demands = $user->{$relationship}();
+        $user_demands = $model->{$relationship}();
         switch ($request->filter) {
             case 'finished':
                 $user_demands = $user_demands->whereNotNull('finished_at');

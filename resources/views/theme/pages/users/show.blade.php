@@ -76,6 +76,9 @@
 @endsection
 
 @push('scripts')
+    <script>
+        const TargetUser = {!! json_encode($user->only(['id', 'fullname', 'avatar_pic'])) !!};
+    </script>
     <script src="{{ asset("js/user-profile.js") }}"></script>
     <script src="{{ asset('js/select2.js') }}"></script>
     <script src="{{ asset('js/chart.js') }}"></script>
