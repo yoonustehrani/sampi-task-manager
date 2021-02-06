@@ -89,7 +89,7 @@ export default class Dashboard extends Component {
         const sendReq = (tab_name, api) => {
             this.setState({ isGetting: true })
             let order_by = $(`#${tab_name}_order_by_select`).val(), order = $(`#${tab_name}_order_select`).val(), relation = $(`#${tab_name}_relation_select`).val()
-            Axios.get(`${api}&limit=15&order_by=${order_by}&order=${order}&relation=${tab_name === "mixed_tasks" ? relation : tab_name === "mixed_demands" ? "asked" : "mixed_need"}${tab_name === "mixed_tasks" ? "" : `&filter=${relation}`}`).then(res =>{
+            Axios.get(`${api}&limit=15&order_by=${order_by}&order=${order}&relationship=${tab_name === "mixed_tasks" ? relation : tab_name === "mixed_demands" ? "asked" : "mixed_need"}${tab_name === "mixed_tasks" ? "" : `&filter=${relation}`}`).then(res =>{
                 let { data } = res
                 this.setState({
                     [tab_name]: data,

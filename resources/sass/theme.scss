@@ -1,3 +1,8 @@
+@import 'dashboard';
+@import 'userprofile.scss';
+@import 'demands.scss';
+@import 'demand.scss';
+
 body,html {
     width: 100%;
     height: 100%;
@@ -397,7 +402,7 @@ div.input-group-single-line-all {
 }
 
 div.select-option {
-    img.option-img {
+    img.member-img {
         width: 30px;
         height: 30px;
         border-radius: 50px;
@@ -417,11 +422,15 @@ div.select-option.small {
     font-size: 12px !important;
 }
 
-div.user-dropdown-item.border-sharp {
-    border-top-left-radius: 0px !important;
-    border-bottom-left-radius: 0px !important;
+div.user-dropdown-item.all-sharp {
+    border-radius: 0px !important;
     div.user-label-container {
         > button {
+            border-radius: 0px !important;
+        }
+    }
+    div.user-img-container {
+        img {
             border-radius: 0px !important;
         }
     }
@@ -487,7 +496,6 @@ div.title-section {
     float: right;
     > i {
         margin-left: 6px;
-
     }
 }
 
@@ -569,7 +577,7 @@ div.show-tasks-container {
 }
 
 div.edit-tasks-container {
-    box-shadow: 0px 2px 5px 2px rgb(156 156 156 / 10%);
+    box-shadow: 0px 2px 5px 2px rgb(156 156 156 / 15%);
     float: right;
 }
 
@@ -584,11 +592,6 @@ div.edit-tasks-container {
     }
 }
 
-@import 'dashboard';
-@import 'userprofile.scss';
-@import 'demands.scss';
-@import 'demand.scss';
-
 .circle-avatar-pic {
     img {
         height: 30px;
@@ -597,4 +600,15 @@ div.edit-tasks-container {
         padding: 2px;
         box-shadow: 0 0 2px 1px #999999;
     }
+}
+
+.select2-search--inline {
+    display: contents; /*this will make the container disappear, making the child the one who sets the width of the element*/
+}
+.select2-search__field:placeholder-shown {
+    width: 100% !important; /*makes the placeholder to be 100% of the width while there are no options selected*/
+}
+
+.rtl {
+    direction: rtl !important;
 }

@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -90,7 +90,7 @@
 /*!*********************************!*\
   !*** ./resources/js/select2.js ***!
   \*********************************/
-/*! exports provided: formatOptionWithIcon, formatOptionWithImage, formatOption */
+/*! exports provided: formatOptionWithIcon, formatOptionWithImage, formatOption, simpleSearch */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -98,6 +98,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "formatOptionWithIcon", function() { return formatOptionWithIcon; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "formatOptionWithImage", function() { return formatOptionWithImage; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "formatOption", function() { return formatOption; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "simpleSearch", function() { return simpleSearch; });
 var formatOptionWithIcon = function formatOptionWithIcon(option) {
   if (option.element) {
     var icon_name = option.element.attributes.icon_name.nodeValue;
@@ -109,28 +110,73 @@ var formatOptionWithImage = function formatOptionWithImage(option) {
   if (option.element) {
     var img_src = option.element.attributes.img_address.nodeValue,
         is_user_admin = option.element.attributes.is_admin;
-    console.log(is_user_admin);
-    return $("\n            <div class=\"select-option\">\n                <img src=\"".concat(img_src, "\" class=\"option-img\"/>\n                ").concat(option.text, "\n                ").concat(typeof is_user_admin !== "undefined" ? "<span class=\"badge badge-pill mr-1 ".concat(is_user_admin === 1 ? "bade-success" : "badge-primary", "\">").concat(is_user_admin === 1 ? "ادمین" : "کاربر", "</span>") : "", "  \n            </div>\n        "));
+    return $("\n            <div class=\"select-option circle-avatar-pic\">\n                <img class=\"ml-1\" src=\"".concat(img_src, "\"/>\n                ").concat(option.text, "\n                ").concat(typeof is_user_admin !== "undefined" ? "<span class=\"badge badge-pill mr-1 ".concat(is_user_admin.nodeValue === "1" ? "badge-success" : "badge-primary", "\">").concat(is_user_admin.nodeValue === "1" ? "ادمین" : "کاربر", "</span>") : "", "  \n            </div>\n        "));
   }
 };
 var formatOption = function formatOption(option) {
-  if (option.element) {
-    return $("<div class=\"select-option\">".concat(option.text, "</div>"));
-  }
+  return $("\n        <div class=\"select-option\">\n            ".concat(option.workspace ? "<div class=\"circle-avatar-pic small-avatar mb-1\"><img src=\"".concat(APP_PATH + option.workspace.avatar_pic, "\"/><span class=\"badge badge-light mr-1\">").concat(option.workspace.title, "</span></div>") : "", "\n            ").concat(option.text).concat(option.group ? " (".concat(option.group, ")") : "", "\n        </div>\n    "));
 };
 $('#new-task-priority, #tasks_order_select, #tasks_order_by_select, #tasks_relation_select, #mixed_tasks_order_select, #mixed_tasks_order_by_select, #mixed_tasks_relation_select, #mixed_demands_order_select, #mixed_demands_order_by_select, #mixed_demands_relation_select, #mixed_needs_order_select, #mixed_needs_order_by_select, #mixed_needs_relation_select').select2({
   templateResult: formatOptionWithIcon,
   minimumResultsForSearch: Infinity,
   width: '100%',
-  dir: "rtl"
+  dir: "rtl",
+  language: {
+    searching: function searching() {
+      return "درحال جستجو ...";
+    },
+    noResults: function noResults() {
+      return "نتیجه ای یافت نشد";
+    }
+  }
 });
 $('.select2-search__field').css('width', '100%');
-$('#task-select').select2({
-  templateResult: formatOption,
-  placeholder: 'کار مربوطه را انتخاب کنید',
-  width: "100%",
-  dir: "rtl"
-});
+var simpleSearch = function simpleSearch(ids, parentOnly) {
+  var workspaceId = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : $("#new-demand-project-select").val();
+  $(ids).select2({
+    templateResult: formatOption,
+    templateSelection: function templateSelection(data, container) {
+      $(data.element).attr('workspace_id', data.workspace_id);
+      return data.text;
+    },
+    placeholder: 'کار مربوطه را جستجو و انتخاب کنید',
+    width: "100%",
+    dir: "rtl",
+    minimumInputLength: 3,
+    delay: 250,
+    ajax: {
+      url: typeof simple_search_url !== "undefined" ? simple_search_url : "",
+      data: function data(params) {
+        return {
+          q: params.term,
+          workspace: workspaceId,
+          parentOnly: parentOnly
+        };
+      },
+      processResults: function processResults(res) {
+        var data = $.map(res, function (obj) {
+          obj.text = obj.text || obj.title; // replace name with the property used for the text
+
+          return obj;
+        });
+        return {
+          results: data
+        };
+      }
+    },
+    language: {
+      searching: function searching() {
+        return "درحال جستجو ...";
+      },
+      noResults: function noResults() {
+        return "نتیجه ای یافت نشد";
+      }
+    },
+    allowClear: true
+  });
+};
+simpleSearch('#task-select', false);
+simpleSearch("#parent-task-select", true);
 
 var renderWithImg = function renderWithImg(ids, placeholder, multiple) {
   $(ids).select2({
@@ -138,36 +184,34 @@ var renderWithImg = function renderWithImg(ids, placeholder, multiple) {
     placeholder: placeholder,
     width: "100%",
     dir: "rtl",
-    multiple: multiple
+    multiple: multiple,
+    language: {
+      searching: function searching() {
+        return "درحال جستجو ...";
+      },
+      noResults: function noResults() {
+        return "نتیجه ای یافت نشد";
+      }
+    },
+    allowClear: true
   });
 };
 
 renderWithImg("#new-demand-member", "نیاز به کمک چه کسی دارید؟", false);
 renderWithImg("#new-demand-project-select", "پروژه مربوطه را انتخاب کنید", false);
 renderWithImg("#new-task-members", "انجام دهندگان این کار", true);
+renderWithImg("#new-task-project-select", "پروژه مربوطه را انتخاب کنید", false);
 
 /***/ }),
 
-/***/ "./resources/sass/app.scss":
-/*!*********************************!*\
-  !*** ./resources/sass/app.scss ***!
-  \*********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
-/***/ 0:
-/*!*****************************************************************!*\
-  !*** multi ./resources/js/select2.js ./resources/sass/app.scss ***!
-  \*****************************************************************/
+/***/ 1:
+/*!***************************************!*\
+  !*** multi ./resources/js/select2.js ***!
+  \***************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! I:\projects\task-manager\resources\js\select2.js */"./resources/js/select2.js");
-module.exports = __webpack_require__(/*! I:\projects\task-manager\resources\sass\app.scss */"./resources/sass/app.scss");
+module.exports = __webpack_require__(/*! I:\projects\task-manager\resources\js\select2.js */"./resources/js/select2.js");
 
 
 /***/ })

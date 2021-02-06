@@ -8,21 +8,23 @@ export const formatOptionWithIcon = (option) => {
 export const formatOptionWithImage = (option) => {
     if (option.element) {
         let img_src = option.element.attributes.img_address.nodeValue, is_user_admin = option.element.attributes.is_admin
-        console.log(is_user_admin)
         return $(`
-            <div class="select-option">
-                <img src="${img_src}" class="option-img"/>
+            <div class="select-option circle-avatar-pic">
+                <img class="ml-1" src="${img_src}"/>
                 ${option.text}
-                ${typeof is_user_admin !== "undefined" ? `<span class="badge badge-pill mr-1 ${is_user_admin === 1 ? "bade-success" : "badge-primary"}">${is_user_admin === 1 ? "ادمین" : "کاربر"}</span>` : "" }  
+                ${typeof is_user_admin !== "undefined" ? `<span class="badge badge-pill mr-1 ${is_user_admin.nodeValue === "1" ? "badge-success" : "badge-primary"}">${is_user_admin.nodeValue === "1" ? "ادمین" : "کاربر"}</span>` : "" }  
             </div>
         `)
     }
 }
 
 export const formatOption = (option) => {
-    if (option.element) {
-        return $(`<div class="select-option">${option.text}</div>`)
-    }
+    return $(`
+        <div class="select-option">
+            ${option.workspace ? `<div class="circle-avatar-pic small-avatar mb-1"><img src="${APP_PATH + option.workspace.avatar_pic}"/><span class="badge badge-light mr-1">${option.workspace.title}</span></div>` : ""}
+            ${option.text}${option.group ? ` (${option.group})` : ""}
+        </div>
+    `)
 }
 
 $('#new-task-priority, #tasks_order_select, #tasks_order_by_select, #tasks_relation_select, #mixed_tasks_order_select, #mixed_tasks_order_by_select, #mixed_tasks_relation_select, #mixed_demands_order_select, #mixed_demands_order_by_select, #mixed_demands_relation_select, #mixed_needs_order_select, #mixed_needs_order_by_select, #mixed_needs_relation_select').select2({
@@ -30,25 +32,82 @@ $('#new-task-priority, #tasks_order_select, #tasks_order_by_select, #tasks_relat
     minimumResultsForSearch: Infinity,
     width: '100%',
     dir: "rtl",
+    language: {
+        searching: function () {
+            return "درحال جستجو ..."
+        },
+        noResults: function () {
+            return "نتیجه ای یافت نشد"
+        }
+    },
 })
 $('.select2-search__field').css('width', '100%')
 
-$('#task-select').select2({
-    templateResult: formatOption,
-    placeholder: 'کار مربوطه را انتخاب کنید',
-    width: "100%",
-    dir: "rtl"
-})
+export const simpleSearch = (ids, parentOnly, workspaceId=$("#new-demand-project-select").val()) => {
+    $(ids).select2({
+        templateResult: formatOption,
+        templateSelection: function (data, container) {
+            $(data.element).attr('workspace_id', data.workspace_id)
+            return data.text
+        },
+        placeholder: 'کار مربوطه را جستجو و انتخاب کنید',
+        width: "100%",
+        dir: "rtl",
+        minimumInputLength: 3,
+        delay: 250,
+        ajax: {
+            url: typeof simple_search_url !== "undefined" ? simple_search_url : "",
+            data: function (params) {
+                return {
+                    q: params.term,
+                    workspace: workspaceId,
+                    parentOnly: parentOnly
+                }
+            },
+            processResults: function (res) {
+                var data = $.map(res, function (obj) {
+                    obj.text = obj.text || obj.title; // replace name with the property used for the text
+                    return obj;
+                });
+                return {
+                    results: data
+                }
+            },
+        },
+        language: {
+            searching: function () {
+                return "درحال جستجو ..."
+            },
+            noResults: function () {
+                return "نتیجه ای یافت نشد"
+            }
+        },
+        allowClear: true
+    })
+}
 
-const renderWithImg = (ids, placeholder, multiple) => {
+simpleSearch('#task-select', false)
+simpleSearch("#parent-task-select", true)
+
+export const renderWithImg = (ids, placeholder, multiple) => {
     $(ids).select2({
         templateResult: formatOptionWithImage,
         placeholder: placeholder,
         width: "100%",
         dir: "rtl",
-        multiple: multiple
+        multiple: multiple,
+        language: {
+            searching: function () {
+                return "درحال جستجو ..."
+            },
+            noResults: function () {
+                return "نتیجه ای یافت نشد"
+            }
+        },
+        allowClear: true,
     })
 }
 renderWithImg("#new-demand-member", "نیاز به کمک چه کسی دارید؟", false)
 renderWithImg("#new-demand-project-select", "پروژه مربوطه را انتخاب کنید", false)
 renderWithImg("#new-task-members", "انجام دهندگان این کار", true)
+renderWithImg("#new-task-project-select", "پروژه مربوطه را انتخاب کنید", false)

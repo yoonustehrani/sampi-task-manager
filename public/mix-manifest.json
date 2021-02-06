@@ -1,3 +1,7 @@
 {
-    "/css/welcome.css": "/css/welcome.css"
+    "/js/chart.js": "/js/chart.js",
+    "/css/app.css": "/css/app.css",
+    "/js/demands.js": "/js/demands.js",
+    "/js/mixedDemands.js": "/js/mixedDemands.js",
+    "/js/mixedTasks.js": "/js/mixedTasks.js"
 }

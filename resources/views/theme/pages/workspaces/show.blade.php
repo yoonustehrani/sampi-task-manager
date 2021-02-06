@@ -13,9 +13,9 @@
             </h4>
         </div>
         <div class="workspace-sub-info float-right col-12">
-            <span><i class="far fa-user-circle ml-1 animated heartBeat delay-2s"></i><span class="number ml-1">{{ count($workspace->users) }}</span>عضو</span>
-            <span><i class="fas fa-thumbtack ml-1 animated heartBeat delay-2s"></i><span class="number ml-1">{{ $workspace->tasks_count - $workspace->finished_tasks_count }}</span>وظیفه جاری</span>
-            <span><i class="far fa-check-square ml-1 animated heartBeat delay-2s"></i><span class="number ml-1">{{ $workspace->finished_tasks_count }}</span>وظیفه انجام شده</span>
+            <span><i class="fas fa-tasks ml-1 animated heartBeat delay-2s"></i><span class="number ml-1">{{ $workspace->tasks_count }}</span>مسئولیت</span>
+            <span><i class="fas fa-thumbtack ml-1 animated heartBeat delay-2s"></i><span class="number ml-1">{{ $workspace->tasks_count - $workspace->finished_tasks_count }}</span>مسئولیت جاری</span>
+            <span><i class="far fa-check-square ml-1 animated heartBeat delay-2s"></i><span class="number ml-1">{{ $workspace->finished_tasks_count }}</span>مسئولیت انجام شده</span>
             <a style="direction: rtl;" href="{{ route('task-manager.demands.index', ['workspace' => $workspace->id]) }}">
                 <span><i class="far fa-check-square ml-1 animated heartBeat delay-2s"></i><span class="number ml-1">{{ $workspace->demands_count }}</span><b>خواسته ها</b></span>
             </a>
@@ -25,7 +25,7 @@
         <div class="col-12 float-right pr-0 pl-0 pr-md-3 pl-md-3 animated flipInX">
             <div class="title-section workspace-title-section col-12">
                 <i class="fas fa-user-secret"></i>
-                <h4 class="">اعضا :</h4>      
+                <h4 class="">اعضا ({{ count($workspace->users) }}):</h4>      
             </div>    
             <div class="col-12">
             @component('theme.tools.table', ['class' => 'table-sm'])
@@ -53,7 +53,7 @@
                                 </div>
                             </td>
                             <td class="no-break">
-                                وظیفه : <span class="badge badge-warning ml-md-4 d-block d-md-inline mb-1 mb-md-0">{{ $user->tasks_count }} <i class="fas fa-briefcase"></i></span>
+                                مسئولیت : <span class="badge badge-warning ml-md-4 d-block d-md-inline mb-1 mb-md-0">{{ $user->tasks_count }} <i class="fas fa-briefcase"></i></span>
                                 درخواست : <span class="badge badge-primary ml-md-4 d-block d-md-inline mb-1 mb-md-0">{{ $user->asked_demands_count }} <i class="fas fa-arrow-down"></i></span>
                                 نیاز : <span class="badge badge-danger ml-md-4 d-block d-md-inline mb-1 mb-md-0">{{ $user->demands_count }} <i class="fas fa-arrow-up"></i></span>
                             </td>
@@ -78,12 +78,17 @@
             add_task_api = "{{ route('api.task-manager.tasks.store', ['workspace' => $workspace->id, 'api_token' => auth()->user()->api_token]) }}"
             task_route = "{{ route('task-manager.tasks.show', ['task' => 'taskId']) }}"
             workspace_api = "{{ route('api.task-manager.workspaces.show', ['workspace' => $workspace->id, 'api_token' => auth()->user()->api_token]) }}"
-            logged_in_user_id = "{{ auth()->user()->id }}"
         ></div>
     </div>
 @endsection
 
 @push('scripts')
-    <script src="{{ asset('js/workspace.js') }}"></script>   
+    <script>
+        const CAN_VIEW_AS_ADMIN = {{ \Gate::allows('update', $workspace) ? 'true' : 'false' }};
+        var VIEW_AS_ADMIN       = {{ request()->view_as_admin == 'true' ? 'true' : 'false' }}; 
+        var simple_search_url = "{{ route('api.task-manager.tasks.search.simple', ['api_token' => auth()->user()->api_token]) }}"
+    </script>
+    <script src="{{ asset('js/datepicker.js') }}"></script>
+    <script src="{{ asset('js/workspace.js') }}"></script>
     <script src="{{ asset('js/select2.js') }}"></script>
 @endpush

@@ -1,9 +1,9 @@
 div.user-card {
     background-color: #ffffff;
     min-width: 300px;
-    @media (min-width: 768px) {
-        min-width: 500px;
-    }
+    // @media (min-width: 768px) {
+    //     min-width: 500px;
+    // }
     div.user-info-section {
         display: flex;
         flex-direction: column;
@@ -148,11 +148,45 @@ div.statistics-section {
     justify-content: center;
     align-items: flex-start;
     flex-wrap: wrap;
-    > div {
-        background-color: #ffffff;
-    }
     div.wide-section-statistics {
-        border: 1px solid #2C5364;
+        box-shadow: 0px 2px 5px 2px rgb(156 156 156 / 10%);
+        div.wide-section-charts {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-direction: row;
+            flex-wrap: wrap;
+            div.wide-chart {
+                > div {
+                    border-right: 1px solid #D7DDE8;
+                }
+            }
+        }
+    }
+}
+
+div.chart-title-section {
+    border-bottom: 1px solid #D7DDE8;
+    align-items: center !important;
+    h5 {
+        font-size: 22px;
+    }
+    i {
+        font-size: 30px;
+        color: #3A6073;
+    }
+}
+
+div.small-chart-sections-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    height: 270px;
+    > div {
+        width: 49%;
+        height: 95%;
     }
 }
 
@@ -163,3 +197,4 @@ div.select-option-big {
     }
     font-size: 16px !important;
 }
+

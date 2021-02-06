@@ -5,8 +5,9 @@ import moment from 'moment'
 moment.locale('fa')
 import { Squares } from 'react-activity'
 import 'react-activity/dist/react-activity.css'
-import Swal from 'sweetalert2'
 import { setPriority, redirectTo } from '../../../helpers'
+import { simpleSearch } from '../../../select2'
+import Task from './Task'
 
 export default class Workspace extends Component {
     constructor(props) {
@@ -62,25 +63,22 @@ export default class Workspace extends Component {
                 already_added_tasks: filtering ? {} : prevState.already_added_tasks
             })
         })
-        switch (table) {
-            case "tasks":
-                filtering ? this.setState({tasks: {data: [], nextPage: 1, hasMore: true}}, () => {getList("tasks")}) : getList("tasks")
-            break
-            
-            default:
-            break
+        if (table == 'tasks') {
+            filtering ? this.setState({tasks: {data: [], nextPage: 1, hasMore: true}}, () => {getList("tasks")}) : getList("tasks")
         }
     }
 
     addTask = () => {
-        let { add_task_api, logged_in_user_id } = this.props, { new_task_description, workspace_users } = this.state
-        let title = $("#new-task-title").val(), group = $("#new-task-group").val(), priority = parseInt($("#new-task-priority").val()), users = $("#new-task-members").val(), description = new_task_description
+        let { add_task_api } = this.props, { new_task_description, workspace_users } = this.state
+        let title = $("#new-task-title").val(), group = $("#new-task-group").val(), priority = parseInt($("#new-task-priority").val()), users = $("#new-task-members").val(), description = new_task_description, due_to = $("input[name='due_to']").val(), parent_id = $("#parent-task-select").val()
         Axios.post(add_task_api, {
             title: title,
             priority: priority,
             group: group,
             users: users,
-            description: new_task_description
+            description: new_task_description,
+            due_to: due_to ? due_to : null,
+            parent_id: parent_id
         }).then(res => {
             this.setState(prevState => {
                 let new_task_users = users.map((userId, i) => {
@@ -90,7 +88,7 @@ export default class Workspace extends Component {
                         name: workspace_users[userId].name,
                     })
                 })
-                new_task_users.unshift({id: logged_in_user_id, fullname: workspace_users[logged_in_user_id].fullname, name: workspace_users[logged_in_user_id].name})
+                new_task_users.unshift({id: CurrentUser.id, fullname: workspace_users[CurrentUser.id].fullname, name: workspace_users[CurrentUser.id].name})
                 return ({
                     tasks: Object.assign({}, prevState.tasks, {
                         data: [{...res.data, users: new_task_users, finished_at: null, finisher_id: null}, ...prevState.tasks.data]
@@ -100,7 +98,7 @@ export default class Workspace extends Component {
                     })
                 })
             })
-            Swal.fire({
+            Swal.default.fire({
                 icon: 'success',
                 title: "موفقیت",
                 text: "کار شما به لیست افزوده شد",
@@ -116,7 +114,7 @@ export default class Workspace extends Component {
                 Object.entries(errors).map(([param, message]) => {
                     err_html += `<p class="float-right text-center col-12">${message}</p><br>`
                 })
-                Swal.fire({
+                Swal.default.fire({
                     title: 'خطا',
                     html: err_html,
                     icon: 'error',
@@ -129,11 +127,22 @@ export default class Workspace extends Component {
         })
     }
 
-    componentDidMount() {
-        let { workspace_api, logged_in_user_id } = this.props
+    componentDidMount() {     
+        let { workspace_api } = this.props
         this.handleMore("tasks", false)
+        const due_to_input = $("input[name='due_to']");
+        $('#task-due-to').persianDatepicker({
+            format: 'dddd D MMMM YYYY، HH:mm',
+            viewMode: 'day',
+            onSelect: unix => {due_to_input.val(unix / 1000);},
+            toolbox:{calendarSwitch:{enabled: true,format: 'YYYY'}},
+            calendar:{gregorian: {locale: 'en'},persian: {locale: 'fa'}},
+            minDate: new persianDate().valueOf(),
+            timePicker: {enabled: true,second:{enabled: false},meridiem:{enabled: true}}
+        });
         Axios.get(workspace_api).then(res => {
             let { data } = res
+            simpleSearch("#parent-task-select", true, data.id)
             this.setState({workspace: data}, () => {
                 this.state.workspace.users.map((user, i) => {
                     this.setState(prevState => ({
@@ -151,11 +160,9 @@ export default class Workspace extends Component {
         })
     }
     
-
     render() {
         let { isGetting, tasks, workspace_users, workspace } = this.state
-        let { taskRoute, logged_in_user_id } = this.props
-        
+        let { taskRoute } = this.props
         return (
             <div>
                 <div className="float-right col-12 pr-0 pl-0 pr-md-3 pl-md-3">
@@ -169,13 +176,13 @@ export default class Workspace extends Component {
                             <h5>افزودن کار</h5>
                         </div>
                         <div className="add-task-section d-none col-12 p-3 animated fadeIn" ref={this.addTaskRef}>
-                            <div className="input-group col-12 col-md-6 pl-0 pr-0 mb-2 mb-md-0">
+                            <div className="input-group col-12 col-md-6 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3">
                                 <div className="input-group-prepend">
                                     <span className="input-group-text">عنوان</span>
                                 </div>
                                 <input type="text" id="new-task-title" className="form-control" placeholder="عنوان کار را در این قسمت وارد کنید" />
                             </div>
-                            <div className="input-group col-12 col-md-6 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line-all">
+                            <div className="input-group col-12 col-md-6 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3 input-group-single-line-all">
                                 <div className="input-group-prepend">
                                     <span className="input-group-text">اولویت</span>
                                 </div>
@@ -186,30 +193,43 @@ export default class Workspace extends Component {
                                     <option value="4" icon_name="fas fa-hourglass">غیر ضروری و غیر مهم</option>
                                 </select>
                             </div>
-                            <div className="input-group col-12 col-md-6 pl-0 pr-0 mb-2 mb-md-0">
+                            <div className="input-group col-12 col-md-6 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3">
                                 <div className="input-group-prepend">
                                     <span className="input-group-text">دسته بندی</span>
                                 </div>
                                 <input type="text" id="new-task-group" className="form-control" placeholder="این کار در چه گروهی قرار میگیرد؟" />
                             </div>
-                            <div className="input-group col-12 col-md-6 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line">
+                            <div className="input-group col-12 col-md-6 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3">
+                                <div className="input-group-prepend">
+                                    <span className="input-group-text">موعد تحویل</span>
+                                </div>
+                                <input type="hidden" id="new-task-due-to" name="due_to"/>
+                                <input type="text" id="task-due-to" className="form-control" />
+                            </div>
+                            <div className="input-group col-12 col-md-6 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3 input-group-single-line-all">
+                                <div className="input-group-prepend">
+                                    <span className="input-group-text">زیر مجموعه</span>
+                                </div>
+                                <select id="parent-task-select">
+                                    <option></option>
+                                </select>
+                            </div>
+                            <div className="input-group col-12 col-md-6 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3 input-group-single-line">
                                 <div className="input-group-prepend">
                                     <span className="input-group-text">مسئولین</span>
                                 </div>
                                 <select id="new-task-members" className="form-control text-right" multiple>
+                                    <option></option>
                                     { workspace ? workspace.users.map((user, i) => {
-                                        if (user.id !== logged_in_user_id) {
+                                        if (user.id !== CurrentUser.id) {
                                             return (
-                                                <option key={i} value={user.id} img_address={APP_PATH + user.avatar_pic}>{user.fullname}</option>
+                                                <option key={i} value={user.id} img_address={APP_PATH + user.avatar_pic} is_admin={user.pivot.is_admin}>{user.fullname}</option>
                                             )                                            
                                         }
                                     }) : null }
                                 </select>
                             </div>
-                            <div className="input-group col-12 pl-0 pr-0">
-                                {/* <div className="input-group-prepend">
-                                    <span className="input-group-text">توضیحات</span>
-                                </div> */}
+                            <div className="input-group col-12 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3 mb-3">
                                 <div className="tinymc-container">
                                     <TinymcEditor changeContent={this.onDescriptionChange} />
                                 </div>
@@ -265,66 +285,16 @@ export default class Workspace extends Component {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {
-                                        tasks.data.length > 0 ? tasks.data.map((task, i) => {
-                                            let { id, title, group, finished_at, priority_id, due_to, workspace, workspace_id, users } = task
-                                            return (
-                                                <tr key={i} onClick={() => redirectTo(taskRoute.replace("taskId", id))} className="animated fadeIn">
-                                                    <th scope="row">{ i + 1 }</th>
-                                                    <td>{title}</td>
-                                                    <td>{group}</td>
-                                                    <td>{setPriority(priority_id)}</td>
-                                                    <td>
-                                                        <div className="employees-container horizontal-centerlize">
-                                                            {
-                                                                users.length === 0 &&
-                                                                    <span><i className="fas fa-user-slash"></i></span>
-                                                            }
-                                                            {
-                                                                users.length === 1 &&
-                                                                    <span>{ users.length }<i className="fas fa-user mr-2"></i></span>
-                                                            }
-                                                            {
-                                                                users.length > 1 &&
-                                                                    <span>{ users.length }<i className="fas fa-users mr-2"></i></span>
-                                                            }
-                                                            <div className="dropdown-users d-none" onClick={(e) => e.stopPropagation()}>
-                                                                {
-                                                                    users.length >= 1 &&
-                                                                        users.map((user, i) => (
-                                                                            <div key={i} className="user-dropdown-item border-sharp animated jackInTheBox">
-                                                                                <div className="user-right-flex">
-                                                                                    <div className="user-img-container ml-2">
-                                                                                        <img src={typeof workspace_users !== 'undefined' ? APP_PATH + workspace_users[user.id].avatar_pic : APP_PATH + 'images/male-avatar.svg'} />
-                                                                                    </div>
-                                                                                    <div className="user-info ml-2">
-                                                                                        <p>{ user.fullname }</p>
-                                                                                        <a href={"#user"}>@{user.name}</a>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div className="user-label-container">
-                                                                                    {
-
-                                                                                        typeof workspace_users !== 'undefined' && workspace_users[user.id].is_admin === 1 ? <button className="btn btn-sm btn-success rtl admin"><span>ادمین<i className="fas fa-user-tie mr-1"></i></span></button>
-                                                                                        : <button className="btn btn-sm btn-primary rtl"><span>عضو<i className="fas fa-user mr-1"></i></span></button>
-                                                                                    } 
-                                                                                </div>
-                                                                            </div>
-                                                                        ))
-                                                                }
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>{due_to !== null ? moment(due_to).fromNow() : <i className="fas fa-calendar-minus  fa-3x"></i>}</td>
-                                                    <td>
-                                                        {finished_at === null ? <i className="fas fa-times-circle fa-3x"></i> : <i className="fas fa-check-circle fa-3x"></i>}
-                                                    </td>
-                                                    <td>
-                                                        {finished_at === null ? <i className="fas fa-calendar-times fa-3x"></i> : moment(finished_at).fromNow()}
-                                                    </td>
-                                                </tr>
-                                            )
-                                        }) : null
+                                    { tasks.data.length > 0 
+                                    ? tasks.data.map((task, i) => {
+                                        return (
+                                            <Task key={i} index={i}                                            
+                                            workspace_users={workspace_users}
+                                            onClick={() => redirectTo(taskRoute.replace("taskId", task.id))} 
+                                            {...task}/>
+                                        )
+                                    }) 
+                                    : null
                                     }
                                 </tbody>
                             </table> 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Demand;
 use App\DemandMessage;
+use App\User;
 use App\Workspace;
 use Illuminate\Http\Request;
 
@@ -11,10 +12,21 @@ class DemandController extends BaseController
 {
     public function index(Request $request, $workspace)
     {
-        $user = $request->user();
-        $relationship = $this->model_relationship($request->relationship, $user, '_demands', 'demands');
-        $with = $relationship == 'demands' ? 'to' : 'from';
-        $user_demands = $user->{$relationship}()->where('workspace_id', $workspace);
+        $model = $request->user();
+        if ($request->view_as_admin == 'true') {
+            $workspace = Workspace::findOrFail($workspace);
+            $this->authorize('update', $workspace);
+            $model = $workspace->demands();
+            if ($request->user_id) {
+                $model = \App\User::findOrFail($request->user_id);
+            }
+        }
+        $user_demands = $model;
+        if ($model instanceof User) {
+            $relationship = $this->model_relationship($request->relationship, $model, '_demands', 'demands');
+            $with = $relationship == 'demands' ? 'to' : 'from';
+            $user_demands = $model->{$relationship}()->where('workspace_id', $workspace)->with($with, 'task', 'priority:id,title');
+        }
         switch ($request->filter) {
             case 'finished':
                 $user_demands = $user_demands->whereNotNull('finished_at');
@@ -23,17 +35,35 @@ class DemandController extends BaseController
                 $user_demands = $user_demands->whereNull('finished_at');
                 break;
         }
-        $user_demands = $this->decide_ordered($request, $user_demands)
-                            ->withCount('messages')
-                            ->with($with, 'task', 'priority:id,title');
+        $user_demands = $this->decide_ordered($request, $user_demands)->withCount('messages');
         return $request->limit ? $user_demands->limit((int) $request->limit)->get() : $user_demands->paginate(10);
     }
     public function mixed(Request $request)
     {
-        $user = $request->user();
-        $relationship = $this->model_relationship($request->relationship, $user, '_demands', 'demands');
-        $with = $relationship == 'demands' ? 'to' : 'from';
-        $user_demands = $user->{$relationship}();
+        $with = null;
+        if ($request->view_as_admin == 'true') {
+            $model = app(Demand::class);
+            $this->authorize('viewAny', Demand::class);
+            $user_demands = $model;
+            if ($request->user_id) {
+                $user = \App\User::find($request->user_id);
+                $this->authorize('viewAny', User::class);
+                $model = $user;
+                $relationship = $this->model_relationship($request->relationship, $model, '_demands', 'demands');
+                $with = $relationship == 'demands' ? 'to' : 'from';
+                $user_demands = $model->{$relationship}();
+            }
+        } else {
+            $model = $request->user();
+            if ($request->user_id) {
+                $target_user = User::findOrFail($request->user_id);
+                $this->authorize('view', $target_user);
+                $model = $target_user;
+            }
+            $relationship = $this->model_relationship($request->relationship, $model, '_demands', 'demands');
+            $with = $relationship == 'demands' ? 'to' : 'from';
+            $user_demands = $model->{$relationship}();
+        }
         switch ($request->filter) {
             case 'finished':
                 $user_demands = $user_demands->whereNotNull('finished_at');
@@ -42,9 +72,12 @@ class DemandController extends BaseController
                 $user_demands = $user_demands->whereNull('finished_at');
                 break;
         }
-        $user_demands = $this->decide_ordered($request, $user_demands)
-                            ->withCount('messages')
-                            ->with($with, 'task', 'priority:id,title', 'workspace');                  
+        $user_demands = $this->decide_ordered($request, $user_demands)->withCount('messages'); 
+        if ($with) {
+            $user_demands = $user_demands->with($with, 'task', 'priority:id,title', 'workspace');
+        } else {
+            $user_demands = $user_demands->with('from', 'to', 'task', 'priority:id,title', 'workspace');
+        }
         return $request->limit ? $user_demands->limit((int) $request->limit)->get() : $user_demands->paginate(10);
     }
     public function search(Request $request)
@@ -56,7 +89,12 @@ class DemandController extends BaseController
         ]);
         $user = ($request->user_id) ? \App\User::find($request->user_id) : $request->user();
         $relationship = $this->model_relationship($request->relationship, $user, '_demands', 'demands');
-        $user_demands = $user->{$relationship}()->search($request->q, null, true);
+        $with = $relationship == 'demands' ? 'to' : 'from';
+        $user_demands = $user->{$relationship}();
+        $user_demands = $this->decide_ordered($request, $user_demands)
+                        ->withCount('messages')
+                        ->with($with, 'task', 'priority:id,title', 'workspace')
+                        ->search($request->q, null, true);
         switch ($request->filter) {
             case 'finished':
                 $user_demands = $user_demands->whereNotNull('finished_at');
@@ -66,8 +104,8 @@ class DemandController extends BaseController
                 break;
         }
         return $request->limit
-                ? $this->decide_ordered($request, $user_demands)->limit((int) $request->limit)->get()
-                : $this->decide_ordered($request, $user_demands)->paginate(10);
+                ? $user_demands->limit((int) $request->limit)->get()
+                : $user_demands->paginate(10);
     }
     public function store(Request $request, Workspace $workspace)
     {
@@ -84,8 +122,10 @@ class DemandController extends BaseController
             \DB::beginTransaction();
             $target_user = \App\User::findOrFail($request->target_user);
             $demand = new Demand();
+            $task = null;
             if ($request->task) {
-                $demand->task_id = optional($user->tasks()->findOrFail($request->task))->id;
+                $task = $user->tasks()->findOrFail($request->task);
+                $demand->task_id = $task->id;
             }
             $demand->title = $request->title;
             $demand->priority_id = $request->priority;
@@ -99,6 +139,7 @@ class DemandController extends BaseController
                 $demand->messages()->create($message->toArray());
             }
             \DB::commit();
+            $demand['task'] = $task ? $task->toArray() : null;
             return $demand;
         } catch (\Exception $e){
             \DB::rollback();

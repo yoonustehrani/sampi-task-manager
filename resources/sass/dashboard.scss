@@ -156,13 +156,13 @@ table {
         color: #000000;
         transition: 0.3s;
     }
-    div.employees-container:hover {
-        > span {
-            color: #4286f4;
-        }
-        div.dropdown-users {
-            display: block !important;
-        }
+}
+div.employees-container:hover {
+    > span {
+        color: #4286f4 !important;
+    }
+    div.dropdown-users {
+        display: block !important;
     }
 }
 table.table-hover {

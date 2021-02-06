@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Task;
+use App\User;
 use App\Workspace;
 use Illuminate\Http\Request;
 
@@ -17,13 +18,22 @@ class TaskController extends BaseController
             'group' => 'nullable|string',
             'order_by' => 'nullable|string'
         ]);
-        $user = ($request->user_id) ? \App\User::find($request->user_id) : $request->user();
-        $relationship = $this->model_relationship($request->relationship, $user, '_tasks', 'tasks');
-        $user_tasks = $user->{$relationship}()
-                    ->whereNull('parent_id')
-                    ->with('users')
-                    ->withCount('demands', 'children')
-                    ->where('workspace_id', $workspace);
+        $model = $request->user();
+        if ($request->view_as_admin == 'true') {
+            $workspace = Workspace::findOrFail($workspace);
+            $this->authorize('update', $workspace);
+            $model = $workspace;
+            if ($request->user_id) {
+                $target_user = \App\User::find($request->user_id);
+                $model = $target_user;
+            }
+        }
+        $relationship = $this->model_relationship($request->relationship, $model, '_tasks', 'tasks');
+        $user_tasks = $model->{$relationship}();
+        if ($model instanceof User) {
+            $user_tasks = $model->{$relationship}()->where('workspace_id', $workspace);
+        }
+        $user_tasks = $user_tasks->whereNull('parent_id')->with('users')->withCount('demands', 'children');
         // $group = $request->group ?: $this->default_group;
         // $user_tasks = $user_tasks->where('group', '=', $group);
         return $request->limit
@@ -37,15 +47,27 @@ class TaskController extends BaseController
             'order' => 'nullable|string',
             'order_by' => 'nullable|string'
         ]);
-        $user = ($request->user_id) ? \App\User::find($request->user_id) : $request->user();
-        $relationship = $this->model_relationship($request->relationship, $user, '_tasks', 'tasks');
-        $user_tasks = $user->{$relationship}()
-                    ->whereNull('parent_id')
-                    ->with(['users','workspace:id,title,avatar_pic'])
-                    ->withCount('demands', 'children');
+        if ($request->view_as_admin == 'true') {
+            $model = app(Task::class);
+            $this->authorize('viewAny', Task::class);
+            if ($request->user_id) {
+                $user = \App\User::find($request->user_id);
+                $this->authorize('viewAny', User::class);
+                $model = $user;
+            }
+        } else {
+            $model = $request->user();
+            if ($request->user_id) {
+                $target_user = User::findOrFail($request->user_id);
+                $this->authorize('view', $target_user);
+                $model = $target_user;
+            }
+        }
+        $relationship = $this->model_relationship($request->relationship, $model, '_tasks', 'tasks');
+        $model = $model->{$relationship}()->whereNull('parent_id')->with(['users','workspace:id,title,avatar_pic'])->withCount('demands', 'children');
         return $request->limit
-            ? $this->decide_ordered($request, $user_tasks)->limit((int) $request->limit)->get()
-            : $this->decide_ordered($request, $user_tasks)->paginate(10);
+            ? $this->decide_ordered($request, $model)->limit((int) $request->limit)->get()
+            : $this->decide_ordered($request, $model)->paginate(10);
     }
     public function search(Request $request)
     {
@@ -56,7 +78,7 @@ class TaskController extends BaseController
         ]);
         $user = ($request->user_id) ? \App\User::find($request->user_id) : $request->user();
         $relationship = $this->model_relationship($request->relationship, $user, '_tasks', 'tasks');
-        $tasks = $tasks = $user->{$relationship}()->with(['workspace:id,title,avatar_pic', 'parent'])->withCount('users', 'children');
+        $tasks = $tasks = $user->{$relationship}()->with(['workspace:id,title,avatar_pic', 'parent', 'users'])->withCount('children');
         return $request->limit
                 ? $this->decide_ordered($request, $tasks)->search($request->q, null, true)->limit((int) $request->limit)->get()
                 : $this->decide_ordered($request, $tasks)->search($request->q, null, true)->paginate(10);
@@ -86,9 +108,9 @@ class TaskController extends BaseController
             'users',
         ])->findOrFail($task);
         $this->authorize('view', $task);
-        $relationship = $task->parent_id ? 'parent.users' : 'children.users';
+        $relationship = $task->parent_id ? 'parent' : 'children';
         $task->load([
-            'demands' => function($q) { $q->with('from', 'to'); },
+            'demands',
             $relationship
         ]);
         return $task;
@@ -122,7 +144,7 @@ class TaskController extends BaseController
                     array_merge($users, [(string) $request->user()->id])
                 );
             \DB::commit();
-            return $task;
+            return $task->parent_id ? $task->load(['parent', 'users']) : $task->load('users');
         } catch(\Exception $e) {
             \DB::rollback();
             throw $e;
@@ -143,7 +165,9 @@ class TaskController extends BaseController
             \DB::beginTransaction();
                 $task->title = $request->title;
                 $task->description = $request->description;
-                $task->parent_id = $request->parent_id;
+                if ($request->parent_id) {
+                    $task->parent_id = $request->parent_id;
+                }
                 $task->group = $request->group ?: $this->default_group;
                 $task->priority_id = $request->priority;
                 $due_to = $request->due_to ? (new \Carbon\Carbon(((int) $request->due_to)))->timezone('Asia/Tehran')->seconds(0) : now();
@@ -158,7 +182,7 @@ class TaskController extends BaseController
                     array_merge($users, [(string) $request->user()->id])
                 );
             \DB::commit();
-            return $task->load('users');
+            return $task->parent_id ? $task->load(['parent', 'users']) : $task->load('users');
         } catch(\Exception $e) {
             \DB::rollback();
             throw $e;
