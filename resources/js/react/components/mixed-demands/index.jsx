@@ -173,7 +173,7 @@ export default class MixedDemands extends Component {
 
     setViewAsAdmin = () => {
         let { viewing_as_admin } = this.state, { get_all_users } = this.props
-        if (!viewing_as_admin) {
+        if (! viewing_as_admin) {
             axios.get(`${get_all_users}&view_as_admin=true`).then(res => {
                 let { data } = res
                 this.setState({
@@ -344,7 +344,7 @@ export default class MixedDemands extends Component {
                                 <th scope="col">عنوان</th>
                                 <th scope="col">پروژه مربوطه</th>
                                 <th scope="col">درخواست کننده</th>
-                                <th scope="col">تسک مربوطه</th>
+                                <th scope="col">مسئولیت مربوطه</th>
                                 <th scope="col">اولویت</th>
                                 <th scope="col">وضعیت اتمام</th>
                                 <th scope="col">تاریخ اتمام</th>
@@ -535,7 +535,7 @@ export default class MixedDemands extends Component {
                                 <th scope="col">عنوان</th>
                                 <th scope="col">پروژه مربوطه</th>
                                 <th scope="col">مخاطب</th>
-                                <th scope="col">تسک مربوطه</th>
+                                <th scope="col">مسئولیت مربوطه</th>
                                 <th scope="col">اولویت</th>
                                 <th scope="col">وضعیت اتمام</th>
                                 <th scope="col">تاریخ اتمام</th>
@@ -652,14 +652,15 @@ export default class MixedDemands extends Component {
                                 <th scope="col">#</th>
                                 <th scope="col">عنوان</th>
                                 <th scope="col">پروژه مربوطه</th>
+                                <th scope="col">از طرف</th>
                                 <th scope="col">مخاطب</th>
-                                <th scope="col">تسک مربوطه</th>
+                                <th scope="col">مسئولیت مربوطه</th>
                                 <th scope="col">اولویت</th>
                                 <th scope="col">وضعیت اتمام</th>
                                 <th scope="col">تاریخ اتمام</th>
                             </tr>
                         </thead>
-                        {/* <tbody>
+                        <tbody>
                             {all && all.data.length > 0 && all.data.map((item, i) => {
                                 let { title, task, priority, due_to, finished_at, to, from, id, workspace_id } = item
                                 return (
@@ -669,6 +670,31 @@ export default class MixedDemands extends Component {
                                         <td className="text-right">
                                             <img className="workspace_avatar" src={APP_PATH + workspaces[workspace_id].avatar_pic} />
                                             <a href={getWorkspace(workspace_id)}>{workspaces[workspace_id].title}</a>
+                                        </td>
+                                        <td>
+                                            <div className="employees-container horizontal-centerlize">
+                                                <span>{ from.fullname }</span>
+                                                <div className="dropdown-users d-none" onClick={(e) => e.stopPropagation()}>
+                                                    <div className="user-dropdown-item animated jackInTheBox">
+                                                        <div className="user-right-flex">
+                                                            <div className="user-img-container ml-2">
+                                                                <img src={from.avatar_pic !== null ? APP_PATH + from.avatar_pic : APP_PATH + 'images/male-avatar.svg'} />
+                                                            </div>
+                                                            <div className="user-info ml-2">
+                                                                <p>{ from.fullname }</p>
+                                                                <a href={getUser(from.id)}>@{from.name}</a>
+                                                            </div>
+                                                        </div>
+                                                        <div className="user-label-container">
+                                                            {
+                                                                workspaces_users && workspaces_users[workspace_id][from.id].is_admin === 1 
+                                                                ? <button className="btn btn-sm btn-success rtl admin p-1"><span>ادمین<i className="fas fa-user-tie mr-1"></i></span></button>
+                                                                : <button className="btn btn-sm btn-primary rtl"><span>عضو<i className="fas fa-user mr-1"></i></span></button>
+                                                            } 
+                                                        </div>
+                                                    </div>                                                
+                                                </div>
+                                            </div>
                                         </td>
                                         <td>
                                             <div className="employees-container horizontal-centerlize">
@@ -707,7 +733,7 @@ export default class MixedDemands extends Component {
                                 )
                             })
                             }
-                        </tbody> */}
+                        </tbody>
                     </table> 
                     {
                         all && all.data.length > 0 && !isGetting && all.hasMore && (

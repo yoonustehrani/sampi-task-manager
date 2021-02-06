@@ -7809,7 +7809,7 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
             sameElse: 'L',
         },
         relativeTime: {
-            future: '%s دیگر',
+            future: 'در %s',
             past: '%s پیش',
             s: 'چند ثانیه',
             ss: '%d ثانیه',
@@ -57171,7 +57171,7 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
         scope: "col"
       }, "\u062F\u0631\u062E\u0648\u0627\u0633\u062A \u06A9\u0646\u0646\u062F\u0647"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
         scope: "col"
-      }, "\u062A\u0633\u06A9 \u0645\u0631\u0628\u0648\u0637\u0647"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+      }, "\u0645\u0633\u0626\u0648\u0644\u06CC\u062A \u0645\u0631\u0628\u0648\u0637\u0647"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
         scope: "col"
       }, "\u0627\u0648\u0644\u0648\u06CC\u062A"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
         scope: "col"
@@ -57438,7 +57438,7 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
         scope: "col"
       }, "\u0645\u062E\u0627\u0637\u0628"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
         scope: "col"
-      }, "\u062A\u0633\u06A9 \u0645\u0631\u0628\u0648\u0637\u0647"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+      }, "\u0645\u0633\u0626\u0648\u0644\u06CC\u062A \u0645\u0631\u0628\u0648\u0637\u0647"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
         scope: "col"
       }, "\u0627\u0648\u0644\u0648\u06CC\u062A"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
         scope: "col"
@@ -57606,15 +57606,111 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
         scope: "col"
       }, "\u067E\u0631\u0648\u0698\u0647 \u0645\u0631\u0628\u0648\u0637\u0647"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
         scope: "col"
+      }, "\u0627\u0632 \u0637\u0631\u0641"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+        scope: "col"
       }, "\u0645\u062E\u0627\u0637\u0628"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
         scope: "col"
-      }, "\u062A\u0633\u06A9 \u0645\u0631\u0628\u0648\u0637\u0647"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+      }, "\u0645\u0633\u0626\u0648\u0644\u06CC\u062A \u0645\u0631\u0628\u0648\u0637\u0647"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
         scope: "col"
       }, "\u0627\u0648\u0644\u0648\u06CC\u062A"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
         scope: "col"
       }, "\u0648\u0636\u0639\u06CC\u062A \u0627\u062A\u0645\u0627\u0645"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
         scope: "col"
-      }, "\u062A\u0627\u0631\u06CC\u062E \u0627\u062A\u0645\u0627\u0645")))), all && all.data.length > 0 && !isGetting && all.hasMore && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "\u062A\u0627\u0631\u06CC\u062E \u0627\u062A\u0645\u0627\u0645"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, all && all.data.length > 0 && all.data.map(function (item, i) {
+        var title = item.title,
+            task = item.task,
+            priority = item.priority,
+            due_to = item.due_to,
+            finished_at = item.finished_at,
+            to = item.to,
+            from = item.from,
+            id = item.id,
+            workspace_id = item.workspace_id;
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
+          key: i,
+          className: "animated fadeIn",
+          onClick: function onClick() {
+            return Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["redirectTo"])(Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["getDemand"])(workspace_id, id));
+          }
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+          scope: "row"
+        }, i + 1), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+          className: "text-right"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+          className: "workspace_avatar",
+          src: APP_PATH + workspaces[workspace_id].avatar_pic
+        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+          href: Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["getWorkspace"])(workspace_id)
+        }, workspaces[workspace_id].title)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "employees-container horizontal-centerlize"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, from.fullname), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "dropdown-users d-none",
+          onClick: function onClick(e) {
+            return e.stopPropagation();
+          }
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "user-dropdown-item animated jackInTheBox"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "user-right-flex"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "user-img-container ml-2"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+          src: from.avatar_pic !== null ? APP_PATH + from.avatar_pic : APP_PATH + 'images/male-avatar.svg'
+        })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "user-info ml-2"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, from.fullname), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+          href: Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["getUser"])(from.id)
+        }, "@", from.name))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "user-label-container"
+        }, workspaces_users && workspaces_users[workspace_id][from.id].is_admin === 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          className: "btn btn-sm btn-success rtl admin p-1"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0627\u062F\u0645\u06CC\u0646", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fas fa-user-tie mr-1"
+        }))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          className: "btn btn-sm btn-primary rtl"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0639\u0636\u0648", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fas fa-user mr-1"
+        })))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "employees-container horizontal-centerlize"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, to.fullname), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "dropdown-users d-none",
+          onClick: function onClick(e) {
+            return e.stopPropagation();
+          }
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "user-dropdown-item animated jackInTheBox"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "user-right-flex"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "user-img-container ml-2"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+          src: to.avatar_pic !== null ? APP_PATH + to.avatar_pic : APP_PATH + 'images/male-avatar.svg'
+        })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "user-info ml-2"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, to.fullname), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+          href: Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["getUser"])(to.id)
+        }, "@", to.name))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "user-label-container"
+        }, workspaces_users && workspaces_users[workspace_id][to.id].is_admin === 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          className: "btn btn-sm btn-success rtl admin p-1"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0627\u062F\u0645\u06CC\u0646", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fas fa-user-tie mr-1"
+        }))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          className: "btn btn-sm btn-primary rtl"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0639\u0636\u0648", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fas fa-user mr-1"
+        })))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, task !== null ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+          href: Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["getTask"])(task.id)
+        }, task.title) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fas fa-minus fa-3x"
+        })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, priority.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, finished_at === null ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fas fa-times-circle fa-3x"
+        }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fas fa-check-circle fa-3x"
+        })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, finished_at === null ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fas fa-calendar-times fa-3x"
+        }) : moment__WEBPACK_IMPORTED_MODULE_8___default()(finished_at).fromNow()));
+      }))), all && all.data.length > 0 && !isGetting && all.hasMore && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "text-center"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "btn btn-outline-dark text-center",
@@ -58026,7 +58122,7 @@ renderWithImg("#new-task-project-select", "پروژه مربوطه را انتخ
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! I:\projects\task-manager\resources\js\react\mixedDemands.js */"./resources/js/react/mixedDemands.js");
+module.exports = __webpack_require__(/*! W:\php\sampies\resources\js\react\mixedDemands.js */"./resources/js/react/mixedDemands.js");
 
 
 /***/ })
