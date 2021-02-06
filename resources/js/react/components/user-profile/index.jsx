@@ -32,7 +32,12 @@ export default class UserProfile extends Component {
             workspaces: [],
             navbar: navbar,
             mixed_demands: [],
-            mixed_needs: []
+            mixed_needs: [],
+            charts: [
+                null,
+                null,
+                null,
+            ]
         }
     }
     
@@ -116,7 +121,14 @@ export default class UserProfile extends Component {
     }
 
     componentDidMount() {
-        let { workspace_counter, task_counter, demand_counter, workspacesApi, workspace_route } = this.props
+        let { workspace_counter, task_counter, demand_counter, workspacesApi, workspace_route, chart_one, chart_two, chart_three } = this.props
+        // [chart_one, chart_two].map((chart_url, i) => {
+        //     // Axios.get(chart_url).then(res => {
+        //     //     let { data } = res.data;
+
+        //     // })
+        // })
+        // chart_three
         let statisticApis = [workspace_counter, task_counter, demand_counter], statistics = {}
         this.setState({
             isGetting: true

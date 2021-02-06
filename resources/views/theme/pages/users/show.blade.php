@@ -72,6 +72,9 @@
         workspaces = "{{ route('api.task-manager.workspaces.index', ['api_token' => auth()->user()->api_token]) }}"
         mixed_tasks = "{{ route('api.task-manager.tasks.mixed', ['api_token' => auth()->user()->api_token]) }}"
         mixed_demands = "{{ route('api.task-manager.demands.mixed', ['api_token' => auth()->user()->api_token]) }}"
+        data-chart-created="{{ route('api.task-manager.chart.tasks') }}"
+        data-chart-completed="{{ route('api.task-manager.chart.tasks') }}"
+        data-chart-yearly="{{ route('api.task-manager.chart.tasks') }}"
     ></div>
 @endsection
 

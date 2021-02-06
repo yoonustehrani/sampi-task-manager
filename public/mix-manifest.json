@@ -1,7 +1,12 @@
 {
-    "/js/chart.js": "/js/chart.js",
-    "/css/app.css": "/css/app.css",
+    "/js/app.js": "/js/app.js",
+    "/js/dashboard.js": "/js/dashboard.js",
+    "/js/datepicker.js": "/js/datepicker.js",
     "/js/demands.js": "/js/demands.js",
     "/js/mixedDemands.js": "/js/mixedDemands.js",
-    "/js/mixedTasks.js": "/js/mixedTasks.js"
+    "/js/mixedTasks.js": "/js/mixedTasks.js",
+    "/js/task.js": "/js/task.js",
+    "/js/tinymce/langs/fa.js": "/js/tinymce/langs/fa.js",
+    "/js/user-profile.js": "/js/user-profile.js",
+    "/js/workspace.js": "/js/workspace.js"
 }
