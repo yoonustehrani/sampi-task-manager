@@ -148,9 +148,6 @@ div.statistics-section {
     justify-content: center;
     align-items: flex-start;
     flex-wrap: wrap;
-    > div {
-        background-color: #ffffff;
-    }
     div.wide-section-statistics {
         box-shadow: 0px 2px 5px 2px rgb(156 156 156 / 10%);
         div.chart-title-section {
@@ -177,6 +174,14 @@ div.statistics-section {
             }
         }
     }
+}
+
+div.small-chart-sections-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
 }
 
 div.select-option-big {
