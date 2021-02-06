@@ -190,7 +190,7 @@
             }
         });
         var myLineChart = new Chart(chart2, {
-            type: 'Line',
+            type: 'line',
             data: {
                 {{-- // labels: {!! $month_name->__toString() !!}, --}}
                 labels: [startDate, endDate],
