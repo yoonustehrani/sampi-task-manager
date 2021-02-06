@@ -244,10 +244,10 @@ export default class Demands extends Component {
                                                         </div>
                                                         <div className="user-label-container">
                                                             {
-                                                                workspace_users && workspace_users[from.id].is_admin === 1 
+                                                                workspace_users && workspace_users[from.id] && workspace_users[from.id].is_admin === 1 
                                                                 ? <button className="btn btn-sm btn-success rtl admin p-1"><span>ادمین<i className="fas fa-user-tie mr-1"></i></span></button>
                                                                 : <button className="btn btn-sm btn-primary rtl"><span>عضو<i className="fas fa-user mr-1"></i></span></button>
-                                                            } 
+                                                            }
                                                         </div>
                                                     </div>                                                
                                                 </div>
