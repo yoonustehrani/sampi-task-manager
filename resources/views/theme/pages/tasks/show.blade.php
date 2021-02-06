@@ -16,6 +16,9 @@
 @endsection
 
 @push('scripts')
+    <script>
+        var simple_search_url = "{{ route('api.task-manager.tasks.search.simple', ['api_token' => auth()->user()->api_token]) }}"
+    </script>
     <script src="{{ asset("/js/task.js") }}"></script>
     <script src="{{ asset('js/select2.js') }}"></script>
 @endpush

@@ -144,7 +144,7 @@ var simpleSearch = function simpleSearch(ids, parentOnly) {
     minimumInputLength: 3,
     delay: 250,
     ajax: {
-      url: simple_search_url,
+      url: simple_search_url ? simple_search_url : "",
       data: function data(params) {
         return {
           q: params.term,
