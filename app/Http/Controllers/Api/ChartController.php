@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Traits\ChartTrait;
+use App\User;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -21,7 +22,12 @@ class ChartController extends Controller
             'start_date' => 'required|date',
             'end_date' => 'required|date'
         ]);
-        $user = $request->user(); 
+        $user = $request->user();
+        if ($request->user_id) {
+            $target_user = User::findOrFail($request->user_id);
+            $this->authorize('view', $target_user);
+            $user = $target_user;
+        }
         $dt_from = $this->carbon_date($request->start_date);
         $dt_to = $this->carbon_date($request->end_date);
         $craeted_tasks = $this->created_tasks($user, $dt_from, $dt_to);
@@ -60,7 +66,12 @@ class ChartController extends Controller
             'start_date' => 'required|date',
             'end_date' => 'required|date'
         ]);
-        $user = $request->user(); 
+        $user = $request->user();
+        if ($request->user_id) {
+            $target_user = User::findOrFail($request->user_id);
+            $this->authorize('view', $target_user);
+            $user = $target_user;
+        }
         $dt_from = $this->carbon_date($request->start_date);
         $dt_to = $this->carbon_date($request->end_date);
         $craeted_tasks = $this->created_tasks($user, $dt_from, $dt_to);
@@ -95,6 +106,12 @@ class ChartController extends Controller
             'start_date' => 'required|date',
             'end_date' => 'required|date'
         ]);
+        $user = $request->user();
+        if ($request->user_id) {
+            $target_user = User::findOrFail($request->user_id);
+            $this->authorize('view', $target_user);
+            $user = $target_user;
+        }
         $dt_from = $this->carbon_date($request->start_date);
         $dt_to = $this->carbon_date($request->end_date);
         $month_day_numbers = [31,31,31,31,31,31,30,30,30,30,30,29];
@@ -114,7 +131,7 @@ class ChartController extends Controller
             'اسفند' => 0,
         ];
         $month_name = array_keys($month);
-        $tasks = $this->created_tasks($request->user(), $dt_from, $dt_to);
+        $tasks = $this->created_tasks($user, $dt_from, $dt_to);
         foreach ($tasks as $task) {
             $a = $month_day_numbers[0];
             for ($i=0; $i < 12; $i++) { 
