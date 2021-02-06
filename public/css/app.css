@@ -11461,7 +11461,7 @@ div.statistics-section > div {
 }
 
 div.statistics-section div.wide-section-statistics {
-  border: 1px solid #2C5364;
+  box-shadow: 0px 2px 5px 2px rgba(156, 156, 156, 0.1);
 }
 
 div.select-option-big {
@@ -11471,6 +11471,24 @@ div.select-option-big {
 div.select-option-big i {
   margin-left: 8px !important;
   font-size: 18px !important;
+}
+
+div.chart-title-section {
+  border-bottom: 1px solid #757F9A;
+  align-items: center !important;
+}
+
+div.chart-title-section h5 {
+  font-size: 22px;
+}
+
+div.chart-title-section i {
+  font-size: 30px;
+  color: #3A6073;
+}
+
+div.wide-chart {
+  border-right: 1px solid #757F9A;
 }
 
 nav.demands-tabs-titles {

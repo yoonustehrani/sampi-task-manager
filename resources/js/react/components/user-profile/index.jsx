@@ -375,20 +375,18 @@ export default class UserProfile extends Component {
                 </div>
                 <div className="statistics-section col-12 col-md-8 float-right">
                     <div className="wide-section-statistics col-12 mb-1">
-                        cahrt
+                        <div className="chart-title-section title-section col-12 p-2">
+                            <i className="fas fa-handshake"></i>
+                            <h5>مسئولیت ها</h5>
+                        </div>
+                        <div className="col-12 col-md-7 wide-chart">
+                            
+                        </div>
+                        <div className="col-12 col-md-5">
+
+                        </div>
                     </div>
-                    <div className="small-section-statictics col-12 col-md-6 mr-2 mb-1">
-                        cahrt
-                    </div>
-                    <div className="small-section-statictics col-12 col-md-6 mb-1">
-                        cahrt
-                    </div>
-                    <div className="small-section-statictics col-12 col-md-6 mr-2 mb-1">
-                        cahrt
-                    </div>
-                    <div className="small-section-statictics col-12 col-md-6 mb-1">
-                        cahrt
-                    </div>
+
                 </div>
             </div>
         )

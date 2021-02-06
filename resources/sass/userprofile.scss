@@ -152,7 +152,7 @@ div.statistics-section {
         background-color: #ffffff;
     }
     div.wide-section-statistics {
-        border: 1px solid #2C5364;
+        box-shadow: 0px 2px 5px 2px rgb(156 156 156 / 10%);
     }
 }
 
@@ -162,4 +162,20 @@ div.select-option-big {
         font-size: 18px !important;
     }
     font-size: 16px !important;
+}
+
+div.chart-title-section {
+    border-bottom: 1px solid #757F9A;
+    align-items: center !important;
+    h5 {
+        font-size: 22px;
+    }
+    i {
+        font-size: 30px;
+        color: #3A6073;
+    }
+}
+
+div.wide-chart {
+    border-right: 1px solid #757F9A;
 }

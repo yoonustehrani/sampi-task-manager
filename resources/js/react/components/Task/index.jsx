@@ -462,7 +462,7 @@ export default class ShowTask extends Component {
                                 <h6>{ task.group }</h6>
                             </div>
                             <i className="fas fa-arrow-circle-left"></i>
-                            { task.parent_id !== null && <a className="hoverable"><h6>تسک پدر</h6></a> } {/* then we add the parent task or the name of the task here */}
+                            { task.parent_id !== null && <a className="hoverable" href={getTask(task.parent.id)}><h6>{ task.parent.title }</h6></a> } {/* then we add the parent task or the name of the task here */}
                             { task.parent_id !== null && <i className="fas fa-arrow-circle-left"></i> }
                             <a className="hoverable" href={getTask(task.id)}><h6>{ task.title }</h6></a>
                         </div>
