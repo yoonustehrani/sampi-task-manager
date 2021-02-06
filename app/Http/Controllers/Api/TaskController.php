@@ -22,14 +22,21 @@ class TaskController extends BaseController
         if ($request->view_as_admin == 'true') {
             $workspace = Workspace::findOrFail($workspace);
             $this->authorize('update', $workspace);
-            $model = ($request->user_id) ? \App\User::find($request->user_id) : $workspace;
+            $model = $workspace;
+            if ($request->user_id) {
+                $target_user = \App\User::find($request->user_id);
+                $model = $target_user;
+            }
         }
         $relationship = $this->model_relationship($request->relationship, $model, '_tasks', 'tasks');
-        $user_tasks = $model->{$relationship}()
+        $user_tasks = $model->{$relationship}();
+        if ($model instanceof User) {
+            $user_tasks = $model->{$relationship}()
                     ->whereNull('parent_id')
                     ->with('users')
                     ->withCount('demands', 'children')
                     ->where('workspace_id', $workspace);
+        }
         // $group = $request->group ?: $this->default_group;
         // $user_tasks = $user_tasks->where('group', '=', $group);
         return $request->limit
