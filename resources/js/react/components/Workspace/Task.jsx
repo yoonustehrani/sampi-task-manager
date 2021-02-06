@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
+import { setPriority } from '../../../helpers';
 
 class Task extends Component {
+    constructor(props) {
+        super(props);
+    }
     render() {
-        let { id, title, group, finished_at, priority_id, due_to, workspace, workspace_id, users } = task
+        let { index, title, group, finished_at, priority_id, due_to, workspace, workspace_id, users, onClick, workspace_users } = this.props;
         return (
-            <tr key={i} onClick={() => redirectTo(taskRoute.replace("taskId", id))} className="animated fadeIn">
-                <th scope="row">{ i + 1 }</th>
+            <tr onClick={onClick} className="animated fadeIn">
+                <th scope="row">{ index + 1 }</th>
                 <td>{title}</td>
                 <td>{group}</td>
                 <td>{setPriority(priority_id)}</td>

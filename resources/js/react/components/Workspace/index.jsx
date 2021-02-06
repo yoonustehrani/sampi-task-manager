@@ -7,6 +7,7 @@ import { Squares } from 'react-activity'
 import 'react-activity/dist/react-activity.css'
 import Swal from 'sweetalert2'
 import { setPriority, redirectTo } from '../../../helpers'
+import Task from './Task'
 
 export default class Workspace extends Component {
     constructor(props) {
@@ -21,7 +22,6 @@ export default class Workspace extends Component {
                 nextPage: 1,
                 hasMore: true,
             },
-            due_to: null,
             already_added_tasks: {}
         }
     }
@@ -63,25 +63,21 @@ export default class Workspace extends Component {
                 already_added_tasks: filtering ? {} : prevState.already_added_tasks
             })
         })
-        switch (table) {
-            case "tasks":
-                filtering ? this.setState({tasks: {data: [], nextPage: 1, hasMore: true}}, () => {getList("tasks")}) : getList("tasks")
-            break
-            
-            default:
-            break
+        if (table == 'tasks') {
+            filtering ? this.setState({tasks: {data: [], nextPage: 1, hasMore: true}}, () => {getList("tasks")}) : getList("tasks")
         }
     }
 
     addTask = () => {
-        let { add_task_api, logged_in_user_id } = this.props, { new_task_description, workspace_users } = this.state
-        let title = $("#new-task-title").val(), group = $("#new-task-group").val(), priority = parseInt($("#new-task-priority").val()), users = $("#new-task-members").val(), description = new_task_description
+        let { add_task_api } = this.props, { new_task_description, workspace_users } = this.state
+        let title = $("#new-task-title").val(), group = $("#new-task-group").val(), priority = parseInt($("#new-task-priority").val()), users = $("#new-task-members").val(), description = new_task_description, due_to = $("input[name='due_to']").val()
         Axios.post(add_task_api, {
             title: title,
             priority: priority,
             group: group,
             users: users,
-            description: new_task_description
+            description: new_task_description,
+            due_to: due_to ? due_to : null
         }).then(res => {
             this.setState(prevState => {
                 let new_task_users = users.map((userId, i) => {
@@ -91,7 +87,7 @@ export default class Workspace extends Component {
                         name: workspace_users[userId].name,
                     })
                 })
-                new_task_users.unshift({id: logged_in_user_id, fullname: workspace_users[logged_in_user_id].fullname, name: workspace_users[logged_in_user_id].name})
+                new_task_users.unshift({id: CurrentUser.id, fullname: workspace_users[CurrentUser.id].fullname, name: workspace_users[CurrentUser.id].name})
                 return ({
                     tasks: Object.assign({}, prevState.tasks, {
                         data: [{...res.data, users: new_task_users, finished_at: null, finisher_id: null}, ...prevState.tasks.data]
@@ -130,9 +126,19 @@ export default class Workspace extends Component {
         })
     }
 
-    componentDidMount() {
-        let { workspace_api, logged_in_user_id } = this.props
+    componentDidMount() {     
+        let { workspace_api } = this.props
         this.handleMore("tasks", false)
+        const due_to_input = $("input[name='due_to']");
+        $('#task-due-to').persianDatepicker({
+            format: 'dddd D MMMM YYYY، HH:mm',
+            viewMode: 'day',
+            onSelect: unix => {due_to_input.val(unix / 1000);},
+            toolbox:{calendarSwitch:{enabled: true,format: 'YYYY'}},
+            calendar:{gregorian: {locale: 'en'},persian: {locale: 'fa'}},
+            minDate: new persianDate().valueOf(),
+            timePicker: {enabled: true,second:{enabled: false},meridiem:{enabled: true}}
+        });
         Axios.get(workspace_api).then(res => {
             let { data } = res
             this.setState({workspace: data}, () => {
@@ -152,11 +158,9 @@ export default class Workspace extends Component {
         })
     }
     
-
     render() {
         let { isGetting, tasks, workspace_users, workspace } = this.state
-        let { taskRoute, logged_in_user_id } = this.props
-        
+        let { taskRoute } = this.props
         return (
             <div>
                 <div className="float-right col-12 pr-0 pl-0 pr-md-3 pl-md-3">
@@ -193,6 +197,13 @@ export default class Workspace extends Component {
                                 </div>
                                 <input type="text" id="new-task-group" className="form-control" placeholder="این کار در چه گروهی قرار میگیرد؟" />
                             </div>
+                            <div className="input-group col-12 col-md-6 pl-0 pr-0 mb-2 mb-md-0">
+                                <div className="input-group-prepend">
+                                    <span className="input-group-text">موعد تحویل</span>
+                                </div>
+                                <input type="hidden" id="new-task-due-to" name="due_to"/>
+                                <input type="text" id="task-due-to" className="form-control" />
+                            </div>
                             <div className="input-group col-12 col-md-6 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line">
                                 <div className="input-group-prepend">
                                     <span className="input-group-text">مسئولین</span>
@@ -200,7 +211,7 @@ export default class Workspace extends Component {
                                 <select id="new-task-members" className="form-control text-right" multiple>
                                     <option></option>
                                     { workspace ? workspace.users.map((user, i) => {
-                                        if (user.id !== logged_in_user_id) {
+                                        if (user.id !== CurrentUser.id) {
                                             return (
                                                 <option key={i} value={user.id} img_address={APP_PATH + user.avatar_pic}>{user.fullname}</option>
                                             )                                            
@@ -209,9 +220,6 @@ export default class Workspace extends Component {
                                 </select>
                             </div>
                             <div className="input-group col-12 pl-0 pr-0">
-                                {/* <div className="input-group-prepend">
-                                    <span className="input-group-text">توضیحات</span>
-                                </div> */}
                                 <div className="tinymc-container">
                                     <TinymcEditor changeContent={this.onDescriptionChange} />
                                 </div>
@@ -269,7 +277,12 @@ export default class Workspace extends Component {
                                 <tbody>
                                     { tasks.data.length > 0 
                                     ? tasks.data.map((task, i) => {
-                                            
+                                        return (
+                                            <Task key={i} index={i}                                            
+                                            workspace_users={workspace_users}
+                                            onClick={() => redirectTo(taskRoute.replace("taskId", task.id))} 
+                                            {...task}/>
+                                        )
                                     }) 
                                     : null
                                     }
