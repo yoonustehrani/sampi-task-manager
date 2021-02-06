@@ -120,16 +120,17 @@ export default class ShowTask extends Component {
                     allowClear: true
                 })
                 const due_to_input = $("input[name='due_to']");
-                $('#task-due-to').persianDatepicker({
+                var pdt = $('#task-due-to').persianDatepicker({
                     format: 'dddd D MMMM YYYY، HH:mm',
                     viewMode: 'day',
                     onSelect: unix => {due_to_input.val(unix / 1000);},
                     toolbox:{calendarSwitch:{enabled: true,format: 'YYYY'}},
-                    calendar:{gregorian: {locale: 'en'},persian: {locale: 'fa'}},
-                    minDate: new persianDate().valueOf(),
+                    calendar:{gregorian: {locale: 'en'},persian: {locale: 'fa'}},   
+                    // minDate: new persianDate().valueOf(),
                     timePicker: {enabled: true,second:{enabled: false},meridiem:{enabled: true}},
-                    
                 })
+                let defate = this.state.task.due_to ? this.state.task.due_to : new Date().valueOf();
+                pdt.setDate(defate)
             } else {
                 let { edit_task_api, toggle_task_state_api } = this.props, { task_description, finished_at_check, first_check_state } = this.state
                 if (finished_at_check !== first_check_state) {
