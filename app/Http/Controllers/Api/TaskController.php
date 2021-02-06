@@ -158,7 +158,7 @@ class TaskController extends BaseController
             \DB::beginTransaction();
                 $task->title = $request->title;
                 $task->description = $request->description;
-                if ($task->parent_id) {
+                if ($request->parent_id) {
                     $task->parent_id = $request->parent_id;
                 }
                 $task->group = $request->group ?: $this->default_group;
