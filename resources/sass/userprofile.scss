@@ -1,9 +1,9 @@
 div.user-card {
     background-color: #ffffff;
     min-width: 300px;
-    @media (min-width: 768px) {
-        min-width: 500px;
-    }
+    // @media (min-width: 768px) {
+    //     min-width: 500px;
+    // }
     div.user-info-section {
         display: flex;
         flex-direction: column;

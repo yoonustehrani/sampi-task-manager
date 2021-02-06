@@ -11304,12 +11304,6 @@ div.user-card {
   min-width: 300px;
 }
 
-@media (min-width: 768px) {
-  div.user-card {
-    min-width: 500px;
-  }
-}
-
 div.user-card div.user-info-section {
   display: flex;
   flex-direction: column;

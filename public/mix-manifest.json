@@ -4,5 +4,6 @@
     "/js/mixedTasks.js": "/js/mixedTasks.js",
     "/js/select2.js": "/js/select2.js",
     "/css/app.css": "/css/app.css",
-    "/js/task.js": "/js/task.js"
+    "/js/task.js": "/js/task.js",
+    "/js/user-profile.js": "/js/user-profile.js"
 }

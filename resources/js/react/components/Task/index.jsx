@@ -150,7 +150,6 @@ export default class ShowTask extends Component {
 
     editInfo = () => {
         let { task, finished_at_check, workspace, task_active_users } = this.state, { logged_in_user_id } = this.props
-        console.log(task)
         return (
             <div className="col-12 col-md-10 offset-md-2 float-left mt-3 animated flash">
                 <div className="edit-tasks-container col-12">
@@ -170,8 +169,9 @@ export default class ShowTask extends Component {
                         <div className="input-group-prepend">
                             <span className="input-group-text">زیر مجموعه</span>
                         </div>
-                        <select id="parent-task-select" disabled={task.parent_id !== null}>
+                        <select id="parent-task-select" disabled={typeof task.children !== "undefined" && task.children.length > 0} defaultValue={task.parent ? `${task.parent.id}` : ""}>
                             <option></option>
+                            { task.parent ? <option value={`${task.parent.id}`}>{task.parent.title}</option> : null }
                         </select>
                     </div>
                     <div className="input-group col-12 col-md-6 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3 input-group-single-line">
@@ -359,7 +359,7 @@ export default class ShowTask extends Component {
                                 <span>موعد تحویل:</span>
                             </div>
                             <div className="task-detail">
-                                <span>{moment(task.due_to).format("jYYYY/jMM/jDD")} ({moment(task.due_to).fromNow()})</span>
+                                <span>{moment(task.due_to).format("HH:mm jYYYY/jMM/jDD")} ({moment(task.due_to).fromNow()})</span>
                             </div>
                         </div>
                         <div className="mt-3 col-12 col-md-5">

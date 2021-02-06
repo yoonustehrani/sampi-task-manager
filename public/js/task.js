@@ -57950,7 +57950,6 @@ var ShowTask = /*#__PURE__*/function (_Component) {
           workspace = _this$state2.workspace,
           task_active_users = _this$state2.task_active_users,
           logged_in_user_id = _this.props.logged_in_user_id;
-      console.log(task);
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-12 col-md-10 offset-md-2 float-left mt-3 animated flash"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -57985,8 +57984,11 @@ var ShowTask = /*#__PURE__*/function (_Component) {
         className: "input-group-text"
       }, "\u0632\u06CC\u0631 \u0645\u062C\u0645\u0648\u0639\u0647")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
         id: "parent-task-select",
-        disabled: task.parent_id !== null
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        disabled: typeof task.children !== "undefined" && task.children.length > 0,
+        defaultValue: task.parent ? "".concat(task.parent.id) : ""
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null), task.parent ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "".concat(task.parent.id)
+      }, task.parent.title) : null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "input-group col-12 col-md-6 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3 input-group-single-line"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "input-group-prepend"
@@ -58212,7 +58214,7 @@ var ShowTask = /*#__PURE__*/function (_Component) {
           className: "fas fa-hourglass-start"
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0645\u0648\u0639\u062F \u062A\u062D\u0648\u06CC\u0644:")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "task-detail"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, moment_jalaali__WEBPACK_IMPORTED_MODULE_2___default()(task.due_to).format("jYYYY/jMM/jDD"), " (", moment_jalaali__WEBPACK_IMPORTED_MODULE_2___default()(task.due_to).fromNow(), ")"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, moment_jalaali__WEBPACK_IMPORTED_MODULE_2___default()(task.due_to).format("HH:mm jYYYY/jMM/jDD"), " (", moment_jalaali__WEBPACK_IMPORTED_MODULE_2___default()(task.due_to).fromNow(), ")"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "mt-3 col-12 col-md-5"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "task-title-section title-section"
