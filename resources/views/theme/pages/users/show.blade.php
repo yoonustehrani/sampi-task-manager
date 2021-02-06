@@ -68,8 +68,11 @@
         @endcomponent
     </div> --}}
     <div
-        id="user-profile-react">
-    </div>
+        id = "user-profile-react"
+        workspaces = "{{ route('api.task-manager.workspaces.index', ['api_token' => auth()->user()->api_token]) }}"
+        mixed_tasks = "{{ route('api.task-manager.tasks.mixed', ['api_token' => auth()->user()->api_token]) }}"
+        mixed_demands = "{{ route('api.task-manager.demands.mixed', ['api_token' => auth()->user()->api_token]) }}"
+    ></div>
 @endsection
 
 @push('scripts')

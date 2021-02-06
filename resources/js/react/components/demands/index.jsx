@@ -5,8 +5,8 @@ moment.locale('fa')
 import axios from 'axios'
 import 'react-activity/dist/react-activity.css'
 import TinymcEditor from '../tinymce-editor/index'
-import Swal from 'sweetalert2'
 import { setPriority, redirectTo, sweetError } from '../../../helpers'
+import { simpleSearch } from '../../../select2'
 
 export default class Demands extends Component {
     constructor(props) {
@@ -99,11 +99,11 @@ export default class Demands extends Component {
 
     addDemand = () => {
         let { post_new_ticket_api } = this.props, { new_demand_description, workspace_users } = this.state
-        let title = $("#new-demand-title").val(), priority = parseInt($("#new-task-priority").val()), toUser = $("#new-demand-member").val(), related_task = $("#task-select").val() === "0" ? "" : $("#task-select").val()
+        let title = $("#new-demand-title").val(), priority = parseInt($("#new-task-priority").val()), toUser = $("#new-demand-member").val(), related_task = $("#related-task-select").val() === "0" ? "" : $("#related-task-select").val()
         axios.post(post_new_ticket_api, {
             title: title,
             priority: priority,
-            task_id: related_task,
+            task: related_task,
             target_user: toUser,
             text: new_demand_description 
         }).then(res => {
@@ -111,14 +111,23 @@ export default class Demands extends Component {
             this.setState(prevState => {
                 return ({
                     needs: Object.assign(prevState.needs, {
-                        data: [{...data, priority: {title: setPriority(data.priority_id)}, to: {id: data.to_id, fullname: workspace_users[data.to_id].fullname, avatar_pic: workspace_users[data.to_id].avatar_pic}, task: null}, ...prevState.needs.data],
+                        data: [
+                            {
+                                ...data, 
+                                priority: {title: setPriority(data.priority_id)}, 
+                                to: {id: data.to_id, fullname: workspace_users[data.to_id].fullname, avatar_pic: workspace_users[data.to_id].avatar_pic}, 
+                                task: data.task,
+                                finished_at: null
+                            }, 
+                            ...prevState.needs.data
+                        ],
                     }),
                     already_added_needs: Object.assign({}, prevState.already_added_needs, {
                         [data.id]: data.id
                     })
                 })
             })
-            Swal.fire({
+            Swal.default.fire({
                 icon: 'success',
                 title: "موفقیت",
                 text: "درخواست شما ارسال شد",
@@ -137,6 +146,7 @@ export default class Demands extends Component {
         this.setState({[current_tab]: {data: [], nextPage: 1, hasMore: true}}, () => this.getData())
         axios.get(get_workspace_api).then(res => {
             let { data } = res
+            simpleSearch("#related-task-select", false, data.id)
             this.setState({workspace: data}, () => {
                 this.state.workspace.users.map((user, i) => {
                     this.setState(prevState => ({
@@ -304,11 +314,8 @@ export default class Demands extends Component {
                                 <div className="input-group-prepend">
                                     <span className="input-group-text">کار مربوطه</span>
                                 </div>
-                                <select id="task-select">
+                                <select id="related-task-select">
                                     <option></option>
-                                    <option value="0">هیچکدام</option>
-                                    <option value="1">کیر تو کون کردن</option>
-                                    <option value="2">جق زدن رو قرآن</option>
                                 </select>
                             </div>
                             <div className="input-group col-12 col-md-6 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line">
@@ -319,7 +326,7 @@ export default class Demands extends Component {
                                     { workspace ? workspace.users.map((user, i) => {
                                         if (user.id !== logged_in_user_id) {
                                             return (
-                                                <option key={i} value={user.id} img_address={user.avatar_pic !== null ? APP_PATH + user.avatar_pic : APP_PATH + 'images/male-avatar.svg'}>{user.fullname}</option>
+                                                <option key={i} value={user.id} img_address={user.avatar_pic !== null ? APP_PATH + user.avatar_pic : APP_PATH + 'images/male-avatar.svg'} is_admin={user.pivot.is_admin}>{user.fullname}</option>
                                             )                                            
                                         }
                                     }) : null }

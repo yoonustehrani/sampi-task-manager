@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
+import Axios from 'axios'
 
 export default class UserProfile extends Component {
-
     constructor(props) {
         super(props)
         this.tabResultsRef = []
@@ -10,63 +10,167 @@ export default class UserProfile extends Component {
             this.tabResultsRef.push(React.createRef())
             this.tabTitlesRef.push(React.createRef())
         }
+
+        let navbar = [
+            {text: 'پروژه ها', icon: 'project-diagram', tab: 0, order: 0},
+            {text: 'وظایف', icon: 'tasks', tab: 1, order: 1},
+            {text: 'درخواست ها', icon: 'comment-dots', tab: 2, order: 2},
+            {text: 'نیاز ها', icon: 'clipboard-list', tab: 3, order: 3}
+        ].sort((a,b) => (a.order > b.order ? 0 : -1));
+
         this.state = {
-            mixedTasks: [],
+            mixed_tasks: [],
             statistics: {},
             isGetting: true,
-            workspaces: []
+            workspaces: [],
+            navbar: navbar,
+            mixed_demands: [],
+            mixed_needs: []
         }
     }
-
+    
     changeTab = (tab_index) => {
-        let { mixedTasksApi } = this.props
-        let { mixedTasks } = this.state
-        // if (tab_index === 1 && mixedTasks.length === 0) {
-        //     this.setState({
-        //         isGetting: true
-        //     })
-        //     Axios.get(`${mixedTasksApi}&limit=15&order_by=due_to&order=desc`).then(res => {
-        //         let { data } = res
-        //         this.setState({
-        //             mixedTasks: data,
-        //             isGetting: false
-        //         })
-        //     })
-        // }
-        this.tabResultsRef.map((tabResultRef, i) => {
-            if (tab_index === i) {
-                tabResultRef.current.classList.add("active")
-            } else {
-                tabResultRef.current.classList.remove("active")
+        let { mixedTasksApi, mixedDemandsApi } = this.props
+        let { mixed_tasks, mixed_demands, mixed_needs } = this.state
+        const getData = (tabName, tabData, api) => {
+            if (tabData.length === 0) {
+                this.setState({
+                    isGetting: true
+                })
+                Axios.get(`${api}&limit=15&order_by=${tabName === "mixed_tasks" ? "due_to" : "created_at"}&order=desc${tabName === "mixed_demands" ? "&relationship=asked" : ""}`).then(res => {
+                    let { data } = res
+                    this.setState({
+                        [tabName]: data,
+                        isGetting: false
+                    })
+                })   
             }
-        })
+        }
+
+        switch (tab_index) {
+            case 1:
+                getData("mixed_tasks", mixed_tasks, mixedTasksApi)
+                break;
+
+            case 2:
+                getData("mixed_demands", mixed_demands, mixedDemandsApi)
+                break;
+
+            case 3:
+                getData("mixed_needs", mixed_needs, mixedDemandsApi)
+                break;
+        
+            default:
+                break;
+        }
+
         this.tabTitlesRef.map((tabTitleRef, i) => {
             if (tab_index === i) {
                 tabTitleRef.current.classList.add("active")
+                this.tabResultsRef[i].current.classList.add("active")
             } else {
                 tabTitleRef.current.classList.remove("active")
+                this.tabResultsRef[i].current.classList.remove("active")
             }
         })
     }
 
     sortData = (tab) => {
-        let { mixedTasksApi } = this.props
-        // this.setState({
-        //     isGetting: true
-        // })
-        // if (tab === "tasks") {
-        //     let mixed_tasks_order_by = $('#mixed_tasks_order_by_select').val(), mixed_tasks_order = $('#mixed_tasks_order_select').val(), mixed_tasks_relation = $('#mixed_tasks_relation_select').val()
-        //     Axios.get(`${mixedTasksApi}&limit=15&order_by=${mixed_tasks_order_by}&order=${mixed_tasks_order}&relationship=${mixed_tasks_relation}`).then(res => {
-        //         let { data } = res
-        //         this.setState({
-        //             mixedTasks: data,
-        //             isGetting: false,
-        //         })
-        //     })
-        // }
+        let { mixedTasksApi, mixedDemandsApi } = this.props
+        const sendReq = (tab_name, api) => {
+            this.setState({ isGetting: true })
+            let order_by = $(`#${tab_name}_order_by_select`).val(), order = $(`#${tab_name}_order_select`).val(), relation = $(`#${tab_name}_relation_select`).val()
+            Axios.get(`${api}&limit=15&order_by=${order_by}&order=${order}&relation=${tab_name === "mixed_tasks" ? relation : tab_name === "mixed_demands" ? "asked" : "mixed_need"}${tab_name === "mixed_tasks" ? "" : `&filter=${relation}`}`).then(res =>{
+                let { data } = res
+                this.setState({
+                    [tab_name]: data,
+                    isGetting: false                    
+                })
+            })
+        }
+
+        switch (tab) {
+            case "mixed_tasks":
+                sendReq("mixed_tasks", mixedTasksApi)
+                break;
+
+            case "mixed_demands":
+                sendReq("mixed_demands", mixedDemandsApi)
+                break;
+
+            case "mixed_needs":
+                sendReq("mixed_needs", mixedDemandsApi)
+                break;
+        
+            default:
+                break;
+        }
+    }
+
+    componentDidMount() {
+        let { workspace_counter, task_counter, demand_counter, workspacesApi, workspace_route } = this.props
+        let statisticApis = [workspace_counter, task_counter, demand_counter], statistics = {}
+        this.setState({
+            isGetting: true
+        })
+        statisticApis.map((url, i) => {
+            Axios.get(url).then(res => {
+                let { data } = res
+                this.setState(preState => {
+                    let catagory
+                    switch (i) {
+                        case 0:
+                            catagory = "workspaceCounter"
+                            break;
+
+                        case 1:
+                            catagory = "taskCounter"
+                            break;
+
+                        case 2:
+                            catagory = "demandCounter"
+                            break;
+                    
+                        default:
+                            break;
+                    }
+                    statistics[catagory] = data
+                    return ({
+                        statistics: statistics
+                    })
+                })
+            })
+        })
+        Axios.get(workspacesApi).then(res => {
+            let { data } = res
+            this.setState({workspaces: data}, () => {
+                this.state.workspaces.map((workspace, i) => {
+                    let current_workspace
+                    workspace.users.map((user, index) => {
+                        current_workspace = Object.assign({}, current_workspace, {
+                            [user.id]: {
+                                id: user.id,
+                                fullname: user.fullname,
+                                avatar_pic: user.avatar_pic,
+                                is_admin: user.pivot.is_admin
+                            }
+                        })
+                    })
+                    this.setState(prevState => ({
+                        workspaces_users: Object.assign({}, prevState.workspaces_users, {
+                            [workspace.id]: current_workspace
+                        }),
+                        isGetting: false
+                    }))
+                })
+            })
+        })
+        this.tabTitlesRef[0].current.classList.add("active")
     }
 
     render() {
+        let { mixed_tasks, statistics, isGetting, workspaces, navbar, mixed_demands, mixed_needs, workspaces_users } = this.state
+        let { workspace_route, task_route, demand_show_route, user_profile_route } = this.props
         return (
             <div>
                 <div className="user-info-section col-12 col-md-4 pl-0 pr-0 float-right">
@@ -84,22 +188,14 @@ export default class UserProfile extends Component {
                         </div>
                         <div className="user-work-section">
                             <nav className="tab-title-bar text-center">
-                                <a className="tab-link active" ref={this.tabTitlesRef[0]} onClick={this.changeTab.bind(this, 0)}>
-                                    <i className="fas fa-project-diagram d-block d-md-inline"></i>
-                                    پروژه ها
-                                </a>
-                                <a className="tab-link" ref={this.tabTitlesRef[1]} onClick={this.changeTab.bind(this, 1)}>
-                                    <i className="fas fa-tasks d-block d-md-inline"></i>
-                                    وظایف
-                                </a>
-                                <a className="tab-link" ref={this.tabTitlesRef[2]} onClick={this.changeTab.bind(this, 2)}>
-                                    <i className="fas fa-comment-dots d-block d-md-inline"></i>
-                                    درخواست ها
-                                </a>
-                                <a className="tab-link" ref={this.tabTitlesRef[3]} onClick={this.changeTab.bind(this, 3)}>
-                                    <i className="fas fa-clipboard-list d-block d-md-inline"></i>
-                                    نیاز ها
-                                </a>
+                                {navbar && navbar.map((item, i) => {
+                                    return (
+                                        <a className="tab-link" ref={this.tabTitlesRef[item.tab]} onClick={this.changeTab.bind(this, item.tab)} key={i}>
+                                            <i className={`fas fa-${item.icon} d-block d-md-inline`}></i>
+                                            {item.text}
+                                        </a>
+                                    )
+                                })}
                             </nav>
                             <div className="user-works-results scrollable-items col-12 mt-4 active" ref={this.tabResultsRef[0]}>
                                 <div className="workspace-item col-12">

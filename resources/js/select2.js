@@ -56,7 +56,7 @@ export const simpleSearch = (ids, parentOnly, workspaceId=$("#new-demand-project
         minimumInputLength: 3,
         delay: 250,
         ajax: {
-            url: simple_search_url ? simple_search_url : "",
+            url: typeof simple_search_url !== "undefined" ? simple_search_url : "",
             data: function (params) {
                 return {
                     q: params.term,
