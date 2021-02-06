@@ -25,7 +25,7 @@ class DemandController extends BaseController
         if ($model instanceof User) {
             $relationship = $this->model_relationship($request->relationship, $model, '_demands', 'demands');
             $with = $relationship == 'demands' ? 'to' : 'from';
-            $user_demands = $model->{$relationship}()->where('workspace_id', $workspace);
+            $user_demands = $model->{$relationship}()->where('workspace_id', $workspace)->with($with, 'task', 'priority:id,title');
         }
         switch ($request->filter) {
             case 'finished':
@@ -35,9 +35,7 @@ class DemandController extends BaseController
                 $user_demands = $user_demands->whereNull('finished_at');
                 break;
         }
-        $user_demands = $this->decide_ordered($request, $user_demands)
-                            ->withCount('messages')
-                            ->with($with, 'task', 'priority:id,title');
+        $user_demands = $this->decide_ordered($request, $user_demands)->withCount('messages');
         return $request->limit ? $user_demands->limit((int) $request->limit)->get() : $user_demands->paginate(10);
     }
     public function mixed(Request $request)
