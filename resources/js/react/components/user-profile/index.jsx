@@ -1,5 +1,10 @@
 import React, { Component } from 'react'
 import Axios from 'axios'
+import { getDemand, getTask, getUser, getWorkspace, redirectTo } from '../../../helpers'
+import moment from 'moment'
+moment.locale('fa')
+import { Sentry } from 'react-activity'
+import 'react-activity/lib/Sentry/Sentry.css'
 
 export default class UserProfile extends Component {
     constructor(props) {
@@ -78,13 +83,14 @@ export default class UserProfile extends Component {
     sortData = (tab) => {
         let { mixedTasksApi, mixedDemandsApi } = this.props
         const sendReq = (tab_name, api) => {
-            this.setState({ isGetting: true })
-            let order_by = $(`#${tab_name}_order_by_select`).val(), order = $(`#${tab_name}_order_select`).val(), relation = $(`#${tab_name}_relation_select`).val()
-            Axios.get(`${api}&limit=15&order_by=${order_by}&order=${order}&relation=${tab_name === "mixed_tasks" ? relation : tab_name === "mixed_demands" ? "asked" : "mixed_need"}${tab_name === "mixed_tasks" ? "" : `&filter=${relation}`}`).then(res =>{
-                let { data } = res
-                this.setState({
-                    [tab_name]: data,
-                    isGetting: false                    
+            this.setState({ isGetting: true }, () => {
+                let order_by = $(`#${tab_name}_order_by_select`).val(), order = $(`#${tab_name}_order_select`).val(), relation = $(`#${tab_name}_relation_select`).val()
+                Axios.get(`${api}&limit=15&order_by=${order_by}&order=${order}&relationship=${tab_name === "mixed_tasks" ? relation : tab_name === "mixed_demands" ? "asked" : "mixed_need"}${tab_name === "mixed_tasks" ? "" : `&filter=${relation}`}`).then(res => {
+                    let { data } = res
+                    this.setState({
+                        [tab_name]: data,
+                        isGetting: false                    
+                    })
                 })
             })
         }
@@ -113,34 +119,34 @@ export default class UserProfile extends Component {
         this.setState({
             isGetting: true
         })
-        statisticApis.map((url, i) => {
-            Axios.get(url).then(res => {
-                let { data } = res
-                this.setState(preState => {
-                    let catagory
-                    switch (i) {
-                        case 0:
-                            catagory = "workspaceCounter"
-                            break;
+        // statisticApis.map((url, i) => {
+        //     Axios.get(url).then(res => {
+        //         let { data } = res
+        //         this.setState(preState => {
+        //             let catagory
+        //             switch (i) {
+        //                 case 0:
+        //                     catagory = "workspaceCounter"
+        //                     break;
 
-                        case 1:
-                            catagory = "taskCounter"
-                            break;
+        //                 case 1:
+        //                     catagory = "taskCounter"
+        //                     break;
 
-                        case 2:
-                            catagory = "demandCounter"
-                            break;
+        //                 case 2:
+        //                     catagory = "demandCounter"
+        //                     break;
                     
-                        default:
-                            break;
-                    }
-                    statistics[catagory] = data
-                    return ({
-                        statistics: statistics
-                    })
-                })
-            })
-        })
+        //                 default:
+        //                     break;
+        //             }
+        //             statistics[catagory] = data
+        //             return ({
+        //                 statistics: statistics
+        //             })
+        //         })
+        //     })
+        // })
         Axios.get(workspacesApi).then(res => {
             let { data } = res
             this.setState({workspaces: data}, () => {
@@ -190,7 +196,7 @@ export default class UserProfile extends Component {
                             <nav className="tab-title-bar text-center">
                                 {navbar && navbar.map((item, i) => {
                                     return (
-                                        <a className="tab-link" ref={this.tabTitlesRef[item.tab]} onClick={this.changeTab.bind(this, item.tab)} key={i}>
+                                        <a key={i} className="tab-link" ref={this.tabTitlesRef[item.tab]} onClick={this.changeTab.bind(this, item.tab)} key={i}>
                                             <i className={`fas fa-${item.icon} d-block d-md-inline`}></i>
                                             {item.text}
                                         </a>
@@ -198,15 +204,22 @@ export default class UserProfile extends Component {
                                 })}
                             </nav>
                             <div className="user-works-results scrollable-items col-12 mt-4 active" ref={this.tabResultsRef[0]}>
-                                <div className="workspace-item col-12">
-                                    <div className="workspace-img-container ml-1">
-                                        <img src={APP_PATH + "images/elnovel-logo.png"} alt=""/>
-                                    </div>
-                                    <div className="workspace-item-text-info">
-                                        <h6>الناول</h6>
-                                        <span>مکانی برای علاقه مندان به هنر و فرهنگ ایرانی</span>
-                                    </div>
-                                </div>
+                                {workspaces && workspaces.length > 0 && !isGetting 
+                                    ? workspaces.map((workspace, i) => (
+                                        <div key={i} className="workspace-item col-12" onClick={() => redirectTo(getWorkspace(workspace.id))}>
+                                            <div className="workspace-img-container ml-1">
+                                                <img src={APP_PATH + workspace.avatar_pic} alt=""/>
+                                            </div>
+                                            <div className="workspace-item-text-info">
+                                                <h6>{ workspace.title }</h6>
+                                                <span>{ workspace.description }</span>
+                                            </div>
+                                        </div>
+                                    ))
+                                    : isGetting
+                                    ? <div className="col-12 text-center"><Sentry size={20} color="#000000" /></div>
+                                    : <p className="text-secondary text-center">موردی برای نمایش وجود ندارد</p>
+                                }
                             </div>
                             <div className="user-works-results col-12 mt-4" ref={this.tabResultsRef[1]}>
                                 <div className="filter-box task-bg-color mb-4 p-2 col-12 animated fadeIn">
@@ -236,14 +249,21 @@ export default class UserProfile extends Component {
                                         </select>
                                     </div>
                                     <div className="text-center">
-                                        <button className="btn btn-outline-info" onClick={this.sortData.bind(this, 'tasks')}>مرتب سازی</button>
+                                        <button className="btn btn-outline-info" onClick={this.sortData.bind(this, 'mixed_tasks')}>مرتب سازی</button>
                                     </div>
                                 </div>
                                 <div className="scrollable-items user-tasks-container col-12 mt-4">
-                                    <div className="task-item user-work-item">
-                                        <h6>طراحی صفحه تسک (برنامه نویسی)</h6>
-                                        <span>سه روز پیش <i className="fas fa-check"></i></span>
-                                    </div>
+                                    {mixed_tasks && mixed_tasks.length > 0 && !isGetting
+                                        ? mixed_tasks.map((task, i) => (
+                                            <div key={i} className="task-item user-work-item" onClick={() => redirectTo(getTask(task.id))}>
+                                                <h6 className="text-right">{task.title} ({task.group})</h6>
+                                                <span>{moment(task.due_to).fromNow()} {task.finished_at !== null ? <i className="fas fa-check"></i> : <i className="fas fa-times"></i>}</span>
+                                            </div>
+                                        ))
+                                        : isGetting
+                                        ? <div className="col-12 text-center"><Sentry size={20} color="#000000" /></div>
+                                        : <p className="text-secondary text-center">موردی برای نمایش وجود ندارد</p>
+                                    }
                                 </div>
                             </div>
                             <div className="user-works-results col-12 mt-4" ref={this.tabResultsRef[2]}>
@@ -274,21 +294,28 @@ export default class UserProfile extends Component {
                                         </select>
                                     </div>
                                     <div className="text-center">
-                                        <button className="btn btn-outline-info" onClick={this.sortData.bind(this, 'tasks')}>مرتب سازی</button>
+                                        <button className="btn btn-outline-info" onClick={this.sortData.bind(this, 'mixed_demands')}>مرتب سازی</button>
                                     </div>
                                 </div>
                                 <div className="scrollable-items user-tasks-container col-12 mt-4">
-                                    <div className="demand-item">
-                                        <div className="demand-sender">
-                                            <img src={APP_PATH + "images/male-avatar.svg"} alt=""/>
-                                            <h6>طراحی ای پی ای برای تسک ها</h6>
-                                        </div>
-                                        <i className="fas fa-long-arrow-alt-left"></i>
-                                        <div>
-                                            <img src={APP_PATH + "images/male-avatar.svg"} alt="" />
-                                            <i className="fas fa-check"></i>
-                                        </div>
-                                    </div>
+                                    {mixed_demands && mixed_demands.length > 0 && !isGetting
+                                        ? mixed_demands.map((demand, i) => (
+                                            <div key={i} className="demand-item hover-bg" onClick={() => redirectTo(getDemand(demand.workspace_id, demand.id))}>
+                                                <div>
+                                                    <i className={`fas ${demand.finished_at === null ? "fa-times" : "fa-cehck"}`}></i>
+                                                    <img src={APP_PATH + `${demand.from.avatar_pic ? demand.from.avatar_pic : 'images/male-avatar.svg'}`} alt=""/>
+                                                </div>
+                                                <i className="fas fa-long-arrow-alt-right"></i>
+                                                <div className="demand-sender">
+                                                    <h6>{ demand.title }</h6>
+                                                    <img src={APP_PATH + `${demand.from.avatar_pic ? demand.from.avatar_pic : 'images/male-avatar.svg'}`} alt="" />
+                                                </div>
+                                            </div>
+                                        ))
+                                        : isGetting
+                                        ? <div className="col-12 text-center"><Sentry size={20} color="#000000" /></div>
+                                        : <p className="text-secondary text-center">موردی برای نمایش وجود ندارد</p>
+                                    }
                                 </div>
                             </div>
                             <div className="user-works-results col-12 mt-4" ref={this.tabResultsRef[3]}>
@@ -319,21 +346,28 @@ export default class UserProfile extends Component {
                                         </select>
                                     </div>
                                     <div className="text-center">
-                                        <button className="btn btn-outline-info" onClick={this.sortData.bind(this, 'tasks')}>مرتب سازی</button>
+                                        <button className="btn btn-outline-info" onClick={this.sortData.bind(this, 'mixed_needs')}>مرتب سازی</button>
                                     </div>
                                 </div>
                                 <div className="scrollable-items user-tasks-container col-12 mt-4">
-                                    <div className="demand-item hover-bg">
-                                        <div>
-                                            <i className="fas fa-times"></i>
-                                            <img src={APP_PATH + "images/male-avatar.svg"} alt=""/>
-                                        </div>
-                                        <i className="fas fa-long-arrow-alt-right"></i>
-                                        <div className="demand-sender">
-                                            <h6>طراحی ای پی ای برای تسک ها</h6>
-                                            <img src={APP_PATH + "images/male-avatar.svg"} alt="" />
-                                        </div>
-                                    </div>
+                                    {mixed_needs && mixed_needs.length > 0 && !isGetting
+                                        ? mixed_needs.map((need, i) => (
+                                            <div key={i} className="demand-item hover-bg" onClick={() => redirectTo(getDemand(need.workspace_id, need.id))}>
+                                                <div className="demand-sender">
+                                                    <img src={APP_PATH + `${need.to.avatar_pic ? need.to.avatar_pic : 'images/male-avatar.svg'}`} alt="" />
+                                                    <h6 className="mr-1">{ need.title }</h6>
+                                                </div>
+                                                <i className="fas fa-long-arrow-alt-left"></i>
+                                                <div>
+                                                    <img src={APP_PATH + `${need.to.avatar_pic ? need.to.avatar_pic : 'images/male-avatar.svg'}`} alt=""/>
+                                                    <i className={`ml-1 fas ${need.finished_at === null ? "fa-times" : "fa-cehck"}`}></i>
+                                                </div>
+                                            </div>
+                                        ))
+                                        : isGetting
+                                        ? <div className="col-12 text-center"><Sentry size={20} color="#000000" /></div>
+                                        : <p className="text-secondary text-center">موردی برای نمایش وجود ندارد</p>
+                                    }
                                 </div>
                             </div>
                         </div>

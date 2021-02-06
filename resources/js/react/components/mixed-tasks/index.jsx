@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import { getTask, getUser, getWorkspace, sweetError } from '../../../helpers'
+import { getTask, getUser, getWorkspace, sweetError, setPriority, redirectTo } from '../../../helpers'
 import { Digital } from 'react-activity'
 import 'react-activity/lib/Digital/Digital.css'
 import TinymcEditor from '../tinymce-editor/index'
-import { setPriority, redirectTo } from '../../../helpers'
 import moment from 'moment'
 moment.locale('fa')
 
