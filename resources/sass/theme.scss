@@ -422,11 +422,15 @@ div.select-option.small {
     font-size: 12px !important;
 }
 
-div.user-dropdown-item.border-sharp {
-    border-top-left-radius: 0px !important;
-    border-bottom-left-radius: 0px !important;
+div.user-dropdown-item.all-sharp {
+    border-radius: 0px !important;
     div.user-label-container {
         > button {
+            border-radius: 0px !important;
+        }
+    }
+    div.user-img-container {
+        img {
             border-radius: 0px !important;
         }
     }
@@ -574,7 +578,7 @@ div.show-tasks-container {
 }
 
 div.edit-tasks-container {
-    box-shadow: 0px 2px 5px 2px rgb(156 156 156 / 10%);
+    box-shadow: 0px 2px 5px 2px rgb(156 156 156 / 15%);
     float: right;
 }
 

@@ -3,8 +3,8 @@ import Axios from 'axios'
 import moment from 'moment-jalaali'
 moment.locale('fa')
 import TinymcEditor from '../tinymce-editor/index'
-import { formatOptionWithIcon, formatOptionWithImage } from '../../../select2'
-import { setPriority, redirectTo } from '../../../helpers'
+import { formatOptionWithIcon, formatOptionWithImage, formatOption } from '../../../select2'
+import { setPriority, redirectTo, getTask, getDemand, getWorkspace } from '../../../helpers'
 import { Spinner } from 'react-activity'
 import 'react-activity/dist/react-activity.css'
 
@@ -63,7 +63,8 @@ export default class ShowTask extends Component {
     }
 
     changeMode = (mode) => {
-        let edited_title = $("#task-title-edit").val(), edited_group = $("#task-group-edit").val(), edited_priority = $("#edit-task-priority").val(), edited_users = $("#edit-task-members").val()
+        let { workspace } = this.state
+        let edited_title = $("#task-title-edit").val(), edited_group = $("#task-group-edit").val(), edited_priority = $("#edit-task-priority").val(), edited_users = $("#edit-task-members").val(), parent_id = $("#parent-task-select").val()
         this.setState(prevState => ({
             mode: mode,
         }), () => {
@@ -82,6 +83,42 @@ export default class ShowTask extends Component {
                     templateResult: formatOptionWithImage
                 })
                 $('.select2-search__field').css('width', '100%')
+                $("#parent-task-select").select2({
+                    templateResult: formatOption,
+                    placeholder: 'مسئولیت مربوطه را جستجو و انتخاب کنید',
+                    width: "100%",
+                    dir: "rtl",
+                    minimumInputLength: 3,
+                    delay: 250,
+                    ajax: {
+                        url: simple_search_url ? simple_search_url : "",
+                        data: function (params) {
+                            return {
+                                q: params.term,
+                                workspace: workspace.id,
+                                parentOnly: true
+                            }
+                        },
+                        processResults: function (res) {
+                            var data = $.map(res, function (obj) {
+                                obj.text = obj.text || obj.title; // replace name with the property used for the text
+                                return obj;
+                            });
+                            return {
+                                results: data
+                            }
+                        },
+                    },
+                    language: {
+                        searching: function () {
+                            return "درحال جستجو ..."
+                        },
+                        noResults: function () {
+                            return "نتیجه ای یافت نشد"
+                        }
+                    },
+                    allowClear: true
+                })
             } else {
                 let { edit_task_api, toggle_task_state_api } = this.props, { task_description, finished_at_check, first_check_state } = this.state
                 if (finished_at_check !== first_check_state) {
@@ -96,6 +133,7 @@ export default class ShowTask extends Component {
                     users: edited_users,
                     description: task_description,
                     // due_to: "",
+                    parent_id: parent_id
                 }).then(res => {
                     let { data } = res
                     this.setState({
@@ -112,6 +150,7 @@ export default class ShowTask extends Component {
 
     editInfo = () => {
         let { task, finished_at_check, workspace, task_active_users } = this.state, { logged_in_user_id } = this.props
+        console.log(task)
         return (
             <div className="col-12 col-md-10 offset-md-2 float-left mt-3 animated flash">
                 <div className="edit-tasks-container col-12">
@@ -129,14 +168,11 @@ export default class ShowTask extends Component {
                     </div>
                     <div className="input-group col-12 col-md-6 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3 input-group-single-line-all">
                         <div className="input-group-prepend">
-                            <span className="input-group-text">اولویت</span>
+                            <span className="input-group-text">زیر مجموعه</span>
                         </div>
-                        <select id="edit-task-priority" defaultValue={`${task.priority_id}`}>
-                            <option value="1" icon_name="fas fa-hourglass-end">ضروری و مهم</option>
-                            <option value="2" icon_name="fas fa-hourglass-half">ضروری و غیر مهم</option>
-                            <option value="3" icon_name="fas fa-hourglass-start">غیر ضروری و غیر مهم</option>
-                            <option value="4" icon_name="fas fa-hourglass">غیر ضروری و غیر مهم</option>
-                        </select>                    
+                        <select id="parent-task-select" disabled={task.parent_id !== null}>
+                            <option></option>
+                        </select>
                     </div>
                     <div className="input-group col-12 col-md-6 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3 input-group-single-line">
                         <div className="input-group-prepend">
@@ -152,13 +188,24 @@ export default class ShowTask extends Component {
                             }) }
                         </select>
                     </div>
-                    <div className="input-group col-12 col-md-6 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3">
+                    <div className="input-group col-12 col-md-4 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3 input-group-single-line-all">
+                        <div className="input-group-prepend">
+                            <span className="input-group-text">اولویت</span>
+                        </div>
+                        <select id="edit-task-priority" defaultValue={`${task.priority_id}`}>
+                            <option value="1" icon_name="fas fa-hourglass-end">ضروری و مهم</option>
+                            <option value="2" icon_name="fas fa-hourglass-half">ضروری و غیر مهم</option>
+                            <option value="3" icon_name="fas fa-hourglass-start">غیر ضروری و غیر مهم</option>
+                            <option value="4" icon_name="fas fa-hourglass">غیر ضروری و غیر مهم</option>
+                        </select>                    
+                    </div>
+                    <div className="input-group col-12 col-md-4 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3">
                         <div className="input-group-prepend">
                             <span className="input-group-text">موعد تحویل</span>
                         </div>
                         {<input defaultValue={moment(task.due_to).format("jYYYY/jMM/jDD HH:mm")} />}
                     </div>
-                    <div className="input-group col-12 col-md-6 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3">
+                    <div className="input-group col-12 col-md-4 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3">
                         <div className="input-group-prepend">
                             <span className="input-group-text">وضعیت اتمام</span>
                         </div>
@@ -182,7 +229,7 @@ export default class ShowTask extends Component {
     }
 
     showInfo = () => {
-        let { task, workspace_users } = this.state
+        let { task, workspace_users, workspace } = this.state
         if (task && workspace_users) {
             return (
                 <div className="col-12 col-md-10 offset-md-2 float-left mt-3 animated fadeIn">
@@ -194,6 +241,15 @@ export default class ShowTask extends Component {
                             </div>
                             <div className="task-detail">
                                 <span>{ task.title }</span>
+                            </div>
+                        </div>
+                        <div className="mt-3 col-12 col-md-5">
+                            <div className="task-title-section title-section">
+                                <i className="fas fa-project-diagram"></i>
+                                <span>پروژه:</span>
+                            </div>
+                            <div className="task-detail">
+                                <a href={getWorkspace(workspace.id)}>{ workspace.title }</a>
                             </div>
                         </div>
                         <div className="mt-3 col-12 col-md-5">
@@ -211,8 +267,10 @@ export default class ShowTask extends Component {
                                 <span>زیر مجموعه:</span>
                             </div>
                             <div className="task-detail">
-                                <a>طراحی api</a> {/* here we will get the parent from the api */}
-                                {/* <i className="fas fa-minus"></i> */}
+                                {task.parent
+                                    ?   <a href={getTask(task.parent.id)}>{ task.parent.title }</a>
+                                    :   <i className="fas fa-minus"></i>
+                                }
                             </div>
                         </div>
                         <div className="mt-3 col-12 col-md-5">
@@ -222,6 +280,59 @@ export default class ShowTask extends Component {
                             </div>
                             <div className="task-detail">
                                 <span>{setPriority(task.priority_id)}</span>
+                            </div>
+                        </div>
+                        <div className="mt-3 col-12 col-md-5">
+                            <div className="task-title-section title-section float-right">
+                                <i className="fas fa-users"></i>
+                                <span>دست اندرکاران:</span>
+                            </div>
+                            <div className="employees-container task-detail">
+                                {
+                                    task.users.length === 0 &&
+                                        <i className="fas fa-user-slash pb-1 pt-1"></i>
+                                }
+                                {
+                                    task.users.length === 1 &&
+                                        <span>{ task.users.length }<i className="fas fa-user mr-2 pb-1 pt-1"></i></span>
+                                }
+                                {
+                                    task.users.length > 1 &&
+                                        <span>{ task.users.length }<i className="fas fa-users mr-2 pb-1 pt-1"></i></span>
+                                }
+                                <div className="dropdown-users d-none" onClick={(e) => e.stopPropagation()}>
+                                {
+                                    task.users.length >= 1 && task.users.map((user, i) => (
+                                        <div key={i} className="user-dropdown-item border-sharp animated flipInX all-sharp">
+                                            <div className="user-right-flex">
+                                                <div className="user-img-container ml-md-2 ml-1">
+                                                    <img src={APP_PATH + (user.avatar_pic !== null ? user.avatar_pic : "/images/male-avatar")} />
+                                                </div>
+                                                <div className="user-info ml-md-2 ml-1">
+                                                    <p>{user.fullname}</p>
+                                                    <a href={"#user"}>@{user.name}</a>
+                                                </div>
+                                            </div>
+                                            <div className="user-label-container">
+                                                {
+                                                    workspace_users[user.id].is_admin === 1 ? <button className="btn btn-sm btn-success rtl admin p-1"><span>{user.id === task.creator_id ? <i className="fas fa-star ml-1"></i> : ""}ادمین<i className="fas fa-user-tie mr-1"></i></span></button>
+                                                    : <button className="btn btn-sm btn-primary rtl"><span>{user.id === task.creator_id ? <i className="fas fa-star ml-1"></i> : ""}عضو<i className="fas fa-user mr-1"></i></span></button>
+                                                }
+                                            </div>
+                                        </div>
+                                    ))
+                                }
+                                </div>
+                            </div>
+                        </div>
+                        <div className="mt-3 col-12 col-md-5">
+                            <div className="task-title-section title-section">
+                                <i className="fas fa-user-check"></i>
+                                <span>اتمام کننده:</span>
+                            </div>
+                            <div className="task-detail">
+                                {/* <a className="task-finisher"><img src={APP_PATH + 'images/male-avatar.svg'} alt="" />امیررضا منصوریان</a> */}
+                                {task.finisher_id !== null ? (<a href="" className="task-finisher">{workspace_users[task.finisher_id].fullname}</a>) : <i className="fas fa-minus pt-1 pb-1 minus-icon"></i>}
                             </div>
                         </div>
                         <div className="mt-3 col-12 col-md-5">
@@ -271,56 +382,43 @@ export default class ShowTask extends Component {
                         </div>
                         <div className="mt-3 col-12 col-md-5">
                             <div className="task-title-section title-section">
-                                <i className="fas fa-user-check"></i>
-                                <span>اتمام کننده:</span>
-                            </div>
-                            <div className="task-detail">
-                                {/* <a className="task-finisher"><img src={APP_PATH + 'images/male-avatar.svg'} alt="" />امیررضا منصوریان</a> */}
-                                {task.finisher_id !== null ? (<a href="" className="task-finisher">{workspace_users[task.finisher_id].fullname}</a>) : <i className="fas fa-minus pt-1 pb-1 minus-icon"></i>}
-                            </div>
-                        </div>
-                        <div className="mt-3 col-12 col-md-5">
-                            <div className="task-title-section title-section float-right">
-                                <i className="fas fa-users"></i>
-                                <span>دست اندرکاران:</span>
-                            </div>
-                            <div className="employees-container task-detail next-line">
-                                {
-                                    task.users.map((user, i) => (
-                                        <div key={i} className="user-dropdown-item border-sharp animated flipInX permanent-visible">
-                                            <div className="user-right-flex">
-                                                <div className="user-img-container ml-md-2 ml-1">
-                                                    <img src={APP_PATH + (user.avatar_pic !== null ? user.avatar_pic : "/images/male-avatar")} />
-                                                </div>
-                                                <div className="user-info ml-md-2 ml-1">
-                                                    <p>{user.fullname}</p>
-                                                    <a href={"#user"}>@{user.name}</a>
-                                                </div>
-                                            </div>
-                                            <div className="user-label-container">
-                                                {
-                                                    workspace_users[user.id].is_admin === 1 ? <button className="btn btn-sm btn-success rtl admin p-1"><span>{user.id === task.creator_id ? <i className="fas fa-star ml-1"></i> : ""}ادمین<i className="fas fa-user-tie mr-1"></i></span></button>
-                                                    : <button className="btn btn-sm btn-primary rtl"><span>{user.id === task.creator_id ? <i className="fas fa-star ml-1"></i> : ""}عضو<i className="fas fa-user mr-1"></i></span></button>
-                                                }
-                                            </div>
-                                        </div>
-                                    ))
-                                }
-                            </div>
-                        </div>
-                        <div className="mt-3 col-12 col-md-5">
-                            <div className="task-title-section title-section">
                                 <i className="fas fa-tasks"></i>
                                 <span>وظایف زیر مجموعه:</span>
                             </div>
-                            <div className="task-detail next-line">
-                                <ul className="child-tasks"> {/* here we will set the dynamic children of the tasks */}
-                                    <li><a>طراحی api تسک ها</a></li>
-                                    <li><a>طراحی api تسک ها</a></li>
-                                    <li><a>طراحی api تسک ها</a></li>
-                                    <li><a>طراحی api تسک ها</a></li>
-                                </ul>
+                            {task.children && task.children.length > 0
+                                ?   <div className="task-detail next-line">
+                                        <ul className="child-tasks">
+                                            {
+                                                task.children.map((child, index) => (
+                                                    <li key={index}><a href={getTask(child.id)}>{ child.title }</a></li>
+                                                ))
+                                            }
+                                        </ul>
+                                    </div>
+                                :   <div className="task-detail">
+                                        <i className="fas fa-minus pt-1 pb-1 minus-icon"></i>
+                                    </div>
+                            }
+                        </div>
+                        <div className="mt-3 col-12 col-md-5">
+                            <div className="task-title-section title-section">
+                                <i className="fas fa-clipboard-list"></i>
+                                <span>درخواست های مرتبط</span>
                             </div>
+                            {task.demands && task.demands.length > 0
+                                ?   <div className="task-detail next-line">
+                                        <ul className="child-tasks">
+                                            {
+                                                task.demands.map((demand, index) => (
+                                                    <li key={index}><a href={getDemand(task.workspace_id, demand.id)}>{ demand.title }</a></li>
+                                                ))
+                                            }
+                                        </ul>
+                                    </div>
+                                :   <div className="task-detail">
+                                        <i className="fas fa-minus pt-1 pb-1 minus-icon"></i>
+                                    </div>
+                            }
                         </div>
                         <div className="mt-3 col-12 col-md-10 mb-3">
                             <div className="task-title-section title-section">
@@ -343,7 +441,7 @@ export default class ShowTask extends Component {
                 <div>
                     <div className="col-12 float-right task-info-container pl-0 pr-0 pr-md-3 pl-md-3">
                         <div className="breadcrumb col-12 float-right animated flipInX">
-                            <a className="float-right hoverable">
+                            <a className="float-right hoverable" href={getWorkspace(workspace.id)}>
                                 <img src={APP_PATH + workspace.avatar_pic} alt=""/>
                                 <h6>{ workspace.title }</h6>
                             </a>
@@ -354,7 +452,7 @@ export default class ShowTask extends Component {
                             <i className="fas fa-arrow-circle-left"></i>
                             { task.parent_id !== null && <a className="hoverable"><h6>تسک پدر</h6></a> } {/* then we add the parent task or the name of the task here */}
                             { task.parent_id !== null && <i className="fas fa-arrow-circle-left"></i> }
-                            <a className="hoverable"><h6>{ task.title }</h6></a>
+                            <a className="hoverable" href={getTask(task.id)}><h6>{ task.title }</h6></a>
                         </div>
                         {mode === "show" ? this.showInfo() : this.editInfo()}
                     </div>
