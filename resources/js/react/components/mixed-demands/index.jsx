@@ -17,7 +17,7 @@ export default class MixedDemands extends Component {
         this.filterBoxRefs = []
         this.addIconRef = React.createRef()
         this.addDemandRef = React.createRef()
-        for (let index = 0; index < 2; index++) {
+        for (let index = 0; index < 3; index++) {
             this.tabTitlesRefs.push(React.createRef())
             this.tabResultsRefs.push(React.createRef())
             this.filterBoxRefs.push(React.createRef())
@@ -27,7 +27,8 @@ export default class MixedDemands extends Component {
             isGetting: false,
             new_demand_description: "",
             already_added_needs: {},
-            api_target: 'mixed'
+            api_target: 'mixed',
+            viewing_as_admin: false
         }
     }
 
@@ -51,6 +52,9 @@ export default class MixedDemands extends Component {
                 case 1:
                     activeTab = "needs"
                     break;
+
+                case 2:
+                    activeTab = "all"
 
                 default:
                     break;
@@ -167,11 +171,6 @@ export default class MixedDemands extends Component {
         })
     }
 
-    setRightTab = () => {
-
-
-    }
-
     componentDidMount() {
         let { get_workspaces_api } = this.props
         const url = window.location.href
@@ -239,9 +238,12 @@ export default class MixedDemands extends Component {
     }
 
     render() {
-        let { demands, needs, isGetting, already_added_needs, workspaces, workspaces_users, selected_workspace, current_tab } = this.state, { logged_in_user_id, demand_show_route } = this.props
+        let { demands, needs, isGetting, already_added_needs, workspaces, workspaces_users, selected_workspace, current_tab, viewing_as_admin } = this.state, { logged_in_user_id, demand_show_route } = this.props
         return (
             <div>
+                <div>
+                    
+                </div>
                 <nav className="demands-tabs-titles col-12 mt-2">
                     <a className={"demand-tab-title-small-arrow " + `${current_tab === "demands" ? "active" : ""}`} ref={this.tabTitlesRefs[0]} onClick={this.changeTab.bind(this, 0)}>
                         <i className="fas fa-arrow-circle-down animated tada delay-1s"></i>
@@ -251,6 +253,14 @@ export default class MixedDemands extends Component {
                         <i className="fas fa-arrow-circle-up animated tada delay-1s"></i>
                         <span>نیاز</span>
                     </a>
+                    {
+                        viewing_as_admin
+                        ?   <a className={"demand-tab-title-small-arrow " + `${current_tab === "all" ? "active" : ""}`} ref={this.tabTitlesRefs[2]} onClick={this.changeTab.bind(this, 2)}>
+                                <i className="fas fa-border-all animated tada delay-1s"></i>
+                                <span>همه</span>
+                            </a>
+                        :   null
+                    }
                 </nav>
                 <div className={"col-12 mt-4 float-right demand-tab-result pr-0 pl-0 pr-md-3 pl-md-3 " + `${current_tab === "demands" ? "active" : ""}`} ref={this.tabResultsRefs[0]}>
                     <div className="search-box p-2 p-md-4">

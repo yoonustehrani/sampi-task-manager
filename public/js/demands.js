@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 5);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -56963,7 +56963,7 @@ var Demands = /*#__PURE__*/function (_Component) {
         scope: "col"
       }, "\u062F\u0631\u062E\u0648\u0627\u0633\u062A \u06A9\u0646\u0646\u062F\u0647"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
         scope: "col"
-      }, "\u062A\u0633\u06A9 \u0645\u0631\u0628\u0648\u0637\u0647"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+      }, "\u0645\u0633\u0626\u0648\u0644\u06CC\u062A \u0645\u0631\u0628\u0648\u0637\u0647"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
         scope: "col"
       }, "\u0627\u0648\u0644\u0648\u06CC\u062A"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
         scope: "col"
@@ -57004,7 +57004,7 @@ var Demands = /*#__PURE__*/function (_Component) {
           href: user_profile_route.replace("userId", from.id)
         }, "@", from.name))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "user-label-container"
-        }, workspace_users && workspace_users[from.id].is_admin === 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        }, workspace_users && workspace_users[from.id] && workspace_users[from.id].is_admin === 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           className: "btn btn-sm btn-success rtl admin p-1"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0627\u062F\u0645\u06CC\u0646", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-user-tie mr-1"
@@ -57660,7 +57660,7 @@ renderWithImg("#new-task-project-select", "پروژه مربوطه را انتخ
 
 /***/ }),
 
-/***/ 5:
+/***/ 1:
 /*!*********************************************!*\
   !*** multi ./resources/js/react/demands.js ***!
   \*********************************************/

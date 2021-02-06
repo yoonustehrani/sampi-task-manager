@@ -37889,26 +37889,14 @@ Chart.platform.disableCSSInjection = true;
 
 /***/ }),
 
-/***/ "./resources/sass/app.scss":
-/*!*********************************!*\
-  !*** ./resources/sass/app.scss ***!
-  \*********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
 /***/ 0:
-/*!***************************************************************!*\
-  !*** multi ./resources/js/chart.js ./resources/sass/app.scss ***!
-  \***************************************************************/
+/*!*************************************!*\
+  !*** multi ./resources/js/chart.js ***!
+  \*************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! I:\projects\task-manager\resources\js\chart.js */"./resources/js/chart.js");
-module.exports = __webpack_require__(/*! I:\projects\task-manager\resources\sass\app.scss */"./resources/sass/app.scss");
+module.exports = __webpack_require__(/*! I:\projects\task-manager\resources\js\chart.js */"./resources/js/chart.js");
 
 
 /***/ })
