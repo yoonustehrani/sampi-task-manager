@@ -215,7 +215,7 @@ export default class Demands extends Component {
                                 <th scope="col">#</th>
                                 <th scope="col">عنوان</th>
                                 <th scope="col">درخواست کننده</th>
-                                <th scope="col">تسک مربوطه</th>
+                                <th scope="col">مسئولیت مربوطه</th>
                                 <th scope="col">اولویت</th>
                                 <th scope="col">وضعیت اتمام</th>
                                 <th scope="col">تاریخ اتمام</th>

@@ -78,7 +78,7 @@ export default class MixedTasks extends Component {
 
     addtask = () => {
         let { post_task_api } = this.props, { new_task_description, workspace_users } = this.state
-        let title = $("#new-task-title").val(), priority = parseInt($("#new-task-priority").val()), users = $("#new-task-members").val(), related_task = $("#parent-task-select").val() === "0" ? "" : $("#parent-task-select").val(), workspaceId = $("#new-task-project-select").val(), group = $("#new-task-group").val()
+        let title = $("#new-task-title").val(), priority = parseInt($("#new-task-priority").val()), users = $("#new-task-members").val(), related_task = $("#parent-task-select").val() === "0" ? "" : $("#parent-task-select").val(), workspaceId = $("#new-task-project-select").val(), group = $("#new-task-group").val(), due_to = $("input[name='due_to']").val()
         console.log(users)
         axios.post(post_task_api.replace("workspaceId", workspaceId), {
             title: title,
@@ -86,6 +86,7 @@ export default class MixedTasks extends Component {
             group: group,
             parent_id: related_task,
             users: users,
+            due_to: due_to,
             description: new_task_description 
         }).then(res => {
             let { data } = res
@@ -154,6 +155,16 @@ export default class MixedTasks extends Component {
                 })
             })
         })
+        const due_to_input = $("input[name='due_to']");
+        var pdt = $('#task-due-to').persianDatepicker({
+            format: 'dddd D MMMM YYYY، HH:mm',
+            viewMode: 'day',
+            onSelect: unix => {due_to_input.val(unix / 1000);},
+            toolbox:{calendarSwitch:{enabled: true,format: 'YYYY'}},
+            calendar:{gregorian: {due_tolocale: 'en'},persian: {locale: 'fa'}},   
+            // minDate: new persianDate().valueOf(),
+            timePicker: {enabled: true,second:{enabled: false},meridiem:{enabled: true}},
+        })
         // here we will use select2, jquery and react states to make a connection between three select2s and the options inside them(warning: do not move this code to another js file(like select2.js) or out of this order)
         const setWorkspaceId = () => {
             let id = $("#new-task-project-select").val()
@@ -189,13 +200,13 @@ export default class MixedTasks extends Component {
                             <h5>مسئولیت جدید</h5>
                         </div>
                         <div className="add-task-section mb-4 d-none col-12 p-3 animated fadeIn" ref={this.addTaskRef}>
-                            <div className="input-group col-12 col-md-6 pl-0 pr-0 mb-2 mb-md-0">
+                            <div className="input-group col-12 col-md-6 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3">
                                 <div className="input-group-prepend">
                                     <span className="input-group-text">عنوان</span>
                                 </div>
                                 <input type="text" id="new-task-title" className="form-control" placeholder="عنوان نیاز را در این قسمت وارد کنید" />
                             </div>
-                            <div className="input-group col-12 col-md-6 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line-all">
+                            <div className="input-group col-12 col-md-6 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3 input-group-single-line-all">
                                 <div className="input-group-prepend">
                                     <span className="input-group-text">اولویت</span>
                                 </div>
@@ -206,7 +217,20 @@ export default class MixedTasks extends Component {
                                     <option value="4" icon_name="fas fa-hourglass">غیر ضروری و غیر مهم</option>
                                 </select>
                             </div>
-                            <div className="input-group col-12 col-md-6 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line-all">
+                            <div className="input-group col-12 col-md-6 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3">
+                                <div className="input-group-prepend">
+                                    <span className="input-group-text">موعد تحویل</span>
+                                </div>
+                                <input type="hidden" id="new-task-due-to" name="due_to" />
+                                <input type="text" id="task-due-to" className="form-control" />
+                            </div>
+                            <div className="input-group col-12 col-md-6 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3">
+                                <div className="input-group-prepend">
+                                    <span className="input-group-text">دسته بندی</span>
+                                </div>
+                                <input type="text" id="new-task-group" className="form-control" placeholder="این مسئولیت در چه گروهی قرار میگیرد؟" />
+                            </div>  
+                            <div className="input-group col-12 col-md-4 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3 input-group-single-line-all">
                                 <div className="input-group-prepend">
                                     <span className="input-group-text">پروژه مربوطه</span>
                                 </div>
@@ -218,14 +242,8 @@ export default class MixedTasks extends Component {
                                         ))
                                     }
                                 </select>
-                            </div>
-                            <div className="input-group col-12 col-md-6 pl-0 pr-0 mb-2 mb-md-0">
-                                <div className="input-group-prepend">
-                                    <span className="input-group-text">دسته بندی</span>
-                                </div>
-                                <input type="text" id="new-task-group" className="form-control" placeholder="این مسئولیت در چه گروهی قرار میگیرد؟" />
-                            </div>                            
-                            <div className="input-group col-12 col-md-6 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line">
+                            </div>                          
+                            <div className="input-group col-12 col-md-4 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3 input-group-single-line">
                                 <div className="input-group-prepend">
                                     <span className="input-group-text">زیر مجموعه</span>
                                 </div>
@@ -233,7 +251,7 @@ export default class MixedTasks extends Component {
                                     <option></option>
                                 </select>
                             </div>
-                            <div className="input-group col-12 col-md-6 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line-all">
+                            <div className="input-group col-12 col-md-4 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3 input-group-single-line-all">
                                 <div className="input-group-prepend">
                                     <span className="input-group-text">مسئولین</span>
                                 </div>
@@ -247,7 +265,7 @@ export default class MixedTasks extends Component {
                                     }) : null }
                                 </select>
                             </div>
-                            <div className="input-group col-12 pl-0 pr-0">
+                            <div className="input-group col-12 pl-0 pr-0 mt-3">
                                 <div className="tinymc-container">
                                     <TinymcEditor changeContent={this.onDescriptionChange} />
                                 </div>

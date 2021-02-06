@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 5);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -56633,7 +56633,6 @@ function _defineProperty(obj, key, value) {
 
 
 
-
 moment__WEBPACK_IMPORTED_MODULE_6___default.a.locale('fa');
 
 var MixedTasks = /*#__PURE__*/function (_Component) {
@@ -56740,7 +56739,8 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
           users = $("#new-task-members").val(),
           related_task = $("#parent-task-select").val() === "0" ? "" : $("#parent-task-select").val(),
           workspaceId = $("#new-task-project-select").val(),
-          group = $("#new-task-group").val();
+          group = $("#new-task-group").val(),
+          due_to = $("input[name='due_to']").val();
       console.log(users);
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(post_task_api.replace("workspaceId", workspaceId), {
         title: title,
@@ -56748,6 +56748,7 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
         group: group,
         parent_id: related_task,
         users: users,
+        due_to: due_to,
         description: new_task_description
       }).then(function (res) {
         var data = res.data;
@@ -56839,6 +56840,38 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
             });
           });
         });
+      });
+      var due_to_input = $("input[name='due_to']");
+      var pdt = $('#task-due-to').persianDatepicker({
+        format: 'dddd D MMMM YYYY، HH:mm',
+        viewMode: 'day',
+        onSelect: function onSelect(unix) {
+          due_to_input.val(unix / 1000);
+        },
+        toolbox: {
+          calendarSwitch: {
+            enabled: true,
+            format: 'YYYY'
+          }
+        },
+        calendar: {
+          gregorian: {
+            due_tolocale: 'en'
+          },
+          persian: {
+            locale: 'fa'
+          }
+        },
+        // minDate: new persianDate().valueOf(),
+        timePicker: {
+          enabled: true,
+          second: {
+            enabled: false
+          },
+          meridiem: {
+            enabled: true
+          }
+        }
       }); // here we will use select2, jquery and react states to make a connection between three select2s and the options inside them(warning: do not move this code to another js file(like select2.js) or out of this order)
 
       var setWorkspaceId = function setWorkspaceId() {
@@ -56892,7 +56925,7 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
         className: "add-task-section mb-4 d-none col-12 p-3 animated fadeIn",
         ref: this.addTaskRef
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "input-group col-12 col-md-6 pl-0 pr-0 mb-2 mb-md-0"
+        className: "input-group col-12 col-md-6 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "input-group-prepend"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
@@ -56903,7 +56936,7 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
         className: "form-control",
         placeholder: "\u0639\u0646\u0648\u0627\u0646 \u0646\u06CC\u0627\u0632 \u0631\u0627 \u062F\u0631 \u0627\u06CC\u0646 \u0642\u0633\u0645\u062A \u0648\u0627\u0631\u062F \u06A9\u0646\u06CC\u062F"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "input-group col-12 col-md-6 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line-all"
+        className: "input-group col-12 col-md-6 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3 input-group-single-line-all"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "input-group-prepend"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
@@ -56924,7 +56957,32 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
         value: "4",
         icon_name: "fas fa-hourglass"
       }, "\u063A\u06CC\u0631 \u0636\u0631\u0648\u0631\u06CC \u0648 \u063A\u06CC\u0631 \u0645\u0647\u0645"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "input-group col-12 col-md-6 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line-all"
+        className: "input-group col-12 col-md-6 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "input-group-prepend"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "input-group-text"
+      }, "\u0645\u0648\u0639\u062F \u062A\u062D\u0648\u06CC\u0644")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "hidden",
+        id: "new-task-due-to",
+        name: "due_to"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        id: "task-due-to",
+        className: "form-control"
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "input-group col-12 col-md-6 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "input-group-prepend"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "input-group-text"
+      }, "\u062F\u0633\u062A\u0647 \u0628\u0646\u062F\u06CC")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        id: "new-task-group",
+        className: "form-control",
+        placeholder: "\u0627\u06CC\u0646 \u0645\u0633\u0626\u0648\u0644\u06CC\u062A \u062F\u0631 \u0686\u0647 \u06AF\u0631\u0648\u0647\u06CC \u0642\u0631\u0627\u0631 \u0645\u06CC\u06AF\u06CC\u0631\u062F\u061F"
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "input-group col-12 col-md-4 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3 input-group-single-line-all"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "input-group-prepend"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
@@ -56939,18 +56997,7 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
           img_address: APP_PATH + workspace.avatar_pic
         }, workspace.title);
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "input-group col-12 col-md-6 pl-0 pr-0 mb-2 mb-md-0"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "input-group-prepend"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "input-group-text"
-      }, "\u062F\u0633\u062A\u0647 \u0628\u0646\u062F\u06CC")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "text",
-        id: "new-task-group",
-        className: "form-control",
-        placeholder: "\u0627\u06CC\u0646 \u0645\u0633\u0626\u0648\u0644\u06CC\u062A \u062F\u0631 \u0686\u0647 \u06AF\u0631\u0648\u0647\u06CC \u0642\u0631\u0627\u0631 \u0645\u06CC\u06AF\u06CC\u0631\u062F\u061F"
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "input-group col-12 col-md-6 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line"
+        className: "input-group col-12 col-md-4 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3 input-group-single-line"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "input-group-prepend"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
@@ -56958,7 +57005,7 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
       }, "\u0632\u06CC\u0631 \u0645\u062C\u0645\u0648\u0639\u0647")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
         id: "parent-task-select"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "input-group col-12 col-md-6 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line-all"
+        className: "input-group col-12 col-md-4 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3 input-group-single-line-all"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "input-group-prepend"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
@@ -56976,7 +57023,7 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
           }, user.fullname);
         }
       }) : null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "input-group col-12 pl-0 pr-0"
+        className: "input-group col-12 pl-0 pr-0 mt-3"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "tinymc-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_tinymce_editor_index__WEBPACK_IMPORTED_MODULE_5__["default"], {
@@ -57448,7 +57495,7 @@ react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEB
 
 /***/ }),
 
-/***/ 5:
+/***/ 2:
 /*!************************************************!*\
   !*** multi ./resources/js/react/mixedTasks.js ***!
   \************************************************/

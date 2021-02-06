@@ -125,7 +125,7 @@ export default class ShowTask extends Component {
                     viewMode: 'day',
                     onSelect: unix => {due_to_input.val(unix / 1000);},
                     toolbox:{calendarSwitch:{enabled: true,format: 'YYYY'}},
-                    calendar:{gregorian: {locale: 'en'},persian: {locale: 'fa'}},   
+                    calendar:{gregorian: {due_tolocale: 'en'},persian: {locale: 'fa'}},   
                     // minDate: new persianDate().valueOf(),
                     timePicker: {enabled: true,second:{enabled: false},meridiem:{enabled: true}},
                 })
@@ -144,7 +144,7 @@ export default class ShowTask extends Component {
                     priority: edited_priority,
                     users: edited_users,
                     description: task_description,
-                    // due_to: "",
+                    due_to: task_due_to,
                     parent_id: parent_id
                 }).then(res => {
                     let { data } = res
