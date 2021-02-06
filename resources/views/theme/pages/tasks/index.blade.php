@@ -19,6 +19,8 @@
 
 @push('scripts')
     <script>
+        const CAN_VIEW_AS_ADMIN = {{ \Gate::allows('viewAny', \App\Task::class) ? 'true' : 'false' }};
+        var VIEW_AS_ADMIN       = {{ request()->view_as_admin == 'true' ? 'true' : 'false' }}; 
         var simple_search_url = "{{ route('api.task-manager.tasks.search.simple', ['api_token' => auth()->user()->api_token]) }}"
     </script>
     <script src="{{ asset('js/mixedTasks.js') }}"></script>
