@@ -43,7 +43,7 @@ $('#new-task-priority, #tasks_order_select, #tasks_order_by_select, #tasks_relat
 })
 $('.select2-search__field').css('width', '100%')
 
-const simpleSearch = (ids, parentOnly) => {
+export const simpleSearch = (ids, parentOnly, workspaceId=$("#new-demand-project-select").val()) => {
     $(ids).select2({
         templateResult: formatOption,
         templateSelection: function (data, container) {
@@ -60,7 +60,7 @@ const simpleSearch = (ids, parentOnly) => {
             data: function (params) {
                 return {
                     q: params.term,
-                    workspace: $("#new-demand-project-select").val(),
+                    workspace: workspaceId,
                     parentOnly: parentOnly
                 }
             },

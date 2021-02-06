@@ -136,8 +136,7 @@ class TaskController extends BaseController
                     array_merge($users, [(string) $request->user()->id])
                 );
             \DB::commit();
-            // $task['users'] = array_merge($users, [(string) $request->user()->id]);
-            return $task->load('users');
+            return $task->parent_id ? $task->load(['parent', 'users']) : $task->load('users');
         } catch(\Exception $e) {
             \DB::rollback();
             throw $e;
@@ -158,7 +157,7 @@ class TaskController extends BaseController
             \DB::beginTransaction();
                 $task->title = $request->title;
                 $task->description = $request->description;
-                if ($task->parent_id) {
+                if ($request->parent_id) {
                     $task->parent_id = $request->parent_id;
                 }
                 $task->group = $request->group ?: $this->default_group;
@@ -175,7 +174,7 @@ class TaskController extends BaseController
                     array_merge($users, [(string) $request->user()->id])
                 );
             \DB::commit();
-            return $task->load('users');
+            return $task->parent_id ? $task->load(['parent', 'users']) : $task->load('users');
         } catch(\Exception $e) {
             \DB::rollback();
             throw $e;

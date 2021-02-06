@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -90,7 +90,7 @@
 /*!*********************************!*\
   !*** ./resources/js/select2.js ***!
   \*********************************/
-/*! exports provided: formatOptionWithIcon, formatOptionWithImage, formatOption */
+/*! exports provided: formatOptionWithIcon, formatOptionWithImage, formatOption, simpleSearch */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -98,6 +98,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "formatOptionWithIcon", function() { return formatOptionWithIcon; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "formatOptionWithImage", function() { return formatOptionWithImage; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "formatOption", function() { return formatOption; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "simpleSearch", function() { return simpleSearch; });
 var formatOptionWithIcon = function formatOptionWithIcon(option) {
   if (option.element) {
     var icon_name = option.element.attributes.icon_name.nodeValue;
@@ -130,8 +131,8 @@ $('#new-task-priority, #tasks_order_select, #tasks_order_by_select, #tasks_relat
   }
 });
 $('.select2-search__field').css('width', '100%');
-
 var simpleSearch = function simpleSearch(ids, parentOnly) {
+  var workspaceId = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : $("#new-demand-project-select").val();
   $(ids).select2({
     templateResult: formatOption,
     templateSelection: function templateSelection(data, container) {
@@ -148,7 +149,7 @@ var simpleSearch = function simpleSearch(ids, parentOnly) {
       data: function data(params) {
         return {
           q: params.term,
-          workspace: $("#new-demand-project-select").val(),
+          workspace: workspaceId,
           parentOnly: parentOnly
         };
       },
@@ -174,7 +175,6 @@ var simpleSearch = function simpleSearch(ids, parentOnly) {
     allowClear: true
   });
 };
-
 simpleSearch('#task-select', false);
 simpleSearch("#parent-task-select", true);
 
@@ -204,26 +204,14 @@ renderWithImg("#new-task-project-select", "پروژه مربوطه را انتخ
 
 /***/ }),
 
-/***/ "./resources/sass/app.scss":
-/*!*********************************!*\
-  !*** ./resources/sass/app.scss ***!
-  \*********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
-/***/ 0:
-/*!*****************************************************************!*\
-  !*** multi ./resources/js/select2.js ./resources/sass/app.scss ***!
-  \*****************************************************************/
+/***/ 1:
+/*!***************************************!*\
+  !*** multi ./resources/js/select2.js ***!
+  \***************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! I:\projects\task-manager\resources\js\select2.js */"./resources/js/select2.js");
-module.exports = __webpack_require__(/*! I:\projects\task-manager\resources\sass\app.scss */"./resources/sass/app.scss");
+module.exports = __webpack_require__(/*! I:\projects\task-manager\resources\js\select2.js */"./resources/js/select2.js");
 
 
 /***/ })

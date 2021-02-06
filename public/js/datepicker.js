@@ -95,7 +95,7 @@
 
 /*!
  * 
- * persian-date -  1.1.0-rc2
+ * persian-date -  1.1.0
  * Reza Babakhani <babakhani.reza@gmail.com>
  * http://babakhani.github.io/PersianWebToolkit/docs/persian-date/
  * Under MIT license 
@@ -355,7 +355,7 @@ var PersianDateClass = function () {
         this.leapYearMode = PersianDateClass.leapYearMode;
 
         this.algorithms = new Algorithms(this);
-        this.version = "1.1.0-rc2";
+        this.version = "1.1.0";
         this._utcMode = false;
         if (this.localType !== 'fa') {
             this.formatPersian = false;
@@ -7864,61 +7864,17 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 window.persianDate = __webpack_require__(/*! persian-date */ "./node_modules/persian-date/dist/persian-date.js");
 window.persianDatepicker = __webpack_require__(/*! persian-datepicker/dist/js/persian-datepicker */ "./node_modules/persian-datepicker/dist/js/persian-datepicker.js");
-var due_to_input = $("input[name='due_to']");
-$('#example').persianDatepicker({
-  format: 'dddd D MMMM YYYY، HH:mm',
-  viewMode: 'day',
-  onSelect: function onSelect(unix) {
-    due_to_input.val(unix / 1000);
-  },
-  toolbox: {
-    calendarSwitch: {
-      enabled: true,
-      format: 'YYYY'
-    }
-  },
-  calendar: {
-    gregorian: {
-      locale: 'en'
-    },
-    persian: {
-      locale: 'fa'
-    }
-  },
-  minDate: new persianDate().valueOf(),
-  timePicker: {
-    enabled: true,
-    second: {
-      enabled: false
-    },
-    meridiem: {
-      enabled: true
-    }
-  }
-});
-
-/***/ }),
-
-/***/ "./resources/sass/app.scss":
-/*!*********************************!*\
-  !*** ./resources/sass/app.scss ***!
-  \*********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
 
 /***/ }),
 
 /***/ 0:
-/*!********************************************************************!*\
-  !*** multi ./resources/js/datepicker.js ./resources/sass/app.scss ***!
-  \********************************************************************/
+/*!******************************************!*\
+  !*** multi ./resources/js/datepicker.js ***!
+  \******************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! I:\projects\task-manager\resources\js\datepicker.js */"./resources/js/datepicker.js");
-module.exports = __webpack_require__(/*! I:\projects\task-manager\resources\sass\app.scss */"./resources/sass/app.scss");
+module.exports = __webpack_require__(/*! I:\projects\task-manager\resources\js\datepicker.js */"./resources/js/datepicker.js");
 
 
 /***/ })

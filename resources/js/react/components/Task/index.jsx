@@ -119,6 +119,17 @@ export default class ShowTask extends Component {
                     },
                     allowClear: true
                 })
+                const due_to_input = $("input[name='due_to']");
+                $('#task-due-to').persianDatepicker({
+                    format: 'dddd D MMMM YYYY، HH:mm',
+                    viewMode: 'day',
+                    onSelect: unix => {due_to_input.val(unix / 1000);},
+                    toolbox:{calendarSwitch:{enabled: true,format: 'YYYY'}},
+                    calendar:{gregorian: {locale: 'en'},persian: {locale: 'fa'}},
+                    minDate: new persianDate().valueOf(),
+                    timePicker: {enabled: true,second:{enabled: false},meridiem:{enabled: true}},
+                    
+                })
             } else {
                 let { edit_task_api, toggle_task_state_api } = this.props, { task_description, finished_at_check, first_check_state } = this.state
                 if (finished_at_check !== first_check_state) {
@@ -182,7 +193,7 @@ export default class ShowTask extends Component {
                             { workspace.users.map((user, i) => {
                                 if (user.id !== logged_in_user_id) {
                                     return (
-                                        <option key={i} value={user.id} img_address={APP_PATH + user.avatar_pic}>{user.fullname}</option>
+                                        <option key={i} value={user.id} img_address={APP_PATH + user.avatar_pic} is_admin={user.pivot.is_admin}>{user.fullname}</option>
                                     )                                            
                                 }
                             }) }
@@ -203,7 +214,8 @@ export default class ShowTask extends Component {
                         <div className="input-group-prepend">
                             <span className="input-group-text">موعد تحویل</span>
                         </div>
-                        {<input defaultValue={moment(task.due_to).format("jYYYY/jMM/jDD HH:mm")} />}
+                        <input type="hidden" id="new-task-due-to" name="due_to" />
+                        <input type="text" id="task-due-to" className="form-control" />
                     </div>
                     <div className="input-group col-12 col-md-4 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3">
                         <div className="input-group-prepend">

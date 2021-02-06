@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -2468,7 +2468,7 @@ module.exports = {
 
 /***/ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/react-activity/dist/react-activity.css":
 /*!*********************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader??ref--7-1!./node_modules/postcss-loader/src??ref--7-2!./node_modules/react-activity/dist/react-activity.css ***!
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/postcss-loader/src??ref--6-2!./node_modules/react-activity/dist/react-activity.css ***!
   \*********************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -2478,7 +2478,7 @@ exports = module.exports = __webpack_require__(/*! ../../css-loader/lib/css-base
 
 
 // module
-exports.push([module.i, "@-webkit-keyframes dots-pulse {\n  0% {\n    opacity: 0.1; }\n  15% {\n    opacity: 1; }\n  100% {\n    opacity: 0.1; } }\n@keyframes dots-pulse {\n  0% {\n    opacity: 0.1; }\n  15% {\n    opacity: 1; }\n  100% {\n    opacity: 0.1; } }\n.rai-dots .rai-circle {\n  border-radius: 100%;\n  display: inline-block;\n  margin-right: 0.1875em;\n  background-color: #727981;\n  width: 0.5em;\n  height: 0.5em;\n  -webkit-animation-name: dots-pulse;\n          animation-name: dots-pulse;\n  -webkit-animation-duration: inherit;\n          animation-duration: inherit;\n  -webkit-animation-timing-function: ease-in-out;\n          animation-timing-function: ease-in-out;\n  -webkit-animation-iteration-count: infinite;\n          animation-iteration-count: infinite; }\n  .rai-dots .rai-circle:last-child {\n    margin-right: 0; }\n\n@-webkit-keyframes levels-pulse {\n  0% {\n    height: 30%;\n    opacity: 0.5; }\n  20% {\n    height: 100%;\n    opacity: 1; }\n  35% {\n    height: 30%;\n    opacity: 0.5; }\n  55% {\n    height: 100%;\n    opacity: 1; }\n  70% {\n    height: 50%;\n    opacity: 0.5; }\n  80% {\n    height: 100%;\n    opacity: 1; }\n  100% {\n    height: 30%;\n    opacity: 0.5; } }\n\n@keyframes levels-pulse {\n  0% {\n    height: 30%;\n    opacity: 0.5; }\n  20% {\n    height: 100%;\n    opacity: 1; }\n  35% {\n    height: 30%;\n    opacity: 0.5; }\n  55% {\n    height: 100%;\n    opacity: 1; }\n  70% {\n    height: 50%;\n    opacity: 0.5; }\n  80% {\n    height: 100%;\n    opacity: 1; }\n  100% {\n    height: 30%;\n    opacity: 0.5; } }\n.rai-levels .rai-levels-container {\n  text-align: left;\n  display: inline-block;\n  height: 1em;\n  line-height: 1em;\n  -webkit-animation-duration: inherit;\n          animation-duration: inherit; }\n.rai-levels .rai-bar {\n  bottom: 0;\n  display: inline-block;\n  vertical-align: bottom;\n  width: 0.25em;\n  background: #727981;\n  margin-right: 0.125em;\n  height: 50%;\n  -webkit-animation-name: levels-pulse;\n          animation-name: levels-pulse;\n  -webkit-animation-duration: inherit;\n          animation-duration: inherit;\n  -webkit-animation-timing-function: ease-in-out;\n          animation-timing-function: ease-in-out;\n  -webkit-animation-iteration-count: infinite;\n          animation-iteration-count: infinite; }\n  .rai-levels .rai-bar:last-child {\n    margin-right: 0; }\n\n@-webkit-keyframes rai-sentry-pulse {\n  from {\n    transform: scale(0);\n    opacity: 1; }\n  to {\n    transform: scale(1);\n    opacity: 0; } }\n\n@keyframes rai-sentry-pulse {\n  from {\n    transform: scale(0);\n    opacity: 1; }\n  to {\n    transform: scale(1);\n    opacity: 0; } }\n.rai-sentry {\n  text-align: left;\n  display: inline-block;\n  position: relative;\n  width: 2em;\n  height: 2em; }\n  .rai-sentry .rai-wave-container {\n    display: inline-flex;\n    align-items: center;\n    justify-content: center;\n    width: 100%;\n    height: 100%;\n    position: absolute;\n    -webkit-animation-duration: inherit;\n            animation-duration: inherit; }\n  .rai-sentry .rai-wave {\n    display: inline-block;\n    border: 0.125em solid #727981;\n    border-radius: 100%;\n    box-sizing: border-box;\n    width: 100%;\n    height: 100%;\n    -webkit-animation-name: rai-sentry-pulse;\n            animation-name: rai-sentry-pulse;\n    -webkit-animation-duration: inherit;\n            animation-duration: inherit;\n    -webkit-animation-timing-function: linear;\n            animation-timing-function: linear;\n    -webkit-animation-iteration-count: infinite;\n            animation-iteration-count: infinite; }\n\n@-webkit-keyframes rai-spinner {\n  from {\n    transform: rotate(0deg); }\n  to {\n    transform: rotate(360deg); } }\n\n@keyframes rai-spinner {\n  from {\n    transform: rotate(0deg); }\n  to {\n    transform: rotate(360deg); } }\n.rai-spinner {\n  width: 1.5em;\n  height: 1.5em;\n  position: relative;\n  margin: 0; }\n  .rai-spinner-inner, .rai-spinner-outer {\n    position: absolute;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    border-radius: 100%;\n    margin-left: -0.0625em;\n    margin-top: -0.0625em; }\n  .rai-spinner-outer {\n    border: 0.125em solid #727981;\n    opacity: 0.2; }\n  .rai-spinner-inner {\n    position: absolute;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    border-radius: 100%;\n    border-top: 0.125em solid #727981;\n    border-right: 0.125em solid transparent !important;\n    border-bottom: 0.125em solid transparent !important;\n    border-left: 0.125em solid transparent !important;\n    -webkit-animation-name: rai-spinner;\n            animation-name: rai-spinner;\n    -webkit-animation-iteration-count: infinite;\n            animation-iteration-count: infinite;\n    -webkit-animation-timing-function: linear;\n            animation-timing-function: linear;\n    -webkit-animation-duration: inherit;\n            animation-duration: inherit; }\n\n@keyframes dots-pulse {\n  0% {\n    opacity: 0.1; }\n  15% {\n    opacity: 1; }\n  100% {\n    opacity: 0.1; } }\n.rai-squares .rai-square {\n  display: inline-block;\n  margin-right: 0.1875em;\n  background-color: #727981;\n  width: 0.5em;\n  height: 0.5em;\n  -webkit-animation-name: dots-pulse;\n          animation-name: dots-pulse;\n  -webkit-animation-duration: inherit;\n          animation-duration: inherit;\n  -webkit-animation-timing-function: ease-in-out;\n          animation-timing-function: ease-in-out;\n  -webkit-animation-iteration-count: infinite;\n          animation-iteration-count: infinite; }\n  .rai-squares .rai-square:last-child {\n    margin-right: 0; }\n\n@-webkit-keyframes digital-pulse {\n  0%, 40%, 100% {\n    transform: scaleY(0.4); }\n  20% {\n    transform: scaleY(1); } }\n\n@keyframes digital-pulse {\n  0%, 40%, 100% {\n    transform: scaleY(0.4); }\n  20% {\n    transform: scaleY(1); } }\n.rai-digital {\n  height: 1em;\n  text-align: center; }\n  .rai-digital > div {\n    display: inline-block;\n    margin-right: 0.125em;\n    background-color: #727981;\n    width: 0.25em;\n    height: 100%;\n    -webkit-animation-name: digital-pulse;\n            animation-name: digital-pulse;\n    -webkit-animation-duration: inherit;\n            animation-duration: inherit;\n    -webkit-animation-timing-function: ease-in-out;\n            animation-timing-function: ease-in-out;\n    -webkit-animation-iteration-count: infinite;\n            animation-iteration-count: infinite; }\n    .rai-digital > div:last-child {\n      margin-right: 0; }\n\n@-webkit-keyframes bounce-pulse {\n  0% {\n    transform: translateY(0.1875em); }\n  30% {\n    transform: translateY(-0.25em); }\n  50% {\n    transform: translateY(3); } }\n\n@keyframes bounce-pulse {\n  0% {\n    transform: translateY(0.1875em); }\n  30% {\n    transform: translateY(-0.25em); }\n  50% {\n    transform: translateY(3); } }\n.rai-bounce > div {\n  transform: translateY(0.1875em);\n  border-radius: 100%;\n  display: inline-block;\n  margin-right: 0.1875em;\n  background-color: #727981;\n  width: 0.5em;\n  height: 0.5em;\n  -webkit-animation-name: bounce-pulse;\n          animation-name: bounce-pulse;\n  -webkit-animation-duration: inherit;\n          animation-duration: inherit;\n  -webkit-animation-timing-function: ease-in-out;\n          animation-timing-function: ease-in-out;\n  -webkit-animation-iteration-count: infinite;\n          animation-iteration-count: infinite; }\n  .rai-bounce > div:last-child {\n    margin-right: 0; }\n\n@-webkit-keyframes windill-pulse {\n  0% {\n    transform: rotate(0deg); }\n  99% {\n    transform: rotate(356deg); } }\n\n@keyframes windill-pulse {\n  0% {\n    transform: rotate(0deg); }\n  99% {\n    transform: rotate(356deg); } }\n.rai-windill {\n  width: 1em;\n  height: 1em;\n  position: relative; }\n  .rai-windill > div {\n    border-radius: 0.125em;\n    position: absolute;\n    top: 0;\n    left: 50%;\n    margin-left: -0.0625em;\n    width: 0.125em;\n    height: 100%;\n    -webkit-animation-name: windill-pulse;\n            animation-name: windill-pulse;\n    -webkit-animation-duration: inherit;\n            animation-duration: inherit;\n    -webkit-animation-timing-function: linear;\n            animation-timing-function: linear;\n    -webkit-animation-iteration-count: infinite;\n            animation-iteration-count: infinite; }\n", ""]);
+exports.push([module.i, "@keyframes dots-pulse {\n  0% {\n    opacity: 0.1; }\n  15% {\n    opacity: 1; }\n  100% {\n    opacity: 0.1; } }\n.rai-dots .rai-circle {\n  border-radius: 100%;\n  display: inline-block;\n  margin-right: 0.1875em;\n  background-color: #727981;\n  width: 0.5em;\n  height: 0.5em;\n  animation-name: dots-pulse;\n  animation-duration: inherit;\n  animation-timing-function: ease-in-out;\n  animation-iteration-count: infinite; }\n  .rai-dots .rai-circle:last-child {\n    margin-right: 0; }\n\n@keyframes levels-pulse {\n  0% {\n    height: 30%;\n    opacity: 0.5; }\n  20% {\n    height: 100%;\n    opacity: 1; }\n  35% {\n    height: 30%;\n    opacity: 0.5; }\n  55% {\n    height: 100%;\n    opacity: 1; }\n  70% {\n    height: 50%;\n    opacity: 0.5; }\n  80% {\n    height: 100%;\n    opacity: 1; }\n  100% {\n    height: 30%;\n    opacity: 0.5; } }\n.rai-levels .rai-levels-container {\n  text-align: left;\n  display: inline-block;\n  height: 1em;\n  line-height: 1em;\n  animation-duration: inherit; }\n.rai-levels .rai-bar {\n  bottom: 0;\n  display: inline-block;\n  vertical-align: bottom;\n  width: 0.25em;\n  background: #727981;\n  margin-right: 0.125em;\n  height: 50%;\n  animation-name: levels-pulse;\n  animation-duration: inherit;\n  animation-timing-function: ease-in-out;\n  animation-iteration-count: infinite; }\n  .rai-levels .rai-bar:last-child {\n    margin-right: 0; }\n\n@keyframes rai-sentry-pulse {\n  from {\n    transform: scale(0);\n    opacity: 1; }\n  to {\n    transform: scale(1);\n    opacity: 0; } }\n.rai-sentry {\n  text-align: left;\n  display: inline-block;\n  position: relative;\n  width: 2em;\n  height: 2em; }\n  .rai-sentry .rai-wave-container {\n    display: inline-flex;\n    align-items: center;\n    justify-content: center;\n    width: 100%;\n    height: 100%;\n    position: absolute;\n    animation-duration: inherit; }\n  .rai-sentry .rai-wave {\n    display: inline-block;\n    border: 0.125em solid #727981;\n    border-radius: 100%;\n    box-sizing: border-box;\n    width: 100%;\n    height: 100%;\n    animation-name: rai-sentry-pulse;\n    animation-duration: inherit;\n    animation-timing-function: linear;\n    animation-iteration-count: infinite; }\n\n@keyframes rai-spinner {\n  from {\n    transform: rotate(0deg); }\n  to {\n    transform: rotate(360deg); } }\n.rai-spinner {\n  width: 1.5em;\n  height: 1.5em;\n  position: relative;\n  margin: 0; }\n  .rai-spinner-inner, .rai-spinner-outer {\n    position: absolute;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    border-radius: 100%;\n    margin-left: -0.0625em;\n    margin-top: -0.0625em; }\n  .rai-spinner-outer {\n    border: 0.125em solid #727981;\n    opacity: 0.2; }\n  .rai-spinner-inner {\n    position: absolute;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    border-radius: 100%;\n    border-top: 0.125em solid #727981;\n    border-right: 0.125em solid transparent !important;\n    border-bottom: 0.125em solid transparent !important;\n    border-left: 0.125em solid transparent !important;\n    animation-name: rai-spinner;\n    animation-iteration-count: infinite;\n    animation-timing-function: linear;\n    animation-duration: inherit; }\n\n@keyframes dots-pulse {\n  0% {\n    opacity: 0.1; }\n  15% {\n    opacity: 1; }\n  100% {\n    opacity: 0.1; } }\n.rai-squares .rai-square {\n  display: inline-block;\n  margin-right: 0.1875em;\n  background-color: #727981;\n  width: 0.5em;\n  height: 0.5em;\n  animation-name: dots-pulse;\n  animation-duration: inherit;\n  animation-timing-function: ease-in-out;\n  animation-iteration-count: infinite; }\n  .rai-squares .rai-square:last-child {\n    margin-right: 0; }\n\n@keyframes digital-pulse {\n  0%, 40%, 100% {\n    transform: scaleY(0.4); }\n  20% {\n    transform: scaleY(1); } }\n.rai-digital {\n  height: 1em;\n  text-align: center; }\n  .rai-digital > div {\n    display: inline-block;\n    margin-right: 0.125em;\n    background-color: #727981;\n    width: 0.25em;\n    height: 100%;\n    animation-name: digital-pulse;\n    animation-duration: inherit;\n    animation-timing-function: ease-in-out;\n    animation-iteration-count: infinite; }\n    .rai-digital > div:last-child {\n      margin-right: 0; }\n\n@keyframes bounce-pulse {\n  0% {\n    transform: translateY(0.1875em); }\n  30% {\n    transform: translateY(-0.25em); }\n  50% {\n    transform: translateY(3); } }\n.rai-bounce > div {\n  transform: translateY(0.1875em);\n  border-radius: 100%;\n  display: inline-block;\n  margin-right: 0.1875em;\n  background-color: #727981;\n  width: 0.5em;\n  height: 0.5em;\n  animation-name: bounce-pulse;\n  animation-duration: inherit;\n  animation-timing-function: ease-in-out;\n  animation-iteration-count: infinite; }\n  .rai-bounce > div:last-child {\n    margin-right: 0; }\n\n@keyframes windill-pulse {\n  0% {\n    transform: rotate(0deg); }\n  99% {\n    transform: rotate(356deg); } }\n.rai-windill {\n  width: 1em;\n  height: 1em;\n  position: relative; }\n  .rai-windill > div {\n    border-radius: 0.125em;\n    position: absolute;\n    top: 0;\n    left: 50%;\n    margin-left: -0.0625em;\n    width: 0.125em;\n    height: 100%;\n    animation-name: windill-pulse;\n    animation-duration: inherit;\n    animation-timing-function: linear;\n    animation-iteration-count: infinite; }\n", ""]);
 
 // exports
 
@@ -26462,7 +26462,7 @@ module.exports = ReactPropTypesSecret;
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(/*! !../../css-loader??ref--7-1!../../postcss-loader/src??ref--7-2!./react-activity.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/react-activity/dist/react-activity.css");
+var content = __webpack_require__(/*! !../../css-loader??ref--6-1!../../postcss-loader/src??ref--6-2!./react-activity.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/react-activity/dist/react-activity.css");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -57906,6 +57906,38 @@ var ShowTask = /*#__PURE__*/function (_Component) {
             },
             allowClear: true
           });
+          var due_to_input = $("input[name='due_to']");
+          $('#task-due-to').persianDatepicker({
+            format: 'dddd D MMMM YYYY، HH:mm',
+            viewMode: 'day',
+            onSelect: function onSelect(unix) {
+              due_to_input.val(unix / 1000);
+            },
+            toolbox: {
+              calendarSwitch: {
+                enabled: true,
+                format: 'YYYY'
+              }
+            },
+            calendar: {
+              gregorian: {
+                locale: 'en'
+              },
+              persian: {
+                locale: 'fa'
+              }
+            },
+            minDate: new persianDate().valueOf(),
+            timePicker: {
+              enabled: true,
+              second: {
+                enabled: false
+              },
+              meridiem: {
+                enabled: true
+              }
+            }
+          });
         } else {
           var _this$props = _this.props,
               edit_task_api = _this$props.edit_task_api,
@@ -58004,7 +58036,8 @@ var ShowTask = /*#__PURE__*/function (_Component) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
             key: i,
             value: user.id,
-            img_address: APP_PATH + user.avatar_pic
+            img_address: APP_PATH + user.avatar_pic,
+            is_admin: user.pivot.is_admin
           }, user.fullname);
         }
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -58035,7 +58068,13 @@ var ShowTask = /*#__PURE__*/function (_Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "input-group-text"
       }, "\u0645\u0648\u0639\u062F \u062A\u062D\u0648\u06CC\u0644")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        defaultValue: moment_jalaali__WEBPACK_IMPORTED_MODULE_2___default()(task.due_to).format("jYYYY/jMM/jDD HH:mm")
+        type: "hidden",
+        id: "new-task-due-to",
+        name: "due_to"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        id: "task-due-to",
+        className: "form-control"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "input-group col-12 col-md-4 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -58664,7 +58703,7 @@ if (target) {
 /*!*********************************!*\
   !*** ./resources/js/select2.js ***!
   \*********************************/
-/*! exports provided: formatOptionWithIcon, formatOptionWithImage, formatOption */
+/*! exports provided: formatOptionWithIcon, formatOptionWithImage, formatOption, simpleSearch */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -58672,6 +58711,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "formatOptionWithIcon", function() { return formatOptionWithIcon; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "formatOptionWithImage", function() { return formatOptionWithImage; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "formatOption", function() { return formatOption; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "simpleSearch", function() { return simpleSearch; });
 var formatOptionWithIcon = function formatOptionWithIcon(option) {
   if (option.element) {
     var icon_name = option.element.attributes.icon_name.nodeValue;
@@ -58704,8 +58744,8 @@ $('#new-task-priority, #tasks_order_select, #tasks_order_by_select, #tasks_relat
   }
 });
 $('.select2-search__field').css('width', '100%');
-
 var simpleSearch = function simpleSearch(ids, parentOnly) {
+  var workspaceId = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : $("#new-demand-project-select").val();
   $(ids).select2({
     templateResult: formatOption,
     templateSelection: function templateSelection(data, container) {
@@ -58722,7 +58762,7 @@ var simpleSearch = function simpleSearch(ids, parentOnly) {
       data: function data(params) {
         return {
           q: params.term,
-          workspace: $("#new-demand-project-select").val(),
+          workspace: workspaceId,
           parentOnly: parentOnly
         };
       },
@@ -58748,7 +58788,6 @@ var simpleSearch = function simpleSearch(ids, parentOnly) {
     allowClear: true
   });
 };
-
 simpleSearch('#task-select', false);
 simpleSearch("#parent-task-select", true);
 
@@ -58778,7 +58817,7 @@ renderWithImg("#new-task-project-select", "پروژه مربوطه را انتخ
 
 /***/ }),
 
-/***/ 2:
+/***/ 3:
 /*!******************************************!*\
   !*** multi ./resources/js/react/task.js ***!
   \******************************************/
