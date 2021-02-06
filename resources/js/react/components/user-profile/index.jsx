@@ -392,15 +392,43 @@ export default class UserProfile extends Component {
                             </div>
                         </div>
                     </div>
-                    <div className="small-chart-sections-container col-12">
-                        <div className="col-12 col-md-6 text-center bg-light">
-                            <div className="col-12 col-md-6 offset-md-3">
+                    <div className="small-chart-sections-container col-12 p-0">
+                        <div className="text-center bg-light">
+                            <div className="chart-title-section title-section col-12 p-2">
+                                <i className="fas fa-chart-line"></i>
+                                <h5>اتمام به موقع مسئولیت های</h5>
+                            </div>
+                            <div className="col-12 col-md-6 offset-md-3 vertical-centerlize">
                                 <CircularProgressbar value={43} text={`43%`} />
                             </div>
                         </div>
-                        <div className="col-12 col-md-6 bg-light">
-                            <div className="col-12 p-3 mt-3 mb-4">
+                        <div className="bg-light">
+                            <div className="chart-title-section title-section col-12 p-2">
+                                <i className="fas fa-chart-bar"></i>
+                                <h5>تسک های ساخته شده</h5>
+                            </div>
+                            <div className="col-12 p-3 mt-3 mb-4 vertical-centerlize">
                                 <canvas id="myChart2" aria-label="Hello ARIA World" role="img"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="small-chart-sections-container col-12 p-0">
+                        <div className="text-center bg-light">
+                            <div className="chart-title-section title-section col-12 p-2">
+                                <i className="fas fa-chart-pie"></i>
+                                <h5>پیشرفت در سرعت</h5>
+                            </div>
+                            <div className="col-12 col-md-6 offset-md-3 vertical-centerlize">
+                                <CircularProgressbar value={43} text={`43%`} />
+                            </div>
+                        </div>
+                        <div className="bg-light">
+                            <div className="chart-title-section title-section col-12 p-2">
+                                <i className="fas fa-chart-area"></i>
+                                <h5>حجم مسئولیت ها</h5>
+                            </div>
+                            <div className="col-12 p-3 mt-3 mb-4 vertical-centerlize">
+                                <canvas id="myChart3" aria-label="Hello ARIA World" role="img"></canvas>
                             </div>
                         </div>
                     </div>

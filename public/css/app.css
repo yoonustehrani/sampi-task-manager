@@ -11460,20 +11460,6 @@ div.statistics-section div.wide-section-statistics {
   box-shadow: 0px 2px 5px 2px rgba(156, 156, 156, 0.1);
 }
 
-div.statistics-section div.wide-section-statistics div.chart-title-section {
-  border-bottom: 1px solid #D7DDE8;
-  align-items: center !important;
-}
-
-div.statistics-section div.wide-section-statistics div.chart-title-section h5 {
-  font-size: 22px;
-}
-
-div.statistics-section div.wide-section-statistics div.chart-title-section i {
-  font-size: 30px;
-  color: #3A6073;
-}
-
 div.statistics-section div.wide-section-statistics div.wide-section-charts {
   display: flex;
   justify-content: space-between;
@@ -11486,12 +11472,32 @@ div.statistics-section div.wide-section-statistics div.wide-section-charts div.w
   border-right: 1px solid #D7DDE8;
 }
 
+div.chart-title-section {
+  border-bottom: 1px solid #D7DDE8;
+  align-items: center !important;
+}
+
+div.chart-title-section h5 {
+  font-size: 22px;
+}
+
+div.chart-title-section i {
+  font-size: 30px;
+  color: #3A6073;
+}
+
 div.small-chart-sections-container {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
+  height: 270px;
+}
+
+div.small-chart-sections-container > div {
+  width: 49%;
+  height: 95%;
 }
 
 div.select-option-big {

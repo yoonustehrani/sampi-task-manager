@@ -85,6 +85,7 @@
     <script>
         let ctx = document.getElementById('myChart');
         let chart2 = document.getElementById('myChart2')
+        let chart3 = document.getElementById('myChart3')
         {{-- let data = {{ $month_task->__toString() }}; --}}
         let data = [
             {
@@ -193,6 +194,76 @@
             }
         });
         var myLineChart = new Chart(chart2, {
+            type: 'line',
+            data: {
+                {{-- // labels: {!! $month_name->__toString() !!}, --}}
+                labels: [startDate, endDate],
+                datasets: [
+                    {
+                        label: 'وظایف',
+                        // showLine: false,
+                        lineTension: 0,
+                        data: data,
+                        // fill: false,
+                        borderColor: 'red',
+                        borderWidth: 1,
+                        backgroundColor: 'rgba(255,0,0,0.2)',
+                    }
+                ]
+            },
+            options: {
+                tooltips: {
+                    mode: 'index',
+                    intersect: false,
+                    titleFontFamily: 'Iransans',
+                    bodyFontFamily: 'Iransans'
+                },
+                legend: {
+                    labels: {
+                        fontFamily: 'Iransans'
+                    }
+                },
+                scales: {
+                    xAxes: [
+                        {
+                            ticks: {
+                                source: 'labels',
+                                fontFamily: 'Iransans'
+                            },
+                            distribution: 'series',
+                            type: 'time',
+                            time: {
+                                round: true,
+                                unit: 'day',
+                                minUnit: 'day',
+                                tooltipFormat: 'dddd، DD MMMM jYYYY',
+                                displayFormats: {
+                                    'day': 'YYYY-MM-DD',
+                                },
+                            }
+                        }
+                    ],
+                    yAxes: [{
+                        stacked: false,
+                        ticks: {
+                            beginAtZero: true,
+                            fontFamily: 'Iransans'
+                        }
+                    }]
+                },
+                elements: {
+                    // point: {
+                    //     pointBackgroundColor: '',
+                    //     pointBorderColor: '',
+                    //     pointBorderWidth: '',
+                    // },
+                    // lines: {
+                    //     backgroundColor: 'red',
+                    // }
+                }
+            }
+        });
+        var myLineChart = new Chart(chart3, {
             type: 'line',
             data: {
                 {{-- // labels: {!! $month_name->__toString() !!}, --}}

@@ -56039,20 +56039,53 @@ var UserProfile = /*#__PURE__*/function (_Component) {
         value: 74,
         text: "74%"
       })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "small-chart-sections-container col-12"
+        className: "small-chart-sections-container col-12 p-0"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-12 col-md-6 text-center bg-light"
+        className: "text-center bg-light"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-12 col-md-6 offset-md-3"
+        className: "chart-title-section title-section col-12 p-2"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-chart-line"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, "\u0627\u062A\u0645\u0627\u0645 \u0628\u0647 \u0645\u0648\u0642\u0639 \u0645\u0633\u0626\u0648\u0644\u06CC\u062A \u0647\u0627\u06CC")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-12 col-md-6 offset-md-3 vertical-centerlize"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_circular_progressbar__WEBPACK_IMPORTED_MODULE_6__["CircularProgressbar"], {
         value: 43,
         text: "43%"
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-12 col-md-6 bg-light"
+        className: "bg-light"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-12 p-3 mt-3 mb-4"
+        className: "chart-title-section title-section col-12 p-2"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-chart-bar"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, "\u062A\u0633\u06A9 \u0647\u0627\u06CC \u0633\u0627\u062E\u062A\u0647 \u0634\u062F\u0647")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-12 p-3 mt-3 mb-4 vertical-centerlize"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("canvas", {
         id: "myChart2",
+        "aria-label": "Hello ARIA World",
+        role: "img"
+      })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "small-chart-sections-container col-12 p-0"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "text-center bg-light"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "chart-title-section title-section col-12 p-2"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-chart-pie"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, "\u067E\u06CC\u0634\u0631\u0641\u062A \u062F\u0631 \u0633\u0631\u0639\u062A")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-12 col-md-6 offset-md-3 vertical-centerlize"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_circular_progressbar__WEBPACK_IMPORTED_MODULE_6__["CircularProgressbar"], {
+        value: 43,
+        text: "43%"
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "bg-light"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "chart-title-section title-section col-12 p-2"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-chart-area"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, "\u062D\u062C\u0645 \u0645\u0633\u0626\u0648\u0644\u06CC\u062A \u0647\u0627")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-12 p-3 mt-3 mb-4 vertical-centerlize"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("canvas", {
+        id: "myChart3",
         "aria-label": "Hello ARIA World",
         role: "img"
       }))))));
