@@ -328,72 +328,73 @@ export default class MixedTasks extends Component {
                             </tr>
                         </thead>
                         <tbody>
-                            {tasks && tasks.data.length > 0 && tasks.data.map((task, i) => {
-                                let { title, priority_id, due_to, finished_at, id, users, workspace, group, workspace_id } = task
-                                return (
-                                    <tr key={i} className="animated fadeIn" onClick={() => redirectTo(getTask(id))}>
-                                        <th scope="row">{i + 1}</th>
-                                        <td>{ title }</td>
-                                        <td className="text-right">
-                                            <img className="workspace_avatar" src={APP_PATH + workspaces[workspace_id].avatar_pic} />
-                                            <a href={getWorkspace(workspace_id)}>{workspaces[workspace_id].title}</a>
-                                        </td>
-                                        <td>{ group }</td>
-                                        <td>
-                                            <div className="employees-container horizontal-centerlize">
-                                                {
-                                                    users.length === 0 &&
-                                                        <i className="fas fa-user-slash"></i>
-                                                }
-                                                {
-                                                    users.length === 1 &&
-                                                        <span>{ users.length }<i className="fas fa-user mr-2"></i></span>
-                                                }
-                                                {
-                                                    users.length > 1 &&
-                                                        <span>{ users.length }<i className="fas fa-users mr-2"></i></span>
-                                                }
-                                                <div className="dropdown-users d-none" onClick={(e) => e.stopPropagation()}>
-                                                {
-                                                    users.length >= 1 &&
-                                                        users.map((user, i) => (
-                                                            <div key={i} className="user-dropdown-item animated jackInTheBox">
-                                                                <div className="user-right-flex">
-                                                                    <div className="user-img-container ml-2">
-                                                                        <img src={user.avatar_pic !== null ? APP_PATH + user.avatar_pic : APP_PATH + 'images/male-avatar.svg'} />
-                                                                    </div>
-                                                                    <div className="user-info ml-2">
-                                                                        <p>{ user.fullname }</p>
-                                                                        <a href={"#user"}>@{user.name}</a>
-                                                                    </div>
+                        {tasks && tasks.data.length > 0 && tasks.data.map((task, i) => {
+                            let { title, priority_id, due_to, finished_at, id, users, workspace, group, workspace_id } = task
+                            return (
+                                <tr key={i} className="animated fadeIn" onClick={() => redirectTo(getTask(id))}>
+                                    <th scope="row">{i + 1}</th>
+                                    <td>{ title }</td>
+                                        { workspaces &&
+                                            <td className="text-right">
+                                                <img className="workspace_avatar" src={APP_PATH + workspaces[workspace_id].avatar_pic} />
+                                                <a href={getWorkspace(workspace_id)}>{workspaces[workspace_id].title}</a>
+                                            </td>
+                                        }
+                                    <td>{ group }</td>
+                                    <td>
+                                        <div className="employees-container horizontal-centerlize">
+                                            {
+                                                users.length === 0 &&
+                                                    <i className="fas fa-user-slash"></i>
+                                            }
+                                            {
+                                                users.length === 1 &&
+                                                    <span>{ users.length }<i className="fas fa-user mr-2"></i></span>
+                                            }
+                                            {
+                                                users.length > 1 &&
+                                                    <span>{ users.length }<i className="fas fa-users mr-2"></i></span>
+                                            }
+                                            <div className="dropdown-users d-none" onClick={(e) => e.stopPropagation()}>
+                                            {
+                                                users.length >= 1 &&
+                                                    users.map((user, i) => (
+                                                        <div key={i} className="user-dropdown-item animated jackInTheBox">
+                                                            <div className="user-right-flex">
+                                                                <div className="user-img-container ml-2">
+                                                                    <img src={user.avatar_pic !== null ? APP_PATH + user.avatar_pic : APP_PATH + 'images/male-avatar.svg'} />
                                                                 </div>
-                                                                <div className="user-label-container">
-                                                                        {
-                                                                        workspaces_users && workspaces_users[workspace_id][user.id].is_admin === 1 
-                                                                            ? <button className="btn btn-sm btn-success rtl admin"><span>ادمین<i className="fas fa-user-tie mr-1"></i></span></button>
-                                                                            : <button className="btn btn-sm btn-primary rtl"><span>عضو<i className="fas fa-user mr-1"></i></span></button>
-                                                                        } 
+                                                                <div className="user-info ml-2">
+                                                                    <p>{ user.fullname }</p>
+                                                                    <a href={"#user"}>@{user.name}</a>
                                                                 </div>
                                                             </div>
-                                                        ))
-                                                }
-                                                </div>
+                                                            <div className="user-label-container">
+                                                                    {
+                                                                    workspaces_users && workspaces_users[workspace_id][user.id].is_admin === 1 
+                                                                        ? <button className="btn btn-sm btn-success rtl admin"><span>ادمین<i className="fas fa-user-tie mr-1"></i></span></button>
+                                                                        : <button className="btn btn-sm btn-primary rtl"><span>عضو<i className="fas fa-user mr-1"></i></span></button>
+                                                                    } 
+                                                            </div>
+                                                        </div>
+                                                    ))
+                                            }
                                             </div>
-                                        </td>
-                                        <td>{ setPriority(priority_id) }</td>
-                                        <td>
-                                            {due_to !== null ? moment(due_to).fromNow() : <i className="fas fa-calendar-minus  fa-3x"></i>}
-                                        </td>
-                                        <td>
-                                            {finished_at === null ? <i className="fas fa-times-circle fa-3x"></i> : <i className="fas fa-check-circle fa-3x"></i>}
-                                        </td>
-                                        <td>
-                                            {finished_at === null ? <i className="fas fa-calendar-times fa-3x"></i> : moment(finished_at).fromNow()}
-                                        </td>
-                                    </tr>
-                                )
-                            })
-                            }
+                                        </div>
+                                    </td>
+                                    <td>{ setPriority(priority_id) }</td>
+                                    <td>
+                                        {due_to !== null ? moment(due_to).fromNow() : <i className="fas fa-calendar-minus  fa-3x"></i>}
+                                    </td>
+                                    <td>
+                                        {finished_at === null ? <i className="fas fa-times-circle fa-3x"></i> : <i className="fas fa-check-circle fa-3x"></i>}
+                                    </td>
+                                    <td>
+                                        {finished_at === null ? <i className="fas fa-calendar-times fa-3x"></i> : moment(finished_at).fromNow()}
+                                    </td>
+                                </tr>
+                            )
+                        })}
                         </tbody>
                     </table> 
                     {
