@@ -13,7 +13,7 @@
             </h4>
         </div>
         <div class="workspace-sub-info float-right col-12">
-            <span><i class="far fa-user-circle ml-1 animated heartBeat delay-2s"></i><span class="number ml-1">{{ $workspace->tasks_count }}</span>مسئولیت</span>
+            <span><i class="fas fa-tasks ml-1 animated heartBeat delay-2s"></i><span class="number ml-1">{{ $workspace->tasks_count }}</span>مسئولیت</span>
             <span><i class="fas fa-thumbtack ml-1 animated heartBeat delay-2s"></i><span class="number ml-1">{{ $workspace->tasks_count - $workspace->finished_tasks_count }}</span>مسئولیت جاری</span>
             <span><i class="far fa-check-square ml-1 animated heartBeat delay-2s"></i><span class="number ml-1">{{ $workspace->finished_tasks_count }}</span>مسئولیت انجام شده</span>
             <a style="direction: rtl;" href="{{ route('task-manager.demands.index', ['workspace' => $workspace->id]) }}">
