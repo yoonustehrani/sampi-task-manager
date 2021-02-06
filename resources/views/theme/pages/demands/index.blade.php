@@ -22,10 +22,10 @@
 @endsection
 
 @push('scripts')
-    <script src="{{ asset('js/demands.js') }}"></script>
-    <script src="{{ asset('js/select2.js') }}"></script>
     <script>
         const CAN_VIEW_AS_ADMIN = {{ \Gate::allows('update', $workspace) ? 'true' : 'false' }};
         var VIEW_AS_ADMIN       = {{ request()->view_as_admin == 'true' ? 'true' : 'false' }}; 
     </script>
+    <script src="{{ asset('js/select2.js') }}"></script>
+    <script src="{{ asset('js/demands.js') }}"></script>
 @endpush
