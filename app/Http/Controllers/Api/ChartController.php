@@ -57,7 +57,7 @@ class ChartController extends Controller
             $target_days[$date]['created'] = $created_count;
             $target_days[$date]['finished'] = $finished_count;
             $percentage = ($finished_count == 0 && $created_count == 0) ? 0 : round($finished_count / $created_count, 3) * 100;
-            $target_days[$date]['percentage'] = round($percentage, 2);
+            $target_days[$date]['percentage'] = round($percentage, 2) > 100 ? 100 : round($percentage, 2);
         }
         return $target_days;
     }
@@ -98,7 +98,7 @@ class ChartController extends Controller
             $target_days[$date]['created'] = $created_count;
             $target_days[$date]['ontime'] = $ontime_count;
             $percentage = ($ontime_count == 0 && $created_count == 0) ? 0 : round($ontime_count / $created_count, 3) * 100;
-            $target_days[$date]['percentage'] = round($percentage, 2);
+            $target_days[$date]['percentage'] = round($percentage, 2) > 100 ? 100 : round($percentage, 2);
         }
         return $target_days;
     }
