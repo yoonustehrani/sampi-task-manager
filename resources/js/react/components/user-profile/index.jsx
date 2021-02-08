@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import Axios from 'axios'
 import { getDemand, getTask, getUser, getWorkspace, redirectTo } from '../../../helpers'
-import moment from 'moment'
-moment.locale('fa')
+import moment from 'moment-jalaali'
 import { Sentry } from 'react-activity'
 import 'react-activity/lib/Sentry/Sentry.css'
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
+import MonthlyChart from './Charts/MonthlyChart'
 
 export default class UserProfile extends Component {
     constructor(props) {
@@ -32,7 +32,18 @@ export default class UserProfile extends Component {
             workspaces: [],
             navbar: navbar,
             mixed_demands: [],
-            mixed_needs: []
+            mixed_needs: [],
+            charts: [
+                {
+                    title: 'تکمیل مسئولیت ها',
+                    data: null
+                },
+                {
+                    title: 'تکمیل به موقع مسئولیت ها',
+                    data: null
+                },
+                null,
+            ]
         }
     }
     
@@ -116,7 +127,28 @@ export default class UserProfile extends Component {
     }
 
     componentDidMount() {
-        let { workspace_counter, task_counter, demand_counter, workspacesApi, workspace_route } = this.props
+        let { workspace_counter, task_counter, demand_counter, workspacesApi, workspace_route, chart_one, chart_two, chart_three } = this.props
+        let fromdate  = moment().locale('en').subtract(31, 'day').format('YYYY-M-D');
+        let todate = moment().locale('en').add(1, 'day').format('YYYY-M-D');
+        [chart_one, chart_two].map((chart_url, i) => {
+            chart_url += `&start_date=${fromdate}&end_date=${todate}`;
+            Axios.get(chart_url).then(res => {
+                let data = res.data;
+                this.setState(prevState => {
+                    let prevCharts = prevState.charts;
+                    prevCharts[i].data = data;
+                    return {
+                        chart: prevCharts
+                    }
+                });
+            })
+        })
+        // let fromdate  = moment().subtract(31, 'day').format('YYYY-M-D');
+        // let todate = moment().add(1, 'day').format('YYYY-M-D');
+        // Axios.get(chart_three).then(res => {
+        //     let { data } = res.data;
+            
+        // })
         let statisticApis = [workspace_counter, task_counter, demand_counter], statistics = {}
         this.setState({
             isGetting: true
@@ -177,7 +209,7 @@ export default class UserProfile extends Component {
     }
 
     render() {
-        let { mixed_tasks, statistics, isGetting, workspaces, navbar, mixed_demands, mixed_needs, workspaces_users } = this.state
+        let { mixed_tasks, statistics, isGetting, workspaces, navbar, mixed_demands, mixed_needs, workspaces_users, charts } = this.state
         let { workspace_route, task_route, demand_show_route, user_profile_route } = this.props
         return (
             <div>
@@ -185,11 +217,11 @@ export default class UserProfile extends Component {
                     <div className="user-card pt-4 pb-2">
                         <div className="user-info-section text-center">
                             <div className="user-img-container">
-                                <img src={APP_PATH + "images/danial.jpg"} alt=""/>
+                                <img src={APP_PATH + (TargetUser.profile_pic ? TargetUser.profile_pic : 'images/male-avatar.svg')} alt=""/>
                             </div>
                             <div className="user-text-info-container">
-                                <h5 className="d-block mt-3">دانیال طهرانیم</h5>
-                                <h6 className="float-right">danialtehrani@</h6>
+                                <h5 className="d-block mt-3">{TargetUser.fullname}</h5>
+                                <h6 className="float-right">@{TargetUser.name}</h6>
                                 <h6 className="mr-1 float-right">مدیر بخش مالی</h6>
                             </div>
                             <hr/>
@@ -384,11 +416,11 @@ export default class UserProfile extends Component {
                         <div className="col-12 wide-section-charts">
                             <div className="col-12 col-md-9 wide-chart">
                                 <div className="col-12 p-3 mt-3 mb-4">
-                                    <canvas id="myChart" aria-label="Hello ARIA World" role="img"></canvas>
+                                    <MonthlyChart Data={charts[0].data} Title={charts[0].title} id={1}/>
                                 </div>                            
                             </div>
                             <div className="col-12 col-md-3">
-                                <CircularProgressbar value={74} text={`74%`} />
+                                {/* <CircularProgressbar value={74} text={`74%`} /> */}
                             </div>
                         </div>
                     </div>
@@ -399,16 +431,16 @@ export default class UserProfile extends Component {
                                 <h5>اتمام به موقع مسئولیت های</h5>
                             </div>
                             <div className="col-12 col-md-6 offset-md-3 vertical-centerlize">
-                                <CircularProgressbar value={43} text={`43%`} />
+                                {/* <CircularProgressbar value={43} text={`43%`} /> */}
                             </div>
                         </div>
                         <div className="bg-light">
                             <div className="chart-title-section title-section col-12 p-2">
                                 <i className="fas fa-chart-bar"></i>
-                                <h5>تسک های ساخته شده</h5>
+                                <h5>مسئولیت های ساخته شده</h5>
                             </div>
                             <div className="col-12 p-3 mt-3 mb-4 vertical-centerlize">
-                                <canvas id="myChart2" aria-label="Hello ARIA World" role="img"></canvas>
+                                <MonthlyChart Data={charts[1].data} Title={charts[1].title} id={2}/>
                             </div>
                         </div>
                     </div>
@@ -419,7 +451,7 @@ export default class UserProfile extends Component {
                                 <h5>پیشرفت در سرعت</h5>
                             </div>
                             <div className="col-12 col-md-6 offset-md-3 vertical-centerlize">
-                                <CircularProgressbar value={43} text={`43%`} />
+                                {/* <CircularProgressbar value={43} text={`43%`} /> */}
                             </div>
                         </div>
                         <div className="bg-light">

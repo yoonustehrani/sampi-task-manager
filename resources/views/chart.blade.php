@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
 <body>
+    <p>
+        {{ route('api.task-manager.chart.tasks', ['type' => 'completed']) }}
+    </p>
     <div class="col-md-6 float-left p-3">
         <canvas id="myChart" aria-label="Hello ARIA World" role="img"></canvas>
     </div>
@@ -15,84 +18,27 @@
     <script src="{{ asset('js/chart.js') }}"></script>
     <script>
         let ctx = document.getElementById('myChart');
+        {{-- let data = {{ $month_task->__toString() }}; --}}
         let data = [
+            @foreach($task_days as $task_day)
             {
-                y: 1,
-                t: moment("2021-01-1")
+                y: {{ rand(0,100) }},
+                t: moment("{{ $task_day->date->format('Y-m-d') }}").format("jYYYY-jMM-jDD")
             },
-            {
-                y: 1,
-                t: moment("2021-01-2")
-            },
-            {
-                y: 2,
-                t: moment("2021-01-3")
-            },
-            {
-                y: 3,
-                t: moment("2021-01-4")
-            },
-            {
-                y: 2,
-                t: moment("2021-01-5")
-            },
-            {
-                y: 2,
-                t: moment("2021-01-6")
-            },
-            {
-                y: 6,
-                t: moment("2021-01-8")
-            },
-            {
-                y: 1,
-                t: moment("2021-01-9")
-            }
-            // {
-            //     t: moment('2021-01-02'),
-            //     y: 0
-            // },
-            // {
-            //     t: moment('2021-01-03'),
-            //     y: 100
-            // },
-            // {
-            //     t: moment('2021-01-05'),
-            //     y: 100
-            // },
-            // {
-            //     t: moment('2021-01-06'),
-            //     y: 100
-            // },
-            // {
-            //     t: moment('2021-01-12'),
-            //     y: 50
-            // },
-            // {
-            //     t: moment('2021-01-14'),
-            //     y: 60
-            // },
-            // {
-            //     t: moment('2021-01-16'),
-            //     y: 40
-            // },
-            // {
-            //     t: moment('2021-01-17'),
-            //     y: 100
-            // },
-            // {
-            //     t: moment('2021-01-18'),
-            //     y: 100
-            // }
+            @endforeach
         ];
+        // var startDate = moment('2020-12-21').format('jYYYY-jMM-jDD');
+        // var endDate = moment('2021-01-20').format('jYYYY-jMM-jDD');
         var myLineChart = new Chart(ctx, {
             type: 'line',
             data: {
+                {{-- // labels: {!! $month_name->__toString() !!}, --}}
+                // labels: [startDate, endDate],
                 datasets: [
                     {
                         label: 'وظایف',
                         // showLine: false,
-                        // lineTension: 0,
+                        lineTension: 0.5,
                         data: data,
                         // fill: false,
                         borderColor: 'red',
@@ -117,7 +63,7 @@
                     xAxes: [
                         {
                             ticks: {
-                                source: 'data',
+                                source: 'auto',
                                 fontFamily: 'Iransans'
                             },
                             distribution: 'series',
@@ -126,9 +72,9 @@
                                 round: true,
                                 unit: 'day',
                                 minUnit: 'day',
-                                tooltipFormat: 'dddd، DD MMMM YYYY',
+                                tooltipFormat: 'dddd، DD MMMM jYYYY',
                                 displayFormats: {
-                                    'day': 'YYYY-MM-DD'
+                                    'day': 'YYYY-MM-DD',
                                 },
                             }
                         }
@@ -137,7 +83,9 @@
                         stacked: false,
                         ticks: {
                             beginAtZero: true,
-                            fontFamily: 'Iransans'
+                            fontFamily: 'Iransans',
+                            suggestedMin: 0,
+                            suggestedMax: 100,
                         }
                     }]
                 },

@@ -50,6 +50,9 @@ Route::group(['prefix' => 'task-manager', 'as' => 'api.task-manager.'], function
             Route::get('tasks', $api_controllers . 'CounterController@tasks')->name('tasks');
             Route::get('demands', $api_controllers . 'CounterController@demands')->name('demands');
         });
+        Route::group(['prefix' => 'chart', 'as' => 'chart.'], function () use($api_controllers) {
+            Route::get('tasks/{type}', $api_controllers . 'ChartController@tasks')->name('tasks');
+        });
     });
 });
 
