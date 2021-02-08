@@ -4,10 +4,10 @@
             <a href="{{ route('task-manager.') }}">داشبورد <i class="fas fa-tachometer-alt"></i></a>
         </li>
         <li>
-            <a href="{{ route('task-manager.tasks.index') }}">مسئولیت ها <i class="fas fa-briefcase"></i></a>
+            <a href="{{ route('task-manager.workspaces.index') }}">پروژه ها <i class="fas fa-project-diagram"></i></a>
         </li>
         <li>
-            <a href="{{ route('task-manager.workspaces.index') }}">پروژه ها <i class="fas fa-briefcase"></i></a>
+            <a href="{{ route('task-manager.tasks.index') }}">مسئولیت ها <i class="fas fa-briefcase"></i></a>
         </li>
         <li>
             <a href="{{ route('task-manager.demands.mixed', ['tab' => 'asked_demands']) }}">درخواست ها <i class="fas fa-arrow-down"></i><i class="fas fa-list"></i></a>

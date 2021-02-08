@@ -17,6 +17,7 @@ export default class MixedDemands extends Component {
         this.filterBoxRefs = []
         this.addIconRef = React.createRef()
         this.addDemandRef = React.createRef()
+        this.adminViewRef = React.createRef()
         for (let index = 0; index < 3; index++) {
             this.tabTitlesRefs.push(React.createRef())
             this.tabResultsRefs.push(React.createRef())
@@ -70,7 +71,7 @@ export default class MixedDemands extends Component {
     }
 
     getData = (filtering=false) => {            
-        let { get_mixed_demands_api, mixed_demands_search } = this.props, { current_tab, already_added_needs, api_target, viewing_as_admin } = this.state
+        let { get_mixed_demands_api, mixed_demands_search } = this.props, { current_tab, already_added_needs, api_target, viewing_as_admin, target_user_id } = this.state
         let order_by = $(`#mixed_${current_tab}_order_by_select`).val(), order = $(`#mixed_${current_tab}_order_select`).val(), filter = $(`#mixed_${current_tab}_relation_select`).val(), search_value = $(`#${current_tab}-search-input`).val()
         this.setState(prevState => {
             if (filtering && search_value.length >= 3) {
@@ -87,7 +88,7 @@ export default class MixedDemands extends Component {
                 return({isGetting: true})
             }
         }, () => {
-            axios.get(`${this.state.api_target === "mixed" ? get_mixed_demands_api : mixed_demands_search}${current_tab === "demands" ? "&relationship=asked" : ""}&order_by=${order_by ? order_by : "created_at"}&order=${order ? order : "desc"}&filter=${filter ? filter : "all"}&page=${this.state[current_tab].nextPage}${viewing_as_admin ? "&view_as_admin=true" : ""}${this.state.api_target === "search" ? `&q=${search_value}` : ""}`).then(res => {
+            axios.get(`${this.state.api_target === "mixed" ? get_mixed_demands_api : mixed_demands_search}${current_tab === "demands" ? "&relationship=asked" : ""}&order_by=${order_by ? order_by : "created_at"}&order=${order ? order : "desc"}&filter=${filter ? filter : "all"}&page=${this.state[current_tab].nextPage}${viewing_as_admin ? "&view_as_admin=true" : ""}${target_user_id && current_tab !== "all" ? `&user_id=${target_user_id}` : ""}${this.state.api_target === "search" ? `&q=${search_value}` : ""}`).then(res => {
                 let { data, current_page, last_page } = res.data
                 let filteredArray = data.filter((item) => already_added_needs && typeof already_added_needs[item.id] === "undefined")
                 this.setState(prevState => {
@@ -173,6 +174,7 @@ export default class MixedDemands extends Component {
 
     setViewAsAdmin = () => {
         let { viewing_as_admin } = this.state, { get_all_users } = this.props
+        this.adminViewRef.current.classList.toggle("d-none")
         if (! viewing_as_admin) {
             axios.get(`${get_all_users}&view_as_admin=true`).then(res => {
                 let { data } = res
@@ -247,22 +249,33 @@ export default class MixedDemands extends Component {
             $("#new-demand-project-select").on("select2:select", function () {
                 setSelectValue("#task-select", null)
                 setWorkspaceId()
-            })            
+            })     
         })
+        renderWithImg("#select-user-target", "کاربر مورد نظر را انتخاب کنید", false)    
+        const setTargetUser = () => {
+            let id = $("#select-user-target").val()
+            this.setState({
+                target_user_id: id
+            }, () => {
+                this.setState({[this.state.current_tab]: {data: [], nextPage: 1, hasMore: true}}, () => this.getData())
+            })
+        }
+        $("#select-user-target").on("select2:select", () => {
+            setTargetUser()
+        }) 
     }
 
     render() {
         let { demands, needs, isGetting, already_added_needs, workspaces, workspaces_users, selected_workspace, current_tab, viewing_as_admin, allUsers, all } = this.state, { logged_in_user_id, demand_show_route } = this.props
-        renderWithImg("#select-user-target", "کاربر مورد نظر را انتخاب کنید", false)
         return (
             <div>
-                <div className="form-check col-12 text-right">
-                    <input className="form-check-input c-p" type="checkbox" value={viewing_as_admin} id="flexCheckDefault" onChange={this.setViewAsAdmin} />
-                    <label className="form-check-label c-p" htmlFor="flexCheckDefault">
-                        مشاهده به عنوان ادمین
-                    </label>
-                    {viewing_as_admin &&
-                        <div className="add-task-section rtl mt-2 mb-4">
+                {CAN_VIEW_AS_ADMIN &&
+                    <div className="form-check col-12 text-right">
+                        <input className="form-check-input c-p" type="checkbox" value={viewing_as_admin} id="flexCheckDefault" onChange={this.setViewAsAdmin} />
+                        <label className="form-check-label c-p" htmlFor="flexCheckDefault">
+                            مشاهده به عنوان ادمین
+                        </label>
+                        <div className="add-task-section rtl mt-2 mb-4 animated slideInLeft d-none" ref={this.adminViewRef}>
                             <div className="input-group col-12 col-md-4 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line-all">
                                 <div className="input-group-prepend">
                                     <span className="input-group-text">مخاطب</span>
@@ -279,22 +292,21 @@ export default class MixedDemands extends Component {
                                 </select>
                             </div>
                         </div>
-                    }
-                </div>
-
+                    </div>
+                }
                 <nav className="demands-tabs-titles col-12 mt-2">
-                    <a className={"demand-tab-title-small-arrow " + `${current_tab === "demands" ? "active" : ""}`} ref={this.tabTitlesRefs[0]} onClick={this.changeTab.bind(this, 0)}>
-                        <i className="fas fa-arrow-circle-down animated tada delay-1s"></i>
+                    <a className={"demand-tab-title-small-arrow animated fadeIn " + `${current_tab === "demands" ? "active" : ""}`} ref={this.tabTitlesRefs[0]} onClick={this.changeTab.bind(this, 0)}>
+                        <i className="fas fa-arrow-circle-down"></i>
                         <span>درخواست</span>
                     </a>
-                    <a className={"demand-tab-title-small-arrow " + `${current_tab === "needs" ? "active" : ""}`} ref={this.tabTitlesRefs[1]} onClick={this.changeTab.bind(this, 1)}>
-                        <i className="fas fa-arrow-circle-up animated tada delay-1s"></i>
+                    <a className={"demand-tab-title-small-arrow animated fadeIn " + `${current_tab === "needs" ? "active" : ""}`} ref={this.tabTitlesRefs[1]} onClick={this.changeTab.bind(this, 1)}>
+                        <i className="fas fa-arrow-circle-up"></i>
                         <span>نیاز</span>
                     </a>
                     {
                         viewing_as_admin
-                        ?   <a className={"demand-tab-title-small-arrow " + `${current_tab === "all" ? "active" : ""}`} ref={this.tabTitlesRefs[2]} onClick={this.changeTab.bind(this, 2)}>
-                                <i className="fas fa-border-all animated tada delay-1s"></i>
+                        ?   <a className={"demand-tab-title-small-arrow animated fadeIn " + `${current_tab === "all" ? "active" : ""}`} ref={this.tabTitlesRefs[2]} onClick={this.changeTab.bind(this, 2)}>
+                                <i className="fas fa-border-all"></i>
                                 <span>همه</span>
                             </a>
                         :   null
