@@ -420,7 +420,7 @@ export default class UserProfile extends Component {
                                 </div>                            
                             </div>
                             <div className="col-12 col-md-3">
-                                {/* <CircularProgressbar value={74} text={`74%`} /> */}
+                                <CircularProgressbar value={0} text={`0%`} />
                             </div>
                         </div>
                     </div>
@@ -431,7 +431,7 @@ export default class UserProfile extends Component {
                                 <h5>اتمام به موقع مسئولیت های</h5>
                             </div>
                             <div className="col-12 col-md-6 offset-md-3 vertical-centerlize">
-                                {/* <CircularProgressbar value={43} text={`43%`} /> */}
+                                <CircularProgressbar value={0} text={`0%`} />
                             </div>
                         </div>
                         <div className="bg-light">
@@ -451,7 +451,7 @@ export default class UserProfile extends Component {
                                 <h5>پیشرفت در سرعت</h5>
                             </div>
                             <div className="col-12 col-md-6 offset-md-3 vertical-centerlize">
-                                {/* <CircularProgressbar value={43} text={`43%`} /> */}
+                                <CircularProgressbar value={0} text={`0%`} />
                             </div>
                         </div>
                         <div className="bg-light">

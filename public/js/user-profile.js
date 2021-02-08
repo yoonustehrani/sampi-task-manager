@@ -73502,7 +73502,10 @@ var UserProfile = /*#__PURE__*/function (_Component) {
         id: 1
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-12 col-md-3"
-      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_circular_progressbar__WEBPACK_IMPORTED_MODULE_6__["CircularProgressbar"], {
+        value: 0,
+        text: "0%"
+      })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "small-chart-sections-container col-12 p-0"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "text-center bg-light"
@@ -73512,7 +73515,10 @@ var UserProfile = /*#__PURE__*/function (_Component) {
         className: "fas fa-chart-line"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, "\u0627\u062A\u0645\u0627\u0645 \u0628\u0647 \u0645\u0648\u0642\u0639 \u0645\u0633\u0626\u0648\u0644\u06CC\u062A \u0647\u0627\u06CC")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-12 col-md-6 offset-md-3 vertical-centerlize"
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_circular_progressbar__WEBPACK_IMPORTED_MODULE_6__["CircularProgressbar"], {
+        value: 0,
+        text: "0%"
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "bg-light"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "chart-title-section title-section col-12 p-2"
@@ -73534,7 +73540,10 @@ var UserProfile = /*#__PURE__*/function (_Component) {
         className: "fas fa-chart-pie"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, "\u067E\u06CC\u0634\u0631\u0641\u062A \u062F\u0631 \u0633\u0631\u0639\u062A")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-12 col-md-6 offset-md-3 vertical-centerlize"
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_circular_progressbar__WEBPACK_IMPORTED_MODULE_6__["CircularProgressbar"], {
+        value: 0,
+        text: "0%"
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "bg-light"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "chart-title-section title-section col-12 p-2"
