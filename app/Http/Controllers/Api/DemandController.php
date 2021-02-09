@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Demand;
 use App\DemandMessage;
+use App\Events\DemandCreated;
+use App\Events\DemandMessageCreated;
 use App\User;
 use App\Workspace;
 use Illuminate\Http\Request;
@@ -142,6 +144,9 @@ class DemandController extends BaseController
                 $demand->messages()->create($message->toArray());
             }
             \DB::commit();
+            $demand['from'] = $user;
+            $demand['to'] = $target_user;
+            event(new DemandCreated($demand));
             $demand['task'] = $task ? $task->toArray() : null;
             return $demand;
         } catch (\Exception $e){
@@ -209,6 +214,8 @@ class DemandController extends BaseController
         $message->user_id = $request->user()->id;
         $message = $demand->messages()->save($message);
         $message['user'] = $request->user();
+        $demand->load('from', 'to');
+        event(new DemandMessageCreated($demand, $message));
         return $message;
     }
     public function messages(Demand $demand)

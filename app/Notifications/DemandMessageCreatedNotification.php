@@ -8,20 +8,22 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class DemandCreatedNotification extends Notification
+class DemandMessageCreatedNotification extends Notification
 {
     use Queueable;
     public $via;
     public $demand;
+    public $message;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($via, $demand)
+    public function __construct($via, $demand, $message)
     {
         $this->via = $via;
         $this->demand = $demand;
+        $this->message = $message;
     }
 
     /**
@@ -48,36 +50,29 @@ class DemandCreatedNotification extends Notification
                     ->action('Notification Action', url('/'))
                     ->line('Thank you for using our application!');
     }
-
+    
     public function toTelegram($notifiable)
     {
         $chat_id = $notifiable->telegram_chat_id;
         $demand = $this->demand;
-        $workspace_url = "http://ourobot.ir/task-manager/workspaces/{$demand->workspace->id}";
-        $demand_url = "http://ourobot.ir/task-manager/workspaces/{$demand->workspace->id}/demands/{$demand->id}";    
+        $message = $this->message;
+        $demand_url = "http://ourobot.ir/task-manager/workspaces/{$demand->workspace_id}/demands/{$demand->id}";    
         $from = "";
-        if ($demand->from) {
-            $from .= "درخواست دهنده : ";
-            if ($demand->from->telegram_chat_id) {
-                $from .= "<a href=\"tg://user?id={$demand->from->telegram_chat_id}\">{$demand->from->fullname}</a>\n";
+        if ($message->user) {
+            if ($message->user->telegram_chat_id) {
+                $from .= "<a href=\"tg://user?id={$message->user->telegram_chat_id}\">{$message->user->fullname}</a>\n";
             } else {
-                $from .= "{$demand->from->fullname}\n";
+                $from .= "{$message->user->fullname}\n";
             }
         }
         $text = "
-{$notifiable->fullname} عزیز
-درخواستی جدید با عنوان <b>{$demand->title}</b> در پروژه <a href=\"{$workspace_url}\">{$demand->workspace->title}</a> در سیستم مدیریت پروژه Sampi ایجاد شده است.
-{$from}
+پیام جدید از سوی {$from} برای درخواست <b>{$demand->title}</b> ارسال شده است.
 Sampi Task Manager (http://ourobot.ir)";
         $tg = new TelegramBot(config('services.telegram.task_manager.bot_token'));
         $keyboard = [
             'inline_keyboard' => [[
                 [
-                    'text' => 'مشاهده پروژه ' . $demand->workspace->title,
-                    'url' => $workspace_url
-                ],
-                [
-                    'text' => 'مشاهده درخواست',
+                    'text' => 'مشاهده',
                     'url' => $demand_url
                 ], 
             ]],

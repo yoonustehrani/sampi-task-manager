@@ -12,19 +12,19 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class DemandCreated
+class DemandMessageCreated
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
     public $demand;
+    public $message;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(Demand $demand)
+    public function __construct(Demand $demand, DemandMessage $message)
     {
         $this->demand = $demand;
+        $this->message = $message;
     }
-
-
 }

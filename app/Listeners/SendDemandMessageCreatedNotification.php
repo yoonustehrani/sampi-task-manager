@@ -3,11 +3,11 @@
 namespace App\Listeners;
 
 use App\Broadcasting\TelegramChannel;
-use App\Notifications\DemandCreatedNotification;
+use App\Notifications\DemandMessageCreatedNotification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
-class SendDemandCreatedNotification
+class SendDemandMessageCreatedNotification
 {
     /**
      * Create the event listener.
@@ -27,9 +27,11 @@ class SendDemandCreatedNotification
      */
     public function handle($event)
     {
-        $user = $event->demand->to;
-        if ($user->telegram_chat_id) {
-            $user->notifyNow(new DemandCreatedNotification([TelegramChannel::class], $event->demand));
+        $users = [$event->demand->to, $event->demand->from];
+        foreach($users as $user) {
+            if ($user->telegram_chat_id && ($event->message->user_id != $user->id)) {
+                $user->notifyNow(new DemandMessageCreatedNotification([TelegramChannel::class], $event->demand, $event->message));
+            }
         }
     }
 }
