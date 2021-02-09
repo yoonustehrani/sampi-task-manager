@@ -31,9 +31,11 @@ class TaskController extends BaseController
             }
         }
         $relationship = $this->model_relationship($request->relationship, $model, '_tasks', 'tasks');
-        $user_tasks = $model->{$relationship}();
         if ($model instanceof User) {
-            $user_tasks = $model->{$relationship}()->where('workspace_id', $workspace);
+            $workspaceId = ($workspace instanceof Workspace) ? $workspace->id : $workspace;
+            $user_tasks = $model->{$relationship}()->where('workspace_id', $workspaceId);
+        } else {
+            $user_tasks = $model->{$relationship}();
         }
         $user_tasks = $user_tasks->whereNull('parent_id')->with('users')->withCount('demands', 'children');
         // $group = $request->group ?: $this->default_group;

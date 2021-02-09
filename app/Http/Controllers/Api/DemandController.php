@@ -25,7 +25,10 @@ class DemandController extends BaseController
         if ($model instanceof User) {
             $relationship = $this->model_relationship($request->relationship, $model, '_demands', 'demands');
             $with = $relationship == 'demands' ? 'to' : 'from';
-            $user_demands = $model->{$relationship}()->where('workspace_id', $workspace)->with($with, 'task', 'priority:id,title');
+            $workspaceId = ($workspace instanceof Workspace) ? $workspace->id : $workspace;
+            $user_demands = $model->{$relationship}()->where('workspace_id', $workspaceId)->with($with, 'task', 'priority:id,title');
+        } else {
+            $user_demands = $model->with('from', 'to', 'task', 'priority:id,title');
         }
         switch ($request->filter) {
             case 'finished':
