@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -56473,7 +56473,7 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
           };
         }
       }, function () {
-        axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("".concat(_this.state.api_target === "mixed" ? get_mixed_tasks_api : mixed_tasks_search, "&order_by=").concat(order_by ? order_by : "created_at", "&order=").concat(order ? order : "desc", "&relationship=").concat(relationship ? relationship : "all").concat(viewing_as_admin ? "&view_as_admin=true" : "").concat(viewing_as_admin && target_user_id && target_user_id !== 0 ? "&user_id=".concat(target_user_id) : "", "&page=").concat(_this.state.tasks.nextPage).concat(_this.state.api_target === "search" ? "&q=".concat(search_value) : "")).then(function (res) {
+        axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("".concat(_this.state.api_target === "mixed" ? get_mixed_tasks_api : mixed_tasks_search, "&order_by=").concat(order_by ? order_by : "created_at", "&order=").concat(order ? order : "desc", "&relationship=").concat(relationship ? relationship : "all").concat(viewing_as_admin ? "&view_as_admin=true" : "").concat(viewing_as_admin && target_user_id && target_user_id !== "0" ? "&user_id=".concat(target_user_id) : "", "&page=").concat(_this.state.tasks.nextPage).concat(_this.state.api_target === "search" ? "&q=".concat(search_value) : "")).then(function (res) {
           var _res$data = res.data,
               data = _res$data.data,
               current_page = _res$data.current_page,
@@ -57411,7 +57411,7 @@ renderWithImg("#new-task-project-select", "پروژه مربوطه را انتخ
 
 /***/ }),
 
-/***/ 3:
+/***/ 4:
 /*!************************************************!*\
   !*** multi ./resources/js/react/mixedTasks.js ***!
   \************************************************/

@@ -310,10 +310,9 @@ export default class MixedDemands extends Component {
                         <i className="fas fa-arrow-circle-up"></i>
                         <span>نیاز</span>
                     </a>
-                    {
-                        viewing_as_admin
+                    {viewing_as_admin
                         ?   <a className={"demand-tab-title-small-arrow animated fadeIn " + `${current_tab === "all" ? "active" : ""}`} ref={this.tabTitlesRefs[2]} onClick={this.changeTab.bind(this, 2)}>
-                                <i className="fas fa-border-all"></i>
+                                <i className="fas fa-retweet"></i>
                                 <span>همه</span>
                             </a>
                         :   null

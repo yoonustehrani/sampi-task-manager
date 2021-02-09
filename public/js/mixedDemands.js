@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -56916,7 +56916,7 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
         ref: this.tabTitlesRefs[2],
         onClick: this.changeTab.bind(this, 2)
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-border-all"
+        className: "fas fa-retweet"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0647\u0645\u0647")) : null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-12 mt-4 float-right demand-tab-result pr-0 pl-0 pr-md-3 pl-md-3 " + "".concat(current_tab === "demands" ? "active" : ""),
         ref: this.tabResultsRefs[0]
@@ -57841,7 +57841,7 @@ renderWithImg("#new-task-project-select", "پروژه مربوطه را انتخ
 
 /***/ }),
 
-/***/ 2:
+/***/ 3:
 /*!**************************************************!*\
   !*** multi ./resources/js/react/mixedDemands.js ***!
   \**************************************************/

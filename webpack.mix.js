@@ -39,10 +39,10 @@ var { res, pub } = src
     // .react(res.react + "task.js", pub.js)
     // .js(res.js + "select2.js", pub.js)
     // .react(res.react + 'dashboard.js', pub.js)
-    // mix.react(res.react + 'workspace.js', pub.js)
+    mix.react(res.react + 'workspace.js', pub.js)
     // .js(res.js + "datepicker.js", pub.js)
     // .js(res.js + "select2.js", pub.js)
-    mix.react(res.react + "user-profile.js", pub.js)
+    .react(res.react + "user-profile.js", pub.js)
     .react(res.react + "task.js", pub.js)
 
     // mix.react(res.react + "demands.js", pub.js)

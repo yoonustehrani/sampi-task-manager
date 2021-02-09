@@ -78,6 +78,7 @@
             add_task_api = "{{ route('api.task-manager.tasks.store', ['workspace' => $workspace->id, 'api_token' => auth()->user()->api_token]) }}"
             task_route = "{{ route('task-manager.tasks.show', ['task' => 'taskId']) }}"
             workspace_api = "{{ route('api.task-manager.workspaces.show', ['workspace' => $workspace->id, 'api_token' => auth()->user()->api_token]) }}"
+            get-all-users="{{ route('api.task-manager.users.index', ['api_token' => auth()->user()->api_token]) }}"
         ></div>
     </div>
 @endsection

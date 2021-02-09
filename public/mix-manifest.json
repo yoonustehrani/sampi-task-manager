@@ -2,5 +2,6 @@
     "/js/mixedDemands.js": "/js/mixedDemands.js",
     "/js/mixedTasks.js": "/js/mixedTasks.js",
     "/js/task.js": "/js/task.js",
-    "/js/user-profile.js": "/js/user-profile.js"
+    "/js/user-profile.js": "/js/user-profile.js",
+    "/js/workspace.js": "/js/workspace.js"
 }

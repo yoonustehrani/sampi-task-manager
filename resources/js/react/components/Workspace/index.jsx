@@ -6,7 +6,7 @@ moment.locale('fa')
 import { Squares } from 'react-activity'
 import 'react-activity/dist/react-activity.css'
 import { setPriority, redirectTo } from '../../../helpers'
-import { simpleSearch } from '../../../select2'
+import { simpleSearch, renderWithImg } from '../../../select2'
 import Task from './Task'
 
 export default class Workspace extends Component {
@@ -14,6 +14,7 @@ export default class Workspace extends Component {
         super(props)
         this.addTaskRef = React.createRef()
         this.addIconRef = React.createRef()
+        this.adminViewRef = React.createRef()
         this.state = {
             new_task_description: "",
             isGetting: true,
@@ -21,6 +22,8 @@ export default class Workspace extends Component {
                 data: [],
                 nextPage: 1,
                 hasMore: true,
+                viewing_as_admin: false,
+                target_user_id: null
             },
             already_added_tasks: {}
         }
@@ -40,10 +43,10 @@ export default class Workspace extends Component {
 
     handleMore = (table, filtering) => {
         let { list_tasks_api } = this.props
-        let { tasks, already_added_tasks } = this.state
+        let { tasks, already_added_tasks, viewing_as_admin, target_user_id } = this.state
         let tasks_order_by = $('#tasks_order_by_select').val(), tasks_order = $('#tasks_order_select').val(), tasks_relation = $('#tasks_relation_select').val()
         const getList = (table) => {            
-            Axios.get(`${eval("list_" + table + "_api")}&order_by=${eval(table + "_order_by")}&order=${eval(table + "_order")}&relationship=${eval(table + "_relation")}&page=${this.state[table].nextPage}`).then(res => {
+            Axios.get(`${eval("list_" + table + "_api")}&order_by=${eval(table + "_order_by")}&order=${eval(table + "_order")}&relationship=${eval(table + "_relation")}${viewing_as_admin ? "&view_as_admin=true" : ""}${viewing_as_admin && target_user_id && target_user_id !== "0" ? `&user_id=${target_user_id}` : ""}&page=${this.state[table].nextPage}`).then(res => {
                 let { data, current_page, last_page } = res.data
                 let filteredArray = data.filter((item) => already_added_tasks && typeof already_added_tasks[item.id] === "undefined")
                 this.setState(prevState => {
@@ -80,24 +83,31 @@ export default class Workspace extends Component {
             due_to: due_to ? due_to : null,
             parent_id: parent_id
         }).then(res => {
-            this.setState(prevState => {
-                let new_task_users = users.map((userId, i) => {
-                    return ({
-                        id: userId,
-                        fullname: workspace_users[userId].fullname,
-                        name: workspace_users[userId].name,
-                    })
-                })
-                new_task_users.unshift({id: CurrentUser.id, fullname: workspace_users[CurrentUser.id].fullname, name: workspace_users[CurrentUser.id].name})
-                return ({
-                    tasks: Object.assign({}, prevState.tasks, {
-                        data: [{...res.data, users: new_task_users, finished_at: null, finisher_id: null}, ...prevState.tasks.data]
-                    }),
-                    already_added_tasks: Object.assign({}, prevState.already_added_tasks, {
-                        [res.data.id]: res.data.id
-                    })
-                })
+            let { data } = res
+            let usersObj = {}
+            data.users.map((user, i) => {
+                usersObj[user.id] = user.id
             })
+            if (typeof usersObj[target_user_id] !== "undefined" || !viewing_as_admin || target_user_id === 0) {
+                this.setState(prevState => {
+                    let new_task_users = users.map((userId, i) => {
+                        return ({
+                            id: userId,
+                            fullname: workspace_users[userId].fullname,
+                            name: workspace_users[userId].name,
+                        })
+                    })
+                    new_task_users.unshift({id: CurrentUser.id, fullname: workspace_users[CurrentUser.id].fullname, name: workspace_users[CurrentUser.id].name})
+                    return ({
+                        tasks: Object.assign({}, prevState.tasks, {
+                            data: [{...res.data, users: new_task_users, finished_at: null, finisher_id: null}, ...prevState.tasks.data]
+                        }),
+                        already_added_tasks: Object.assign({}, prevState.already_added_tasks, {
+                            [res.data.id]: res.data.id
+                        })
+                    })
+                })
+            }
             Swal.default.fire({
                 icon: 'success',
                 title: "موفقیت",
@@ -125,6 +135,25 @@ export default class Workspace extends Component {
                 })
             }
         })
+    }
+
+    setViewAsAdmin = () => {
+        let { viewing_as_admin } = this.state, { get_all_users } = this.props
+        this.adminViewRef.current.classList.toggle("d-none")
+        if (! viewing_as_admin) {
+            axios.get(`${get_all_users}&view_as_admin=true`).then(res => {
+                let { data } = res
+                this.setState({
+                    allUsers: data
+                })
+            })
+        } else {
+            $("#select-user-target").val(null).change()
+                this.setState({tasks: {data: [], nextPage: 1, hasMore: true}, already_added_tasks: {}}, () => this.handleMore("tasks", false))
+        }
+        this.setState(prevState => ({
+            viewing_as_admin: !prevState.viewing_as_admin 
+        }))
     }
 
     componentDidMount() {     
@@ -158,10 +187,23 @@ export default class Workspace extends Component {
                 })
             })
         })
+        renderWithImg("#select-user-target", "کاربر مورد نظر را انتخاب کنید", false)    
+        const setTargetUser = () => {
+            let id = $("#select-user-target").val()
+            this.setState({
+                target_user_id: id,
+                already_added_tasks: {}
+            }, () => {
+                this.setState({tasks: {data: [], nextPage: 1, hasMore: true}}, () => this.handleMore("tasks", false))
+            })
+        }
+        $("#select-user-target").on("select2:select", () => {
+            setTargetUser()
+        })
     }
     
     render() {
-        let { isGetting, tasks, workspace_users, workspace } = this.state
+        let { isGetting, tasks, workspace_users, workspace, viewing_as_admin, allUsers } = this.state
         let { taskRoute } = this.props
         return (
             <div>
@@ -169,7 +211,33 @@ export default class Workspace extends Component {
                     <div className="workspace-title-section title-section col-12">
                         <i className="fas fa-clipboard-list"></i>
                         <h4 className="">وظایف :</h4>      
-                    </div>  
+                    </div>
+                    {CAN_VIEW_AS_ADMIN &&
+                        <div className="form-check col-12 text-right float-right">
+                            <input className="form-check-input c-p" type="checkbox" value={viewing_as_admin} id="flexCheckDefault" onChange={this.setViewAsAdmin} />
+                            <label className="form-check-label c-p" htmlFor="flexCheckDefault">
+                                مشاهده به عنوان ادمین
+                            </label>
+                            <div className="add-task-section rtl mt-2 animated slideInLeft d-none" ref={this.adminViewRef}>
+                                <div className="input-group col-12 col-md-4 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line-all">
+                                    <div className="input-group-prepend">
+                                        <span className="input-group-text">مخاطب</span>
+                                    </div>
+                                    <select id="select-user-target" className="form-control text-right">
+                                        <option></option>
+                                        <option value="0" img_address={APP_PATH + "images/check-all.svg"}>همه</option>
+                                        { allUsers ? allUsers.map((user, i) => {
+                                            if (user.id !== CurrentUser.id) {
+                                                return (
+                                                    <option key={i} value={user.id} img_address={user.avatar_pic !== null ? APP_PATH + user.avatar_pic : APP_PATH + 'images/male-avatar.svg'}>{user.fullname}</option>
+                                                )                                            
+                                            }
+                                        }) : null }
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    }  
                     <div className="workspace-add-task mb-2 col-12 pl-0 pr-0 pr-md-3 pl-md-3">
                         <div className="workspace-title-section title-section" onClick={this.toggleAddBox}>
                             <i className="fas fa-plus" ref={this.addIconRef}></i>
