@@ -56682,7 +56682,9 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "setViewAsAdmin", function () {
-      var viewing_as_admin = _this.state.viewing_as_admin,
+      var _this$state3 = _this.state,
+          viewing_as_admin = _this$state3.viewing_as_admin,
+          current_tab = _this$state3.current_tab,
           get_all_users = _this.props.get_all_users;
 
       _this.adminViewRef.current.classList.toggle("d-none");
@@ -56698,13 +56700,17 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
       } else {
         $("#select-user-target").val(null).change();
 
-        _this.setState(_defineProperty({}, _this.state.current_tab, {
-          data: [],
-          nextPage: 1,
-          hasMore: true
-        }), function () {
-          return _this.getData();
-        });
+        if (current_tab === "all") {
+          _this.changeTab(1);
+        } else {
+          _this.setState(_defineProperty({}, current_tab, {
+            data: [],
+            nextPage: 1,
+            hasMore: true
+          }), function () {
+            return _this.getData();
+          });
+        }
       }
 
       _this.setState(function (prevState) {
@@ -56845,18 +56851,18 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this$state3 = this.state,
-          demands = _this$state3.demands,
-          needs = _this$state3.needs,
-          isGetting = _this$state3.isGetting,
-          already_added_needs = _this$state3.already_added_needs,
-          workspaces = _this$state3.workspaces,
-          workspaces_users = _this$state3.workspaces_users,
-          selected_workspace = _this$state3.selected_workspace,
-          current_tab = _this$state3.current_tab,
-          viewing_as_admin = _this$state3.viewing_as_admin,
-          allUsers = _this$state3.allUsers,
-          all = _this$state3.all,
+      var _this$state4 = this.state,
+          demands = _this$state4.demands,
+          needs = _this$state4.needs,
+          isGetting = _this$state4.isGetting,
+          already_added_needs = _this$state4.already_added_needs,
+          workspaces = _this$state4.workspaces,
+          workspaces_users = _this$state4.workspaces_users,
+          selected_workspace = _this$state4.selected_workspace,
+          current_tab = _this$state4.current_tab,
+          viewing_as_admin = _this$state4.viewing_as_admin,
+          allUsers = _this$state4.allUsers,
+          all = _this$state4.all,
           _this$props2 = this.props,
           logged_in_user_id = _this$props2.logged_in_user_id,
           demand_show_route = _this$props2.demand_show_route;

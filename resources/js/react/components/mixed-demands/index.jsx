@@ -173,7 +173,7 @@ export default class MixedDemands extends Component {
     }
 
     setViewAsAdmin = () => {
-        let { viewing_as_admin } = this.state, { get_all_users } = this.props
+        let { viewing_as_admin, current_tab } = this.state, { get_all_users } = this.props
         this.adminViewRef.current.classList.toggle("d-none")
         if (! viewing_as_admin) {
             axios.get(`${get_all_users}&view_as_admin=true`).then(res => {
@@ -184,7 +184,11 @@ export default class MixedDemands extends Component {
             })
         } else {
             $("#select-user-target").val(null).change()
-            this.setState({[this.state.current_tab]: {data: [], nextPage: 1, hasMore: true}}, () => this.getData())
+            if (current_tab === "all") {
+                this.changeTab(1)
+            } else {
+                this.setState({[current_tab]: {data: [], nextPage: 1, hasMore: true}}, () => this.getData())
+            }
         }
         this.setState(prevState => ({
             viewing_as_admin: !prevState.viewing_as_admin 
