@@ -56633,7 +56633,9 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
       var post_demand_api = _this.props.post_demand_api,
           _this$state2 = _this.state,
           new_demand_description = _this$state2.new_demand_description,
-          workspaces_users = _this$state2.workspaces_users;
+          workspaces_users = _this$state2.workspaces_users,
+          viewing_as_admin = _this$state2.viewing_as_admin,
+          target_user_id = _this$state2.target_user_id;
       var title = $("#new-demand-title").val(),
           priority = parseInt($("#new-task-priority").val()),
           toUser = $("#new-demand-member").val(),
@@ -56648,25 +56650,27 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
       }).then(function (res) {
         var data = res.data;
 
-        _this.setState(function (prevState) {
-          return {
-            needs: Object.assign(prevState.needs, {
-              data: [_objectSpread(_objectSpread({}, data), {}, {
-                priority: {
-                  title: Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["setPriority"])(data.priority_id)
-                },
-                to: {
-                  id: data.to_id,
-                  fullname: workspaces_users[data.workspace_id][data.to_id].fullname,
-                  avatar_pic: workspaces_users[data.workspace_id][data.to_id].avatar_pic,
-                  name: workspaces_users[data.workspace_id][data.to_id].name
-                },
-                finished_at: null
-              })].concat(_toConsumableArray(prevState.needs.data))
-            }),
-            already_added_needs: Object.assign({}, prevState.already_added_needs, _defineProperty({}, data.id, data.id))
-          };
-        });
+        if (target_user_id === null) {
+          _this.setState(function (prevState) {
+            return {
+              needs: Object.assign(prevState.needs, {
+                data: [_objectSpread(_objectSpread({}, data), {}, {
+                  priority: {
+                    title: Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["setPriority"])(data.priority_id)
+                  },
+                  to: {
+                    id: data.to_id,
+                    fullname: workspaces_users[data.workspace_id][data.to_id].fullname,
+                    avatar_pic: workspaces_users[data.workspace_id][data.to_id].avatar_pic,
+                    name: workspaces_users[data.workspace_id][data.to_id].name
+                  },
+                  finished_at: null
+                })].concat(_toConsumableArray(prevState.needs.data))
+              }),
+              already_added_needs: Object.assign({}, prevState.already_added_needs, _defineProperty({}, data.id, data.id))
+            };
+          });
+        }
 
         Swal["default"].fire({
           icon: 'success',
@@ -56742,7 +56746,8 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
       new_demand_description: "",
       already_added_needs: {},
       api_target: 'mixed',
-      viewing_as_admin: false
+      viewing_as_admin: false,
+      target_user_id: null
     };
     return _this;
   }

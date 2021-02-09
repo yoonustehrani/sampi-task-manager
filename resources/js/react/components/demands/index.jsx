@@ -5,7 +5,7 @@ moment.locale('fa')
 import axios from 'axios'
 import 'react-activity/dist/react-activity.css'
 import TinymcEditor from '../tinymce-editor/index'
-import { setPriority, redirectTo, sweetError } from '../../../helpers'
+import { setPriority, redirectTo, sweetError, getUser, getTask, getDemand, getWorkspace } from '../../../helpers'
 import { simpleSearch, renderWithImg } from '../../../select2'
 
 export default class Demands extends Component {
@@ -105,7 +105,7 @@ export default class Demands extends Component {
     }
 
     addDemand = () => {
-        let { post_new_ticket_api } = this.props, { new_demand_description, workspace_users } = this.state
+        let { post_new_ticket_api } = this.props, { new_demand_description, workspace_users, target_user_id } = this.state
         let title = $("#new-demand-title").val(), priority = parseInt($("#new-task-priority").val()), toUser = $("#new-demand-member").val(), related_task = $("#related-task-select").val() === "0" ? "" : $("#related-task-select").val()
         axios.post(post_new_ticket_api, {
             title: title,
@@ -115,25 +115,27 @@ export default class Demands extends Component {
             text: new_demand_description 
         }).then(res => {
             let { data } = res
-            this.setState(prevState => {
-                return ({
-                    needs: Object.assign(prevState.needs, {
-                        data: [
-                            {
-                                ...data, 
-                                priority: {title: setPriority(data.priority_id)}, 
-                                to: {id: data.to_id, fullname: workspace_users[data.to_id].fullname, avatar_pic: workspace_users[data.to_id].avatar_pic}, 
-                                task: data.task,
-                                finished_at: null
-                            }, 
-                            ...prevState.needs.data
-                        ],
-                    }),
-                    already_added_needs: Object.assign({}, prevState.already_added_needs, {
-                        [data.id]: data.id
+            if (target_user_id === null) {
+                this.setState(prevState => {
+                    return ({
+                        needs: Object.assign(prevState.needs, {
+                            data: [
+                                {
+                                    ...data, 
+                                    priority: {title: setPriority(data.priority_id)}, 
+                                    to: {id: data.to.id, fullname: data.to.fullname, avatar_pic: data.to.avatar_pic, name: data.to.name}, 
+                                    task: data.task,
+                                    finished_at: null
+                                }, 
+                                ...prevState.needs.data
+                            ],
+                        }),
+                        already_added_needs: Object.assign({}, prevState.already_added_needs, {
+                            [data.id]: data.id
+                        })
                     })
-                })
-            })
+                })   
+            }
             Swal.default.fire({
                 icon: 'success',
                 title: "موفقیت",
@@ -590,7 +592,7 @@ export default class Demands extends Component {
                                                         </div>
                                                         <div className="user-label-container">
                                                             {
-                                                                workspaces_users && workspaces_users[workspace_id][from.id].is_admin === 1 
+                                                                workspace_users && workspace_users[from.id].is_admin === 1 
                                                                 ? <button className="btn btn-sm btn-success rtl admin p-1"><span>ادمین<i className="fas fa-user-tie mr-1"></i></span></button>
                                                                 : <button className="btn btn-sm btn-primary rtl"><span>عضو<i className="fas fa-user mr-1"></i></span></button>
                                                             } 
@@ -615,7 +617,7 @@ export default class Demands extends Component {
                                                         </div>
                                                         <div className="user-label-container">
                                                             {
-                                                                workspaces_users && workspaces_users[workspace_id][to.id].is_admin === 1 
+                                                                workspace_users && workspace_users[to.id].is_admin === 1 
                                                                 ? <button className="btn btn-sm btn-success rtl admin p-1"><span>ادمین<i className="fas fa-user-tie mr-1"></i></span></button>
                                                                 : <button className="btn btn-sm btn-primary rtl"><span>عضو<i className="fas fa-user mr-1"></i></span></button>
                                                             } 

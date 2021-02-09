@@ -56558,7 +56558,8 @@ var Demands = /*#__PURE__*/function (_Component) {
       var post_new_ticket_api = _this.props.post_new_ticket_api,
           _this$state2 = _this.state,
           new_demand_description = _this$state2.new_demand_description,
-          workspace_users = _this$state2.workspace_users;
+          workspace_users = _this$state2.workspace_users,
+          target_user_id = _this$state2.target_user_id;
       var title = $("#new-demand-title").val(),
           priority = parseInt($("#new-task-priority").val()),
           toUser = $("#new-demand-member").val(),
@@ -56572,25 +56573,28 @@ var Demands = /*#__PURE__*/function (_Component) {
       }).then(function (res) {
         var data = res.data;
 
-        _this.setState(function (prevState) {
-          return {
-            needs: Object.assign(prevState.needs, {
-              data: [_objectSpread(_objectSpread({}, data), {}, {
-                priority: {
-                  title: Object(_helpers__WEBPACK_IMPORTED_MODULE_6__["setPriority"])(data.priority_id)
-                },
-                to: {
-                  id: data.to_id,
-                  fullname: workspace_users[data.to_id].fullname,
-                  avatar_pic: workspace_users[data.to_id].avatar_pic
-                },
-                task: data.task,
-                finished_at: null
-              })].concat(_toConsumableArray(prevState.needs.data))
-            }),
-            already_added_needs: Object.assign({}, prevState.already_added_needs, _defineProperty({}, data.id, data.id))
-          };
-        });
+        if (target_user_id === null) {
+          _this.setState(function (prevState) {
+            return {
+              needs: Object.assign(prevState.needs, {
+                data: [_objectSpread(_objectSpread({}, data), {}, {
+                  priority: {
+                    title: Object(_helpers__WEBPACK_IMPORTED_MODULE_6__["setPriority"])(data.priority_id)
+                  },
+                  to: {
+                    id: data.to.id,
+                    fullname: data.to.fullname,
+                    avatar_pic: data.to.avatar_pic,
+                    name: data.to.name
+                  },
+                  task: data.task,
+                  finished_at: null
+                })].concat(_toConsumableArray(prevState.needs.data))
+              }),
+              already_added_needs: Object.assign({}, prevState.already_added_needs, _defineProperty({}, data.id, data.id))
+            };
+          });
+        }
 
         Swal["default"].fire({
           icon: 'success',
@@ -57257,7 +57261,7 @@ var Demands = /*#__PURE__*/function (_Component) {
           key: i,
           className: "animated fadeIn",
           onClick: function onClick() {
-            return Object(_helpers__WEBPACK_IMPORTED_MODULE_6__["redirectTo"])(getDemand(workspace_id, id));
+            return Object(_helpers__WEBPACK_IMPORTED_MODULE_6__["redirectTo"])(Object(_helpers__WEBPACK_IMPORTED_MODULE_6__["getDemand"])(workspace_id, id));
           }
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
           scope: "row"
@@ -57279,10 +57283,10 @@ var Demands = /*#__PURE__*/function (_Component) {
         })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "user-info ml-2"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, from.fullname), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-          href: getUser(from.id)
+          href: Object(_helpers__WEBPACK_IMPORTED_MODULE_6__["getUser"])(from.id)
         }, "@", from.name))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "user-label-container"
-        }, workspaces_users && workspaces_users[workspace_id][from.id].is_admin === 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        }, workspace_users && workspace_users[from.id].is_admin === 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           className: "btn btn-sm btn-success rtl admin p-1"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0627\u062F\u0645\u06CC\u0646", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-user-tie mr-1"
@@ -57308,10 +57312,10 @@ var Demands = /*#__PURE__*/function (_Component) {
         })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "user-info ml-2"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, to.fullname), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-          href: getUser(to.id)
+          href: Object(_helpers__WEBPACK_IMPORTED_MODULE_6__["getUser"])(to.id)
         }, "@", to.name))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "user-label-container"
-        }, workspaces_users && workspaces_users[workspace_id][to.id].is_admin === 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        }, workspace_users && workspace_users[to.id].is_admin === 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           className: "btn btn-sm btn-success rtl admin p-1"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0627\u062F\u0645\u06CC\u0646", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-user-tie mr-1"
@@ -57320,7 +57324,7 @@ var Demands = /*#__PURE__*/function (_Component) {
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0639\u0636\u0648", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-user mr-1"
         })))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, task !== null ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-          href: getTask(task.id)
+          href: Object(_helpers__WEBPACK_IMPORTED_MODULE_6__["getTask"])(task.id)
         }, task.title) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-minus fa-3x"
         })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, priority.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, finished_at === null ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {

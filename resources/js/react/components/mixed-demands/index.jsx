@@ -29,7 +29,8 @@ export default class MixedDemands extends Component {
             new_demand_description: "",
             already_added_needs: {},
             api_target: 'mixed',
-            viewing_as_admin: false
+            viewing_as_admin: false,
+            target_user_id: null
         }
     }
 
@@ -127,7 +128,7 @@ export default class MixedDemands extends Component {
     }
 
     addDemand = () => {
-        let { post_demand_api } = this.props, { new_demand_description, workspaces_users } = this.state
+        let { post_demand_api } = this.props, { new_demand_description, workspaces_users, viewing_as_admin, target_user_id } = this.state
         let title = $("#new-demand-title").val(), priority = parseInt($("#new-task-priority").val()), toUser = $("#new-demand-member").val(), related_task = $("#task-select").val() === "0" ? "" : $("#task-select").val(), workspaceId = $("#new-demand-project-select").val()
         axios.post(post_demand_api.replace("workspaceId", workspaceId), {
             title: title,
@@ -137,28 +138,30 @@ export default class MixedDemands extends Component {
             text: new_demand_description 
         }).then(res => {
             let { data } = res
-            this.setState(prevState => {
-                return ({
-                    needs: Object.assign(prevState.needs, {
-                        data: [
-                            {
-                                ...data,
-                                priority: {title: setPriority(data.priority_id)},
-                                to: {
-                                    id: data.to_id, 
-                                    fullname: workspaces_users[data.workspace_id][data.to_id].fullname, 
-                                    avatar_pic: workspaces_users[data.workspace_id][data.to_id].avatar_pic, 
-                                    name: workspaces_users[data.workspace_id][data.to_id].name
-                                },
-                                finished_at: null
-                            }, 
-                        ...prevState.needs.data],
-                    }),
-                    already_added_needs: Object.assign({}, prevState.already_added_needs, {
-                        [data.id]: data.id
+            if (target_user_id === null) {
+                this.setState(prevState => {
+                    return ({
+                        needs: Object.assign(prevState.needs, {
+                            data: [
+                                {
+                                    ...data,
+                                    priority: {title: setPriority(data.priority_id)},
+                                    to: {
+                                        id: data.to_id, 
+                                        fullname: workspaces_users[data.workspace_id][data.to_id].fullname, 
+                                        avatar_pic: workspaces_users[data.workspace_id][data.to_id].avatar_pic, 
+                                        name: workspaces_users[data.workspace_id][data.to_id].name
+                                    },
+                                    finished_at: null
+                                }, 
+                            ...prevState.needs.data],
+                        }),
+                        already_added_needs: Object.assign({}, prevState.already_added_needs, {
+                            [data.id]: data.id
+                        })
                     })
-                })
-            })
+                })   
+            }
             Swal.default.fire({
                 icon: 'success',
                 title: "موفقیت",
