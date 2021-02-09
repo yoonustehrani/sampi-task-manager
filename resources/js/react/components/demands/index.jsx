@@ -6,7 +6,7 @@ import axios from 'axios'
 import 'react-activity/dist/react-activity.css'
 import TinymcEditor from '../tinymce-editor/index'
 import { setPriority, redirectTo, sweetError } from '../../../helpers'
-import { simpleSearch } from '../../../select2'
+import { simpleSearch, renderWithImg } from '../../../select2'
 
 export default class Demands extends Component {
     constructor(props) {
@@ -15,7 +15,8 @@ export default class Demands extends Component {
         this.tabResultsRef = []
         this.addIconRef = React.createRef()
         this.addDemandRef = React.createRef()
-        for (let index = 0; index < 2; index++) {
+        this.adminViewRef = React.createRef()
+        for (let index = 0; index < 3; index++) {
             this.tabTitlesRef.push(React.createRef())
             this.tabResultsRef.push(React.createRef())
         }
@@ -23,18 +24,22 @@ export default class Demands extends Component {
             current_tab: 'demands',
             isGetting: false,
             new_demand_description: "",
-            already_added_needs: {}
+            already_added_needs: {},
+            viewing_as_admin: false,
+            target_user_id: null
         }
     }
 
     changeTab = (tab_index) => {
         this.tabTitlesRef.map((titleRef, i) => {
-            if (tab_index === i) {
-                this.tabTitlesRef[i].current.classList.add("active")
-                this.tabResultsRef[i].current.classList.add("active")
-            } else {
-                this.tabTitlesRef[i].current.classList.remove("active")
-                this.tabResultsRef[i].current.classList.remove("active")
+            if (titleRef.current !== null) {
+                if (tab_index === i) {
+                    this.tabTitlesRef[i].current.classList.add("active")
+                    this.tabResultsRef[i].current.classList.add("active")
+                } else {
+                    this.tabTitlesRef[i].current.classList.remove("active")
+                    this.tabResultsRef[i].current.classList.remove("active")
+                }
             }
         })
         let activeTab
@@ -47,6 +52,10 @@ export default class Demands extends Component {
                 case 1:
                     activeTab = "needs"
                     break;
+                    
+                case 2:
+                    activeTab = "all";
+                    break;
 
                 default:
                     break;
@@ -55,19 +64,17 @@ export default class Demands extends Component {
                 current_tab: activeTab
             })
         }, () => {
-            if (typeof this.state[activeTab] === 'undefined') {
-                this.setState({[activeTab]: {data: [], nextPage: 1, hasMore: true}}, () => this.getData())
-            }
+            this.setState({[activeTab]: {data: [], nextPage: 1, hasMore: true}}, () => this.getData())
         })
     }
 
     getData = () => {            
-        let { get_tickets_api } = this.props, { current_tab, already_added_needs } = this.state
+        let { get_tickets_api } = this.props, { current_tab, already_added_needs, viewing_as_admin, target_user_id } = this.state
         let order_by = $(`#mixed_${current_tab}_order_by_select`).val(), order = $(`#mixed_${current_tab}_order_select`).val(), filter = $(`#mixed_${current_tab}_relation_select`).val()
         this.setState({ isGetting: true })
-        axios.get(`${get_tickets_api}${current_tab === "demands" ? "&relationship=asked" : ""}&order_by=${order_by}&order=${order}&filter=${filter}&page=${this.state[current_tab].nextPage}`).then(res => {
+        axios.get(`${get_tickets_api}${current_tab === "demands" ? "&relationship=asked" : ""}&order_by=${order_by}&order=${order}&filter=${filter}${viewing_as_admin ? "&view_as_admin=true" : ""}${viewing_as_admin && target_user_id && current_tab !== "all" ? `&user_id=${target_user_id}` : ""}&page=${this.state[current_tab].nextPage}`).then(res => {
             let { data, current_page, last_page } = res.data
-            let filteredArray = data.filter((item) => already_added_needs && typeof already_added_needs[item.id] === "undefined")
+            let filteredArray = current_tab === "needs" ? data.filter((item) => already_added_needs && typeof already_added_needs[item.id] === "undefined") : data
             this.setState(prevState => {
             return ({
                 [current_tab]: {
@@ -141,6 +148,29 @@ export default class Demands extends Component {
         })
     }
 
+    setViewAsAdmin = () => {
+        let { viewing_as_admin, current_tab } = this.state, { get_all_users } = this.props
+        this.adminViewRef.current.classList.toggle("d-none")
+        if (! viewing_as_admin) {
+            axios.get(`${get_all_users}&view_as_admin=true`).then(res => {
+                let { data } = res
+                this.setState({
+                    allUsers: data
+                })
+            })
+        } else {
+            $("#select-user-target").val(null).change()
+            if (current_tab === "all") {
+                this.changeTab(1)
+            } else {
+                this.setState({[current_tab]: {data: [], nextPage: 1, hasMore: true}}, () => this.getData())
+            }
+        }
+        this.setState(prevState => ({
+            viewing_as_admin: !prevState.viewing_as_admin 
+        }))
+    }
+
     componentDidMount() {
         let { current_tab } = this.state, { get_workspace_api } = this.props
         this.setState({[current_tab]: {data: [], nextPage: 1, hasMore: true}}, () => this.getData())
@@ -162,12 +192,49 @@ export default class Demands extends Component {
                 })
             })
         })
+        renderWithImg("#select-user-target", "کاربر مورد نظر را انتخاب کنید", false)    
+        const setTargetUser = () => {
+            let id = $("#select-user-target").val()
+            this.setState({
+                target_user_id: id
+            }, () => {
+                this.setState({[this.state.current_tab]: {data: [], nextPage: 1, hasMore: true}}, () => this.getData())
+            })
+        }
+        $("#select-user-target").on("select2:select", () => {
+            setTargetUser()
+        }) 
     }
     
     render() {
-        let { demands, needs, isGetting, workspace, already_added_needs, workspace_users } = this.state, { user_profile_route, task_route, logged_in_user_id, demand_show_route } = this.props
+        let { demands, needs, all, isGetting, workspace, already_added_needs, workspace_users, viewing_as_admin, allUsers, current_tab } = this.state, { user_profile_route, task_route, logged_in_user_id, demand_show_route } = this.props
         return (
             <div>
+                {CAN_VIEW_AS_ADMIN &&
+                    <div className="form-check col-12 text-right">
+                        <input className="form-check-input c-p" type="checkbox" value={viewing_as_admin} id="flexCheckDefault" onChange={this.setViewAsAdmin} />
+                        <label className="form-check-label c-p" htmlFor="flexCheckDefault">
+                            مشاهده به عنوان ادمین
+                        </label>
+                        <div className="add-task-section rtl mt-2 mb-4 animated slideInLeft d-none" ref={this.adminViewRef}>
+                            <div className="input-group col-12 col-md-4 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line-all">
+                                <div className="input-group-prepend">
+                                    <span className="input-group-text">مخاطب</span>
+                                </div>
+                                <select id="select-user-target" className="form-control text-right">
+                                    <option></option>
+                                    { allUsers ? allUsers.map((user, i) => {
+                                        if (user.id !== CurrentUser.id) {
+                                            return (
+                                                <option key={i} value={user.id} img_address={user.avatar_pic !== null ? APP_PATH + user.avatar_pic : APP_PATH + 'images/male-avatar.svg'}>{user.fullname}</option>
+                                            )                                            
+                                        }
+                                    }) : null }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                }
                 <nav className="demands-tabs-titles col-12">
                     <a href="#demands" className="demand-tab-title active" ref={this.tabTitlesRef[0]} onClick={this.changeTab.bind(this, 0)}>
                         <span>درخواست</span>
@@ -179,6 +246,15 @@ export default class Demands extends Component {
                         <i className="fas fa-long-arrow-alt-up left-arrow animated slideInUp"></i>
                         <span>نیاز</span>
                     </a>
+                    {viewing_as_admin
+                        ?   <a className={"demand-tab-title animated fadeIn " + `${current_tab === "all" ? "active" : ""}`} ref={this.tabTitlesRef[2]} onClick={this.changeTab.bind(this, 2)}>
+                                {/* <i className="fas fa-exchange-alt"></i> */}
+                                <i className="fas fa-long-arrow-alt-up left-arrow animated slideInUp"></i>
+                                <i className="fas fa-long-arrow-alt-down left-arrow animated slideInDown"></i>
+                                <span>همه</span>
+                            </a>
+                        :   null
+                    }
                 </nav>
                 <div className="col-12 mt-4 float-right demand-tab-result active" ref={this.tabResultsRef[0]}>
                     <div className="filter-box demand-bg-color mb-4 p-2 col-12 animated fadeIn">
@@ -287,7 +363,7 @@ export default class Demands extends Component {
                     }
                 </div>
                 <div className="col-12 mt-4 float-right demand-tab-result" ref={this.tabResultsRef[1]}>
-                <div className="workspace-add-task mb-2 col-12 pl-0 pr-0 pr-md-3 pl-md-3">
+                    <div className="workspace-add-task mb-2 col-12 pl-0 pr-0 pr-md-3 pl-md-3">
                         <div className="workspace-title-section title-section" onClick={this.toggleAddBox}>
                             <i className="fas fa-plus" ref={this.addIconRef}></i>
                             <h5>نیاز جدید</h5>
@@ -439,7 +515,138 @@ export default class Demands extends Component {
                         )
                     }
                     {
-                        needs && needs.length <= 0 && !isGetting &&
+                        needs && needs.data.length <= 0 && !isGetting &&
+                            <p className="text-center text-secondary">موردی برای نمایش وجود ندارد</p>
+                    }
+                    {
+                        isGetting &&
+                            <div className="text-center">
+                                <Digital color="#000000" size={24} />
+                            </div>
+                    }
+                </div>
+                <div className={"col-12 mt-4 float-right demand-tab-result pr-0 pl-0 pr-md-3 pl-md-3 " + `${current_tab === "all" ? "active" : ""}`} ref={this.tabResultsRef[2]}>
+                    <div className="filter-box demand-bg-color mb-4 p-2 col-12 animated fadeIn">
+                        <div className="filter-option col-12 col-md-6 col-lg-3 mb-3 mb-lg-0 text-center">
+                            <span>جستجو در: </span>
+                            <select id="mixed_all_relation_select" defaultValue="all">
+                                <option container_class="select-option-big" value="all" icon_name="fas fa-tasks">همه</option>
+                                <option container_class="select-option-big" value="finished" icon_name="fas fa-check-square">انجام شده</option>
+                                <option container_class="select-option-big" value="unfinished" icon_name="fas fa-times-circle">انجام نشده</option>
+                            </select>
+                        </div>
+                        <div className="filter-option col-12 col-md-6 col-lg-3 mb-3 mb-lg-0 text-center">
+                            <span>مرتب سازی بر اساس:</span>
+                            <select id="mixed_all_order_by_select" defaultValue="createdw">
+                                <option container_class="select-option-big" value="created_at" icon_name="fas fa-calendar-plus">تاریخ ایجاد</option>
+                                <option container_class="select-option-big" value="updated_at" icon_name="fas fa-user-edit">تاریخ تغییرات</option>
+                                <option container_class="select-option-big" value="finished_at" icon_name="fas fa-calendar-check">تاریخ اتمام</option>
+                            </select>
+                        </div>
+                        <div className="filter-option col-12 col-md-6 col-lg-3 mb-3 mb-lg-0 text-center">
+                            <span>نحوه مرتب سازی:</span>
+                            <select id="mixed_all_order_select" defaultValue="desc">
+                                <option container_class="select-option-big" value="asc" icon_name="fas fa-sort-amount-up">صعودی</option>
+                                <option container_class="select-option-big" value="desc" icon_name="fas fa-sort-amount-down">نزولی</option>
+                            </select>
+                        </div>
+                        <div className="text-center">
+                            <button className="btn btn-outline-info" onClick={this.handleMore.bind(this, true)}>مرتب سازی</button>
+                        </div>
+                    </div>
+                    <table className="col-12 table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right animated bounce mt-4">
+                        <thead className="thead-dark">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">عنوان</th>
+                                <th scope="col">از طرف</th>
+                                <th scope="col">مخاطب</th>
+                                <th scope="col">مسئولیت مربوطه</th>
+                                <th scope="col">اولویت</th>
+                                <th scope="col">وضعیت اتمام</th>
+                                <th scope="col">تاریخ اتمام</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {all && all.data.length > 0 && all.data.map((item, i) => {
+                                let { title, task, priority, due_to, finished_at, to, from, id, workspace_id } = item
+                                return (
+                                    <tr key={i} className="animated fadeIn" onClick={() => redirectTo(getDemand(workspace_id, id))}>
+                                        <th scope="row">{i + 1}</th>
+                                        <td>{ title }</td>
+                                        <td>
+                                            <div className="employees-container horizontal-centerlize">
+                                                <span>{ from.fullname }</span>
+                                                <div className="dropdown-users d-none" onClick={(e) => e.stopPropagation()}>
+                                                    <div className="user-dropdown-item animated jackInTheBox">
+                                                        <div className="user-right-flex">
+                                                            <div className="user-img-container ml-2">
+                                                                <img src={from.avatar_pic !== null ? APP_PATH + from.avatar_pic : APP_PATH + 'images/male-avatar.svg'} />
+                                                            </div>
+                                                            <div className="user-info ml-2">
+                                                                <p>{ from.fullname }</p>
+                                                                <a href={getUser(from.id)}>@{from.name}</a>
+                                                            </div>
+                                                        </div>
+                                                        <div className="user-label-container">
+                                                            {
+                                                                workspaces_users && workspaces_users[workspace_id][from.id].is_admin === 1 
+                                                                ? <button className="btn btn-sm btn-success rtl admin p-1"><span>ادمین<i className="fas fa-user-tie mr-1"></i></span></button>
+                                                                : <button className="btn btn-sm btn-primary rtl"><span>عضو<i className="fas fa-user mr-1"></i></span></button>
+                                                            } 
+                                                        </div>
+                                                    </div>                                                
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div className="employees-container horizontal-centerlize">
+                                                <span>{ to.fullname }</span>
+                                                <div className="dropdown-users d-none" onClick={(e) => e.stopPropagation()}>
+                                                    <div className="user-dropdown-item animated jackInTheBox">
+                                                        <div className="user-right-flex">
+                                                            <div className="user-img-container ml-2">
+                                                                <img src={to.avatar_pic !== null ? APP_PATH + to.avatar_pic : APP_PATH + 'images/male-avatar.svg'} />
+                                                            </div>
+                                                            <div className="user-info ml-2">
+                                                                <p>{ to.fullname }</p>
+                                                                <a href={getUser(to.id)}>@{to.name}</a>
+                                                            </div>
+                                                        </div>
+                                                        <div className="user-label-container">
+                                                            {
+                                                                workspaces_users && workspaces_users[workspace_id][to.id].is_admin === 1 
+                                                                ? <button className="btn btn-sm btn-success rtl admin p-1"><span>ادمین<i className="fas fa-user-tie mr-1"></i></span></button>
+                                                                : <button className="btn btn-sm btn-primary rtl"><span>عضو<i className="fas fa-user mr-1"></i></span></button>
+                                                            } 
+                                                        </div>
+                                                    </div>                                                
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>{task !== null ? <a href={getTask(task.id)}>{ task.title }</a> : <i className="fas fa-minus fa-3x"></i>}</td>
+                                        <td>{ priority.title }</td>
+                                        <td>
+                                            {finished_at === null ? <i className="fas fa-times-circle fa-3x"></i> : <i className="fas fa-check-circle fa-3x"></i>}
+                                        </td>
+                                        <td>
+                                            {finished_at === null ? <i className="fas fa-calendar-times fa-3x"></i> : moment(finished_at).fromNow()}
+                                        </td>
+                                    </tr>
+                                )
+                            })
+                            }
+                        </tbody>
+                    </table> 
+                    {
+                        all && all.data.length > 0 && !isGetting && all.hasMore && (
+                            <div className="text-center">
+                                <button className="btn btn-outline-dark text-center" onClick={this.handleMore.bind(this, false)}>بیشتر</button>
+                            </div>
+                        )
+                    }
+                    {
+                        all && all.data.length === 0 && !isGetting &&
                             <p className="text-center text-secondary">موردی برای نمایش وجود ندارد</p>
                     }
                     {

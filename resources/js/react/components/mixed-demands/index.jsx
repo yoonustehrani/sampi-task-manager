@@ -57,7 +57,8 @@ export default class MixedDemands extends Component {
                     break;
 
                 case 2:
-                    activeTab = "all"
+                    activeTab = "all";
+                    break;
 
                 default:
                     break;

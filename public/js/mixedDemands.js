@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -56523,6 +56523,7 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
 
           case 2:
             activeTab = "all";
+            break;
 
           default:
             break;
@@ -57841,7 +57842,7 @@ renderWithImg("#new-task-project-select", "پروژه مربوطه را انتخ
 
 /***/ }),
 
-/***/ 3:
+/***/ 4:
 /*!**************************************************!*\
   !*** multi ./resources/js/react/mixedDemands.js ***!
   \**************************************************/
