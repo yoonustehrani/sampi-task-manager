@@ -36,6 +36,7 @@ Route::group(['prefix' => 'task-manager', 'as' => 'api.task-manager.'], function
         Route::apiResource('workspaces/{workspace}/tasks', $api_controllers . 'TaskController');
         Route::apiResource('workspaces/{workspace}/demands', $api_controllers . 'DemandController');
         Route::get('users', $api_controllers . 'UserController@index')->name('users.index');
+        Route::get('users/{user}', $api_controllers . 'UserController@show')->name('users.show');
         Route::get('tasks', $api_controllers . 'TaskController@mixed')->name('tasks.mixed');
         Route::get('demands', $api_controllers . 'DemandController@mixed')->name('demands.mixed');
         Route::get('demands/{demand}/messages', $api_controllers . 'DemandController@messages')->name('demands.messages.index');

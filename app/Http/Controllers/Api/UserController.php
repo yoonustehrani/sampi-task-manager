@@ -13,4 +13,10 @@ class UserController extends Controller
         $this->authorize('viewAny', User::class);
         return User::all();
     }
+    public function show($user)
+    {
+        $user = User::with('roles')->findOrFail($user);
+        $this->authorize('view', $user);
+        return $user;
+    }
 }
