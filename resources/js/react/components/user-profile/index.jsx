@@ -55,7 +55,7 @@ export default class UserProfile extends Component {
                 this.setState({
                     isGetting: true
                 })
-                Axios.get(`${api}&limit=15&order_by=${tabName === "mixed_tasks" ? "due_to" : "created_at"}&order=desc${tabName === "mixed_demands" ? "&relationship=asked" : ""}`).then(res => {
+                Axios.get(`${api}&user_id=${TargetUser.id}&limit=15&order_by=${tabName === "mixed_tasks" ? "due_to" : "created_at"}&order=desc${tabName === "mixed_demands" ? "&relationship=asked" : ""}`).then(res => {
                     let { data } = res
                     this.setState({
                         [tabName]: data,
@@ -98,7 +98,7 @@ export default class UserProfile extends Component {
         const sendReq = (tab_name, api) => {
             this.setState({ isGetting: true }, () => {
                 let order_by = $(`#${tab_name}_order_by_select`).val(), order = $(`#${tab_name}_order_select`).val(), relation = $(`#${tab_name}_relation_select`).val()
-                Axios.get(`${api}&limit=15&order_by=${order_by}&order=${order}&relationship=${tab_name === "mixed_tasks" ? relation : tab_name === "mixed_demands" ? "asked" : "mixed_need"}${tab_name === "mixed_tasks" ? "" : `&filter=${relation}`}`).then(res => {
+                Axios.get(`${api}&limit=15&order_by=${order_by}&order=${order}&relationship=${tab_name === "mixed_tasks" ? relation : tab_name === "mixed_demands" ? "asked" : "mixed_need"}${tab_name === "mixed_tasks" ? "" : `&filter=${relation}`}&user_id=${TargetUser.id}`).then(res => {
                     let { data } = res
                     this.setState({
                         [tab_name]: data,
@@ -181,7 +181,7 @@ export default class UserProfile extends Component {
         //         })
         //     })
         // })
-        Axios.get(workspacesApi).then(res => {
+        Axios.get(`${workspacesApi}&user_id=${TargetUser.id}`).then(res => {
             let { data } = res
             this.setState({workspaces: data}, () => {
                 this.state.workspaces.map((workspace, i) => {
@@ -209,7 +209,7 @@ export default class UserProfile extends Component {
     }
 
     render() {
-        let { mixed_tasks, statistics, isGetting, workspaces, navbar, mixed_demands, mixed_needs, workspaces_users, charts } = this.state
+        let { mixed_tasks, statistics, isGetting, workspaces, navbar, mixed_demands, mixed_needs, charts } = this.state
         let { workspace_route, task_route, demand_show_route, user_profile_route } = this.props
         return (
             <div>
@@ -217,7 +217,7 @@ export default class UserProfile extends Component {
                     <div className="user-card pt-4 pb-2">
                         <div className="user-info-section text-center">
                             <div className="user-img-container">
-                                <img src={APP_PATH + (TargetUser.profile_pic ? TargetUser.profile_pic : 'images/male-avatar.svg')} alt=""/>
+                                <img src={APP_PATH + (TargetUser.avatar_pic ? TargetUser.avatar_pic : 'images/male-avatar.svg')} alt=""/>
                             </div>
                             <div className="user-text-info-container">
                                 <h5 className="d-block mt-3">{TargetUser.fullname}</h5>
@@ -314,7 +314,6 @@ export default class UserProfile extends Component {
                                     <div className="filter-option col-12 mb-3 text-center">
                                         <span>مرتب سازی بر اساس:</span>
                                         <select id="mixed_demands_order_by_select" defaultValue="due_to">
-                                            <option container_class="select-option-big" value="due_to" icon_name="fas fa-hourglass-start">تاریخ تحویل</option>
                                             <option container_class="select-option-big" value="created_at" icon_name="fas fa-calendar-plus">تاریخ ایجاد</option>
                                             <option container_class="select-option-big" value="updated_at" icon_name="fas fa-user-edit">تاریخ تغییرات</option>
                                             <option container_class="select-option-big" value="finished_at" icon_name="fas fa-calendar-check">تاریخ اتمام</option>
@@ -336,13 +335,13 @@ export default class UserProfile extends Component {
                                         ? mixed_demands.map((demand, i) => (
                                             <div key={i} className="demand-item hover-bg" onClick={() => redirectTo(getDemand(demand.workspace_id, demand.id))}>
                                                 <div>
-                                                    <i className={`fas ${demand.finished_at === null ? "fa-times" : "fa-cehck"}`}></i>
-                                                    <img src={APP_PATH + `${demand.from.avatar_pic ? demand.from.avatar_pic : 'images/male-avatar.svg'}`} alt=""/>
+                                                    <i className={`mr-1 fas ${demand.finished_at === null ? "fa-times" : "fa-cehck"}`}></i>
+                                                    <img src={APP_PATH + `${TargetUser.avatar_pic ? TargetUser.avatar_pic : 'images/male-avatar.svg'}`} alt="" />
                                                 </div>
                                                 <i className="fas fa-long-arrow-alt-right"></i>
                                                 <div className="demand-sender">
-                                                    <h6>{ demand.title }</h6>
-                                                    <img src={APP_PATH + `${demand.from.avatar_pic ? demand.from.avatar_pic : 'images/male-avatar.svg'}`} alt="" />
+                                                    <h6 className="ml-1">{ demand.title }</h6>
+                                                    <img src={APP_PATH + `${demand.from.avatar_pic ? demand.from.avatar_pic : 'images/male-avatar.svg'}`} alt=""/>
                                                 </div>
                                             </div>
                                         ))
@@ -366,7 +365,6 @@ export default class UserProfile extends Component {
                                     <div className="filter-option col-12 mb-3 text-center">
                                         <span>مرتب سازی بر اساس:</span>
                                         <select id="mixed_needs_order_by_select" defaultValue="due_to">
-                                            <option container_class="select-option-big" value="due_to" icon_name="fas fa-hourglass-start">تاریخ تحویل</option>
                                             <option container_class="select-option-big" value="created_at" icon_name="fas fa-calendar-plus">تاریخ ایجاد</option>
                                             <option container_class="select-option-big" value="updated_at" icon_name="fas fa-user-edit">تاریخ تغییرات</option>
                                             <option container_class="select-option-big" value="finished_at" icon_name="fas fa-calendar-check">تاریخ اتمام</option>
@@ -388,7 +386,7 @@ export default class UserProfile extends Component {
                                         ? mixed_needs.map((need, i) => (
                                             <div key={i} className="demand-item hover-bg" onClick={() => redirectTo(getDemand(need.workspace_id, need.id))}>
                                                 <div className="demand-sender">
-                                                    <img src={APP_PATH + `${need.to.avatar_pic ? need.to.avatar_pic : 'images/male-avatar.svg'}`} alt="" />
+                                                    <img src={APP_PATH + `${TargetUser.avatar_pic ? TargetUser.avatar_pic : 'images/male-avatar.svg'}`} alt="" />
                                                     <h6 className="mr-1">{ need.title }</h6>
                                                 </div>
                                                 <i className="fas fa-long-arrow-alt-left"></i>

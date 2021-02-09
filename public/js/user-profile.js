@@ -18130,7 +18130,7 @@ return src;
 
 /***/ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/react-activity/lib/Sentry/Sentry.css":
 /*!*******************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader??ref--5-1!./node_modules/postcss-loader/src??ref--5-2!./node_modules/react-activity/lib/Sentry/Sentry.css ***!
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/postcss-loader/src??ref--6-2!./node_modules/react-activity/lib/Sentry/Sentry.css ***!
   \*******************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -18140,7 +18140,7 @@ exports = module.exports = __webpack_require__(/*! ../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, "@keyframes rai-sentry-pulse {\n  from {\n    transform: scale(0);\n    opacity: 1; }\n  to {\n    transform: scale(1);\n    opacity: 0; } }\n.rai-sentry {\n  text-align: left;\n  display: inline-block;\n  position: relative;\n  width: 2em;\n  height: 2em; }\n  .rai-sentry .rai-wave-container {\n    display: inline-flex;\n    align-items: center;\n    justify-content: center;\n    width: 100%;\n    height: 100%;\n    position: absolute;\n    animation-duration: inherit; }\n  .rai-sentry .rai-wave {\n    display: inline-block;\n    border: 0.125em solid #727981;\n    border-radius: 100%;\n    box-sizing: border-box;\n    width: 100%;\n    height: 100%;\n    animation-name: rai-sentry-pulse;\n    animation-duration: inherit;\n    animation-timing-function: linear;\n    animation-iteration-count: infinite; }\n", ""]);
+exports.push([module.i, "@-webkit-keyframes rai-sentry-pulse {\n  from {\n    transform: scale(0);\n    opacity: 1; }\n  to {\n    transform: scale(1);\n    opacity: 0; } }\n@keyframes rai-sentry-pulse {\n  from {\n    transform: scale(0);\n    opacity: 1; }\n  to {\n    transform: scale(1);\n    opacity: 0; } }\n.rai-sentry {\n  text-align: left;\n  display: inline-block;\n  position: relative;\n  width: 2em;\n  height: 2em; }\n  .rai-sentry .rai-wave-container {\n    display: inline-flex;\n    align-items: center;\n    justify-content: center;\n    width: 100%;\n    height: 100%;\n    position: absolute;\n    -webkit-animation-duration: inherit;\n            animation-duration: inherit; }\n  .rai-sentry .rai-wave {\n    display: inline-block;\n    border: 0.125em solid #727981;\n    border-radius: 100%;\n    box-sizing: border-box;\n    width: 100%;\n    height: 100%;\n    -webkit-animation-name: rai-sentry-pulse;\n            animation-name: rai-sentry-pulse;\n    -webkit-animation-duration: inherit;\n            animation-duration: inherit;\n    -webkit-animation-timing-function: linear;\n            animation-timing-function: linear;\n    -webkit-animation-iteration-count: infinite;\n            animation-iteration-count: infinite; }\n", ""]);
 
 // exports
 
@@ -18149,7 +18149,7 @@ exports.push([module.i, "@keyframes rai-sentry-pulse {\n  from {\n    transform:
 
 /***/ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/react-circular-progressbar/dist/styles.css":
 /*!*************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader??ref--5-1!./node_modules/postcss-loader/src??ref--5-2!./node_modules/react-circular-progressbar/dist/styles.css ***!
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/postcss-loader/src??ref--6-2!./node_modules/react-circular-progressbar/dist/styles.css ***!
   \*************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -18159,7 +18159,7 @@ exports = module.exports = __webpack_require__(/*! ../../css-loader/lib/css-base
 
 
 // module
-exports.push([module.i, "/*\n * react-circular-progressbar styles\n * All of the styles in this file are configurable!\n */\n\n.CircularProgressbar {\n  /*\n   * This fixes an issue where the CircularProgressbar svg has\n   * 0 width inside a \"display: flex\" container, and thus not visible.\n   */\n  width: 100%;\n  /*\n   * This fixes a centering issue with CircularProgressbarWithChildren:\n   * https://github.com/kevinsqi/react-circular-progressbar/issues/94\n   */\n  vertical-align: middle;\n}\n\n.CircularProgressbar .CircularProgressbar-path {\n  stroke: #3e98c7;\n  stroke-linecap: round;\n  -webkit-transition: stroke-dashoffset 0.5s ease 0s;\n  transition: stroke-dashoffset 0.5s ease 0s;\n}\n\n.CircularProgressbar .CircularProgressbar-trail {\n  stroke: #d6d6d6;\n  /* Used when trail is not full diameter, i.e. when props.circleRatio is set */\n  stroke-linecap: round;\n}\n\n.CircularProgressbar .CircularProgressbar-text {\n  fill: #3e98c7;\n  font-size: 20px;\n  dominant-baseline: middle;\n  text-anchor: middle;\n}\n\n.CircularProgressbar .CircularProgressbar-background {\n  fill: #d6d6d6;\n}\n\n/*\n * Sample background styles. Use these with e.g.:\n *\n *   <CircularProgressbar\n *     className=\"CircularProgressbar-inverted\"\n *     background\n *     percentage={50}\n *   />\n */\n.CircularProgressbar.CircularProgressbar-inverted .CircularProgressbar-background {\n  fill: #3e98c7;\n}\n\n.CircularProgressbar.CircularProgressbar-inverted .CircularProgressbar-text {\n  fill: #fff;\n}\n\n.CircularProgressbar.CircularProgressbar-inverted .CircularProgressbar-path {\n  stroke: #fff;\n}\n\n.CircularProgressbar.CircularProgressbar-inverted .CircularProgressbar-trail {\n  stroke: transparent;\n}\n", ""]);
+exports.push([module.i, "/*\n * react-circular-progressbar styles\n * All of the styles in this file are configurable!\n */\n\n.CircularProgressbar {\n  /*\n   * This fixes an issue where the CircularProgressbar svg has\n   * 0 width inside a \"display: flex\" container, and thus not visible.\n   */\n  width: 100%;\n  /*\n   * This fixes a centering issue with CircularProgressbarWithChildren:\n   * https://github.com/kevinsqi/react-circular-progressbar/issues/94\n   */\n  vertical-align: middle;\n}\n\n.CircularProgressbar .CircularProgressbar-path {\n  stroke: #3e98c7;\n  stroke-linecap: round;\n  transition: stroke-dashoffset 0.5s ease 0s;\n}\n\n.CircularProgressbar .CircularProgressbar-trail {\n  stroke: #d6d6d6;\n  /* Used when trail is not full diameter, i.e. when props.circleRatio is set */\n  stroke-linecap: round;\n}\n\n.CircularProgressbar .CircularProgressbar-text {\n  fill: #3e98c7;\n  font-size: 20px;\n  dominant-baseline: middle;\n  text-anchor: middle;\n}\n\n.CircularProgressbar .CircularProgressbar-background {\n  fill: #d6d6d6;\n}\n\n/*\n * Sample background styles. Use these with e.g.:\n *\n *   <CircularProgressbar\n *     className=\"CircularProgressbar-inverted\"\n *     background\n *     percentage={50}\n *   />\n */\n.CircularProgressbar.CircularProgressbar-inverted .CircularProgressbar-background {\n  fill: #3e98c7;\n}\n\n.CircularProgressbar.CircularProgressbar-inverted .CircularProgressbar-text {\n  fill: #fff;\n}\n\n.CircularProgressbar.CircularProgressbar-inverted .CircularProgressbar-path {\n  stroke: #fff;\n}\n\n.CircularProgressbar.CircularProgressbar-inverted .CircularProgressbar-trail {\n  stroke: transparent;\n}\n", ""]);
 
 // exports
 
@@ -43437,7 +43437,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(/*! !../../../css-loader??ref--5-1!../../../postcss-loader/src??ref--5-2!./Sentry.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/react-activity/lib/Sentry/Sentry.css");
+var content = __webpack_require__(/*! !../../../css-loader??ref--6-1!../../../postcss-loader/src??ref--6-2!./Sentry.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/react-activity/lib/Sentry/Sentry.css");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -43680,7 +43680,7 @@ function removeUndefinedValues(obj) {
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(/*! !../../css-loader??ref--5-1!../../postcss-loader/src??ref--5-2!./styles.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/react-circular-progressbar/dist/styles.css");
+var content = __webpack_require__(/*! !../../css-loader??ref--6-1!../../postcss-loader/src??ref--6-2!./styles.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/react-circular-progressbar/dist/styles.css");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -72903,7 +72903,7 @@ var UserProfile = /*#__PURE__*/function (_Component) {
             isGetting: true
           });
 
-          axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("".concat(api, "&limit=15&order_by=").concat(tabName === "mixed_tasks" ? "due_to" : "created_at", "&order=desc").concat(tabName === "mixed_demands" ? "&relationship=asked" : "")).then(function (res) {
+          axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("".concat(api, "&user_id=").concat(TargetUser.id, "&limit=15&order_by=").concat(tabName === "mixed_tasks" ? "due_to" : "created_at", "&order=desc").concat(tabName === "mixed_demands" ? "&relationship=asked" : "")).then(function (res) {
             var _this$setState;
 
             var data = res.data;
@@ -72955,7 +72955,7 @@ var UserProfile = /*#__PURE__*/function (_Component) {
           var order_by = $("#".concat(tab_name, "_order_by_select")).val(),
               order = $("#".concat(tab_name, "_order_select")).val(),
               relation = $("#".concat(tab_name, "_relation_select")).val();
-          axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("".concat(api, "&limit=15&order_by=").concat(order_by, "&order=").concat(order, "&relationship=").concat(tab_name === "mixed_tasks" ? relation : tab_name === "mixed_demands" ? "asked" : "mixed_need").concat(tab_name === "mixed_tasks" ? "" : "&filter=".concat(relation))).then(function (res) {
+          axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("".concat(api, "&limit=15&order_by=").concat(order_by, "&order=").concat(order, "&relationship=").concat(tab_name === "mixed_tasks" ? relation : tab_name === "mixed_demands" ? "asked" : "mixed_need").concat(tab_name === "mixed_tasks" ? "" : "&filter=".concat(relation), "&user_id=").concat(TargetUser.id)).then(function (res) {
             var _this$setState2;
 
             var data = res.data;
@@ -73099,7 +73099,7 @@ var UserProfile = /*#__PURE__*/function (_Component) {
       //     })
       // })
 
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(workspacesApi).then(function (res) {
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("".concat(workspacesApi, "&user_id=").concat(TargetUser.id)).then(function (res) {
         var data = res.data;
 
         _this2.setState({
@@ -73140,7 +73140,6 @@ var UserProfile = /*#__PURE__*/function (_Component) {
           navbar = _this$state2.navbar,
           mixed_demands = _this$state2.mixed_demands,
           mixed_needs = _this$state2.mixed_needs,
-          workspaces_users = _this$state2.workspaces_users,
           charts = _this$state2.charts;
       var _this$props4 = this.props,
           workspace_route = _this$props4.workspace_route,
@@ -73156,7 +73155,7 @@ var UserProfile = /*#__PURE__*/function (_Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "user-img-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        src: APP_PATH + (TargetUser.profile_pic ? TargetUser.profile_pic : 'images/male-avatar.svg'),
+        src: APP_PATH + (TargetUser.avatar_pic ? TargetUser.avatar_pic : 'images/male-avatar.svg'),
         alt: ""
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "user-text-info-container"
@@ -73325,10 +73324,6 @@ var UserProfile = /*#__PURE__*/function (_Component) {
         defaultValue: "due_to"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
         container_class: "select-option-big",
-        value: "due_to",
-        icon_name: "fas fa-hourglass-start"
-      }, "\u062A\u0627\u0631\u06CC\u062E \u062A\u062D\u0648\u06CC\u0644"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        container_class: "select-option-big",
         value: "created_at",
         icon_name: "fas fa-calendar-plus"
       }, "\u062A\u0627\u0631\u06CC\u062E \u0627\u06CC\u062C\u0627\u062F"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
@@ -73367,15 +73362,17 @@ var UserProfile = /*#__PURE__*/function (_Component) {
             return Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["redirectTo"])(Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["getDemand"])(demand.workspace_id, demand.id));
           }
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-          className: "fas ".concat(demand.finished_at === null ? "fa-times" : "fa-cehck")
+          className: "mr-1 fas ".concat(demand.finished_at === null ? "fa-times" : "fa-cehck")
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-          src: APP_PATH + "".concat(demand.from.avatar_pic ? demand.from.avatar_pic : 'images/male-avatar.svg'),
+          src: APP_PATH + "".concat(TargetUser.avatar_pic ? TargetUser.avatar_pic : 'images/male-avatar.svg'),
           alt: ""
         })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-long-arrow-alt-right"
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "demand-sender"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, demand.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", {
+          className: "ml-1"
+        }, demand.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
           src: APP_PATH + "".concat(demand.from.avatar_pic ? demand.from.avatar_pic : 'images/male-avatar.svg'),
           alt: ""
         })));
@@ -73419,10 +73416,6 @@ var UserProfile = /*#__PURE__*/function (_Component) {
         defaultValue: "due_to"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
         container_class: "select-option-big",
-        value: "due_to",
-        icon_name: "fas fa-hourglass-start"
-      }, "\u062A\u0627\u0631\u06CC\u062E \u062A\u062D\u0648\u06CC\u0644"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        container_class: "select-option-big",
         value: "created_at",
         icon_name: "fas fa-calendar-plus"
       }, "\u062A\u0627\u0631\u06CC\u062E \u0627\u06CC\u062C\u0627\u062F"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
@@ -73463,7 +73456,7 @@ var UserProfile = /*#__PURE__*/function (_Component) {
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "demand-sender"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-          src: APP_PATH + "".concat(need.to.avatar_pic ? need.to.avatar_pic : 'images/male-avatar.svg'),
+          src: APP_PATH + "".concat(TargetUser.avatar_pic ? TargetUser.avatar_pic : 'images/male-avatar.svg'),
           alt: ""
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", {
           className: "mr-1"

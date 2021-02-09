@@ -2468,7 +2468,7 @@ module.exports = {
 
 /***/ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/react-activity/lib/Digital/Digital.css":
 /*!*********************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader??ref--5-1!./node_modules/postcss-loader/src??ref--5-2!./node_modules/react-activity/lib/Digital/Digital.css ***!
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/postcss-loader/src??ref--6-2!./node_modules/react-activity/lib/Digital/Digital.css ***!
   \*********************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -2478,7 +2478,7 @@ exports = module.exports = __webpack_require__(/*! ../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, "@keyframes digital-pulse {\n  0%, 40%, 100% {\n    transform: scaleY(0.4); }\n  20% {\n    transform: scaleY(1); } }\n.rai-digital {\n  height: 1em;\n  text-align: center; }\n  .rai-digital > div {\n    display: inline-block;\n    margin-right: 0.125em;\n    background-color: #727981;\n    width: 0.25em;\n    height: 100%;\n    animation-name: digital-pulse;\n    animation-duration: inherit;\n    animation-timing-function: ease-in-out;\n    animation-iteration-count: infinite; }\n    .rai-digital > div:last-child {\n      margin-right: 0; }\n", ""]);
+exports.push([module.i, "@-webkit-keyframes digital-pulse {\n  0%, 40%, 100% {\n    transform: scaleY(0.4); }\n  20% {\n    transform: scaleY(1); } }\n@keyframes digital-pulse {\n  0%, 40%, 100% {\n    transform: scaleY(0.4); }\n  20% {\n    transform: scaleY(1); } }\n.rai-digital {\n  height: 1em;\n  text-align: center; }\n  .rai-digital > div {\n    display: inline-block;\n    margin-right: 0.125em;\n    background-color: #727981;\n    width: 0.25em;\n    height: 100%;\n    -webkit-animation-name: digital-pulse;\n            animation-name: digital-pulse;\n    -webkit-animation-duration: inherit;\n            animation-duration: inherit;\n    -webkit-animation-timing-function: ease-in-out;\n            animation-timing-function: ease-in-out;\n    -webkit-animation-iteration-count: infinite;\n            animation-iteration-count: infinite; }\n    .rai-digital > div:last-child {\n      margin-right: 0; }\n", ""]);
 
 // exports
 
@@ -27138,7 +27138,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(/*! !../../../css-loader??ref--5-1!../../../postcss-loader/src??ref--5-2!./Digital.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/react-activity/lib/Digital/Digital.css");
+var content = __webpack_require__(/*! !../../../css-loader??ref--6-1!../../../postcss-loader/src??ref--6-2!./Digital.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/react-activity/lib/Digital/Digital.css");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 

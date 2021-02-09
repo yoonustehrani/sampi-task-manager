@@ -11324,6 +11324,7 @@ div.user-card div.user-info-section div.user-text-info-container h5 {
 
 div.user-card div.user-info-section div.user-text-info-container h6 {
   color: #757F9A;
+  direction: ltr !important;
 }
 
 div.user-card div.user-work-section div.scrollable-items {
