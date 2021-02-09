@@ -73146,6 +73146,10 @@ var UserProfile = /*#__PURE__*/function (_Component) {
           task_route = _this$props4.task_route,
           demand_show_route = _this$props4.demand_show_route,
           user_profile_route = _this$props4.user_profile_route;
+      var roles = "";
+      TargetUser.roles.map(function (role, i) {
+        roles += role.label + "".concat(i !== 0 ? "-" : "");
+      });
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "user-info-section col-12 col-md-4 pl-0 pr-0 float-right"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -73165,7 +73169,7 @@ var UserProfile = /*#__PURE__*/function (_Component) {
         className: "float-right"
       }, "@", TargetUser.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", {
         className: "mr-1 float-right"
-      }, "\u0645\u062F\u06CC\u0631 \u0628\u062E\u0634 \u0645\u0627\u0644\u06CC")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, roles)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "user-work-section"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
         className: "tab-title-bar text-center"

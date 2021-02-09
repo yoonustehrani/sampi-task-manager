@@ -211,6 +211,10 @@ export default class UserProfile extends Component {
     render() {
         let { mixed_tasks, statistics, isGetting, workspaces, navbar, mixed_demands, mixed_needs, charts } = this.state
         let { workspace_route, task_route, demand_show_route, user_profile_route } = this.props
+        let roles = ""
+        TargetUser.roles.map((role, i) => {
+            roles += role.label + `${i !== 0 ? "-" : ""}`                       
+        })
         return (
             <div>
                 <div className="user-info-section col-12 col-md-4 pl-0 pr-0 float-right">
@@ -222,7 +226,7 @@ export default class UserProfile extends Component {
                             <div className="user-text-info-container">
                                 <h5 className="d-block mt-3">{TargetUser.fullname}</h5>
                                 <h6 className="float-right">@{TargetUser.name}</h6>
-                                <h6 className="mr-1 float-right">مدیر بخش مالی</h6>
+                                <h6 className="mr-1 float-right">{ roles }</h6>
                             </div>
                             <hr/>
                         </div>
