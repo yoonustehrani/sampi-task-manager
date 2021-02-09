@@ -237,7 +237,7 @@ export default class UserProfile extends Component {
                                     )
                                 })}
                             </nav>
-                            <div className="user-works-results scrollable-items col-12 mt-4 active" ref={this.tabResultsRef[0]}>
+                            <div className="user-works-results scrollable-items col-12 mt-4 active mb-4" ref={this.tabResultsRef[0]}>
                                 {workspaces && workspaces.length > 0 && !isGetting 
                                     ? workspaces.map((workspace, i) => (
                                         <div key={i} className="workspace-item col-12" onClick={() => redirectTo(getWorkspace(workspace.id))}>

@@ -73179,7 +73179,7 @@ var UserProfile = /*#__PURE__*/function (_Component) {
           className: "fas fa-".concat(item.icon, " d-block d-md-inline")
         }), item.text);
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "user-works-results scrollable-items col-12 mt-4 active",
+        className: "user-works-results scrollable-items col-12 mt-4 active mb-4",
         ref: this.tabResultsRef[0]
       }, workspaces && workspaces.length > 0 && !isGetting ? workspaces.map(function (workspace, i) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
