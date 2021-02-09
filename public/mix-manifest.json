@@ -2,8 +2,9 @@
     "/js/demands.js": "/js/demands.js",
     "/js/mixedDemands.js": "/js/mixedDemands.js",
     "/js/mixedTasks.js": "/js/mixedTasks.js",
+    "/js/select2.js": "/js/select2.js",
+    "/css/app.css": "/css/app.css",
     "/js/task.js": "/js/task.js",
     "/js/user-profile.js": "/js/user-profile.js",
-    "/js/workspace.js": "/js/workspace.js",
-    "/css/app.css": "/css/app.css"
+    "/js/workspace.js": "/js/workspace.js"
 }
