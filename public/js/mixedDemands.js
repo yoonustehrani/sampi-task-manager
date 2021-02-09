@@ -56496,14 +56496,16 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
 
     _defineProperty(_assertThisInitialized(_this), "changeTab", function (tab_index) {
       _this.tabTitlesRefs.map(function (titleRef, i) {
-        if (tab_index === i) {
-          _this.tabTitlesRefs[i].current.classList.add("active");
+        if (titleRef.current !== null) {
+          if (tab_index === i) {
+            _this.tabTitlesRefs[i].current.classList.add("active");
 
-          _this.tabResultsRefs[i].current.classList.add("active");
-        } else {
-          _this.tabTitlesRefs[i].current.classList.remove("active");
+            _this.tabResultsRefs[i].current.classList.add("active");
+          } else {
+            _this.tabTitlesRefs[i].current.classList.remove("active");
 
-          _this.tabResultsRefs[i].current.classList.remove("active");
+            _this.tabResultsRefs[i].current.classList.remove("active");
+          }
         }
       });
 
@@ -56530,15 +56532,13 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
           current_tab: activeTab
         };
       }, function () {
-        if (typeof _this.state[activeTab] === 'undefined') {
-          _this.setState(_defineProperty({}, activeTab, {
-            data: [],
-            nextPage: 1,
-            hasMore: true
-          }), function () {
-            return _this.getData();
-          });
-        }
+        _this.setState(_defineProperty({}, activeTab, {
+          data: [],
+          nextPage: 1,
+          hasMore: true
+        }), function () {
+          return _this.getData();
+        });
       });
     });
 
@@ -56575,14 +56575,14 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
           };
         }
       }, function () {
-        axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("".concat(_this.state.api_target === "mixed" ? get_mixed_demands_api : mixed_demands_search).concat(current_tab === "demands" ? "&relationship=asked" : "", "&order_by=").concat(order_by ? order_by : "created_at", "&order=").concat(order ? order : "desc", "&filter=").concat(filter ? filter : "all", "&page=").concat(_this.state[current_tab].nextPage).concat(viewing_as_admin ? "&view_as_admin=true" : "").concat(target_user_id && current_tab !== "all" ? "&user_id=".concat(target_user_id) : "").concat(_this.state.api_target === "search" ? "&q=".concat(search_value) : "")).then(function (res) {
+        axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("".concat(_this.state.api_target === "mixed" ? get_mixed_demands_api : mixed_demands_search).concat(current_tab === "demands" ? "&relationship=asked" : "", "&order_by=").concat(order_by ? order_by : "created_at", "&order=").concat(order ? order : "desc", "&filter=").concat(filter ? filter : "all", "&page=").concat(_this.state[current_tab].nextPage).concat(viewing_as_admin ? "&view_as_admin=true" : "").concat(viewing_as_admin && target_user_id && current_tab !== "all" ? "&user_id=".concat(target_user_id) : "").concat(_this.state.api_target === "search" ? "&q=".concat(search_value) : "")).then(function (res) {
           var _res$data = res.data,
               data = _res$data.data,
               current_page = _res$data.current_page,
               last_page = _res$data.last_page;
-          var filteredArray = data.filter(function (item) {
+          var filteredArray = current_tab === "needs" && viewing_as_admin ? data.filter(function (item) {
             return already_added_needs && typeof already_added_needs[item.id] === "undefined";
-          });
+          }) : data;
 
           _this.setState(function (prevState) {
             var _ref;
@@ -56694,6 +56694,16 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
           _this.setState({
             allUsers: data
           });
+        });
+      } else {
+        $("#select-user-target").val(null).change();
+
+        _this.setState(_defineProperty({}, _this.state.current_tab, {
+          data: [],
+          nextPage: 1,
+          hasMore: true
+        }), function () {
+          return _this.getData();
         });
       }
 

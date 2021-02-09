@@ -35,12 +35,14 @@ export default class MixedDemands extends Component {
 
     changeTab = (tab_index) => {
         this.tabTitlesRefs.map((titleRef, i) => {
+            if (titleRef.current !== null) {
             if (tab_index === i) {
                 this.tabTitlesRefs[i].current.classList.add("active")
                 this.tabResultsRefs[i].current.classList.add("active")
             } else {
                 this.tabTitlesRefs[i].current.classList.remove("active")
                 this.tabResultsRefs[i].current.classList.remove("active")
+            }   
             }
         })
         let activeTab
@@ -64,9 +66,7 @@ export default class MixedDemands extends Component {
                 current_tab: activeTab
             })
         }, () => {
-            if (typeof this.state[activeTab] === 'undefined') {
-                this.setState({[activeTab]: {data: [], nextPage: 1, hasMore: true}}, () => this.getData())
-            }
+            this.setState({[activeTab]: {data: [], nextPage: 1, hasMore: true}}, () => this.getData())
         })
     }
 
@@ -88,9 +88,9 @@ export default class MixedDemands extends Component {
                 return({isGetting: true})
             }
         }, () => {
-            axios.get(`${this.state.api_target === "mixed" ? get_mixed_demands_api : mixed_demands_search}${current_tab === "demands" ? "&relationship=asked" : ""}&order_by=${order_by ? order_by : "created_at"}&order=${order ? order : "desc"}&filter=${filter ? filter : "all"}&page=${this.state[current_tab].nextPage}${viewing_as_admin ? "&view_as_admin=true" : ""}${target_user_id && current_tab !== "all" ? `&user_id=${target_user_id}` : ""}${this.state.api_target === "search" ? `&q=${search_value}` : ""}`).then(res => {
+            axios.get(`${this.state.api_target === "mixed" ? get_mixed_demands_api : mixed_demands_search}${current_tab === "demands" ? "&relationship=asked" : ""}&order_by=${order_by ? order_by : "created_at"}&order=${order ? order : "desc"}&filter=${filter ? filter : "all"}&page=${this.state[current_tab].nextPage}${viewing_as_admin ? "&view_as_admin=true" : ""}${viewing_as_admin && target_user_id && current_tab !== "all" ? `&user_id=${target_user_id}` : ""}${this.state.api_target === "search" ? `&q=${search_value}` : ""}`).then(res => {
                 let { data, current_page, last_page } = res.data
-                let filteredArray = data.filter((item) => already_added_needs && typeof already_added_needs[item.id] === "undefined")
+                let filteredArray = current_tab === "needs" && viewing_as_admin ? data.filter((item) => already_added_needs && typeof already_added_needs[item.id] === "undefined") : data
                 this.setState(prevState => {
                 return ({
                     [current_tab]: {
@@ -182,6 +182,9 @@ export default class MixedDemands extends Component {
                     allUsers: data
                 })
             })
+        } else {
+            $("#select-user-target").val(null).change()
+            this.setState({[this.state.current_tab]: {data: [], nextPage: 1, hasMore: true}}, () => this.getData())
         }
         this.setState(prevState => ({
             viewing_as_admin: !prevState.viewing_as_admin 
