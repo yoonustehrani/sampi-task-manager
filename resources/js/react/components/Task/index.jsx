@@ -123,7 +123,12 @@ export default class ShowTask extends Component {
                 var pdt = $('#task-due-to').persianDatepicker({
                     format: 'dddd D MMMM YYYY، HH:mm',
                     viewMode: 'day',
-                    onSelect: unix => {due_to_input.val(unix / 1000);},
+                    onSelect: unix => {
+                        due_to_input.val(unix / 1000)
+                        this.setState({
+                            task_due_to: due_to_input.val()
+                        })
+                    },
                     toolbox:{calendarSwitch:{enabled: true,format: 'YYYY'}},
                     calendar:{gregorian: {due_tolocale: 'en'},persian: {locale: 'fa'}},   
                     // minDate: new persianDate().valueOf(),
@@ -132,7 +137,7 @@ export default class ShowTask extends Component {
                 let defate = this.state.task.due_to ? this.state.task.due_to : new Date().valueOf();
                 pdt.setDate(defate)
             } else {
-                let { edit_task_api, toggle_task_state_api } = this.props, { task_description, finished_at_check, first_check_state } = this.state
+                let { edit_task_api, toggle_task_state_api } = this.props, { task_description, finished_at_check, first_check_state, task_due_to } = this.state
                 if (finished_at_check !== first_check_state) {
                     Axios.put(toggle_task_state_api).then(res => {
                         // we will show the erros with swal
