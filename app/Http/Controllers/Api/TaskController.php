@@ -62,13 +62,13 @@ class TaskController extends BaseController
             }
         } else {
             $model = $request->user();
+            $relationship = $this->model_relationship($request->relationship, $model, '_tasks', 'tasks');
             if ($request->user_id) {
                 $target_user = User::findOrFail($request->user_id);
                 $this->authorize('view', $target_user);
                 $model = $target_user;
-                $relationship = $this->model_relationship($request->relationship, $model, '_tasks', 'tasks');
-                $model = $model->{$relationship}();
             }
+            $model = $model->{$relationship}();
         }
         
         $model->whereNull('parent_id')->with(['users','workspace:id,title,avatar_pic'])->withCount('demands', 'children');
