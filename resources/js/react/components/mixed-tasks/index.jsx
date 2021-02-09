@@ -22,7 +22,8 @@ export default class MixedTasks extends Component {
             search_value: "",
             api_target: 'mixed',
             viewing_as_admin: false,
-            target_user_id: null
+            target_user_id: null,
+            due_to_check: true
         }
     }
 
@@ -70,6 +71,12 @@ export default class MixedTasks extends Component {
         this.addTaskRef.current.classList.toggle("d-none")
     }
 
+    toggle_check = (val) => {
+        this.setState(prevState => ({
+            [val]: !prevState[val]
+        }))
+    }
+
     toggleFilterBox = () => {
         this.filterBoxRef.current.classList.toggle("d-none")
     }
@@ -81,7 +88,7 @@ export default class MixedTasks extends Component {
     }
 
     addtask = () => {
-        let { post_task_api } = this.props, { new_task_description, workspace_users, target_user_id, viewing_as_admin } = this.state
+        let { post_task_api } = this.props, { new_task_description, workspace_users, target_user_id, viewing_as_admin, due_to_check, task_due_to } = this.state
         let title = $("#new-task-title").val(), priority = parseInt($("#new-task-priority").val()), users = $("#new-task-members").val(), related_task = $("#parent-task-select").val() === "0" ? "" : $("#parent-task-select").val(), workspaceId = $("#new-task-project-select").val(), group = $("#new-task-group").val(), due_to = $("input[name='due_to']").val()
         console.log(users)
         axios.post(post_task_api.replace("workspaceId", workspaceId), {
@@ -90,7 +97,7 @@ export default class MixedTasks extends Component {
             group: group,
             parent_id: related_task,
             users: users,
-            due_to: due_to,
+            due_to: !due_to_check ? null : task_due_to,
             description: new_task_description 
         }).then(res => {
             let { data } = res
@@ -188,7 +195,12 @@ export default class MixedTasks extends Component {
         var pdt = $('#task-due-to').persianDatepicker({
             format: 'dddd D MMMM YYYY، HH:mm',
             viewMode: 'day',
-            onSelect: unix => {due_to_input.val(unix / 1000);},
+            onSelect: unix => {
+                due_to_input.val(unix / 1000)
+                this.setState({
+                    task_due_to: due_to_input.val()
+                })
+            },
             toolbox:{calendarSwitch:{enabled: true,format: 'YYYY'}},
             calendar:{gregorian: {due_tolocale: 'en'},persian: {locale: 'fa'}},   
             // minDate: new persianDate().valueOf(),
@@ -231,7 +243,7 @@ export default class MixedTasks extends Component {
     }
 
     render() {
-        let { isGetting, already_added_tasks, workspaces, workspaces_users, selected_workspace, tasks, viewing_as_admin, allUsers } = this.state, { logged_in_user_id } = this.props
+        let { isGetting, already_added_tasks, workspaces, workspaces_users, selected_workspace, tasks, viewing_as_admin, allUsers, due_to_check } = this.state, { logged_in_user_id } = this.props
 
         return (
             <div>
@@ -289,8 +301,11 @@ export default class MixedTasks extends Component {
                                 <div className="input-group-prepend">
                                     <span className="input-group-text">موعد تحویل</span>
                                 </div>
-                                <input type="hidden" id="new-task-due-to" name="due_to" />
-                                <input type="text" id="task-due-to" className="form-control" />
+                                <input type="hidden" id="new-task-due-to" name="due_to" readOnly={!due_to_check} />
+                                <input type="text" id="task-due-to" className="form-control" readOnly={!due_to_check} />
+                                <div className="input-group-text">
+                                <input className="c-p" type="checkbox" onChange={this.toggle_check.bind(this, "due_to_check")} defaultChecked={true} />
+                            </div>
                             </div>
                             <div className="input-group col-12 col-md-6 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3">
                                 <div className="input-group-prepend">

@@ -12276,6 +12276,24 @@ div.show-tasks-container div.task-detail {
   margin-right: 8px;
 }
 
+div.show-tasks-container div.task-detail button,
+div.show-tasks-container div.task-detail input,
+div.show-tasks-container div.task-detail p,
+div.show-tasks-container div.task-detail a,
+div.show-tasks-container div.task-detail h1,
+div.show-tasks-container div.task-detail h2,
+div.show-tasks-container div.task-detail h3,
+div.show-tasks-container div.task-detail h4,
+div.show-tasks-container div.task-detail h5,
+div.show-tasks-container div.task-detail h6,
+div.show-tasks-container div.task-detail span,
+div.show-tasks-container div.task-detail li,
+div.show-tasks-container div.task-detail div {
+  font-family: "Iransans" !important;
+  direction: rtl !important;
+  text-align: right !important;
+}
+
 div.show-tasks-container div.task-detail span {
   font-size: 15px;
   color: #000000;

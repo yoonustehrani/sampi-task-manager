@@ -56517,6 +56517,12 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
       _this.addTaskRef.current.classList.toggle("d-none");
     });
 
+    _defineProperty(_assertThisInitialized(_this), "toggle_check", function (val) {
+      _this.setState(function (prevState) {
+        return _defineProperty({}, val, !prevState[val]);
+      });
+    });
+
     _defineProperty(_assertThisInitialized(_this), "toggleFilterBox", function () {
       _this.filterBoxRef.current.classList.toggle("d-none");
     });
@@ -56533,7 +56539,9 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
           new_task_description = _this$state2.new_task_description,
           workspace_users = _this$state2.workspace_users,
           target_user_id = _this$state2.target_user_id,
-          viewing_as_admin = _this$state2.viewing_as_admin;
+          viewing_as_admin = _this$state2.viewing_as_admin,
+          due_to_check = _this$state2.due_to_check,
+          task_due_to = _this$state2.task_due_to;
       var title = $("#new-task-title").val(),
           priority = parseInt($("#new-task-priority").val()),
           users = $("#new-task-members").val(),
@@ -56548,7 +56556,7 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
         group: group,
         parent_id: related_task,
         users: users,
-        due_to: due_to,
+        due_to: !due_to_check ? null : task_due_to,
         description: new_task_description
       }).then(function (res) {
         var data = res.data;
@@ -56635,7 +56643,8 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
       search_value: "",
       api_target: 'mixed',
       viewing_as_admin: false,
-      target_user_id: null
+      target_user_id: null,
+      due_to_check: true
     };
     return _this;
   }
@@ -56692,6 +56701,10 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
         viewMode: 'day',
         onSelect: function onSelect(unix) {
           due_to_input.val(unix / 1000);
+
+          _this2.setState({
+            task_due_to: due_to_input.val()
+          });
         },
         toolbox: {
           calendarSwitch: {
@@ -56781,6 +56794,7 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
           tasks = _this$state3.tasks,
           viewing_as_admin = _this$state3.viewing_as_admin,
           allUsers = _this$state3.allUsers,
+          due_to_check = _this$state3.due_to_check,
           logged_in_user_id = this.props.logged_in_user_id;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, CAN_VIEW_AS_ADMIN && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-check col-12 text-right"
@@ -56870,12 +56884,21 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
       }, "\u0645\u0648\u0639\u062F \u062A\u062D\u0648\u06CC\u0644")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "hidden",
         id: "new-task-due-to",
-        name: "due_to"
+        name: "due_to",
+        readOnly: !due_to_check
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         id: "task-due-to",
-        className: "form-control"
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-control",
+        readOnly: !due_to_check
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "input-group-text"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: "c-p",
+        type: "checkbox",
+        onChange: this.toggle_check.bind(this, "due_to_check"),
+        defaultChecked: true
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "input-group col-12 col-md-6 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "input-group-prepend"

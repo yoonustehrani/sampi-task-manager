@@ -524,6 +524,11 @@ div.show-tasks-container {
     div.task-detail {
         float: right;
         margin-right: 8px;
+        button, input, p, a, h1, h2, h3, h4, h5, h6, span, li, div {
+            font-family: $iran-sans !important;
+            direction: rtl !important;
+            text-align: right !important;
+        }
         span {
             font-size: 15px;
             color: #000000;

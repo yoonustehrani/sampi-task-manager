@@ -5,7 +5,7 @@ import moment from 'moment'
 moment.locale('fa')
 import { Squares } from 'react-activity'
 import 'react-activity/dist/react-activity.css'
-import { setPriority, redirectTo } from '../../../helpers'
+import { setPriority, redirectTo, sweetError } from '../../../helpers'
 import { simpleSearch, renderWithImg } from '../../../select2'
 import Task from './Task'
 
@@ -23,9 +23,10 @@ export default class Workspace extends Component {
                 nextPage: 1,
                 hasMore: true,
                 viewing_as_admin: false,
-                target_user_id: null
+                target_user_id: null,
             },
-            already_added_tasks: {}
+            already_added_tasks: {},
+            due_to_check: true
         }
     }
 
@@ -33,6 +34,12 @@ export default class Workspace extends Component {
         this.addIconRef.current.classList.toggle("fa-plus")
         this.addIconRef.current.classList.toggle("fa-minus")
         this.addTaskRef.current.classList.toggle("d-none")
+    }
+
+    toggle_check = (val) => {
+        this.setState(prevState => ({
+            [val]: !prevState[val]
+        }))
     }
 
     onDescriptionChange = (content) => {
@@ -72,7 +79,7 @@ export default class Workspace extends Component {
     }
 
     addTask = () => {
-        let { add_task_api } = this.props, { new_task_description, workspace_users } = this.state
+        let { add_task_api } = this.props, { new_task_description, workspace_users, due_to_check, target_user_id, viewing_as_admin, task_due_to } = this.state
         let title = $("#new-task-title").val(), group = $("#new-task-group").val(), priority = parseInt($("#new-task-priority").val()), users = $("#new-task-members").val(), description = new_task_description, due_to = $("input[name='due_to']").val(), parent_id = $("#parent-task-select").val()
         Axios.post(add_task_api, {
             title: title,
@@ -80,7 +87,7 @@ export default class Workspace extends Component {
             group: group,
             users: users,
             description: new_task_description,
-            due_to: due_to ? due_to : null,
+            due_to: !due_to_check ? null : task_due_to,
             parent_id: parent_id
         }).then(res => {
             let { data } = res
@@ -118,22 +125,7 @@ export default class Workspace extends Component {
                 }
             })
         }).catch(err => {
-            let {status, data} = err.response
-            if (status === 422) {
-                let {errors} = data, err_html = ""
-                Object.entries(errors).map(([param, message]) => {
-                    err_html += `<p class="float-right text-center col-12">${message}</p><br>`
-                })
-                Swal.default.fire({
-                    title: 'خطا',
-                    html: err_html,
-                    icon: 'error',
-                    confirmButtonText: 'تایید',
-                    customClass: {
-                        content: 'persian-text'
-                    }
-                })
-            }
+            sweetError(err)
         })
     }
 
@@ -163,7 +155,12 @@ export default class Workspace extends Component {
         $('#task-due-to').persianDatepicker({
             format: 'dddd D MMMM YYYY، HH:mm',
             viewMode: 'day',
-            onSelect: unix => {due_to_input.val(unix / 1000);},
+            onSelect: unix => {
+                due_to_input.val(unix / 1000)
+                this.setState({
+                    task_due_to: due_to_input.val()
+                })
+            },
             toolbox:{calendarSwitch:{enabled: true,format: 'YYYY'}},
             calendar:{gregorian: {locale: 'en'},persian: {locale: 'fa'}},
             minDate: new persianDate().valueOf(),
@@ -203,7 +200,7 @@ export default class Workspace extends Component {
     }
     
     render() {
-        let { isGetting, tasks, workspace_users, workspace, viewing_as_admin, allUsers } = this.state
+        let { isGetting, tasks, workspace_users, workspace, viewing_as_admin, allUsers, due_to_check } = this.state
         let { taskRoute } = this.props
         return (
             <div>
@@ -218,7 +215,7 @@ export default class Workspace extends Component {
                             <label className="form-check-label c-p" htmlFor="flexCheckDefault">
                                 مشاهده به عنوان ادمین
                             </label>
-                            <div className="add-task-section rtl mt-2 animated slideInLeft d-none" ref={this.adminViewRef}>
+                            <div className="add-task-section rtl mt-2 mb-2 animated slideInLeft d-none" ref={this.adminViewRef}>
                                 <div className="input-group col-12 col-md-4 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line-all">
                                     <div className="input-group-prepend">
                                         <span className="input-group-text">مخاطب</span>
@@ -271,8 +268,11 @@ export default class Workspace extends Component {
                                 <div className="input-group-prepend">
                                     <span className="input-group-text">موعد تحویل</span>
                                 </div>
-                                <input type="hidden" id="new-task-due-to" name="due_to"/>
-                                <input type="text" id="task-due-to" className="form-control" />
+                                <input type="hidden" id="new-task-due-to" name="due_to" readOnly={!due_to_check} />
+                                <input type="text" id="task-due-to" className="form-control" readOnly={!due_to_check} />
+                                <div className="input-group-text">
+                                <input className="c-p" type="checkbox" onChange={this.toggle_check.bind(this, "due_to_check")} defaultChecked={true} />
+                        </div>
                             </div>
                             <div className="input-group col-12 col-md-6 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3 input-group-single-line-all">
                                 <div className="input-group-prepend">

@@ -13,13 +13,14 @@ export default class ShowTask extends Component {
         super(props)
         this.state = {
             mode: "show",
-            task_active_users: []
+            task_active_users: [],
+            due_to_check: true
         }
     }
 
-    toggle_finished_check = () => {
+    toggle_check = (val) => {
         this.setState(prevState => ({
-            finished_at_check: !prevState.finished_at_check
+            [val]: !prevState[val]
         }))
     }
 
@@ -63,7 +64,7 @@ export default class ShowTask extends Component {
     }
 
     changeMode = (mode) => {
-        let { workspace } = this.state
+        let { workspace, task } = this.state
         let edited_title = $("#task-title-edit").val(), edited_group = $("#task-group-edit").val(), edited_priority = $("#edit-task-priority").val(), edited_users = $("#edit-task-members").val(), parent_id = $("#parent-task-select").val()
         this.setState(prevState => ({
             mode: mode,
@@ -100,7 +101,11 @@ export default class ShowTask extends Component {
                             }
                         },
                         processResults: function (res) {
+                            console.log(res)
                             var data = $.map(res, function (obj) {
+                                if (obj.id === task.id) {
+                                    return null
+                                }
                                 obj.text = obj.text || obj.title; // replace name with the property used for the text
                                 return obj;
                             });
@@ -137,7 +142,7 @@ export default class ShowTask extends Component {
                 let defate = this.state.task.due_to ? this.state.task.due_to : new Date().valueOf();
                 pdt.setDate(defate)
             } else {
-                let { edit_task_api, toggle_task_state_api } = this.props, { task_description, finished_at_check, first_check_state, task_due_to } = this.state
+                let { edit_task_api, toggle_task_state_api } = this.props, { task_description, finished_at_check, first_check_state, task_due_to, due_to_check } = this.state
                 if (finished_at_check !== first_check_state) {
                     Axios.put(toggle_task_state_api).then(res => {
                         // we will show the erros with swal
@@ -149,7 +154,7 @@ export default class ShowTask extends Component {
                     priority: edited_priority,
                     users: edited_users,
                     description: task_description,
-                    due_to: task_due_to,
+                    due_to: !due_to_check ? null : task_due_to,
                     parent_id: parent_id
                 }).then(res => {
                     let { data } = res
@@ -166,7 +171,7 @@ export default class ShowTask extends Component {
     }
 
     editInfo = () => {
-        let { task, finished_at_check, workspace, task_active_users } = this.state, { logged_in_user_id } = this.props
+        let { task, finished_at_check, workspace, task_active_users, due_to_check } = this.state, { logged_in_user_id } = this.props
         return (
             <div className="col-12 col-md-10 offset-md-2 float-left mt-3 animated flash">
                 <div className="edit-tasks-container col-12">
@@ -220,8 +225,11 @@ export default class ShowTask extends Component {
                         <div className="input-group-prepend">
                             <span className="input-group-text">موعد تحویل</span>
                         </div>
-                        <input type="hidden" id="new-task-due-to" name="due_to" />
-                        <input type="text" id="task-due-to" className="form-control" />
+                        <input type="hidden" id="new-task-due-to" name="due_to" readOnly={!due_to_check} />
+                        <input type="text" id="task-due-to" className="form-control" readOnly={!due_to_check} />
+                        <div className="input-group-text">
+                            <input className="c-p" type="checkbox" onChange={this.toggle_check.bind(this, "due_to_check")} defaultChecked={task.due_to !== null ? true : false} />
+                        </div>
                     </div>
                     <div className="input-group col-12 col-md-4 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3">
                         <div className="input-group-prepend">
@@ -230,7 +238,7 @@ export default class ShowTask extends Component {
                         {/* <input id="finished_at_input" className="form-control" type="text" defaultValue={task.finished_at !== null ? moment(task.finished_at).format("jYYYY/jMM/jDD HH:mm") : ""} disabled={finished_at_check ? false : true} /> */}
                         <input type="text" className="form-control" value={finished_at_check ? "تمام شده" : "نا تمام"} readOnly />
                         <div className="input-group-text">
-                            <input className="c-p" type="checkbox" onChange={this.toggle_finished_check.bind(this)} defaultChecked={task.finished_at !== null ? true : false} />
+                            <input className="c-p" type="checkbox" onChange={this.toggle_check.bind(this, "finished_at_check")} defaultChecked={task.finished_at !== null ? true : false} />
                         </div>
                     </div>
                     <div className="input-group col-12 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3 mb-3">

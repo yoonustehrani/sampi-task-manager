@@ -56510,14 +56510,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
-
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -56587,6 +56579,12 @@ var Workspace = /*#__PURE__*/function (_Component) {
       _this.addTaskRef.current.classList.toggle("d-none");
     });
 
+    _defineProperty(_assertThisInitialized(_this), "toggle_check", function (val) {
+      _this.setState(function (prevState) {
+        return _defineProperty({}, val, !prevState[val]);
+      });
+    });
+
     _defineProperty(_assertThisInitialized(_this), "onDescriptionChange", function (content) {
       _this.setState({
         new_task_description: content
@@ -56615,13 +56613,13 @@ var Workspace = /*#__PURE__*/function (_Component) {
           });
 
           _this.setState(function (prevState) {
-            var _ref;
+            var _ref2;
 
-            return _ref = {}, _defineProperty(_ref, table, {
+            return _ref2 = {}, _defineProperty(_ref2, table, {
               data: [].concat(_toConsumableArray(prevState[table].data), _toConsumableArray(filteredArray)),
               nextPage: current_page + 1,
               hasMore: current_page === last_page ? false : true
-            }), _defineProperty(_ref, "isGetting", false), _ref;
+            }), _defineProperty(_ref2, "isGetting", false), _ref2;
           });
         });
       };
@@ -56650,7 +56648,11 @@ var Workspace = /*#__PURE__*/function (_Component) {
       var add_task_api = _this.props.add_task_api,
           _this$state2 = _this.state,
           new_task_description = _this$state2.new_task_description,
-          workspace_users = _this$state2.workspace_users;
+          workspace_users = _this$state2.workspace_users,
+          due_to_check = _this$state2.due_to_check,
+          target_user_id = _this$state2.target_user_id,
+          viewing_as_admin = _this$state2.viewing_as_admin,
+          task_due_to = _this$state2.task_due_to;
       var title = $("#new-task-title").val(),
           group = $("#new-task-group").val(),
           priority = parseInt($("#new-task-priority").val()),
@@ -56664,7 +56666,7 @@ var Workspace = /*#__PURE__*/function (_Component) {
         group: group,
         users: users,
         description: new_task_description,
-        due_to: due_to ? due_to : null,
+        due_to: !due_to_check ? null : task_due_to,
         parent_id: parent_id
       }).then(function (res) {
         var data = res.data;
@@ -56710,30 +56712,7 @@ var Workspace = /*#__PURE__*/function (_Component) {
           }
         });
       })["catch"](function (err) {
-        var _err$response = err.response,
-            status = _err$response.status,
-            data = _err$response.data;
-
-        if (status === 422) {
-          var errors = data.errors,
-              err_html = "";
-          Object.entries(errors).map(function (_ref2) {
-            var _ref3 = _slicedToArray(_ref2, 2),
-                param = _ref3[0],
-                message = _ref3[1];
-
-            err_html += "<p class=\"float-right text-center col-12\">".concat(message, "</p><br>");
-          });
-          Swal["default"].fire({
-            title: 'خطا',
-            html: err_html,
-            icon: 'error',
-            confirmButtonText: 'تایید',
-            customClass: {
-              content: 'persian-text'
-            }
-          });
-        }
+        Object(_helpers__WEBPACK_IMPORTED_MODULE_6__["sweetError"])(err);
       });
     });
 
@@ -56786,7 +56765,8 @@ var Workspace = /*#__PURE__*/function (_Component) {
         viewing_as_admin: false,
         target_user_id: null
       },
-      already_added_tasks: {}
+      already_added_tasks: {},
+      due_to_check: true
     };
     return _this;
   }
@@ -56804,6 +56784,10 @@ var Workspace = /*#__PURE__*/function (_Component) {
         viewMode: 'day',
         onSelect: function onSelect(unix) {
           due_to_input.val(unix / 1000);
+
+          _this2.setState({
+            task_due_to: due_to_input.val()
+          });
         },
         toolbox: {
           calendarSwitch: {
@@ -56885,7 +56869,8 @@ var Workspace = /*#__PURE__*/function (_Component) {
           workspace_users = _this$state3.workspace_users,
           workspace = _this$state3.workspace,
           viewing_as_admin = _this$state3.viewing_as_admin,
-          allUsers = _this$state3.allUsers;
+          allUsers = _this$state3.allUsers,
+          due_to_check = _this$state3.due_to_check;
       var taskRoute = this.props.taskRoute;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "float-right col-12 pr-0 pl-0 pr-md-3 pl-md-3"
@@ -56907,7 +56892,7 @@ var Workspace = /*#__PURE__*/function (_Component) {
         className: "form-check-label c-p",
         htmlFor: "flexCheckDefault"
       }, "\u0645\u0634\u0627\u0647\u062F\u0647 \u0628\u0647 \u0639\u0646\u0648\u0627\u0646 \u0627\u062F\u0645\u06CC\u0646"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "add-task-section rtl mt-2 animated slideInLeft d-none",
+        className: "add-task-section rtl mt-2 mb-2 animated slideInLeft d-none",
         ref: this.adminViewRef
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "input-group col-12 col-md-4 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line-all"
@@ -56992,12 +56977,21 @@ var Workspace = /*#__PURE__*/function (_Component) {
       }, "\u0645\u0648\u0639\u062F \u062A\u062D\u0648\u06CC\u0644")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "hidden",
         id: "new-task-due-to",
-        name: "due_to"
+        name: "due_to",
+        readOnly: !due_to_check
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         id: "task-due-to",
-        className: "form-control"
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-control",
+        readOnly: !due_to_check
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "input-group-text"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: "c-p",
+        type: "checkbox",
+        onChange: this.toggle_check.bind(this, "due_to_check"),
+        defaultChecked: true
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "input-group col-12 col-md-6 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3 input-group-single-line-all"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "input-group-prepend"

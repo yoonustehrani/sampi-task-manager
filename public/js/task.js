@@ -57673,11 +57673,9 @@ var ShowTask = /*#__PURE__*/function (_Component) {
 
     _this = _super.call(this, props);
 
-    _defineProperty(_assertThisInitialized(_this), "toggle_finished_check", function () {
+    _defineProperty(_assertThisInitialized(_this), "toggle_check", function (val) {
       _this.setState(function (prevState) {
-        return {
-          finished_at_check: !prevState.finished_at_check
-        };
+        return _defineProperty({}, val, !prevState[val]);
       });
     });
 
@@ -57688,7 +57686,9 @@ var ShowTask = /*#__PURE__*/function (_Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "changeMode", function (mode) {
-      var workspace = _this.state.workspace;
+      var _this$state = _this.state,
+          workspace = _this$state.workspace,
+          task = _this$state.task;
       var edited_title = $("#task-title-edit").val(),
           edited_group = $("#task-group-edit").val(),
           edited_priority = $("#edit-task-priority").val(),
@@ -57732,7 +57732,12 @@ var ShowTask = /*#__PURE__*/function (_Component) {
                 };
               },
               processResults: function processResults(res) {
+                console.log(res);
                 var data = $.map(res, function (obj) {
+                  if (obj.id === task.id) {
+                    return null;
+                  }
+
                   obj.text = obj.text || obj.title; // replace name with the property used for the text
 
                   return obj;
@@ -57794,11 +57799,12 @@ var ShowTask = /*#__PURE__*/function (_Component) {
           var _this$props = _this.props,
               edit_task_api = _this$props.edit_task_api,
               toggle_task_state_api = _this$props.toggle_task_state_api,
-              _this$state = _this.state,
-              task_description = _this$state.task_description,
-              finished_at_check = _this$state.finished_at_check,
-              first_check_state = _this$state.first_check_state,
-              task_due_to = _this$state.task_due_to;
+              _this$state2 = _this.state,
+              task_description = _this$state2.task_description,
+              finished_at_check = _this$state2.finished_at_check,
+              first_check_state = _this$state2.first_check_state,
+              task_due_to = _this$state2.task_due_to,
+              due_to_check = _this$state2.due_to_check;
 
           if (finished_at_check !== first_check_state) {
             axios__WEBPACK_IMPORTED_MODULE_1___default.a.put(toggle_task_state_api).then(function (res) {// we will show the erros with swal
@@ -57811,7 +57817,7 @@ var ShowTask = /*#__PURE__*/function (_Component) {
             priority: edited_priority,
             users: edited_users,
             description: task_description,
-            due_to: task_due_to,
+            due_to: !due_to_check ? null : task_due_to,
             parent_id: parent_id
           }).then(function (res) {
             var data = res.data;
@@ -57829,11 +57835,12 @@ var ShowTask = /*#__PURE__*/function (_Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "editInfo", function () {
-      var _this$state2 = _this.state,
-          task = _this$state2.task,
-          finished_at_check = _this$state2.finished_at_check,
-          workspace = _this$state2.workspace,
-          task_active_users = _this$state2.task_active_users,
+      var _this$state3 = _this.state,
+          task = _this$state3.task,
+          finished_at_check = _this$state3.finished_at_check,
+          workspace = _this$state3.workspace,
+          task_active_users = _this$state3.task_active_users,
+          due_to_check = _this$state3.due_to_check,
           logged_in_user_id = _this.props.logged_in_user_id;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-12 col-md-10 offset-md-2 float-left mt-3 animated flash"
@@ -57923,12 +57930,21 @@ var ShowTask = /*#__PURE__*/function (_Component) {
       }, "\u0645\u0648\u0639\u062F \u062A\u062D\u0648\u06CC\u0644")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "hidden",
         id: "new-task-due-to",
-        name: "due_to"
+        name: "due_to",
+        readOnly: !due_to_check
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         id: "task-due-to",
-        className: "form-control"
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-control",
+        readOnly: !due_to_check
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "input-group-text"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: "c-p",
+        type: "checkbox",
+        onChange: _this.toggle_check.bind(_assertThisInitialized(_this), "due_to_check"),
+        defaultChecked: task.due_to !== null ? true : false
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "input-group col-12 col-md-4 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "input-group-prepend"
@@ -57944,7 +57960,7 @@ var ShowTask = /*#__PURE__*/function (_Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         className: "c-p",
         type: "checkbox",
-        onChange: _this.toggle_finished_check.bind(_assertThisInitialized(_this)),
+        onChange: _this.toggle_check.bind(_assertThisInitialized(_this), "finished_at_check"),
         defaultChecked: task.finished_at !== null ? true : false
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "input-group col-12 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3 mb-3"
@@ -57965,10 +57981,10 @@ var ShowTask = /*#__PURE__*/function (_Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "showInfo", function () {
-      var _this$state3 = _this.state,
-          task = _this$state3.task,
-          workspace_users = _this$state3.workspace_users,
-          workspace = _this$state3.workspace;
+      var _this$state4 = _this.state,
+          task = _this$state4.task,
+          workspace_users = _this$state4.workspace_users,
+          workspace = _this$state4.workspace;
 
       if (task && workspace_users) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -58188,7 +58204,8 @@ var ShowTask = /*#__PURE__*/function (_Component) {
 
     _this.state = {
       mode: "show",
-      task_active_users: []
+      task_active_users: [],
+      due_to_check: true
     };
     return _this;
   }
@@ -58238,10 +58255,10 @@ var ShowTask = /*#__PURE__*/function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this$state4 = this.state,
-          mode = _this$state4.mode,
-          task = _this$state4.task,
-          workspace = _this$state4.workspace;
+      var _this$state5 = this.state,
+          mode = _this$state5.mode,
+          task = _this$state5.task,
+          workspace = _this$state5.workspace;
 
       if (task && workspace) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
