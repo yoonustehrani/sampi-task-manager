@@ -18,7 +18,7 @@
 
 @push('scripts')
     <script>
-        const TargetUser = {!! json_encode($user->only(['id', 'fullname', 'avatar_pic', 'name'])) !!};
+        const TargetUser = {!! json_encode($user->only(['id', 'fullname', 'avatar_pic', 'name', 'roles'])) !!};
     </script>
     <script src="{{ asset("js/user-profile.js") }}"></script>
     <script src="{{ asset('js/select2.js') }}"></script>

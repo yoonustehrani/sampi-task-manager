@@ -9,7 +9,7 @@ use Nicolaslopezj\Searchable\SearchableTrait;
 class Task extends Model
 {
     use SoftDeletes, SearchableTrait;
-    protected $fillable = ['title', 'description', 'parent_id', 'group', 'workspace_id', 'creator_id', 'finisher_id', 'priority_id', 'finished_at'];
+    protected $fillable = ['title', 'description', 'parent_id', 'group', 'workspace_id', 'creator_id', 'finisher_id', 'priority_id', 'due_to', 'finished_at'];
     protected $casts = [
         'due_to' => 'datetime',
         'date'   => 'datetime',
