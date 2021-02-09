@@ -13,7 +13,11 @@ return [
     | a conventional file to locate the various service credentials.
     |
     */
-
+    'telegram' => [
+        'task_manager' => [
+            'bot_token' => '1635919329:AAE6laF2oCY4DrzKMI8e85jTV5KYrqxHyvA'
+        ]
+    ],
     'mailgun' => [
         'domain' => env('MAILGUN_DOMAIN'),
         'secret' => env('MAILGUN_SECRET'),

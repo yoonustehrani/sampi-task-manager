@@ -45,6 +45,15 @@ class EventServiceProvider extends ServiceProvider
         \App\Events\UserUpdatedTask::class => [
             '\App\Listeners\SendUserUpdatedTaskNotification'
         ],
+        \App\Events\WorkspaceCreated::class => [
+            \App\Listeners\SendWorkspaceCreatedNotification::class
+        ],
+        \App\Events\TaskCreated::class => [
+            \App\Listeners\SendTaskCreatedNotification::class
+        ],
+        \App\Events\TaskFinished::class => [
+            \App\Listeners\SendTaskFinishedNotification::class
+        ],
     ];
 
     /**

@@ -1,6 +1,8 @@
 <?php
 
+use App\Events\WorkspaceCreated;
 use App\User;
+use App\Workspace;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -19,6 +21,7 @@ use Illuminate\Support\Facades\Route;
 // $user = auth()->user() ?: User::find(2);
 // return $user->actions()->with('subject')->limit(5)->get();
 // return "<a href='". route('task-manager.') ."'>Task Manager</a>";
+
 
 Route::get('/', function () {
     return view('index');

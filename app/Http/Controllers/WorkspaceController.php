@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\WorkspaceCreated;
 use App\User;
 use App\Workspace;
 use Illuminate\Http\Request;
@@ -51,7 +52,10 @@ class WorkspaceController extends Controller
         $workspace->save();
         $workspace->admins()->attach([auth()->user()->id]);
         $workspace->members()->attach($request->input('members'));
-        return redirect()->to(route('task-manager.workspaces.index'));
+        dispatch(function () use($workspace) {
+            event(new WorkspaceCreated($workspace));
+        })->afterResponse();
+        return response()->redirectTo(route('task-manager.workspaces.index'));
     }
 
     /**

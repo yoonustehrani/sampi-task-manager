@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\TaskCreated;
+use App\Events\TaskFinished;
 use App\Task;
 use App\User;
 use App\Workspace;
@@ -111,7 +113,8 @@ class TaskController extends BaseController
         $relationship = $task->parent_id ? 'parent' : 'children';
         $task->load([
             'demands',
-            $relationship
+            $relationship,
+            'finisher'
         ]);
         return $task;
     }
@@ -144,6 +147,8 @@ class TaskController extends BaseController
                     array_merge($users, [(string) $request->user()->id])
                 );
             \DB::commit();
+            $task['workspace'] = $workspace;
+            event(new TaskCreated($task));
             return $task->parent_id ? $task->load(['parent', 'users']) : $task->load('users');
         } catch(\Exception $e) {
             \DB::rollback();
@@ -203,6 +208,10 @@ class TaskController extends BaseController
         $task->finished_at = $task->finished_at ? null : now();
         $task->finisher_id = $user->id;
         if ($task->save()) {
+            if ($task->finished_at) {
+                $task->load('workspace', 'finisher');
+                event(new TaskFinished($task));
+            }
             return $task;
         }
     }
