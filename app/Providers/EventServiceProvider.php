@@ -15,36 +15,36 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        \App\Events\UserAddedMemberToATask::class => [
-            '\App\Listeners\SendUserAddedMemberToATaskNotification'
-        ],
-        \App\Events\UserAddedTask::class => [
-            '\App\Listeners\SendUserAddedTaskNotification'
-        ],
-        \App\Events\UserAddedToWorkspace::class => [
-            '\App\Listeners\SendUserAddedToWorkspaceNotification'
-        ],
-        \App\Events\UserAskedForDemand::class => [
-            '\App\Listeners\SendUserAskedForDemandNotification'
-        ],
-        \App\Events\UserDeletedDemand::class => [
-            '\App\Listeners\SendUserDeletedDemandNotification'
-        ],
-        \App\Events\UserDeletedTask::class => [
-            '\App\Listeners\SendUserDeletedTaskNotification'
-        ],
-        \App\Events\UserFinishedDemand::class => [
-            '\App\Listeners\SendUserFinishedDemandNotification'
-        ],
-        \App\Events\UserFinishedTask::class => [
-            '\App\Listeners\SendUserFinishedTaskNotification'
-        ],
-        \App\Events\UserUpdatedDemand::class => [
-            '\App\Listeners\SendUserUpdatedDemandNotification'
-        ],
-        \App\Events\UserUpdatedTask::class => [
-            '\App\Listeners\SendUserUpdatedTaskNotification'
-        ],
+        // \App\Events\UserAddedMemberToATask::class => [
+        //     '\App\Listeners\SendUserAddedMemberToATaskNotification'
+        // ],
+        // \App\Events\UserAddedTask::class => [
+        //     '\App\Listeners\SendUserAddedTaskNotification'
+        // ],
+        // \App\Events\UserAddedToWorkspace::class => [
+        //     '\App\Listeners\SendUserAddedToWorkspaceNotification'
+        // ],
+        // \App\Events\UserAskedForDemand::class => [
+        //     '\App\Listeners\SendUserAskedForDemandNotification'
+        // ],
+        // \App\Events\UserDeletedDemand::class => [
+        //     '\App\Listeners\SendUserDeletedDemandNotification'
+        // ],
+        // \App\Events\UserDeletedTask::class => [
+        //     '\App\Listeners\SendUserDeletedTaskNotification'
+        // ],
+        // \App\Events\UserFinishedDemand::class => [
+        //     '\App\Listeners\SendUserFinishedDemandNotification'
+        // ],
+        // \App\Events\UserFinishedTask::class => [
+        //     '\App\Listeners\SendUserFinishedTaskNotification'
+        // ],
+        // \App\Events\UserUpdatedDemand::class => [
+        //     '\App\Listeners\SendUserUpdatedDemandNotification'
+        // ],
+        // \App\Events\UserUpdatedTask::class => [
+        //     '\App\Listeners\SendUserUpdatedTaskNotification'
+        // ],
         \App\Events\WorkspaceCreated::class => [
             \App\Listeners\SendWorkspaceCreatedNotification::class
         ],
@@ -53,6 +53,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         \App\Events\TaskFinished::class => [
             \App\Listeners\SendTaskFinishedNotification::class
+        ],
+        \App\Events\DemandCreated::class => [
+            \App\Listeners\SendDemandCreatedNotification::class
         ],
     ];
 

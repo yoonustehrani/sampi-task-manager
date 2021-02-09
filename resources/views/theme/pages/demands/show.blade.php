@@ -113,9 +113,9 @@
                     @endif
                 </div>
             </div>
-            @if ($demand->task_id)
+            @if ($demand->task)
             @php
-                $demand->load('task.workspace')
+                $demand->task->load('workspace')
             @endphp
             @can('view', $demand)
             <div class="box-section mt-3 p-0">
