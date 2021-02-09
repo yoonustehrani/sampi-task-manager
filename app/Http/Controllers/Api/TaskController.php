@@ -49,6 +49,7 @@ class TaskController extends BaseController
             'order' => 'nullable|string',
             'order_by' => 'nullable|string'
         ]);
+        
         if ($request->view_as_admin == 'true') {
             $model = app(Task::class);
             $this->authorize('viewAny', Task::class);
@@ -56,6 +57,8 @@ class TaskController extends BaseController
                 $user = \App\User::find($request->user_id);
                 $this->authorize('viewAny', User::class);
                 $model = $user;
+                $relationship = $this->model_relationship($request->relationship, $model, '_tasks', 'tasks');
+                $model = $model->{$relationship}();
             }
         } else {
             $model = $request->user();
@@ -63,10 +66,12 @@ class TaskController extends BaseController
                 $target_user = User::findOrFail($request->user_id);
                 $this->authorize('view', $target_user);
                 $model = $target_user;
+                $relationship = $this->model_relationship($request->relationship, $model, '_tasks', 'tasks');
+                $model = $model->{$relationship}();
             }
         }
-        $relationship = $this->model_relationship($request->relationship, $model, '_tasks', 'tasks');
-        $model = $model->{$relationship}()->whereNull('parent_id')->with(['users','workspace:id,title,avatar_pic'])->withCount('demands', 'children');
+        
+        $model->whereNull('parent_id')->with(['users','workspace:id,title,avatar_pic'])->withCount('demands', 'children');
         return $request->limit
             ? $this->decide_ordered($request, $model)->limit((int) $request->limit)->get()
             : $this->decide_ordered($request, $model)->paginate(10);
