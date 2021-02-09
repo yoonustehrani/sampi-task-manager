@@ -90,7 +90,7 @@ export default class MixedDemands extends Component {
         }, () => {
             axios.get(`${this.state.api_target === "mixed" ? get_mixed_demands_api : mixed_demands_search}${current_tab === "demands" ? "&relationship=asked" : ""}&order_by=${order_by ? order_by : "created_at"}&order=${order ? order : "desc"}&filter=${filter ? filter : "all"}&page=${this.state[current_tab].nextPage}${viewing_as_admin ? "&view_as_admin=true" : ""}${viewing_as_admin && target_user_id && current_tab !== "all" ? `&user_id=${target_user_id}` : ""}${this.state.api_target === "search" ? `&q=${search_value}` : ""}`).then(res => {
                 let { data, current_page, last_page } = res.data
-                let filteredArray = current_tab === "needs" && viewing_as_admin ? data.filter((item) => already_added_needs && typeof already_added_needs[item.id] === "undefined") : data
+                let filteredArray = current_tab === "needs" ? data.filter((item) => already_added_needs && typeof already_added_needs[item.id] === "undefined") : data
                 this.setState(prevState => {
                 return ({
                     [current_tab]: {

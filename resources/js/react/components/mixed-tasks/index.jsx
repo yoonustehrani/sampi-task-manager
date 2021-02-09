@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import { getTask, getUser, getWorkspace, sweetError, setPriority, redirectTo } from '../../../helpers'
+import { renderWithImg } from '../../../select2'
 import { Digital } from 'react-activity'
 import 'react-activity/lib/Digital/Digital.css'
 import TinymcEditor from '../tinymce-editor/index'
@@ -13,17 +14,20 @@ export default class MixedTasks extends Component {
         this.filterBoxRef = React.createRef()
         this.addIconRef = React.createRef()
         this.addTaskRef = React.createRef()
+        this.adminViewRef = React.createRef()
         this.state = {
             isGetting: false,
             new_task_description: "",
             already_added_tasks: {},
             search_value: "",
-            api_target: 'mixed'
+            api_target: 'mixed',
+            viewing_as_admin: false,
+            target_user_id: null
         }
     }
 
     getData = (filtering=false) => {            
-        let { get_mixed_tasks_api, mixed_tasks_search } = this.props, { already_added_tasks } = this.state
+        let { get_mixed_tasks_api, mixed_tasks_search } = this.props, { already_added_tasks, viewing_as_admin, target_user_id } = this.state
         let order_by = $(`#mixed_tasks_order_by_select`).val(), order = $(`#mixed_tasks_order_select`).val(), relationship = $(`#mixed_tasks_relation_select`).val(), search_value = $(`#tasks-search-input`).val()
         this.setState(prevState => {
             if (filtering && search_value.length >= 3) {
@@ -40,7 +44,7 @@ export default class MixedTasks extends Component {
                 return({isGetting: true})
             }
         }, () => {
-            axios.get(`${this.state.api_target === "mixed" ? get_mixed_tasks_api : mixed_tasks_search}&order_by=${order_by ? order_by : "created_at"}&order=${order ? order : "desc"}&relationship=${relationship ? relationship : "all"}&page=${this.state.tasks.nextPage}${this.state.api_target === "search" ? `&q=${search_value}` : ""}`).then(res => {
+            axios.get(`${this.state.api_target === "mixed" ? get_mixed_tasks_api : mixed_tasks_search}&order_by=${order_by ? order_by : "created_at"}&order=${order ? order : "desc"}&relationship=${relationship ? relationship : "all"}${viewing_as_admin ? "&view_as_admin=true" : ""}${viewing_as_admin && target_user_id && target_user_id !== 0 ? `&user_id=${target_user_id}` : ""}&page=${this.state.tasks.nextPage}${this.state.api_target === "search" ? `&q=${search_value}` : ""}`).then(res => {
                 let { data, current_page, last_page } = res.data
                 let filteredArray = data.filter((item) => already_added_tasks && typeof already_added_tasks[item.id] === "undefined")
                 this.setState(prevState => {
@@ -77,7 +81,7 @@ export default class MixedTasks extends Component {
     }
 
     addtask = () => {
-        let { post_task_api } = this.props, { new_task_description, workspace_users } = this.state
+        let { post_task_api } = this.props, { new_task_description, workspace_users, target_user_id, viewing_as_admin } = this.state
         let title = $("#new-task-title").val(), priority = parseInt($("#new-task-priority").val()), users = $("#new-task-members").val(), related_task = $("#parent-task-select").val() === "0" ? "" : $("#parent-task-select").val(), workspaceId = $("#new-task-project-select").val(), group = $("#new-task-group").val(), due_to = $("input[name='due_to']").val()
         console.log(users)
         axios.post(post_task_api.replace("workspaceId", workspaceId), {
@@ -90,23 +94,29 @@ export default class MixedTasks extends Component {
             description: new_task_description 
         }).then(res => {
             let { data } = res
-            this.setState(prevState => {
-                return ({
-                    tasks: Object.assign(prevState.tasks, {
-                        data: [
-                        {
-                            ...data,
-                            priority: {title: setPriority(data.priority_id)},
-                            users: data.users,
-                            finished_at: null
-                        },
-                        ...prevState.tasks.data],
-                    }),
-                    already_added_tasks: Object.assign({}, prevState.already_added_tasks, {
-                        [data.id]: data.id
-                    })
-                })
+            let usersObj = {}
+            data.users.map((user, i) => {
+                usersObj[user.id] = user.id
             })
+            if (typeof usersObj[target_user_id] !== "undefined" || !viewing_as_admin || target_user_id === 0) {
+                this.setState(prevState => {
+                    return ({
+                        tasks: Object.assign(prevState.tasks, {
+                            data: [
+                            {
+                                ...data,
+                                priority: {title: setPriority(data.priority_id)},
+                                users: data.users,
+                                finished_at: null
+                            },
+                            ...prevState.tasks.data],
+                        }),
+                        already_added_tasks: Object.assign({}, prevState.already_added_tasks, {
+                            [data.id]: data.id
+                        })
+                    })
+                })   
+            }
             Swal.default.fire({
                 icon: 'success',
                 title: "موفقیت",
@@ -119,6 +129,25 @@ export default class MixedTasks extends Component {
         }).catch(err => {
             sweetError(err)
         })
+    }
+
+    setViewAsAdmin = () => {
+        let { viewing_as_admin } = this.state, { get_all_users } = this.props
+        this.adminViewRef.current.classList.toggle("d-none")
+        if (! viewing_as_admin) {
+            axios.get(`${get_all_users}&view_as_admin=true`).then(res => {
+                let { data } = res
+                this.setState({
+                    allUsers: data
+                })
+            })
+        } else {
+            $("#select-user-target").val(null).change()
+                this.setState({tasks: {data: [], nextPage: 1, hasMore: true}, already_added_tasks: {}}, () => this.getData())
+        }
+        this.setState(prevState => ({
+            viewing_as_admin: !prevState.viewing_as_admin 
+        }))
     }
 
     componentDidMount() {
@@ -185,15 +214,54 @@ export default class MixedTasks extends Component {
         $("#new-task-project-select").on("select2:select", function () {
             setSelectValue("#parent-task-select", null)
             setWorkspaceId()
-        })       
+        })    
+        renderWithImg("#select-user-target", "کاربر مورد نظر را انتخاب کنید", false)    
+        const setTargetUser = () => {
+            let id = $("#select-user-target").val()
+            this.setState({
+                target_user_id: id,
+                already_added_tasks: {}
+            }, () => {
+                this.setState({tasks: {data: [], nextPage: 1, hasMore: true}}, () => this.getData())
+            })
+        }
+        $("#select-user-target").on("select2:select", () => {
+            setTargetUser()
+        })   
     }
 
     render() {
-        let { isGetting, already_added_tasks, workspaces, workspaces_users, selected_workspace, tasks } = this.state, { logged_in_user_id } = this.props
+        let { isGetting, already_added_tasks, workspaces, workspaces_users, selected_workspace, tasks, viewing_as_admin, allUsers } = this.state, { logged_in_user_id } = this.props
 
         return (
             <div>
-                <div className="col-12 mt-4 float-right task-tab-result pr-0 pl-0 pr-md-3 pl-md-3">
+                {CAN_VIEW_AS_ADMIN &&
+                    <div className="form-check col-12 text-right">
+                        <input className="form-check-input c-p" type="checkbox" value={viewing_as_admin} id="flexCheckDefault" onChange={this.setViewAsAdmin} />
+                        <label className="form-check-label c-p" htmlFor="flexCheckDefault">
+                            مشاهده به عنوان ادمین
+                        </label>
+                        <div className="add-task-section rtl mt-2 animated slideInLeft d-none" ref={this.adminViewRef}>
+                            <div className="input-group col-12 col-md-4 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line-all">
+                                <div className="input-group-prepend">
+                                    <span className="input-group-text">مخاطب</span>
+                                </div>
+                                <select id="select-user-target" className="form-control text-right">
+                                    <option></option>
+                                    <option value="0" img_address={APP_PATH + "images/check-all.svg"}>همه</option>
+                                    { allUsers ? allUsers.map((user, i) => {
+                                        if (user.id !== CurrentUser.id) {
+                                            return (
+                                                <option key={i} value={user.id} img_address={user.avatar_pic !== null ? APP_PATH + user.avatar_pic : APP_PATH + 'images/male-avatar.svg'}>{user.fullname}</option>
+                                            )                                            
+                                        }
+                                    }) : null }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <div className="col-12 mt-3 float-right task-tab-result pr-0 pl-0 pr-md-3 pl-md-3">
                     <div className="workspace-add-task mb-2 col-12 pl-0 pr-0 pr-md-3 pl-md-3">
                         <div className="workspace-title-section title-section" onClick={this.toggleAddBox}>
                             <i className="fas fa-plus" ref={this.addIconRef}></i>

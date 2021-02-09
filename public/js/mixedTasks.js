@@ -56372,13 +56372,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../helpers */ "./resources/js/helpers/index.js");
-/* harmony import */ var react_activity__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-activity */ "./node_modules/react-activity/dist/react-activity.js");
-/* harmony import */ var react_activity__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_activity__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var react_activity_lib_Digital_Digital_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-activity/lib/Digital/Digital.css */ "./node_modules/react-activity/lib/Digital/Digital.css");
-/* harmony import */ var react_activity_lib_Digital_Digital_css__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_activity_lib_Digital_Digital_css__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _tinymce_editor_index__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../tinymce-editor/index */ "./resources/js/react/components/tinymce-editor/index.jsx");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _select2__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../select2 */ "./resources/js/select2.js");
+/* harmony import */ var react_activity__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-activity */ "./node_modules/react-activity/dist/react-activity.js");
+/* harmony import */ var react_activity__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_activity__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var react_activity_lib_Digital_Digital_css__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-activity/lib/Digital/Digital.css */ "./node_modules/react-activity/lib/Digital/Digital.css");
+/* harmony import */ var react_activity_lib_Digital_Digital_css__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react_activity_lib_Digital_Digital_css__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _tinymce_editor_index__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../tinymce-editor/index */ "./resources/js/react/components/tinymce-editor/index.jsx");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_7__);
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
@@ -56426,7 +56427,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
-moment__WEBPACK_IMPORTED_MODULE_6___default.a.locale('fa');
+
+moment__WEBPACK_IMPORTED_MODULE_7___default.a.locale('fa');
 
 var MixedTasks = /*#__PURE__*/function (_Component) {
   _inherits(MixedTasks, _Component);
@@ -56445,7 +56447,10 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
       var _this$props = _this.props,
           get_mixed_tasks_api = _this$props.get_mixed_tasks_api,
           mixed_tasks_search = _this$props.mixed_tasks_search,
-          already_added_tasks = _this.state.already_added_tasks;
+          _this$state = _this.state,
+          already_added_tasks = _this$state.already_added_tasks,
+          viewing_as_admin = _this$state.viewing_as_admin,
+          target_user_id = _this$state.target_user_id;
       var order_by = $("#mixed_tasks_order_by_select").val(),
           order = $("#mixed_tasks_order_select").val(),
           relationship = $("#mixed_tasks_relation_select").val(),
@@ -56468,7 +56473,7 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
           };
         }
       }, function () {
-        axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("".concat(_this.state.api_target === "mixed" ? get_mixed_tasks_api : mixed_tasks_search, "&order_by=").concat(order_by ? order_by : "created_at", "&order=").concat(order ? order : "desc", "&relationship=").concat(relationship ? relationship : "all", "&page=").concat(_this.state.tasks.nextPage).concat(_this.state.api_target === "search" ? "&q=".concat(search_value) : "")).then(function (res) {
+        axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("".concat(_this.state.api_target === "mixed" ? get_mixed_tasks_api : mixed_tasks_search, "&order_by=").concat(order_by ? order_by : "created_at", "&order=").concat(order ? order : "desc", "&relationship=").concat(relationship ? relationship : "all").concat(viewing_as_admin ? "&view_as_admin=true" : "").concat(viewing_as_admin && target_user_id && target_user_id !== 0 ? "&user_id=".concat(target_user_id) : "", "&page=").concat(_this.state.tasks.nextPage).concat(_this.state.api_target === "search" ? "&q=".concat(search_value) : "")).then(function (res) {
           var _res$data = res.data,
               data = _res$data.data,
               current_page = _res$data.current_page,
@@ -56524,9 +56529,11 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
 
     _defineProperty(_assertThisInitialized(_this), "addtask", function () {
       var post_task_api = _this.props.post_task_api,
-          _this$state = _this.state,
-          new_task_description = _this$state.new_task_description,
-          workspace_users = _this$state.workspace_users;
+          _this$state2 = _this.state,
+          new_task_description = _this$state2.new_task_description,
+          workspace_users = _this$state2.workspace_users,
+          target_user_id = _this$state2.target_user_id,
+          viewing_as_admin = _this$state2.viewing_as_admin;
       var title = $("#new-task-title").val(),
           priority = parseInt($("#new-task-priority").val()),
           users = $("#new-task-members").val(),
@@ -56545,21 +56552,27 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
         description: new_task_description
       }).then(function (res) {
         var data = res.data;
-
-        _this.setState(function (prevState) {
-          return {
-            tasks: Object.assign(prevState.tasks, {
-              data: [_objectSpread(_objectSpread({}, data), {}, {
-                priority: {
-                  title: Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["setPriority"])(data.priority_id)
-                },
-                users: data.users,
-                finished_at: null
-              })].concat(_toConsumableArray(prevState.tasks.data))
-            }),
-            already_added_tasks: Object.assign({}, prevState.already_added_tasks, _defineProperty({}, data.id, data.id))
-          };
+        var usersObj = {};
+        data.users.map(function (user, i) {
+          usersObj[user.id] = user.id;
         });
+
+        if (typeof usersObj[target_user_id] !== "undefined" || !viewing_as_admin || target_user_id === 0) {
+          _this.setState(function (prevState) {
+            return {
+              tasks: Object.assign(prevState.tasks, {
+                data: [_objectSpread(_objectSpread({}, data), {}, {
+                  priority: {
+                    title: Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["setPriority"])(data.priority_id)
+                  },
+                  users: data.users,
+                  finished_at: null
+                })].concat(_toConsumableArray(prevState.tasks.data))
+              }),
+              already_added_tasks: Object.assign({}, prevState.already_added_tasks, _defineProperty({}, data.id, data.id))
+            };
+          });
+        }
 
         Swal["default"].fire({
           icon: 'success',
@@ -56575,15 +56588,54 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
       });
     });
 
+    _defineProperty(_assertThisInitialized(_this), "setViewAsAdmin", function () {
+      var viewing_as_admin = _this.state.viewing_as_admin,
+          get_all_users = _this.props.get_all_users;
+
+      _this.adminViewRef.current.classList.toggle("d-none");
+
+      if (!viewing_as_admin) {
+        axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("".concat(get_all_users, "&view_as_admin=true")).then(function (res) {
+          var data = res.data;
+
+          _this.setState({
+            allUsers: data
+          });
+        });
+      } else {
+        $("#select-user-target").val(null).change();
+
+        _this.setState({
+          tasks: {
+            data: [],
+            nextPage: 1,
+            hasMore: true
+          },
+          already_added_tasks: {}
+        }, function () {
+          return _this.getData();
+        });
+      }
+
+      _this.setState(function (prevState) {
+        return {
+          viewing_as_admin: !prevState.viewing_as_admin
+        };
+      });
+    });
+
     _this.filterBoxRef = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
     _this.addIconRef = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
     _this.addTaskRef = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
+    _this.adminViewRef = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
     _this.state = {
       isGetting: false,
       new_task_description: "",
       already_added_tasks: {},
       search_value: "",
-      api_target: 'mixed'
+      api_target: 'mixed',
+      viewing_as_admin: false,
+      target_user_id: null
     };
     return _this;
   }
@@ -56692,20 +56744,80 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
         setSelectValue("#parent-task-select", null);
         setWorkspaceId();
       });
+      Object(_select2__WEBPACK_IMPORTED_MODULE_3__["renderWithImg"])("#select-user-target", "کاربر مورد نظر را انتخاب کنید", false);
+
+      var setTargetUser = function setTargetUser() {
+        var id = $("#select-user-target").val();
+
+        _this2.setState({
+          target_user_id: id,
+          already_added_tasks: {}
+        }, function () {
+          _this2.setState({
+            tasks: {
+              data: [],
+              nextPage: 1,
+              hasMore: true
+            }
+          }, function () {
+            return _this2.getData();
+          });
+        });
+      };
+
+      $("#select-user-target").on("select2:select", function () {
+        setTargetUser();
+      });
     }
   }, {
     key: "render",
     value: function render() {
-      var _this$state2 = this.state,
-          isGetting = _this$state2.isGetting,
-          already_added_tasks = _this$state2.already_added_tasks,
-          workspaces = _this$state2.workspaces,
-          workspaces_users = _this$state2.workspaces_users,
-          selected_workspace = _this$state2.selected_workspace,
-          tasks = _this$state2.tasks,
+      var _this$state3 = this.state,
+          isGetting = _this$state3.isGetting,
+          already_added_tasks = _this$state3.already_added_tasks,
+          workspaces = _this$state3.workspaces,
+          workspaces_users = _this$state3.workspaces_users,
+          selected_workspace = _this$state3.selected_workspace,
+          tasks = _this$state3.tasks,
+          viewing_as_admin = _this$state3.viewing_as_admin,
+          allUsers = _this$state3.allUsers,
           logged_in_user_id = this.props.logged_in_user_id;
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-12 mt-4 float-right task-tab-result pr-0 pl-0 pr-md-3 pl-md-3"
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, CAN_VIEW_AS_ADMIN && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-check col-12 text-right"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: "form-check-input c-p",
+        type: "checkbox",
+        value: viewing_as_admin,
+        id: "flexCheckDefault",
+        onChange: this.setViewAsAdmin
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        className: "form-check-label c-p",
+        htmlFor: "flexCheckDefault"
+      }, "\u0645\u0634\u0627\u0647\u062F\u0647 \u0628\u0647 \u0639\u0646\u0648\u0627\u0646 \u0627\u062F\u0645\u06CC\u0646"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "add-task-section rtl mt-2 animated slideInLeft d-none",
+        ref: this.adminViewRef
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "input-group col-12 col-md-4 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line-all"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "input-group-prepend"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "input-group-text"
+      }, "\u0645\u062E\u0627\u0637\u0628")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+        id: "select-user-target",
+        className: "form-control text-right"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "0",
+        img_address: APP_PATH + "images/check-all.svg"
+      }, "\u0647\u0645\u0647"), allUsers ? allUsers.map(function (user, i) {
+        if (user.id !== CurrentUser.id) {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+            key: i,
+            value: user.id,
+            img_address: user.avatar_pic !== null ? APP_PATH + user.avatar_pic : APP_PATH + 'images/male-avatar.svg'
+          }, user.fullname);
+        }
+      }) : null)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-12 mt-3 float-right task-tab-result pr-0 pl-0 pr-md-3 pl-md-3"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "workspace-add-task mb-2 col-12 pl-0 pr-0 pr-md-3 pl-md-3"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -56819,7 +56931,7 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
         className: "input-group col-12 pl-0 pr-0 mt-3"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "tinymc-container"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_tinymce_editor_index__WEBPACK_IMPORTED_MODULE_5__["default"], {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_tinymce_editor_index__WEBPACK_IMPORTED_MODULE_6__["default"], {
         changeContent: this.onDescriptionChange
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "text-center mt-2"
@@ -56993,7 +57105,7 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
           }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0639\u0636\u0648", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
             className: "fas fa-user mr-1"
           })))));
-        })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["setPriority"])(priority_id)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, due_to !== null ? moment__WEBPACK_IMPORTED_MODULE_6___default()(due_to).fromNow() : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["setPriority"])(priority_id)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, due_to !== null ? moment__WEBPACK_IMPORTED_MODULE_7___default()(due_to).fromNow() : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-calendar-minus  fa-3x"
         })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, finished_at === null ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-times-circle fa-3x"
@@ -57001,7 +57113,7 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
           className: "fas fa-check-circle fa-3x"
         })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, finished_at === null ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-calendar-times fa-3x"
-        }) : moment__WEBPACK_IMPORTED_MODULE_6___default()(finished_at).fromNow()));
+        }) : moment__WEBPACK_IMPORTED_MODULE_7___default()(finished_at).fromNow()));
       }))), tasks && tasks.data.length > 0 && !isGetting && tasks.hasMore && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "text-center"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
@@ -57011,7 +57123,7 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
         className: "text-center text-secondary"
       }, "\u0645\u0648\u0631\u062F\u06CC \u0628\u0631\u0627\u06CC \u0646\u0645\u0627\u06CC\u0634 \u0648\u062C\u0648\u062F \u0646\u062F\u0627\u0631\u062F"), isGetting && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "text-center"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_activity__WEBPACK_IMPORTED_MODULE_3__["Digital"], {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_activity__WEBPACK_IMPORTED_MODULE_4__["Digital"], {
         color: "#000000",
         size: 24
       }))));
@@ -57170,13 +57282,132 @@ var mixed_tasks_search_api = target.getAttribute("data-search");
 var get_workspaces_api = target.getAttribute("workspaces-api");
 var post_task_api = target.getAttribute("add_task_api");
 var logged_in_user_id = parseInt(target.getAttribute("logged-in-user-id"));
+var get_all_users = target.getAttribute("get-all-users");
 react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_mixed_tasks__WEBPACK_IMPORTED_MODULE_2__["default"], {
   get_mixed_tasks_api: mixed_tasks_api,
   mixed_tasks_search: mixed_tasks_search_api,
   logged_in_user_id: logged_in_user_id,
   post_task_api: post_task_api,
-  get_workspaces_api: get_workspaces_api
+  get_workspaces_api: get_workspaces_api,
+  get_all_users: get_all_users
 }), target);
+
+/***/ }),
+
+/***/ "./resources/js/select2.js":
+/*!*********************************!*\
+  !*** ./resources/js/select2.js ***!
+  \*********************************/
+/*! exports provided: formatOptionWithIcon, formatOptionWithImage, formatOption, simpleSearch, renderWithImg */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "formatOptionWithIcon", function() { return formatOptionWithIcon; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "formatOptionWithImage", function() { return formatOptionWithImage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "formatOption", function() { return formatOption; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "simpleSearch", function() { return simpleSearch; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "renderWithImg", function() { return renderWithImg; });
+var formatOptionWithIcon = function formatOptionWithIcon(option) {
+  if (option.element) {
+    var icon_name = option.element.attributes.icon_name.nodeValue;
+    var containerClass = option.element.attributes.container_class ? option.element.attributes.container_class.nodeValue : null;
+    return $("<div class=\"select-option ".concat(containerClass !== null ? containerClass : "", "\"><i class=\"").concat(icon_name, "\"></i>").concat(option.text, "</div>"));
+  }
+};
+var formatOptionWithImage = function formatOptionWithImage(option) {
+  if (option.element) {
+    var img_src = option.element.attributes.img_address.nodeValue,
+        is_user_admin = option.element.attributes.is_admin;
+    return $("\n            <div class=\"select-option circle-avatar-pic\">\n                <img class=\"ml-1\" src=\"".concat(img_src, "\"/>\n                ").concat(option.text, "\n                ").concat(typeof is_user_admin !== "undefined" ? "<span class=\"badge badge-pill mr-1 ".concat(is_user_admin.nodeValue === "1" ? "badge-success" : "badge-primary", "\">").concat(is_user_admin.nodeValue === "1" ? "ادمین" : "کاربر", "</span>") : "", "  \n            </div>\n        "));
+  }
+};
+var formatOption = function formatOption(option) {
+  return $("\n        <div class=\"select-option\">\n            ".concat(option.workspace ? "<div class=\"circle-avatar-pic small-avatar mb-1\"><img src=\"".concat(APP_PATH + option.workspace.avatar_pic, "\"/><span class=\"badge badge-light mr-1\">").concat(option.workspace.title, "</span></div>") : "", "\n            ").concat(option.text).concat(option.group ? " (".concat(option.group, ")") : "", "\n        </div>\n    "));
+};
+$('#new-task-priority, #tasks_order_select, #tasks_order_by_select, #tasks_relation_select, #mixed_tasks_order_select, #mixed_tasks_order_by_select, #mixed_tasks_relation_select, #mixed_demands_order_select, #mixed_demands_order_by_select, #mixed_demands_relation_select, #mixed_needs_order_select, #mixed_needs_order_by_select, #mixed_needs_relation_select').select2({
+  templateResult: formatOptionWithIcon,
+  minimumResultsForSearch: Infinity,
+  width: '100%',
+  dir: "rtl",
+  language: {
+    searching: function searching() {
+      return "درحال جستجو ...";
+    },
+    noResults: function noResults() {
+      return "نتیجه ای یافت نشد";
+    }
+  }
+});
+$('.select2-search__field').css('width', '100%');
+var simpleSearch = function simpleSearch(ids, parentOnly) {
+  var workspaceId = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : $("#new-demand-project-select").val();
+  $(ids).select2({
+    templateResult: formatOption,
+    templateSelection: function templateSelection(data, container) {
+      $(data.element).attr('workspace_id', data.workspace_id);
+      return data.text;
+    },
+    placeholder: 'کار مربوطه را جستجو و انتخاب کنید',
+    width: "100%",
+    dir: "rtl",
+    minimumInputLength: 3,
+    delay: 250,
+    ajax: {
+      url: typeof simple_search_url !== "undefined" ? simple_search_url : "",
+      data: function data(params) {
+        return {
+          q: params.term,
+          workspace: workspaceId,
+          parentOnly: parentOnly
+        };
+      },
+      processResults: function processResults(res) {
+        var data = $.map(res, function (obj) {
+          obj.text = obj.text || obj.title; // replace name with the property used for the text
+
+          return obj;
+        });
+        return {
+          results: data
+        };
+      }
+    },
+    language: {
+      searching: function searching() {
+        return "درحال جستجو ...";
+      },
+      noResults: function noResults() {
+        return "نتیجه ای یافت نشد";
+      }
+    },
+    allowClear: true
+  });
+};
+simpleSearch('#task-select', false);
+simpleSearch("#parent-task-select", true);
+var renderWithImg = function renderWithImg(ids, placeholder, multiple) {
+  $(ids).select2({
+    templateResult: formatOptionWithImage,
+    placeholder: placeholder,
+    width: "100%",
+    dir: "rtl",
+    multiple: multiple,
+    language: {
+      searching: function searching() {
+        return "درحال جستجو ...";
+      },
+      noResults: function noResults() {
+        return "نتیجه ای یافت نشد";
+      }
+    },
+    allowClear: true
+  });
+};
+renderWithImg("#new-demand-member", "نیاز به کمک چه کسی دارید؟", false);
+renderWithImg("#new-demand-project-select", "پروژه مربوطه را انتخاب کنید", false);
+renderWithImg("#new-task-members", "انجام دهندگان این کار", true);
+renderWithImg("#new-task-project-select", "پروژه مربوطه را انتخاب کنید", false);
 
 /***/ }),
 

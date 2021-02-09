@@ -56580,7 +56580,7 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
               data = _res$data.data,
               current_page = _res$data.current_page,
               last_page = _res$data.last_page;
-          var filteredArray = current_tab === "needs" && viewing_as_admin ? data.filter(function (item) {
+          var filteredArray = current_tab === "needs" ? data.filter(function (item) {
             return already_added_needs && typeof already_added_needs[item.id] === "undefined";
           }) : data;
 
