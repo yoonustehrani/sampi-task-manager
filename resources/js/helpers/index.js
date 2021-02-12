@@ -95,3 +95,15 @@ export const sweetError = (errObject) => {
     }
     return {'code': status};
 }
+
+export const sweetSuccess = (message) => {
+    Swal.default.fire({
+        icon: "success",
+        title: "موفقیت",
+        text: "اطلاعات مورد نظر بروزرسانی شد",
+        showConfirmButton: true,
+        customClass: {
+            content: "persian-text"
+        }
+    })
+}

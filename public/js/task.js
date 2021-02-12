@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -57469,7 +57469,7 @@ module.exports = function(module) {
 /*!***************************************!*\
   !*** ./resources/js/helpers/index.js ***!
   \***************************************/
-/*! exports provided: setPriority, redirectTo, getUser, getTask, getWorkspace, getDemand, sweetError */
+/*! exports provided: setPriority, redirectTo, getUser, getTask, getWorkspace, getDemand, sweetError, sweetSuccess */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -57481,6 +57481,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getWorkspace", function() { return getWorkspace; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getDemand", function() { return getDemand; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "sweetError", function() { return sweetError; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "sweetSuccess", function() { return sweetSuccess; });
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -57601,6 +57602,17 @@ var sweetError = function sweetError(errObject) {
     'code': status
   };
 };
+var sweetSuccess = function sweetSuccess(message) {
+  Swal["default"].fire({
+    icon: "success",
+    title: "موفقیت",
+    text: "اطلاعات مورد نظر بروزرسانی شد",
+    showConfirmButton: true,
+    customClass: {
+      content: "persian-text"
+    }
+  });
+};
 
 /***/ }),
 
@@ -57676,6 +57688,19 @@ var ShowTask = /*#__PURE__*/function (_Component) {
     _defineProperty(_assertThisInitialized(_this), "toggle_check", function (val) {
       _this.setState(function (prevState) {
         return _defineProperty({}, val, !prevState[val]);
+      }, function () {
+        if (val === "due_to_check" && _this.state.due_to_check === true) {
+          var due_to_input = $("input[name='due_to']");
+          var defate = _this.state.task.due_to ? new Date(_this.state.task.due_to).valueOf() : new Date().valueOf();
+
+          _this.pdt.setDate(defate);
+
+          due_to_input.val(defate / 1000);
+
+          _this.setState({
+            task_due_to: due_to_input.val()
+          });
+        }
       });
     });
 
@@ -57712,7 +57737,16 @@ var ShowTask = /*#__PURE__*/function (_Component) {
             width: "100%",
             dir: 'rtl',
             multiple: true,
-            templateResult: _select2__WEBPACK_IMPORTED_MODULE_4__["formatOptionWithImage"]
+            templateResult: _select2__WEBPACK_IMPORTED_MODULE_4__["formatOptionWithImage"],
+            language: {
+              searching: function searching() {
+                return "درحال جستجو ...";
+              },
+              noResults: function noResults() {
+                return "نتیجه ای یافت نشد";
+              }
+            },
+            allowClear: true
           });
           $('.select2-search__field').css('width', '100%');
           $("#parent-task-select").select2({
@@ -57758,7 +57792,7 @@ var ShowTask = /*#__PURE__*/function (_Component) {
             allowClear: true
           });
           var due_to_input = $("input[name='due_to']");
-          var pdt = $('#task-due-to').persianDatepicker({
+          _this.pdt = $('#task-due-to').persianDatepicker({
             format: 'dddd D MMMM YYYY، HH:mm',
             viewMode: 'day',
             onSelect: function onSelect(unix) {
@@ -57793,8 +57827,15 @@ var ShowTask = /*#__PURE__*/function (_Component) {
               }
             }
           });
-          var defate = _this.state.task.due_to ? _this.state.task.due_to : new Date().valueOf();
-          pdt.setDate(defate);
+          var defate = _this.state.task.due_to ? new Date(_this.state.task.due_to).valueOf() : new Date().valueOf();
+
+          _this.pdt.setDate(defate);
+
+          due_to_input.val(defate / 1000);
+
+          _this.setState({
+            task_due_to: due_to_input.val()
+          });
         } else {
           var _this$props = _this.props,
               edit_task_api = _this$props.edit_task_api,
@@ -57807,7 +57848,8 @@ var ShowTask = /*#__PURE__*/function (_Component) {
               due_to_check = _this$state2.due_to_check;
 
           if (finished_at_check !== first_check_state) {
-            axios__WEBPACK_IMPORTED_MODULE_1___default.a.put(toggle_task_state_api).then(function (res) {// we will show the erros with swal
+            axios__WEBPACK_IMPORTED_MODULE_1___default.a.put(toggle_task_state_api)["catch"](function (err) {
+              Object(_helpers__WEBPACK_IMPORTED_MODULE_5__["sweetError"])(err);
             });
           }
 
@@ -57817,15 +57859,26 @@ var ShowTask = /*#__PURE__*/function (_Component) {
             priority: edited_priority,
             users: edited_users,
             description: task_description,
-            due_to: !due_to_check ? null : task_due_to,
-            parent_id: parent_id
+            due_to: due_to_check ? task_due_to : null,
+            parent_id: parent_id.length === 0 ? null : parent_id
           }).then(function (res) {
             var data = res.data;
 
-            _this.setState({
-              task: data,
-              first_check_state: data.finished_at !== null ? true : false
+            _this.setState(function (prevState) {
+              var active_users = [];
+              data.users.map(function (user, i) {
+                active_users.push(user.id);
+              });
+              return {
+                task: data,
+                first_check_state: data.finished_at !== null ? true : false,
+                task_active_users: active_users
+              };
             });
+
+            Object(_helpers__WEBPACK_IMPORTED_MODULE_5__["sweetSuccess"])("جزئیات مسئولیت با موفقیت بروزرسانی شد");
+          })["catch"](function (err) {
+            Object(_helpers__WEBPACK_IMPORTED_MODULE_5__["sweetError"])(err);
           });
           $.each($(".select2"), function (i, item) {
             item.remove();
@@ -57931,12 +57984,14 @@ var ShowTask = /*#__PURE__*/function (_Component) {
         type: "hidden",
         id: "new-task-due-to",
         name: "due_to",
-        readOnly: !due_to_check
+        readOnly: !due_to_check,
+        disabled: !due_to_check
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         id: "task-due-to",
         className: "form-control",
-        readOnly: !due_to_check
+        readOnly: !due_to_check,
+        disabled: !due_to_check
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "input-group-text"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
@@ -58122,7 +58177,9 @@ var ShowTask = /*#__PURE__*/function (_Component) {
           className: "fas fa-hourglass-start"
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\u0645\u0648\u0639\u062F \u062A\u062D\u0648\u06CC\u0644:")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "task-detail"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, moment_jalaali__WEBPACK_IMPORTED_MODULE_2___default()(task.due_to).format("HH:mm jYYYY/jMM/jDD"), " (", moment_jalaali__WEBPACK_IMPORTED_MODULE_2___default()(task.due_to).fromNow(), ")"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, task.due_to !== null ? moment_jalaali__WEBPACK_IMPORTED_MODULE_2___default()(task.due_to).format("HH:mm jYYYY/jMM/jDD") + " (" + moment_jalaali__WEBPACK_IMPORTED_MODULE_2___default()(task.due_to).fromNow() + ")" : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fas fa-minus pt-1 pb-1 minus-icon"
+        })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "mt-3 col-12 col-md-5"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "task-title-section title-section"
@@ -58202,10 +58259,10 @@ var ShowTask = /*#__PURE__*/function (_Component) {
       }
     });
 
+    _this.pdt = null;
     _this.state = {
       mode: "show",
-      task_active_users: [],
-      due_to_check: true
+      task_active_users: []
     };
     return _this;
   }
@@ -58224,7 +58281,9 @@ var ShowTask = /*#__PURE__*/function (_Component) {
         _this2.setState({
           task: data,
           finished_at_check: data.finished_at !== null ? true : false,
-          first_check_state: data.finished_at !== null ? true : false
+          first_check_state: data.finished_at !== null ? true : false,
+          due_to_check: data.due_to === null ? false : true,
+          task_description: data.description
         }, function () {
           _this2.state.task.users.map(function (user, i) {
             _this2.setState(function (prevState) {
@@ -58579,14 +58638,26 @@ renderWithImg("#new-task-project-select", "پروژه مربوطه را انتخ
 
 /***/ }),
 
-/***/ 2:
-/*!******************************************!*\
-  !*** multi ./resources/js/react/task.js ***!
-  \******************************************/
+/***/ "./resources/sass/app.scss":
+/*!*********************************!*\
+  !*** ./resources/sass/app.scss ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ 0:
+/*!********************************************************************!*\
+  !*** multi ./resources/js/react/task.js ./resources/sass/app.scss ***!
+  \********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! I:\projects\task-manager\resources\js\react\task.js */"./resources/js/react/task.js");
+__webpack_require__(/*! I:\projects\task-manager\resources\js\react\task.js */"./resources/js/react/task.js");
+module.exports = __webpack_require__(/*! I:\projects\task-manager\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

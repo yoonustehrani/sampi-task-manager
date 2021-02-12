@@ -264,7 +264,7 @@ export default class MixedTasks extends Component {
                                     { allUsers ? allUsers.map((user, i) => {
                                         if (user.id !== CurrentUser.id) {
                                             return (
-                                                <option key={i} value={user.id} img_address={user.avatar_pic !== null ? APP_PATH + user.avatar_pic : APP_PATH + 'images/male-avatar.svg'}>{user.fullname}</option>
+                                                <option key={i} value={user.id} img_address={user !== null && user.avatar_pic !== null ? APP_PATH + user.avatar_pic : APP_PATH + 'images/male-avatar.svg'}>{user.fullname}</option>
                                             )                                            
                                         }
                                     }) : null }
@@ -321,7 +321,7 @@ export default class MixedTasks extends Component {
                                     <option></option>
                                     {
                                         workspaces && Object.values(workspaces).length > 0 && Object.values(workspaces).map((workspace, i) => (
-                                            <option key={i} value={workspace.id} img_address={APP_PATH + workspace.avatar_pic}>{workspace.title}</option>
+                                            <option key={i} value={workspace.id} img_address={workspaces !== null ? APP_PATH + workspace.avatar_pic : ""}>{workspace.title}</option>
                                         ))
                                     }
                                 </select>
@@ -342,7 +342,7 @@ export default class MixedTasks extends Component {
                                     { workspaces_users && selected_workspace ? Object.values(workspaces_users[parseInt(selected_workspace)]).map((user, i) => {
                                         if (user.id !== logged_in_user_id) {
                                             return (
-                                                <option key={i} value={user.id} img_address={APP_PATH + user.avatar_pic} is_admin={user.is_admin}>{user.fullname}</option>
+                                                <option key={i} value={user.id} img_address={APP_PATH + user!== null ? user.avatar_pic : "iamges/male-avatar.svg" } is_admin={user.is_admin}>{user.fullname}</option>
                                             )                                            
                                         }
                                     }) : null }
@@ -418,7 +418,7 @@ export default class MixedTasks extends Component {
                                     <th scope="row">{i + 1}</th>
                                     <td>{ title }</td>
                                     <td className="text-right">
-                                        <img className="workspace_avatar" src={APP_PATH + workspace.avatar_pic} />
+                                        <img className="workspace_avatar" src={workspace ? APP_PATH + workspace.avatar_pic : ""} />
                                         <a href={getWorkspace(workspace_id)}>{workspace.title}</a>
                                     </td>
                                     <td>{group}</td>
@@ -432,7 +432,7 @@ export default class MixedTasks extends Component {
                                                 <div key={i} className="user-dropdown-item animated jackInTheBox">
                                                     <div className="user-right-flex">
                                                         <div className="user-img-container ml-2">
-                                                            <img src={user.avatar_pic !== null ? APP_PATH + user.avatar_pic : APP_PATH + 'images/male-avatar.svg'} />
+                                                            <img src={user !== null && user.avatar_pic !== null ? APP_PATH + user.avatar_pic : APP_PATH + 'images/male-avatar.svg'} />
                                                         </div>
                                                         <div className="user-info ml-2">
                                                             <p>{ user.fullname }</p>

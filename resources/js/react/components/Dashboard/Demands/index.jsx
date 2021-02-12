@@ -54,7 +54,10 @@ export default class Demands extends Component {
                     </thead>
                     <tbody>
                         {
-                            data.length > 0 && !isGetting && data.map((demand, i) => {
+                            console.log(data)
+                        }
+                        {
+                            data && data.length > 0 && !isGetting && data.map((demand, i) => {
                                 return (
                                     <Demand key={i} demand_show_route={demand_show_route} task_route={task_route} workspace_route={workspace_route} user_profile_route={user_profile_route} index={i} {...demand} workspaces_users={workspaces_users} />
                                 )
@@ -63,7 +66,7 @@ export default class Demands extends Component {
                     </tbody>
                 </table> 
                 {
-                    data.length <= 0 && !isGetting &&
+                    data && data.length <= 0 && !isGetting &&
                         <p className="text-center text-secondary">موردی برای نمایش وجود ندارد</p>
                 }
                 {

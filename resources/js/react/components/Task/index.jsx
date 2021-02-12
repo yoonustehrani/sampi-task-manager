@@ -4,24 +4,34 @@ import moment from 'moment-jalaali'
 moment.locale('fa')
 import TinymcEditor from '../tinymce-editor/index'
 import { formatOptionWithIcon, formatOptionWithImage, formatOption } from '../../../select2'
-import { setPriority, redirectTo, getTask, getDemand, getWorkspace } from '../../../helpers'
+import { setPriority, redirectTo, getTask, getDemand, getWorkspace, sweetError, sweetSuccess } from '../../../helpers'
 import { Spinner } from 'react-activity'
 import 'react-activity/dist/react-activity.css'
 
 export default class ShowTask extends Component {
     constructor(props) {
         super(props)
+        this.pdt = null
         this.state = {
             mode: "show",
             task_active_users: [],
-            due_to_check: true
         }
     }
 
     toggle_check = (val) => {
         this.setState(prevState => ({
             [val]: !prevState[val]
-        }))
+        }), () => {
+            if (val === "due_to_check" && this.state.due_to_check === true) {
+                let due_to_input = $("input[name='due_to']")
+                let defate = this.state.task.due_to ? new Date(this.state.task.due_to).valueOf() : new Date().valueOf()
+                this.pdt.setDate(defate)
+                due_to_input.val(defate / 1000)
+                this.setState({
+                    task_due_to: due_to_input.val()
+                })
+            }
+        })
     }
 
     handleDescriptionChange = (content) => {
@@ -38,6 +48,8 @@ export default class ShowTask extends Component {
                 task: data,
                 finished_at_check: data.finished_at !== null ? true : false,
                 first_check_state: data.finished_at !== null ? true : false,
+                due_to_check: data.due_to === null ? false : true,
+                task_description: data.description
             }, () => {
                 this.state.task.users.map((user, i) => {
                     this.setState(prevState => {
@@ -81,7 +93,16 @@ export default class ShowTask extends Component {
                     width: "100%",
                     dir: 'rtl',
                     multiple: true,
-                    templateResult: formatOptionWithImage
+                    templateResult: formatOptionWithImage,
+                    language: {
+                        searching: function () {
+                            return "درحال جستجو ..."
+                        },
+                        noResults: function () {
+                            return "نتیجه ای یافت نشد"
+                        }
+                    },
+                    allowClear: true,
                 })
                 $('.select2-search__field').css('width', '100%')
                 $("#parent-task-select").select2({
@@ -125,7 +146,7 @@ export default class ShowTask extends Component {
                     allowClear: true
                 })
                 const due_to_input = $("input[name='due_to']");
-                var pdt = $('#task-due-to').persianDatepicker({
+                this.pdt = $('#task-due-to').persianDatepicker({
                     format: 'dddd D MMMM YYYY، HH:mm',
                     viewMode: 'day',
                     onSelect: unix => {
@@ -139,13 +160,17 @@ export default class ShowTask extends Component {
                     // minDate: new persianDate().valueOf(),
                     timePicker: {enabled: true,second:{enabled: false},meridiem:{enabled: true}},
                 })
-                let defate = this.state.task.due_to ? this.state.task.due_to : new Date().valueOf();
-                pdt.setDate(defate)
+                let defate = this.state.task.due_to ? new Date(this.state.task.due_to).valueOf() : new Date().valueOf()
+                this.pdt.setDate(defate)
+                due_to_input.val(defate / 1000)
+                this.setState({
+                    task_due_to: due_to_input.val()
+                })
             } else {
                 let { edit_task_api, toggle_task_state_api } = this.props, { task_description, finished_at_check, first_check_state, task_due_to, due_to_check } = this.state
                 if (finished_at_check !== first_check_state) {
-                    Axios.put(toggle_task_state_api).then(res => {
-                        // we will show the erros with swal
+                    Axios.put(toggle_task_state_api).catch(err => {
+                        sweetError(err)
                     })
                 }
                 Axios.put(edit_task_api, {
@@ -154,14 +179,24 @@ export default class ShowTask extends Component {
                     priority: edited_priority,
                     users: edited_users,
                     description: task_description,
-                    due_to: !due_to_check ? null : task_due_to,
-                    parent_id: parent_id
+                    due_to: due_to_check ? task_due_to : null,
+                    parent_id: parent_id.length === 0 ? null : parent_id
                 }).then(res => {
                     let { data } = res
-                    this.setState({
-                        task: data,
-                        first_check_state: data.finished_at !== null ? true : false,
+                    this.setState(prevState => {
+                        let active_users = []
+                        data.users.map((user, i) => {
+                            active_users.push(user.id)
+                        })
+                        return {
+                            task: data,
+                            first_check_state: data.finished_at !== null ? true : false,
+                            task_active_users: active_users
+                        }
                     })
+                    sweetSuccess("جزئیات مسئولیت با موفقیت بروزرسانی شد")
+                }).catch(err => {
+                    sweetError(err)
                 })
                 $.each($(".select2"), (i, item) => {
                     item.remove()
@@ -225,8 +260,8 @@ export default class ShowTask extends Component {
                         <div className="input-group-prepend">
                             <span className="input-group-text">موعد تحویل</span>
                         </div>
-                        <input type="hidden" id="new-task-due-to" name="due_to" readOnly={!due_to_check} />
-                        <input type="text" id="task-due-to" className="form-control" readOnly={!due_to_check} />
+                        <input type="hidden" id="new-task-due-to" name="due_to" readOnly={!due_to_check} disabled={!due_to_check} />
+                        <input type="text" id="task-due-to" className="form-control" readOnly={!due_to_check} disabled={!due_to_check} />
                         <div className="input-group-text">
                             <input className="c-p" type="checkbox" onChange={this.toggle_check.bind(this, "due_to_check")} defaultChecked={task.due_to !== null ? true : false} />
                         </div>
@@ -385,7 +420,7 @@ export default class ShowTask extends Component {
                                 <span>موعد تحویل:</span>
                             </div>
                             <div className="task-detail">
-                                <span>{moment(task.due_to).format("HH:mm jYYYY/jMM/jDD")} ({moment(task.due_to).fromNow()})</span>
+                                <span>{ task.due_to !== null ? moment(task.due_to).format("HH:mm jYYYY/jMM/jDD") + " (" + moment(task.due_to).fromNow() + ")" : <i className="fas fa-minus pt-1 pb-1 minus-icon"></i> }</span>
                             </div>
                         </div>
                         <div className="mt-3 col-12 col-md-5">
