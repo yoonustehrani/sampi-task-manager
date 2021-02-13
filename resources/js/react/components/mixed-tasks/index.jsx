@@ -127,7 +127,7 @@ export default class MixedTasks extends Component {
             group: group,
             parent_id: related_task,
             users: users,
-            // due_to: !due_to_check ? null : task_due_to.toString(),
+            // due_to: !due_to_check ? null : Math.floor(task_due_to).toString(),
             due_to: my_unix.toString(),
             description: new_task_description 
         }).then(res => {

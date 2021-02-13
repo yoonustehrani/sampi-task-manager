@@ -179,8 +179,7 @@ export default class ShowTask extends Component {
                     priority: edited_priority,
                     users: edited_users,
                     description: task_description,
-                    due_to: due_to_check ? task_due_to : null,
-                    // due_to: 1613174940,
+                    due_to: due_to_check ? Math.floor(task_due_to) : null,
                     parent_id: parent_id.length === 0 ? null : parent_id
                 }).then(res => {
                     let { data } = res
