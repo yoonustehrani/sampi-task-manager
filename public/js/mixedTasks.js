@@ -58055,7 +58055,7 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
         group: group,
         parent_id: related_task,
         users: users,
-        // due_to: !due_to_check ? null : Math.floor(task_due_to).toString(),
+        // due_to: !due_to_check ? null : Math.trunc(task_due_to).toString(),
         due_to: my_unix.toString(),
         description: new_task_description
       }).then(function (res) {
@@ -58234,7 +58234,8 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
       });
       var defate = new Date().valueOf();
       this.pdt.setDate(defate);
-      due_to_input.val(defate / 1000);
+      due_to_input.val(defate / 1000); // due_to_input.val(defate)
+
       this.setState({
         task_due_to: due_to_input.val()
       }); // here we will use select2, jquery and react states to make a connection between three select2s and the options inside them(warning: do not move this code to another js file(like select2.js) or out of this order)
