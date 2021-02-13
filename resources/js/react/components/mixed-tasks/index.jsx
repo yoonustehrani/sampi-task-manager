@@ -126,7 +126,8 @@ export default class MixedTasks extends Component {
             group: group,
             parent_id: related_task,
             users: users,
-            due_to: !due_to_check ? null : task_due_to,
+            // due_to: !due_to_check ? null : task_due_to,
+            due_to: 1613217418,
             description: new_task_description 
         }).then(res => {
             let { data } = res

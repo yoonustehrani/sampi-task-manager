@@ -56807,7 +56807,8 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
         group: group,
         parent_id: related_task,
         users: users,
-        due_to: !due_to_check ? null : task_due_to,
+        // due_to: !due_to_check ? null : task_due_to,
+        due_to: 1613217418,
         description: new_task_description
       }).then(function (res) {
         var data = res.data;
