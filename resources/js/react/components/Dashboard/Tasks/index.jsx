@@ -25,7 +25,7 @@ class Tasks extends Component {
     }    
 
     render() {
-        let tasks = this.props.AllTasks, { isGetting, workspaces_users } = this.props
+        let tasks = this.props.AllTasks, { isGetting, workspaces_users, toggle_task_state_api } = this.props
         return (
             <div>
                 <div className="filter-box mt-2 mb-2 p-3 col-12 animated fadeIn">
@@ -77,7 +77,15 @@ class Tasks extends Component {
                             tasks.length > 0 && !isGetting 
                             ? tasks.map((task, i) => {
                                 return (
-                                    <Task key={i} index={i} workspace_route={this.state.workspace_route} onClick={() => redirectTo(this.state.route.replace("taskId", task.id))} workspaces_users={workspaces_users}  {...task}/>
+                                    <Task 
+                                        key={i} 
+                                        index={i} 
+                                        workspace_route={this.state.workspace_route} 
+                                        onClick={() => redirectTo(this.state.route.replace("taskId", task.id))} 
+                                        workspaces_users={workspaces_users}  
+                                        toggle_task_state_api={toggle_task_state_api}
+                                        {...task}
+                                    />
                                 )
                             })
                             : null

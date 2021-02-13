@@ -65,7 +65,7 @@ class Task extends Component {
                 </td>
                 <td>{due_to !== null ? moment(due_to).fromNow() : <i className="fas fa-calendar-minus  fa-3x"></i>}</td>
                 <td>
-                    {finished_at === null ? <i className="fas fa-times-circle fa-3x" onClick={this.changeTaskState.bind(this, id)} onMouseEnter={this.hoverStateIcon.bind(this)} onMouseLeave={this.hoverStateIcon.bind(this)}></i> : <i className="fas fa-check-circle fa-3x" onClick={this.changeTaskState.bind(this, id)} onMouseEnter={this.hoverStateIcon.bind(this)} onMouseLeave={this.hoverStateIcon.bind(this)}></i>}
+                    {finished_at === null ? <i className="fas fa-times-circle fa-3x finished-status-icon" onClick={this.changeTaskState.bind(this, id)} onMouseEnter={this.hoverStateIcon.bind(this)} onMouseLeave={this.hoverStateIcon.bind(this)}></i> : <i className="fas fa-check-circle fa-3x finished-status-icon" onClick={this.changeTaskState.bind(this, id)} onMouseEnter={this.hoverStateIcon.bind(this)} onMouseLeave={this.hoverStateIcon.bind(this)}></i>}
                 </td>
                 <td>
                     {finished_at === null ? <i className="fas fa-calendar-times fa-3x"></i> : moment(finished_at).fromNow()}

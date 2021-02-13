@@ -17,6 +17,7 @@
         mixed_demands = "{{ route('api.task-manager.demands.mixed', ['api_token' => auth()->user()->api_token]) }}"
         demand-show-route="{{ route('task-manager.demands.show', ['workspace' => 'workspaceId', 'demand' => 'demandId']) }}"
         user-profile-route="{{ route('task-manager.users.show', ['user' => 'userId']) }}"
+        toggle-task-state-api = "{{ route('api.task-manager.tasks.toggle_state', ['workspace' => "workspaceId", 'task' => 'taskId', 'api_token' => auth()->user()->api_token]) }}"
     ></div>
 @endsection
 

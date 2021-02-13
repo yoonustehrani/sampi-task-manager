@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -73826,12 +73826,12 @@ var Task = /*#__PURE__*/function (_Component) {
       })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", null, due_to !== null ? moment(due_to).fromNow() : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("i", {
         className: "fas fa-calendar-minus  fa-3x"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", null, finished_at === null ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("i", {
-        className: "fas fa-times-circle fa-3x",
+        className: "fas fa-times-circle fa-3x finished-status-icon",
         onClick: this.changeTaskState.bind(this, id),
         onMouseEnter: this.hoverStateIcon.bind(this),
         onMouseLeave: this.hoverStateIcon.bind(this)
       }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("i", {
-        className: "fas fa-check-circle fa-3x",
+        className: "fas fa-check-circle fa-3x finished-status-icon",
         onClick: this.changeTaskState.bind(this, id),
         onMouseEnter: this.hoverStateIcon.bind(this),
         onMouseLeave: this.hoverStateIcon.bind(this)
@@ -74372,7 +74372,6 @@ var Workspace = /*#__PURE__*/function (_Component) {
         }
       });
       var defate = new Date().valueOf();
-      console.log(defate);
       this.pdt.setDate(defate);
       due_to_input.val(defate / 1000);
       this.setState({
@@ -75109,7 +75108,7 @@ renderWithImg("#new-task-project-select", "پروژه مربوطه را انتخ
 
 /***/ }),
 
-/***/ 2:
+/***/ 3:
 /*!***********************************************!*\
   !*** multi ./resources/js/react/workspace.js ***!
   \***********************************************/

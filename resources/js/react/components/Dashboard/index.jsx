@@ -179,7 +179,7 @@ export default class Dashboard extends Component {
 
     render() {
         let { mixed_tasks, statistics, isGetting, workspaces, navbar, mixed_demands, mixed_needs, workspaces_users } = this.state
-        let { workspace_route, task_route, demand_show_route, user_profile_route } = this.props
+        let { workspace_route, task_route, demand_show_route, user_profile_route, toggle_task_state_api } = this.props
         return (
             <div>
                 <div className="analysis-boxes analysis-container">
@@ -208,7 +208,7 @@ export default class Dashboard extends Component {
                         }
                     </div>
                     <div className="result-container col-12 mt-3" ref={this.tabResultsRef[1]}>
-                        <Tasks AllTasks={mixed_tasks} Route={task_route} workspace_route={workspace_route} sortData={(tab) => this.sortData.bind(this, tab)} isGetting={isGetting} workspaces_users={workspaces_users} />
+                        <Tasks AllTasks={mixed_tasks} Route={task_route} workspace_route={workspace_route} sortData={(tab) => this.sortData.bind(this, tab)} isGetting={isGetting} workspaces_users={workspaces_users} toggle_task_state_api={toggle_task_state_api} />
                     </div>
                     <div className="result-container col-12 mt-3" ref={this.tabResultsRef[2]}>
                         <Demands mixed_demands={mixed_demands} demand_show_route={demand_show_route} task_route={task_route} workspace_route={workspace_route} sortData={(tab) => this.sortData.bind(this, tab)} user_profile_route={user_profile_route} isGetting={isGetting} workspaces_users={workspaces_users} />

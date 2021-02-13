@@ -177,7 +177,6 @@ export default class Workspace extends Component {
             timePicker: {enabled: true,second:{enabled: false},meridiem:{enabled: true}},
         })
         let defate = new Date().valueOf()
-        console.log(defate)
         this.pdt.setDate(defate)
         due_to_input.val(defate / 1000)
         this.setState({
