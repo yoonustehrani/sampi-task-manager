@@ -58048,14 +58048,15 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
           workspaceId = $("#new-task-project-select").val(),
           group = $("#new-task-group").val(),
           due_to = $("input[name='due_to']").val();
+      var my_unix = 1613174940;
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(post_task_api.replace("workspaceId", workspaceId), {
         title: title,
         priority: priority,
         group: group,
         parent_id: related_task,
         users: users,
-        // due_to: !due_to_check ? null : task_due_to,
-        due_to: toString(1613174940),
+        // due_to: !due_to_check ? null : task_due_to.toString(),
+        due_to: my_unix.toString(),
         description: new_task_description
       }).then(function (res) {
         var data = res.data;
