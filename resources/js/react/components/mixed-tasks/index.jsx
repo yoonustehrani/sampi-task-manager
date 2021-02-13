@@ -233,7 +233,7 @@ export default class MixedTasks extends Component {
             },
             toolbox:{calendarSwitch:{enabled: true,format: 'YYYY'}},
             calendar:{gregorian: {due_tolocale: 'en'},persian: {locale: 'fa'}},   
-            // minDate: new persianDate().valueOf(),
+            minDate: new persianDate().valueOf(),
             timePicker: {enabled: true,second:{enabled: false},meridiem:{enabled: true}},
         })
         let defate = new Date().valueOf()
