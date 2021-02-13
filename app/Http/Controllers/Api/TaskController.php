@@ -127,6 +127,8 @@ class TaskController extends BaseController
     }
     public function store(Request $request, $workspace)
     {
+        // $dd = (new \Carbon\Carbon((int) $request->due_to))->timezone('Asia/Tehran');
+        // dd($dd->format('Y-m-d H:i:s'));
         $request->validate([
             'parent' => 'nullable|numeric',
             'title' => 'required|string',
@@ -139,14 +141,13 @@ class TaskController extends BaseController
         $workspace = $user->workspaces()->findOrFail($workspace);
         try {
             \DB::beginTransaction();
-                $task = new Task();
+                $task = new Task;
                 $task->title = $request->title;
                 $task->description = $request->description;
                 $task->parent = $request->parent;
                 $task->group = $request->group ?: $this->default_group;
                 $task->priority_id = $request->priority;
-                $due_to = $request->due_to ? (new \Carbon\Carbon(((int) $request->due_to)))->timezone('Asia/Tehran')->seconds(0) : null;
-                $task->due_to = $due_to;
+                $task->due_to = $request->due_to ?: null;
                 $task->creator_id = $request->user()->id;
                 $task = $workspace->tasks()->create($task->toArray());
                 $users = $request->input('users') ?: [];
@@ -182,7 +183,7 @@ class TaskController extends BaseController
                 }
                 $task->group = $request->group ?: $this->default_group;
                 $task->priority_id = $request->priority;
-                $due_to = $request->due_to ? (new \Carbon\Carbon(((int) $request->due_to)))->timezone('Asia/Tehran')->seconds(0) : null;
+                $due_to = $request->due_to ? (new \Carbon\Carbon(((int) $request->due_to)))->timezone('Asia/Tehran')->seconds(0)->format('Y-m-d H:i:s') : null;
                 $task->due_to = $due_to;
                 if ($request->finished) {
                     $task->finished_at = $task->finished_at ? null : now();
