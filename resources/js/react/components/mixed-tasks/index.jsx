@@ -120,7 +120,7 @@ export default class MixedTasks extends Component {
     addtask = () => {
         let { post_task_api } = this.props, { new_task_description, workspace_users, target_user_id, viewing_as_admin, due_to_check, task_due_to } = this.state
         let title = $("#new-task-title").val(), priority = parseInt($("#new-task-priority").val()), users = $("#new-task-members").val(), related_task = $("#parent-task-select").val() === "0" ? "" : $("#parent-task-select").val(), workspaceId = $("#new-task-project-select").val(), group = $("#new-task-group").val(), due_to = $("input[name='due_to']").val()
-        let my_unix = 1613174940
+        let my_unix = new Date().valueOf() / 1000;
         axios.post(post_task_api.replace("workspaceId", workspaceId), {
             title: title,
             priority: priority,
@@ -234,7 +234,7 @@ export default class MixedTasks extends Component {
             },
             toolbox:{calendarSwitch:{enabled: true,format: 'YYYY'}},
             calendar:{gregorian: {due_tolocale: 'en'},persian: {locale: 'fa'}},   
-            // minDate: new persianDate().valueOf(),
+            minDate: new persianDate().valueOf(),
             timePicker: {enabled: true,second:{enabled: false},meridiem:{enabled: true}},
         })
         let defate = new Date().valueOf()
