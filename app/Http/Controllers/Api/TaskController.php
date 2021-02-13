@@ -144,7 +144,7 @@ class TaskController extends BaseController
                 $task = new Task;
                 $task->title = $request->title;
                 $task->description = $request->description;
-                $task->parent = $request->parent;
+                $task->parent_id = $request->parent_id;
                 $task->group = $request->group ?: $this->default_group;
                 $task->priority_id = $request->priority;
                 $task->due_to = $request->due_to ?: null;
@@ -178,9 +178,7 @@ class TaskController extends BaseController
             \DB::beginTransaction();
                 $task->title = $request->title;
                 $task->description = $request->description;
-                if ($request->parent_id) {
-                    $task->parent_id = $request->parent_id;
-                }
+                $task->parent_id = $request->parent_id;
                 $task->group = $request->group ?: $this->default_group;
                 $task->priority_id = $request->priority;
                 $task->due_to = $request->due_to ?: null;
