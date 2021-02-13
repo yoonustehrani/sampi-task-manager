@@ -5,7 +5,7 @@ import { renderWithImg } from '../../../select2'
 import { Digital } from 'react-activity'
 import 'react-activity/lib/Digital/Digital.css'
 import TinymcEditor from '../tinymce-editor/index'
-import moment from 'moment'
+import moment from 'moment-jalaali'
 moment.locale('fa')
 
 export default class MixedTasks extends Component {
@@ -127,7 +127,7 @@ export default class MixedTasks extends Component {
             parent_id: related_task,
             users: users,
             // due_to: !due_to_check ? null : task_due_to,
-            due_to: 1613217418,
+            due_to: toString(1613174940),
             description: new_task_description 
         }).then(res => {
             let { data } = res
