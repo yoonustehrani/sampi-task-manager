@@ -7,7 +7,8 @@ export const formatOptionWithIcon = (option) => {
 }
 export const formatOptionWithImage = (option) => {
     if (option.element) {
-        let img_src = option.element.attributes.img_address.nodeValue, is_user_admin = option.element.attributes.is_admin
+        let img_src = option.element.attributes.img_address.nodeValue ? option.element.attributes.img_address.nodeValue : 'images/male-avatar.svg'
+        let is_user_admin = option.element.attributes.is_admin
         return $(`
             <div class="select-option circle-avatar-pic">
                 <img class="ml-1" src="${img_src}"/>

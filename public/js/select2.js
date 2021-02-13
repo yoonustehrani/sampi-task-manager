@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -90,7 +90,7 @@
 /*!*********************************!*\
   !*** ./resources/js/select2.js ***!
   \*********************************/
-/*! exports provided: formatOptionWithIcon, formatOptionWithImage, formatOption, simpleSearch */
+/*! exports provided: formatOptionWithIcon, formatOptionWithImage, formatOption, simpleSearch, renderWithImg */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -99,6 +99,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "formatOptionWithImage", function() { return formatOptionWithImage; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "formatOption", function() { return formatOption; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "simpleSearch", function() { return simpleSearch; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "renderWithImg", function() { return renderWithImg; });
 var formatOptionWithIcon = function formatOptionWithIcon(option) {
   if (option.element) {
     var icon_name = option.element.attributes.icon_name.nodeValue;
@@ -108,8 +109,8 @@ var formatOptionWithIcon = function formatOptionWithIcon(option) {
 };
 var formatOptionWithImage = function formatOptionWithImage(option) {
   if (option.element) {
-    var img_src = option.element.attributes.img_address.nodeValue,
-        is_user_admin = option.element.attributes.is_admin;
+    var img_src = option.element.attributes.img_address.nodeValue ? option.element.attributes.img_address.nodeValue : 'images/male-avatar.svg';
+    var is_user_admin = option.element.attributes.is_admin;
     return $("\n            <div class=\"select-option circle-avatar-pic\">\n                <img class=\"ml-1\" src=\"".concat(img_src, "\"/>\n                ").concat(option.text, "\n                ").concat(typeof is_user_admin !== "undefined" ? "<span class=\"badge badge-pill mr-1 ".concat(is_user_admin.nodeValue === "1" ? "badge-success" : "badge-primary", "\">").concat(is_user_admin.nodeValue === "1" ? "ادمین" : "کاربر", "</span>") : "", "  \n            </div>\n        "));
   }
 };
@@ -177,7 +178,6 @@ var simpleSearch = function simpleSearch(ids, parentOnly) {
 };
 simpleSearch('#task-select', false);
 simpleSearch("#parent-task-select", true);
-
 var renderWithImg = function renderWithImg(ids, placeholder, multiple) {
   $(ids).select2({
     templateResult: formatOptionWithImage,
@@ -196,7 +196,6 @@ var renderWithImg = function renderWithImg(ids, placeholder, multiple) {
     allowClear: true
   });
 };
-
 renderWithImg("#new-demand-member", "نیاز به کمک چه کسی دارید؟", false);
 renderWithImg("#new-demand-project-select", "پروژه مربوطه را انتخاب کنید", false);
 renderWithImg("#new-task-members", "انجام دهندگان این کار", true);
@@ -204,14 +203,26 @@ renderWithImg("#new-task-project-select", "پروژه مربوطه را انتخ
 
 /***/ }),
 
-/***/ 1:
-/*!***************************************!*\
-  !*** multi ./resources/js/select2.js ***!
-  \***************************************/
+/***/ "./resources/sass/app.scss":
+/*!*********************************!*\
+  !*** ./resources/sass/app.scss ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ 0:
+/*!*****************************************************************!*\
+  !*** multi ./resources/js/select2.js ./resources/sass/app.scss ***!
+  \*****************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! I:\projects\task-manager\resources\js\select2.js */"./resources/js/select2.js");
+__webpack_require__(/*! I:\projects\task-manager\resources\js\select2.js */"./resources/js/select2.js");
+module.exports = __webpack_require__(/*! I:\projects\task-manager\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

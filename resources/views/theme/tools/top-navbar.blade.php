@@ -17,11 +17,13 @@
                 </div>
             </div>
         </div>
-        <button data-event="max" class="btn scr-controller float-right vertical-centerlize d-none d-md-inline">
-            <i class="fas fa-expand-arrows-alt fa-compress"></i>
-        </button>
-        <button class="btn btn-secondary float-right vertical-centerlize collapser-btn">
-            <i class="fas fa-angle-double-left"></i>
-        </button>
+        <div class="pt-3 pb-3">
+            <button data-event="max" class="btn scr-controller float-right d-none d-md-inline">
+                <i class="fas fa-expand-arrows-alt fa-compress"></i>
+            </button>
+            <button class="btn btn-secondary float-right collapser-btn">
+                <i class="fas fa-angle-double-left"></i>
+            </button>
+        </div>
     </div>
 </div>

@@ -11771,10 +11771,14 @@ a {
 
 #mainpage .navbar-top {
   background: #ffffff;
-  height: 10%;
+  min-height: 10%;
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+#mainpage .navbar-top > div {
+  white-space: nowrap;
 }
 
 .contentbar {

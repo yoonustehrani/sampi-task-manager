@@ -49,6 +49,9 @@ export default class TinymcEditor extends React.Component {
                             name: 'indentation', items: [ 'outdent', 'indent' ]
                         },
                         {
+                            name: 'lists', items: [ 'numlist', 'bullist' ]
+                        },
+                        {
                             name: 'table', items: [ 'table' ]
                         },
                         {

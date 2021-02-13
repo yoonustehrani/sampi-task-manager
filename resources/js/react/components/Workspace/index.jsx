@@ -39,7 +39,17 @@ export default class Workspace extends Component {
     toggle_check = (val) => {
         this.setState(prevState => ({
             [val]: !prevState[val]
-        }))
+        }), () => {
+            if (val === "due_to_check" && this.state.due_to_check === true) {
+                let due_to_input = $("input[name='due_to']")
+                let defate = this.state.task_due_to, now = new Date().valueOf()
+                this.pdt.setDate(defate ? defate : now)
+                due_to_input.val(defate ? defate : now / 1000)
+                this.setState({
+                    task_due_to: due_to_input.val()
+                })
+            }
+        })
     }
 
     onDescriptionChange = (content) => {
@@ -152,7 +162,7 @@ export default class Workspace extends Component {
         let { workspace_api } = this.props
         this.handleMore("tasks", false)
         const due_to_input = $("input[name='due_to']");
-        $('#task-due-to').persianDatepicker({
+        this.pdt = $('#task-due-to').persianDatepicker({
             format: 'dddd D MMMM YYYY، HH:mm',
             viewMode: 'day',
             onSelect: unix => {
@@ -162,10 +172,17 @@ export default class Workspace extends Component {
                 })
             },
             toolbox:{calendarSwitch:{enabled: true,format: 'YYYY'}},
-            calendar:{gregorian: {locale: 'en'},persian: {locale: 'fa'}},
-            minDate: new persianDate().valueOf(),
-            timePicker: {enabled: true,second:{enabled: false},meridiem:{enabled: true}}
-        });
+            calendar:{gregorian: {due_tolocale: 'en'},persian: {locale: 'fa'}},   
+            // minDate: new persianDate().valueOf(),
+            timePicker: {enabled: true,second:{enabled: false},meridiem:{enabled: true}},
+        })
+        let defate = new Date().valueOf()
+        console.log(defate)
+        this.pdt.setDate(defate)
+        due_to_input.val(defate / 1000)
+        this.setState({
+            task_due_to: due_to_input.val()
+        })
         Axios.get(workspace_api).then(res => {
             let { data } = res
             simpleSearch("#parent-task-select", true, data.id)
@@ -268,8 +285,8 @@ export default class Workspace extends Component {
                                 <div className="input-group-prepend">
                                     <span className="input-group-text">موعد تحویل</span>
                                 </div>
-                                <input type="hidden" id="new-task-due-to" name="due_to" readOnly={!due_to_check} />
-                                <input type="text" id="task-due-to" className="form-control" readOnly={!due_to_check} />
+                                <input type="hidden" id="new-task-due-to" name="due_to" readOnly={!due_to_check} disabled={!due_to_check} />
+                                <input type="text" id="task-due-to" className="form-control" readOnly={!due_to_check} disabled={!due_to_check} />
                                 <div className="input-group-text">
                                 <input className="c-p" type="checkbox" onChange={this.toggle_check.bind(this, "due_to_check")} defaultChecked={true} />
                         </div>

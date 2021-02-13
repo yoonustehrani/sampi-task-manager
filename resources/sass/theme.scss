@@ -67,11 +67,14 @@ a {
     float: left;
     .navbar-top {
         background: $white;
-        height: 10%;
+        min-height: 10%;
         // padding: 15px 10px;
         display: flex;
         flex-direction: column;
         justify-content: center;
+        > div {
+            white-space: nowrap;
+        }
     }
 }
 .contentbar {

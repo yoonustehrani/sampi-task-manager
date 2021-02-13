@@ -11,6 +11,7 @@ moment.locale('fa')
 export default class MixedTasks extends Component {
     constructor(props) {
         super(props)
+        this.pdt = null
         this.filterBoxRef = React.createRef()
         this.addIconRef = React.createRef()
         this.addTaskRef = React.createRef()
@@ -23,7 +24,7 @@ export default class MixedTasks extends Component {
             api_target: 'mixed',
             viewing_as_admin: false,
             target_user_id: null,
-            due_to_check: true
+            due_to_check: true,
         }
     }
 
@@ -74,7 +75,17 @@ export default class MixedTasks extends Component {
     toggle_check = (val) => {
         this.setState(prevState => ({
             [val]: !prevState[val]
-        }))
+        }), () => {
+            if (val === "due_to_check" && this.state.due_to_check === true) {
+                let due_to_input = $("input[name='due_to']")
+                let defate = this.state.task_due_to, now = new Date().valueOf()
+                this.pdt.setDate(defate ? defate : now)
+                due_to_input.val(defate ? defate : now / 1000)
+                this.setState({
+                    task_due_to: due_to_input.val()
+                })
+            }
+        })
     }
 
     toggleFilterBox = () => {
@@ -90,7 +101,6 @@ export default class MixedTasks extends Component {
     addtask = () => {
         let { post_task_api } = this.props, { new_task_description, workspace_users, target_user_id, viewing_as_admin, due_to_check, task_due_to } = this.state
         let title = $("#new-task-title").val(), priority = parseInt($("#new-task-priority").val()), users = $("#new-task-members").val(), related_task = $("#parent-task-select").val() === "0" ? "" : $("#parent-task-select").val(), workspaceId = $("#new-task-project-select").val(), group = $("#new-task-group").val(), due_to = $("input[name='due_to']").val()
-        console.log(users)
         axios.post(post_task_api.replace("workspaceId", workspaceId), {
             title: title,
             priority: priority,
@@ -192,7 +202,7 @@ export default class MixedTasks extends Component {
             })
         })
         const due_to_input = $("input[name='due_to']");
-        var pdt = $('#task-due-to').persianDatepicker({
+        this.pdt = $('#task-due-to').persianDatepicker({
             format: 'dddd D MMMM YYYY، HH:mm',
             viewMode: 'day',
             onSelect: unix => {
@@ -205,6 +215,12 @@ export default class MixedTasks extends Component {
             calendar:{gregorian: {due_tolocale: 'en'},persian: {locale: 'fa'}},   
             // minDate: new persianDate().valueOf(),
             timePicker: {enabled: true,second:{enabled: false},meridiem:{enabled: true}},
+        })
+        let defate = new Date().valueOf()
+        this.pdt.setDate(defate)
+        due_to_input.val(defate / 1000)
+        this.setState({
+            task_due_to: due_to_input.val()
         })
         // here we will use select2, jquery and react states to make a connection between three select2s and the options inside them(warning: do not move this code to another js file(like select2.js) or out of this order)
         const setWorkspaceId = () => {
@@ -301,8 +317,8 @@ export default class MixedTasks extends Component {
                                 <div className="input-group-prepend">
                                     <span className="input-group-text">موعد تحویل</span>
                                 </div>
-                                <input type="hidden" id="new-task-due-to" name="due_to" readOnly={!due_to_check} />
-                                <input type="text" id="task-due-to" className="form-control" readOnly={!due_to_check} />
+                                <input type="hidden" id="new-task-due-to" name="due_to" readOnly={!due_to_check} disabled={!due_to_check} />
+                                <input type="text" id="task-due-to" className="form-control" readOnly={!due_to_check} disabled={!due_to_check} />
                                 <div className="input-group-text">
                                 <input className="c-p" type="checkbox" onChange={this.toggle_check.bind(this, "due_to_check")} defaultChecked={true} />
                             </div>
