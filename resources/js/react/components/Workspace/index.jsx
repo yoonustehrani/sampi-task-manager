@@ -97,7 +97,7 @@ export default class Workspace extends Component {
             group: group,
             users: users,
             description: new_task_description,
-            due_to: !due_to_check ? null : task_due_to,
+            due_to: !due_to_check ? null : task_due_to.toString(),
             parent_id: parent_id
         }).then(res => {
             let { data } = res

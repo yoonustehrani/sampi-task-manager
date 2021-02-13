@@ -120,16 +120,13 @@ export default class MixedTasks extends Component {
     addtask = () => {
         let { post_task_api } = this.props, { new_task_description, workspace_users, target_user_id, viewing_as_admin, due_to_check, task_due_to } = this.state
         let title = $("#new-task-title").val(), priority = parseInt($("#new-task-priority").val()), users = $("#new-task-members").val(), related_task = $("#parent-task-select").val() === "0" ? "" : $("#parent-task-select").val(), workspaceId = $("#new-task-project-select").val(), group = $("#new-task-group").val(), due_to = $("input[name='due_to']").val()
-        let my_unix = new Date().valueOf() / 1000;
         axios.post(post_task_api.replace("workspaceId", workspaceId), {
             title: title,
             priority: priority,
             group: group,
             parent_id: related_task,
             users: users,
-            // due_to: !due_to_check ? null : Math.trunc(task_due_to).toString(),
-            due_to: my_unix.toString(),
-            description: new_task_description 
+            due_to: !due_to_check ? null : task_due_to.toString(),
         }).then(res => {
             let { data } = res
             let usersObj = {}
