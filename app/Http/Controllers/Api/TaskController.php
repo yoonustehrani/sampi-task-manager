@@ -183,8 +183,7 @@ class TaskController extends BaseController
                 }
                 $task->group = $request->group ?: $this->default_group;
                 $task->priority_id = $request->priority;
-                $due_to = $request->due_to ? (new \Carbon\Carbon(((int) $request->due_to)))->timezone('Asia/Tehran')->seconds(0)->format('Y-m-d H:i:s') : null;
-                $task->due_to = $due_to;
+                $task->due_to = $request->due_to ?: null;
                 if ($request->finished) {
                     $task->finished_at = $task->finished_at ? null : now();
                     $task->finisher_id = $request->user()->id;
