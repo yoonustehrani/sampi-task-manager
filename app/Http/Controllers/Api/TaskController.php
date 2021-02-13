@@ -127,8 +127,6 @@ class TaskController extends BaseController
     }
     public function store(Request $request, $workspace)
     {
-        // $dd = (new \Carbon\Carbon((int) $request->due_to))->timezone('Asia/Tehran');
-        // dd($dd->format('Y-m-d H:i:s'));
         $request->validate([
             'parent' => 'nullable|numeric',
             'title' => 'required|string',
