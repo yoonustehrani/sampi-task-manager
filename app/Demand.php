@@ -14,6 +14,9 @@ class Demand extends Model
             'title' => 10,
         ]
     ];
+    protected $casts = [
+        'finished_at' => 'datetime',
+    ];
     public function from()
     {
         return $this->belongsTo(User::class, 'from_id');
