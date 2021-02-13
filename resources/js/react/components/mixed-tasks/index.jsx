@@ -328,7 +328,7 @@ export default class MixedTasks extends Component {
                                 <select id="new-task-priority" defaultValue="1">
                                     <option value="1" icon_name="fas fa-hourglass-end">ضروری و مهم</option>
                                     <option value="2" icon_name="fas fa-hourglass-half">ضروری و غیر مهم</option>
-                                    <option value="3" icon_name="fas fa-hourglass-start">غیر ضروری و غیر مهم</option>
+                                    <option value="3" icon_name="fas fa-hourglass-start">غیر ضروری و مهم</option>
                                     <option value="4" icon_name="fas fa-hourglass">غیر ضروری و غیر مهم</option>
                                 </select>
                             </div>

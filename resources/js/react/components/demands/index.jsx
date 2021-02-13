@@ -301,9 +301,9 @@ export default class Demands extends Component {
                         </thead>
                         <tbody>
                             {demands && demands.data.length > 0 && demands.data.map((demand, i) => {
-                                let { title, task, priority, finished_at, from } = demand
+                                let { title, task, priority, finished_at, from, workspace_id, id } = demand
                                 return (
-                                    <tr key={i} className="animated fadeIn" onClick={() => redirectTo(demand_show_route.replace("demandId", demand.id))}>
+                                    <tr key={i} className="animated fadeIn" onClick={() => redirectTo(getDemand(workspace_id, id))}>
                                         <th scope="row">{i + 1}</th>
                                         <td>{ title }</td>
                                         <td>
@@ -384,7 +384,7 @@ export default class Demands extends Component {
                                 <select id="new-task-priority" defaultValue="1">
                                     <option value="1" icon_name="fas fa-hourglass-end">ضروری و مهم</option>
                                     <option value="2" icon_name="fas fa-hourglass-half">ضروری و غیر مهم</option>
-                                    <option value="3" icon_name="fas fa-hourglass-start">غیر ضروری و غیر مهم</option>
+                                    <option value="3" icon_name="fas fa-hourglass-start">غیر ضروری و مهم</option>
                                     <option value="4" icon_name="fas fa-hourglass">غیر ضروری و غیر مهم</option>
                                 </select>
                             </div>
@@ -465,9 +465,9 @@ export default class Demands extends Component {
                         </thead>
                         <tbody>
                             {needs && needs.data.length > 0 && needs.data.map((need, i) => {
-                                let { title, task, priority, due_to, finished_at, to, id } = need
+                                let { title, task, priority, due_to, finished_at, to, id, workspace_id } = need
                                 return (
-                                    <tr key={i} className="animated fadeIn" onClick={() => redirectTo(demand_show_route.replace("demandId", demand.id))}>
+                                    <tr key={i} className="animated fadeIn" onClick={() => redirectTo(getDemand(workspace_id, id))}>
                                         <th scope="row">{i + 1}</th>
                                         <td>{ title }</td>
                                         <td>
