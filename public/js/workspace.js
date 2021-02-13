@@ -24955,7 +24955,7 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
             sameElse: 'L',
         },
         relativeTime: {
-            future: 'در %s',
+            future: '%s دیگر',
             past: '%s پیش',
             s: 'چند ثانیه',
             ss: '%d ثانیه',
@@ -74223,7 +74223,7 @@ var Workspace = /*#__PURE__*/function (_Component) {
         group: group,
         users: users,
         description: new_task_description,
-        due_to: !due_to_check ? null : task_due_to,
+        due_to: !due_to_check ? null : task_due_to.toString(),
         parent_id: parent_id
       }).then(function (res) {
         var data = res.data;
@@ -75115,7 +75115,7 @@ renderWithImg("#new-task-project-select", "پروژه مربوطه را انتخ
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! W:\php\sampies\resources\js\react\workspace.js */"./resources/js/react/workspace.js");
+module.exports = __webpack_require__(/*! I:\projects\task-manager\resources\js\react\workspace.js */"./resources/js/react/workspace.js");
 
 
 /***/ })
