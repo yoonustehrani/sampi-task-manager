@@ -12397,6 +12397,11 @@ div.edit-tasks-container {
   direction: rtl !important;
 }
 
+i.finished-status-icon {
+  position: relative;
+  z-index: 99;
+}
+
 .select2-container {
   box-sizing: border-box;
   display: inline-block;

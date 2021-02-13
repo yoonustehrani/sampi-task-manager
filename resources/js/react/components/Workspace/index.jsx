@@ -218,7 +218,7 @@ export default class Workspace extends Component {
     
     render() {
         let { isGetting, tasks, workspace_users, workspace, viewing_as_admin, allUsers, due_to_check } = this.state
-        let { taskRoute } = this.props
+        let { taskRoute, toggle_task_state_api } = this.props
         return (
             <div>
                 <div className="float-right col-12 pr-0 pl-0 pr-md-3 pl-md-3">
@@ -376,6 +376,7 @@ export default class Workspace extends Component {
                                             <Task key={i} index={i}                                            
                                             workspace_users={workspace_users}
                                             onClick={() => redirectTo(taskRoute.replace("taskId", task.id))} 
+                                            toggle_task_state_api = { toggle_task_state_api }
                                             {...task}/>
                                         )
                                     }) 

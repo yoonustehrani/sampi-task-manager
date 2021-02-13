@@ -1,12 +1,33 @@
+import { bind } from 'lodash';
 import React, { Component } from 'react';
-import { setPriority } from '../../../helpers';
+import { setPriority, sweetError, sweetSuccess } from '../../../helpers';
 
 class Task extends Component {
     constructor(props) {
         super(props);
     }
+
+    hoverStateIcon = (e) => {
+        e.stopPropagation()
+        e.target.classList.toggle("fas")
+        e.target.classList.toggle("far")
+    }
+
+    changeTaskState = (taskId, e) => {
+        e.stopPropagation()
+        e.persist()
+        let { toggle_task_state_api } = this.props
+        axios.put(toggle_task_state_api.replace("taskId", taskId)).then(res => {
+            sweetSuccess("وضعیت اتمام با موفقیت تغییر یافت")
+            e.target.classList.toggle("fa-times-circle")
+            e.target.classList.toggle("fa-check-circle")
+        }).catch(err => {
+            sweetError(err)
+        })
+    }
+
     render() {
-        let { index, title, group, finished_at, priority_id, due_to, workspace, workspace_id, users, onClick, workspace_users } = this.props;
+        let { index, title, group, finished_at, priority_id, due_to, workspace, workspace_id, users, onClick, workspace_users, id } = this.props;
         return (
             <tr onClick={onClick} className="animated fadeIn">
                 <th scope="row">{ index + 1 }</th>
@@ -44,7 +65,7 @@ class Task extends Component {
                 </td>
                 <td>{due_to !== null ? moment(due_to).fromNow() : <i className="fas fa-calendar-minus  fa-3x"></i>}</td>
                 <td>
-                    {finished_at === null ? <i className="fas fa-times-circle fa-3x"></i> : <i className="fas fa-check-circle fa-3x"></i>}
+                    {finished_at === null ? <i className="fas fa-times-circle fa-3x" onClick={this.changeTaskState.bind(this, id)} onMouseEnter={this.hoverStateIcon.bind(this)} onMouseLeave={this.hoverStateIcon.bind(this)}></i> : <i className="fas fa-check-circle fa-3x" onClick={this.changeTaskState.bind(this, id)} onMouseEnter={this.hoverStateIcon.bind(this)} onMouseLeave={this.hoverStateIcon.bind(this)}></i>}
                 </td>
                 <td>
                     {finished_at === null ? <i className="fas fa-calendar-times fa-3x"></i> : moment(finished_at).fromNow()}

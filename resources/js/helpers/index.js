@@ -100,7 +100,7 @@ export const sweetSuccess = (message) => {
     Swal.default.fire({
         icon: "success",
         title: "موفقیت",
-        text: "اطلاعات مورد نظر بروزرسانی شد",
+        text: message,
         showConfirmButton: true,
         customClass: {
             content: "persian-text"

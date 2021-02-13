@@ -9,6 +9,7 @@ const get_workspaces_api = target.getAttribute("workspaces-api")
 const post_task_api = target.getAttribute("add_task_api")
 const logged_in_user_id = parseInt(target.getAttribute("logged-in-user-id"))
 const get_all_users = target.getAttribute("get-all-users")
+const toggleTaskStateApi = target.getAttribute("toggle-task-state-api")
 
 ReactDOM.render(
     <MixedTasks 
@@ -18,6 +19,7 @@ ReactDOM.render(
         post_task_api = { post_task_api }
         get_workspaces_api = { get_workspaces_api }
         get_all_users = { get_all_users }
+        toggle_task_state_api = { toggleTaskStateApi }
     />,
     target
 )

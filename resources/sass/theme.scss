@@ -620,3 +620,8 @@ div.edit-tasks-container {
 .rtl {
     direction: rtl !important;
 }
+
+i.finished-status-icon {
+    position: relative;
+    z-index: 99;
+}

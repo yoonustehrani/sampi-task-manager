@@ -14,6 +14,7 @@
         add_task_api = "{{ route('api.task-manager.tasks.store', ['workspace' => "workspaceId", 'api_token' => auth()->user()->api_token]) }}"
         logged-in-user-id = "{{ auth()->user()->id }}"
         get-all-users="{{ route('api.task-manager.users.index', ['api_token' => auth()->user()->api_token]) }}"
+        toggle-task-state-api = "{{ route('api.task-manager.tasks.toggle_state', ['workspace' => "workspaceId", 'task' => 'taskId', 'api_token' => auth()->user()->api_token]) }}"
     >
     </div>
 @endsection

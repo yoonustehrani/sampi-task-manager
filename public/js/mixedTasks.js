@@ -56405,7 +56405,7 @@ var sweetSuccess = function sweetSuccess(message) {
   Swal["default"].fire({
     icon: "success",
     title: "موفقیت",
-    text: "اطلاعات مورد نظر بروزرسانی شد",
+    text: message,
     showConfirmButton: true,
     customClass: {
       content: "persian-text"
@@ -56756,6 +56756,25 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
       });
     });
 
+    _defineProperty(_assertThisInitialized(_this), "hoverStateIcon", function (e) {
+      e.stopPropagation();
+      e.target.classList.toggle("fas");
+      e.target.classList.toggle("far");
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "changeTaskState", function (workspaceId, taskId, e) {
+      e.stopPropagation();
+      e.persist();
+      var toggle_task_state_api = _this.props.toggle_task_state_api;
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.put(toggle_task_state_api.replace("workspaceId", workspaceId).replace("taskId", taskId)).then(function (res) {
+        Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["sweetSuccess"])("وضعیت اتمام با موفقیت تغییر یافت");
+        e.target.classList.toggle("fa-times-circle");
+        e.target.classList.toggle("fa-check-circle");
+      })["catch"](function (err) {
+        Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["sweetError"])(err);
+      });
+    });
+
     _defineProperty(_assertThisInitialized(_this), "toggleFilterBox", function () {
       _this.filterBoxRef.current.classList.toggle("d-none");
     });
@@ -56965,7 +56984,6 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
         }
       });
       var defate = new Date().valueOf();
-      console.log(defate);
       this.pdt.setDate(defate);
       due_to_input.val(defate / 1000);
       this.setState({
@@ -57025,6 +57043,8 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
   }, {
     key: "render",
     value: function render() {
+      var _this3 = this;
+
       var _this$state3 = this.state,
           isGetting = _this$state3.isGetting,
           already_added_tasks = _this$state3.already_added_tasks,
@@ -57373,9 +57393,15 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
         })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["setPriority"])(priority_id)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, due_to !== null ? moment__WEBPACK_IMPORTED_MODULE_7___default()(due_to).fromNow() : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-calendar-minus  fa-3x"
         })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, finished_at === null ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-          className: "fas fa-times-circle fa-3x"
+          className: "fas fa-times-circle fa-3x finished-status-icon",
+          onClick: _this3.changeTaskState.bind(_this3, workspace_id, id),
+          onMouseEnter: _this3.hoverStateIcon.bind(_this3),
+          onMouseLeave: _this3.hoverStateIcon.bind(_this3)
         }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-          className: "fas fa-check-circle fa-3x"
+          className: "fas fa-check-circle fa-3x finished-status-icon",
+          onClick: _this3.changeTaskState.bind(_this3, workspace_id, id),
+          onMouseEnter: _this3.hoverStateIcon.bind(_this3),
+          onMouseLeave: _this3.hoverStateIcon.bind(_this3)
         })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, finished_at === null ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-calendar-times fa-3x"
         }) : moment__WEBPACK_IMPORTED_MODULE_7___default()(finished_at).fromNow()));
@@ -57659,13 +57685,15 @@ var get_workspaces_api = target.getAttribute("workspaces-api");
 var post_task_api = target.getAttribute("add_task_api");
 var logged_in_user_id = parseInt(target.getAttribute("logged-in-user-id"));
 var get_all_users = target.getAttribute("get-all-users");
+var toggleTaskStateApi = target.getAttribute("toggle-task-state-api");
 react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_mixed_tasks__WEBPACK_IMPORTED_MODULE_2__["default"], {
   get_mixed_tasks_api: mixed_tasks_api,
   mixed_tasks_search: mixed_tasks_search_api,
   logged_in_user_id: logged_in_user_id,
   post_task_api: post_task_api,
   get_workspaces_api: get_workspaces_api,
-  get_all_users: get_all_users
+  get_all_users: get_all_users,
+  toggle_task_state_api: toggleTaskStateApi
 }), target);
 
 /***/ }),
