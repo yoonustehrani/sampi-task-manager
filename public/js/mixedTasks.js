@@ -9037,7 +9037,7 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
             sameElse: 'L',
         },
         relativeTime: {
-            future: '%s دیگر',
+            future: 'در %s',
             past: '%s پیش',
             s: 'چند ثانیه',
             ss: '%d ثانیه',
@@ -58048,7 +58048,7 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
           workspaceId = $("#new-task-project-select").val(),
           group = $("#new-task-group").val(),
           due_to = $("input[name='due_to']").val();
-      var my_unix = 1613174940;
+      var my_unix = new Date().valueOf() / 1000;
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(post_task_api.replace("workspaceId", workspaceId), {
         title: title,
         priority: priority,
@@ -58221,7 +58221,7 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
             locale: 'fa'
           }
         },
-        // minDate: new persianDate().valueOf(),
+        minDate: new persianDate().valueOf(),
         timePicker: {
           enabled: true,
           second: {
@@ -59071,7 +59071,7 @@ renderWithImg("#new-task-project-select", "پروژه مربوطه را انتخ
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! I:\projects\task-manager\resources\js\react\mixedTasks.js */"./resources/js/react/mixedTasks.js");
+module.exports = __webpack_require__(/*! W:\php\sampies\resources\js\react\mixedTasks.js */"./resources/js/react/mixedTasks.js");
 
 
 /***/ })
