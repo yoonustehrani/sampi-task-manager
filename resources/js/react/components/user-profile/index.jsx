@@ -234,14 +234,14 @@ export default class UserProfile extends Component {
                             <nav className="tab-title-bar text-center">
                                 {navbar && navbar.map((item, i) => {
                                     return (
-                                        <a key={i} className="tab-link" ref={this.tabTitlesRef[item.tab]} onClick={this.changeTab.bind(this, item.tab)} key={i}>
+                                        <a key={i} className="tab-link user-profile-tab-link" ref={this.tabTitlesRef[item.tab]} onClick={this.changeTab.bind(this, item.tab)} key={i}>
                                             <i className={`fas fa-${item.icon} d-block d-md-inline`}></i>
                                             {item.text}
                                         </a>
                                     )
                                 })}
                             </nav>
-                            <div className="user-works-results scrollable-items col-12 mt-4 active mb-4" ref={this.tabResultsRef[0]}>
+                            <div className="user-works-results scrollable-items col-12 mt-4 active mb-4 pr-2 pl-2" ref={this.tabResultsRef[0]}>
                                 {workspaces && workspaces.length > 0 && !isGetting 
                                     ? workspaces.map((workspace, i) => (
                                         <div key={i} className="workspace-item col-12" onClick={() => redirectTo(getWorkspace(workspace.id))}>
@@ -250,7 +250,7 @@ export default class UserProfile extends Component {
                                             </div>
                                             <div className="workspace-item-text-info">
                                                 <h6>{ workspace.title }</h6>
-                                                <span>{ workspace.description }</span>
+                                                <span>{ workspace.description.length < 50 ? workspace.description : workspace.description.substring(0, 47) + " ..." }</span>
                                             </div>
                                         </div>
                                     ))
@@ -290,14 +290,17 @@ export default class UserProfile extends Component {
                                         <button className="btn btn-outline-info" onClick={this.sortData.bind(this, 'mixed_tasks')}>مرتب سازی</button>
                                     </div>
                                 </div>
-                                <div className="scrollable-items user-tasks-container col-12 mt-4">
+                                <div className="scrollable-items scrollable-shadow user-tasks-container col-12 mt-4">
                                     {mixed_tasks && mixed_tasks.length > 0 && !isGetting
-                                        ? mixed_tasks.map((task, i) => (
-                                            <div key={i} className="task-item user-work-item" onClick={() => redirectTo(getTask(task.id))}>
-                                                <h6 className="text-right">{task.title} ({task.group})</h6>
-                                                <span>{moment(task.due_to).fromNow()} {task.finished_at !== null ? <i className="fas fa-check"></i> : <i className="fas fa-times"></i>}</span>
-                                            </div>
-                                        ))
+                                        ? mixed_tasks.map((task, i) => {
+                                            let content = task.title + " (" + task.group + ")"
+                                            return (
+                                                <div key={i} className="task-item user-work-item" onClick={() => redirectTo(getTask(task.id))}>
+                                                    <h6 className="text-right small-font">{ (task.title.length + task.group.length) < 33 ? content : content.substring(0, 30) + " ..." }</h6>
+                                                    <span className="small-font">{moment(task.due_to).fromNow()} {task.finished_at !== null ? <i className="fas fa-check"></i> : <i className="fas fa-times"></i>}</span>
+                                                </div>
+                                            )
+                                        })
                                         : isGetting
                                         ? <div className="col-12 text-center"><Sentry size={20} color="#000000" /></div>
                                         : <p className="text-secondary text-center">موردی برای نمایش وجود ندارد</p>
@@ -334,7 +337,7 @@ export default class UserProfile extends Component {
                                         <button className="btn btn-outline-info" onClick={this.sortData.bind(this, 'mixed_demands')}>مرتب سازی</button>
                                     </div>
                                 </div>
-                                <div className="scrollable-items user-tasks-container col-12 mt-4">
+                                <div className="scrollable-items scrollable-shadow user-tasks-container col-12 mt-4">
                                     {mixed_demands && mixed_demands.length > 0 && !isGetting
                                         ? mixed_demands.map((demand, i) => (
                                             <div key={i} className="demand-item hover-bg" onClick={() => redirectTo(getDemand(demand.workspace_id, demand.id))}>
@@ -344,7 +347,7 @@ export default class UserProfile extends Component {
                                                 </div>
                                                 <i className="fas fa-long-arrow-alt-right"></i>
                                                 <div className="demand-sender">
-                                                    <h6 className="ml-1">{ demand.title }</h6>
+                                                    <h6 className="ml-1 small-font">{ demand.title.length < 30 ? demand.title : demand.title.substring(0, 27) + " ..." }</h6>
                                                     <img src={APP_PATH + `${demand.from.avatar_pic ? demand.from.avatar_pic : 'images/male-avatar.svg'}`} alt=""/>
                                                 </div>
                                             </div>
@@ -385,13 +388,13 @@ export default class UserProfile extends Component {
                                         <button className="btn btn-outline-info" onClick={this.sortData.bind(this, 'mixed_needs')}>مرتب سازی</button>
                                     </div>
                                 </div>
-                                <div className="scrollable-items user-tasks-container col-12 mt-4">
+                                <div className="scrollable-items scrollable-shadow user-tasks-container col-12 mt-4">
                                     {mixed_needs && mixed_needs.length > 0 && !isGetting
                                         ? mixed_needs.map((need, i) => (
                                             <div key={i} className="demand-item hover-bg" onClick={() => redirectTo(getDemand(need.workspace_id, need.id))}>
                                                 <div className="demand-sender">
                                                     <img src={APP_PATH + `${TargetUser.avatar_pic ? TargetUser.avatar_pic : 'images/male-avatar.svg'}`} alt="" />
-                                                    <h6 className="mr-1">{ need.title }</h6>
+                                                    <h6 className="mr-1 small-font">{ need.title.length < 30 ? need.title : need.title.substring(0, 27) + " ..." }</h6>
                                                 </div>
                                                 <i className="fas fa-long-arrow-alt-left"></i>
                                                 <div>

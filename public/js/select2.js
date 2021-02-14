@@ -221,8 +221,8 @@ renderWithImg("#new-task-project-select", "پروژه مربوطه را انتخ
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! W:\php\sampies\resources\js\select2.js */"./resources/js/select2.js");
-module.exports = __webpack_require__(/*! W:\php\sampies\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! I:\projects\task-manager\resources\js\select2.js */"./resources/js/select2.js");
+module.exports = __webpack_require__(/*! I:\projects\task-manager\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

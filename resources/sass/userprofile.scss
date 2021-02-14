@@ -32,7 +32,9 @@ div.user-card {
             overflow-x: hidden;
             overflow-y: auto;
             max-height: 480px;
-            // box-shadow: 5px 5px 10px 2px #bdc3c7;
+        }
+        div.scrollable-shadow {
+            box-shadow: 0px 2px 5px 2px rgb(156 156 156 / 15%);
         }
         div.user-works-results {
             display: none;
@@ -43,6 +45,7 @@ div.user-card {
                 transition: 0.5s;
                 padding: 10px;
                 border-radius: 4px;
+                border-bottom: 1px solid #bdc3c7;
                 div.workspace-img-container {
                     float: right !important;
                     img {
@@ -81,6 +84,8 @@ div.user-card {
                     transition: 0.5s;
                     padding: 10px;
                     border-radius: 4px;
+                    border-bottom: 1px solid #bdc3c7;
+                    // box-shadow: 5px 5px 10px 2px #bdc3c7;
                 }  
                 div.task-item {
                     h6 {
@@ -103,6 +108,7 @@ div.user-card {
                     transition: 0.5s;
                     padding: 10px;
                     border-radius: 4px;
+                    border-bottom: 1px solid #bdc3c7;
                     > i {
                         color: #2C5364;
                         font-size: 26px;
@@ -198,3 +204,18 @@ div.select-option-big {
     font-size: 16px !important;
 }
 
+a.user-profile-tab-link {
+    color: #108dc7 !important;
+}
+a.user-profile-tab-link:hover {
+    color: #EF3B36 !important;
+}
+a.user-profile-tab-link.active {
+    color: #EF3B36 !important;
+    border-bottom: 2px solid #EF3B36 !important;
+}
+.small-font {
+    @media (max-width: 576px) {
+        font-size: 12px;
+    } 
+}

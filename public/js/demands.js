@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 5);
+/******/ 	return __webpack_require__(__webpack_require__.s = 6);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -7790,7 +7790,7 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
             sameElse: 'L',
         },
         relativeTime: {
-            future: 'در %s',
+            future: '%s دیگر',
             past: '%s پیش',
             s: 'چند ثانیه',
             ss: '%d ثانیه',
@@ -57971,14 +57971,14 @@ renderWithImg("#new-task-project-select", "پروژه مربوطه را انتخ
 
 /***/ }),
 
-/***/ 5:
+/***/ 6:
 /*!*********************************************!*\
   !*** multi ./resources/js/react/demands.js ***!
   \*********************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! W:\php\sampies\resources\js\react\demands.js */"./resources/js/react/demands.js");
+module.exports = __webpack_require__(/*! I:\projects\task-manager\resources\js\react\demands.js */"./resources/js/react/demands.js");
 
 
 /***/ })

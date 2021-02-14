@@ -300,7 +300,7 @@ export default class ShowTask extends Component {
                                 <i className="fas fa-hand-point-left"></i>
                                 <span>عنوان:</span>
                             </div>
-                            <div className="task-detail">
+                            <div className="task-detail text-right">
                                 <span>{ task.title }</span>
                             </div>
                         </div>

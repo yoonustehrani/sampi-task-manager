@@ -11333,6 +11333,10 @@ div.user-card div.user-work-section div.scrollable-items {
   max-height: 480px;
 }
 
+div.user-card div.user-work-section div.scrollable-shadow {
+  box-shadow: 0px 2px 5px 2px rgba(156, 156, 156, 0.15);
+}
+
 div.user-card div.user-work-section div.user-works-results {
   display: none;
 }
@@ -11343,6 +11347,7 @@ div.user-card div.user-work-section div.user-works-results div.workspace-item {
   transition: 0.5s;
   padding: 10px;
   border-radius: 4px;
+  border-bottom: 1px solid #bdc3c7;
 }
 
 div.user-card div.user-work-section div.user-works-results div.workspace-item div.workspace-img-container {
@@ -11386,6 +11391,7 @@ div.user-card div.user-work-section div.user-works-results div.user-tasks-contai
   transition: 0.5s;
   padding: 10px;
   border-radius: 4px;
+  border-bottom: 1px solid #bdc3c7;
 }
 
 div.user-card div.user-work-section div.user-works-results div.user-tasks-container div.task-item h6 {
@@ -11409,6 +11415,7 @@ div.user-card div.user-work-section div.user-works-results div.user-tasks-contai
   transition: 0.5s;
   padding: 10px;
   border-radius: 4px;
+  border-bottom: 1px solid #bdc3c7;
 }
 
 div.user-card div.user-work-section div.user-works-results div.user-tasks-container div.demand-item > i {
@@ -11507,6 +11514,25 @@ div.select-option-big {
 div.select-option-big i {
   margin-left: 8px !important;
   font-size: 18px !important;
+}
+
+a.user-profile-tab-link {
+  color: #108dc7 !important;
+}
+
+a.user-profile-tab-link:hover {
+  color: #EF3B36 !important;
+}
+
+a.user-profile-tab-link.active {
+  color: #EF3B36 !important;
+  border-bottom: 2px solid #EF3B36 !important;
+}
+
+@media (max-width: 576px) {
+  .small-font {
+    font-size: 12px;
+  }
 }
 
 nav.demands-tabs-titles {
