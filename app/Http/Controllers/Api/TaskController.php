@@ -127,8 +127,6 @@ class TaskController extends BaseController
     }
     public function store(Request $request, $workspace)
     {
-        // $dd = (new \Carbon\Carbon((int) $request->due_to))->timezone('Asia/Tehran');
-        // dd($dd->format('Y-m-d H:i:s'));
         $request->validate([
             'parent' => 'nullable|numeric',
             'title' => 'required|string',
@@ -144,7 +142,7 @@ class TaskController extends BaseController
                 $task = new Task;
                 $task->title = $request->title;
                 $task->description = $request->description;
-                $task->parent = $request->parent;
+                $task->parent_id = $request->parent_id;
                 $task->group = $request->group ?: $this->default_group;
                 $task->priority_id = $request->priority;
                 $task->due_to = $request->due_to ?: null;
@@ -178,13 +176,10 @@ class TaskController extends BaseController
             \DB::beginTransaction();
                 $task->title = $request->title;
                 $task->description = $request->description;
-                if ($request->parent_id) {
-                    $task->parent_id = $request->parent_id;
-                }
+                $task->parent_id = $request->parent_id;
                 $task->group = $request->group ?: $this->default_group;
                 $task->priority_id = $request->priority;
-                $due_to = $request->due_to ? (new \Carbon\Carbon(((int) $request->due_to)))->timezone('Asia/Tehran')->seconds(0)->format('Y-m-d H:i:s') : null;
-                $task->due_to = $due_to;
+                $task->due_to = $request->due_to ?: null;
                 if ($request->finished) {
                     $task->finished_at = $task->finished_at ? null : now();
                     $task->finisher_id = $request->user()->id;
