@@ -73,7 +73,7 @@ class TaskController extends BaseController
             $model = $model->{$relationship}();
         }
         
-        $model = $model->whereNull('parent_id')->with(['users','workspace:id,title,avatar_pic'])->withCount('demands', 'children');
+        $model = $model->whereNull('parent_id')->whereHas('workspace')->with(['users','workspace:id,title,avatar_pic'])->withCount('demands', 'children');
         return $request->limit
             ? $this->decide_ordered($request, $model)->limit((int) $request->limit)->get()
             : $this->decide_ordered($request, $model)->paginate(10);
@@ -87,7 +87,7 @@ class TaskController extends BaseController
         ]);
         $user = ($request->user_id) ? \App\User::find($request->user_id) : $request->user();
         $relationship = $this->model_relationship($request->relationship, $user, '_tasks', 'tasks');
-        $tasks = $tasks = $user->{$relationship}()->with(['workspace:id,title,avatar_pic', 'parent', 'users'])->withCount('children');
+        $tasks = $tasks = $user->{$relationship}()->whereHas('workspace')->with(['workspace:id,title,avatar_pic', 'parent', 'users'])->withCount('children');
         return $request->limit
                 ? $this->decide_ordered($request, $tasks)->search($request->q, null, true)->limit((int) $request->limit)->get()
                 : $this->decide_ordered($request, $tasks)->search($request->q, null, true)->paginate(10);
@@ -104,7 +104,7 @@ class TaskController extends BaseController
         if ($request->workspace) {
             $tasks = $tasks->where('workspace_id', $request->workspace);
         } else {
-            $tasks = $tasks->with('workspace:id,title,avatar_pic');
+            $tasks = $tasks->whereHas('workspace')->with('workspace:id,title,avatar_pic');
         }
         if ($request->parent_only) {
             $tasks = $tasks->whereNull('parent_id');
