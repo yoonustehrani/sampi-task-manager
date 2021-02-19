@@ -61356,7 +61356,8 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
             to = item.to,
             from = item.from,
             id = item.id,
-            workspace_id = item.workspace_id;
+            workspace_id = item.workspace_id,
+            workspace = item.workspace;
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
           key: i,
           className: "animated fadeIn",
@@ -61369,10 +61370,10 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
           className: "text-right"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
           className: "workspace_avatar",
-          src: APP_PATH + (workspaces[workspace_id].avatar_pic !== null ? workspaces[workspace_id].avatar_pic : "images/idea.svg")
+          src: APP_PATH + (workspace.avatar_pic !== null ? workspace.avatar_pic : "images/idea.svg")
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
           href: Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["getWorkspace"])(workspace_id)
-        }, workspaces[workspace_id].title)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }, workspace.title)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "employees-container horizontal-centerlize"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, from.fullname), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "dropdown-users d-none",
