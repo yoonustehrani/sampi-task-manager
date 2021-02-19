@@ -356,7 +356,7 @@ export default class MixedTasks extends Component {
                                     <option></option>
                                     {
                                         workspaces && Object.values(workspaces).length > 0 && Object.values(workspaces).map((workspace, i) => (
-                                            <option key={i} value={workspace.id} img_address={workspaces !== null ? APP_PATH + workspace.avatar_pic : ""}>{workspace.title}</option>
+                                            <option key={i} value={workspace.id} img_address={APP_PATH + (workspace.avatar_pic !== null ? workspace.avatar_pic : "images/idea.svg")}>{workspace.title}</option>
                                         ))
                                     }
                                 </select>
@@ -453,7 +453,7 @@ export default class MixedTasks extends Component {
                                     <th scope="row">{i + 1}</th>
                                     <td>{ title }</td>
                                     <td className="text-right">
-                                        <img className="workspace_avatar" src={workspace ? APP_PATH + workspace.avatar_pic : ""} />
+                                        <img className="workspace_avatar" src={APP_PATH + (workspace.avatar_pic !== null ? workspace.avatar_pic : "images/idea.svg")} />
                                         <a href={getWorkspace(workspace_id)}>{workspace.title}</a>
                                     </td>
                                     <td>{group}</td>

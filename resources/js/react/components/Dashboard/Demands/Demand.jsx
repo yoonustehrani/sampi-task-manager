@@ -10,7 +10,7 @@ export default class Demand extends Component {
                 <th scope="row">{ index }</th>
                 <td>{ title }</td>
                 <td className="text-right">
-                    <img className="workspace_avatar" src={APP_PATH + workspace.avatar_pic} />
+                    <img className="workspace_avatar" src={APP_PATH + (workspace.avatar_pic ? workspace.avatar_pic : "images/idea.svg")} />
                     <a href={workspace_route.replace('workspaceId', workspace.id)}>{workspace.title}</a>
                 </td>
                 <td>{task !== null ? <a href={task_route.replace("taskId", task.id)}>{ task.title }</a> : <i className="fas fa-minus fa-3x"></i>}</td>

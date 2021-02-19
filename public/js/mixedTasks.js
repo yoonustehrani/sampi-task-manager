@@ -62103,7 +62103,7 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
           key: i,
           value: workspace.id,
-          img_address: workspaces !== null ? APP_PATH + workspace.avatar_pic : ""
+          img_address: APP_PATH + (workspace.avatar_pic !== null ? workspace.avatar_pic : "images/idea.svg")
         }, workspace.title);
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "input-group col-12 col-md-4 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3 input-group-single-line"
@@ -62268,7 +62268,7 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
           className: "text-right"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
           className: "workspace_avatar",
-          src: workspace ? APP_PATH + workspace.avatar_pic : ""
+          src: APP_PATH + (workspace.avatar_pic !== null ? workspace.avatar_pic : "images/idea.svg")
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
           href: Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["getWorkspace"])(workspace_id)
         }, workspace.title)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, group), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {

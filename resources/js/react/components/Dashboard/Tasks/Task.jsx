@@ -32,7 +32,7 @@ class Task extends Component {
                 <th scope="row">{ index + 1 }</th>
                 <td>{title}</td>
                 <td className="text-right">
-                    <img className="workspace_avatar" src={workspace.avatar_pic !== null ? APP_PATH + workspace.avatar_pic : ""} />
+                    <img className="workspace_avatar" src={APP_PATH + (avatar_pic ? avatar_pic : "images/idea.svg")} />
                     <a href={workspace_route.replace('workspaceId', workspace_id)}>{workspace.title}</a>
                 </td>
                 <td>{group}</td>

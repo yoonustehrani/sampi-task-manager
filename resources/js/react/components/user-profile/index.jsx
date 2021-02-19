@@ -246,7 +246,7 @@ export default class UserProfile extends Component {
                                     ? workspaces.map((workspace, i) => (
                                         <div key={i} className="workspace-item col-12" onClick={() => redirectTo(getWorkspace(workspace.id))}>
                                             <div className="workspace-img-container ml-1">
-                                                <img src={APP_PATH + workspace.avatar_pic} alt=""/>
+                                                <img src={APP_PATH + (workspace.avatar_pic !== null ? workspace.avatar_pic : "images/idea.svg")} alt=""/>
                                             </div>
                                             <div className="workspace-item-text-info">
                                                 <h6>{ workspace.title }</h6>

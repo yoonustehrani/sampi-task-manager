@@ -518,7 +518,7 @@ export default class ShowTask extends Component {
                     <div className="col-12 float-right task-info-container pl-0 pr-0 pr-md-3 pl-md-3">
                         <div className="breadcrumb col-12 float-right animated flipInX">
                             <a className="float-right hoverable" href={getWorkspace(workspace.id)}>
-                                <img src={APP_PATH + workspace.avatar_pic} alt=""/>
+                                <img src={APP_PATH + (workspace.avatar_pic !== null ? workspace.avatar_pic : "images/idea.svg")} alt=""/>
                                 <h6>{ workspace.title }</h6>
                             </a>
                             <i className="fas fa-arrow-circle-left"></i>

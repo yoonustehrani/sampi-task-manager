@@ -7,7 +7,7 @@
 @section('page-content')
     <div class="col-md-10 offset-md-1 col-12">
         <div class="col-12 float-right mb-3 pr-0 pl-0 pr-md-3 pl-md-3 animated flipInY">
-            <img class="float-right" src="{{ asset($workspace->avatar_pic) }}" style="height: 50px; widht: 50px;" alt="">
+            <img class="float-right" src="{{ asset($workspace->avatar_pic ?: "images/idea.svg") }}" style="height: 50px; widht: 50px;" alt="">
             <h4 class="text-right mt-3">
                 {{ $workspace->title }}
             </h4>
@@ -17,7 +17,7 @@
             <span><i class="fas fa-thumbtack ml-1 animated heartBeat delay-2s"></i><span class="number ml-1">{{ $workspace->tasks_count - $workspace->finished_tasks_count }}</span>مسئولیت جاری</span>
             <span><i class="far fa-check-square ml-1 animated heartBeat delay-2s"></i><span class="number ml-1">{{ $workspace->finished_tasks_count }}</span>مسئولیت انجام شده</span>
             <a style="direction: rtl;" href="{{ route('task-manager.demands.index', ['workspace' => $workspace->id]) }}">
-                <span><i class="far fa-check-square ml-1 animated heartBeat delay-2s"></i><span class="number ml-1">{{ $workspace->demands_count }}</span><b>خواسته ها</b></span>
+                <span><i class="far fa-check-square ml-1 animated heartBeat delay-2s"></i><span class="number ml-1">{{ $workspace->demands_count }}</span><b>خواسته</b></span>
             </a>
             <span><i class="far fa-comments ml-1 animated heartBeat delay-2s"></i><span class="number ml-1">{{ $workspace->demands_left_count }}</span>خواسته جاری</span>
             <span><i class="far fa-check-circle ml-1 animated heartBeat delay-2s"></i><span class="number ml-1">{{ $workspace->demands_count -  $workspace->demands_left_count }}</span>خواسته انجام شده</span>

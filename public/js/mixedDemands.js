@@ -60928,7 +60928,7 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
           className: "text-right"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
           className: "workspace_avatar",
-          src: APP_PATH + demand.workspace.avatar_pic
+          src: APP_PATH + (demand.workspace.avatar_pic !== null ? demand.workspace.avatar_pic : "images/idea.svg")
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
           href: Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["getWorkspace"])(workspace_id)
         }, demand.workspace.title)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -61042,7 +61042,7 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
           key: i,
           value: workspace.id,
-          img_address: APP_PATH + workspace.avatar_pic
+          img_address: APP_PATH + (workspace.avatar_pic ? workspace.avatar_pic : "images/idea.svg")
         }, workspace.title);
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "input-group col-12 col-md-4 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line-all"
@@ -61196,7 +61196,7 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
           className: "text-right"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
           className: "workspace_avatar",
-          src: APP_PATH + workspaces[workspace_id].avatar_pic
+          src: APP_PATH + (need.workspace.avatar_pic !== null ? need.workspace.avatar_pic : "images/idea.svg")
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
           href: Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["getWorkspace"])(workspace_id)
         }, workspaces[need.workspace_id].title)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -61369,7 +61369,7 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
           className: "text-right"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
           className: "workspace_avatar",
-          src: APP_PATH + workspaces[workspace_id].avatar_pic
+          src: APP_PATH + (item.workspace.avatar_pic !== null ? item.workspace.avatar_pic : "images/idea.svg")
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
           href: Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["getWorkspace"])(workspace_id)
         }, workspaces[workspace_id].title)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {

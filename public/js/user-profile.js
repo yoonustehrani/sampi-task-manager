@@ -77174,7 +77174,7 @@ var UserProfile = /*#__PURE__*/function (_Component) {
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "workspace-img-container ml-1"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-          src: APP_PATH + workspace.avatar_pic,
+          src: APP_PATH + (workspace.avatar_pic !== null ? workspace.avatar_pic : "images/idea.svg"),
           alt: ""
         })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "workspace-item-text-info"

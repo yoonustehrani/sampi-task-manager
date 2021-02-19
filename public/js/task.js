@@ -62171,7 +62171,7 @@ var ShowTask = /*#__PURE__*/function (_Component) {
           className: "float-right hoverable",
           href: Object(_helpers__WEBPACK_IMPORTED_MODULE_5__["getWorkspace"])(workspace.id)
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-          src: APP_PATH + workspace.avatar_pic,
+          src: APP_PATH + (workspace.avatar_pic !== null ? workspace.avatar_pic : "images/idea.svg"),
           alt: ""
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, workspace.title)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-arrow-circle-left"

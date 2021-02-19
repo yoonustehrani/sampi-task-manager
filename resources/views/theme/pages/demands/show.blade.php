@@ -61,7 +61,7 @@
                     </div>
                     <p class="box-header-title">اطلاعات پروژه 
                         <span class="avatar-pic">
-                            <img src="{{ asset($demand->workspace->avatar_pic ?: 'male-avatar.svg') }}" alt="">
+                            <img src="{{ asset($demand->workspace->avatar_pic ?: 'images/idea.svg') }}" alt="">
                         </span>
                     </p>
                 </div>

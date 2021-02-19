@@ -11,7 +11,7 @@ class Workspace extends Component {
             <tr className="animated fadeIn" onClick={() => redirectTo(getWorkspace(id))}>
                 <th scope="row">{ index + 1 }</th>
                 <td className="text-right">
-                    <img className="workspace_avatar" src={APP_PATH + avatar_pic} />
+                    <img className="workspace_avatar" src={APP_PATH + (avatar_pic ? avatar_pic : "images/idea.svg")} />
                     <a href={workspace_url}>{ title }</a>
                 </td>
                 <td>

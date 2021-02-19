@@ -59056,7 +59056,7 @@ var Demand = /*#__PURE__*/function (_Component) {
         className: "text-right"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         className: "workspace_avatar",
-        src: APP_PATH + workspace.avatar_pic
+        src: APP_PATH + (workspace.avatar_pic ? workspace.avatar_pic : "images/idea.svg")
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         href: workspace_route.replace('workspaceId', workspace.id)
       }, workspace.title)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, task !== null ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
@@ -59594,7 +59594,7 @@ var Task = /*#__PURE__*/function (_Component) {
         className: "text-right"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         className: "workspace_avatar",
-        src: workspace.avatar_pic !== null ? APP_PATH + workspace.avatar_pic : ""
+        src: APP_PATH + (avatar_pic ? avatar_pic : "images/idea.svg")
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         href: workspace_route.replace('workspaceId', workspace_id)
       }, workspace.title)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, group), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -60128,7 +60128,7 @@ var Workspace = /*#__PURE__*/function (_Component) {
         className: "text-right"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         className: "workspace_avatar",
-        src: APP_PATH + avatar_pic
+        src: APP_PATH + (avatar_pic ? avatar_pic : "images/idea.svg")
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         href: workspace_url
       }, title)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
