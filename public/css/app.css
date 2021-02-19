@@ -11302,6 +11302,7 @@ div.employees-container div.user-dropdown-item.permanent-visible div.user-img-co
 div.user-card {
   background-color: #ffffff;
   min-width: 300px;
+  box-shadow: 2px 2px 6px 0px #bdc3c7;
 }
 
 div.user-card div.user-info-section {
@@ -11464,7 +11465,7 @@ div.statistics-section {
 }
 
 div.statistics-section div.wide-section-statistics {
-  box-shadow: 0px 2px 5px 2px rgba(156, 156, 156, 0.1);
+  box-shadow: 2px 2px 6px 0px #bdc3c7;
 }
 
 div.statistics-section div.wide-section-statistics div.wide-section-charts {
@@ -11473,15 +11474,25 @@ div.statistics-section div.wide-section-statistics div.wide-section-charts {
   align-items: center;
   flex-direction: row;
   flex-wrap: wrap;
+  height: 80%;
 }
 
-div.statistics-section div.wide-section-statistics div.wide-section-charts div.wide-chart > div {
-  border-right: 1px solid #D7DDE8;
+@media (max-width: 576px) {
+  div.statistics-section div.wide-section-statistics div.wide-section-charts div.wide-chart > div {
+    border-bottom: 1px solid #D7DDE8;
+  }
+}
+
+@media (min-width: 576px) {
+  div.statistics-section div.wide-section-statistics div.wide-section-charts div.wide-chart > div {
+    border-right: 1px solid #D7DDE8;
+  }
 }
 
 div.chart-title-section {
   border-bottom: 1px solid #D7DDE8;
   align-items: center !important;
+  height: 20%;
 }
 
 div.chart-title-section h5 {
@@ -11493,18 +11504,37 @@ div.chart-title-section i {
   color: #3A6073;
 }
 
+@media (max-width: 576px) {
+  div.chart-title-section h5 {
+    font-size: 18px;
+  }
+
+  div.chart-title-section i {
+    font-size: 24px;
+  }
+}
+
 div.small-chart-sections-container {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  height: 270px;
 }
 
 div.small-chart-sections-container > div {
-  width: 49%;
-  height: 95%;
+  box-shadow: 2px 2px 6px 0px #bdc3c7;
+}
+
+@media (min-width: 576px) {
+  div.small-chart-sections-container {
+    height: 270px;
+  }
+
+  div.small-chart-sections-container > div {
+    max-width: 49%;
+    height: 95%;
+  }
 }
 
 div.select-option-big {
@@ -11533,6 +11563,11 @@ a.user-profile-tab-link.active {
   .small-font {
     font-size: 12px;
   }
+}
+
+.small-section-charts {
+  display: flex;
+  height: 80%;
 }
 
 nav.demands-tabs-titles {

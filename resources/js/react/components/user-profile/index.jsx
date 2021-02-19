@@ -412,59 +412,59 @@ export default class UserProfile extends Component {
                         </div>
                     </div>
                 </div>
-                <div className="statistics-section col-12 col-md-8 float-right">
+                <div className="statistics-section col-12 col-md-8 float-right mt-4 mt-md-0 pr-0 pl-0 pr-md-3 pl-md-3">
                     <div className="wide-section-statistics col-12 mb-1 bg-light">
                         <div className="chart-title-section title-section col-12 p-2">
                             <i className="fas fa-handshake"></i>
                             <h5>مسئولیت ها</h5>
                         </div>
-                        <div className="col-12 wide-section-charts">
-                            <div className="col-12 col-md-9 wide-chart">
-                                <div className="col-12 p-3 mt-3 mb-4">
+                        <div className="col-12 wide-section-charts pl-0 pr-0 pl-md-3 pr-md-3">
+                            <div className="col-12 col-md-9 wide-chart p-0">
+                                <div className="mt-3 mb-3 pr-0 pl-0 pr-md-3 pl-md-3 pb-2 pb-md-0">
                                     <MonthlyChart Data={charts[0].data} Title={charts[0].title} id={1}/>
                                 </div>                            
                             </div>
-                            <div className="col-12 col-md-3">
-                                <CircularProgressbar value={0} text={`0%`} />
+                            <div className="col-6 offset-3 offset-md-0 col-md-3 p-0 p-md-3 mb-2 mb-md-0">
+                                <CircularProgressbar value={20} text={`20%`} />
                             </div>
                         </div>
                     </div>
                     <div className="small-chart-sections-container col-12 p-0">
-                        <div className="text-center bg-light">
+                        <div className="text-center bg-light col-12 col-md-6 mt-3 mt-md-0">
                             <div className="chart-title-section title-section col-12 p-2">
                                 <i className="fas fa-chart-line"></i>
                                 <h5>اتمام به موقع مسئولیت های</h5>
                             </div>
-                            <div className="col-12 col-md-6 offset-md-3 vertical-centerlize">
+                            <div className="col-6 offset-3 small-section-charts p-md-3 pt-3 pb-3">
                                 <CircularProgressbar value={0} text={`0%`} />
                             </div>
                         </div>
-                        <div className="bg-light">
+                        <div className="bg-light col-12 col-md-6 mt-3 mt-md-0">
                             <div className="chart-title-section title-section col-12 p-2">
                                 <i className="fas fa-chart-bar"></i>
                                 <h5>مسئولیت های ساخته شده</h5>
                             </div>
-                            <div className="col-12 p-3 mt-3 mb-4 vertical-centerlize">
+                            <div className="col-12 pr-0 pl-0 small-section-charts p-md-3 pt-3 pb-3">
                                 <MonthlyChart Data={charts[1].data} Title={charts[1].title} id={2}/>
                             </div>
                         </div>
                     </div>
                     <div className="small-chart-sections-container col-12 p-0">
-                        <div className="text-center bg-light">
+                        <div className="text-center bg-light col-12 col-md-6 mt-3 mt-md-0">
                             <div className="chart-title-section title-section col-12 p-2">
                                 <i className="fas fa-chart-pie"></i>
                                 <h5>پیشرفت در سرعت</h5>
                             </div>
-                            <div className="col-12 col-md-6 offset-md-3 vertical-centerlize">
+                            <div className="col-6 offset-3 small-section-charts p-md-3 pt-3 pb-3">
                                 <CircularProgressbar value={0} text={`0%`} />
                             </div>
                         </div>
-                        <div className="bg-light">
+                        <div className="bg-light col-12 col-md-6 mt-3 mt-md-0">
                             <div className="chart-title-section title-section col-12 p-2">
                                 <i className="fas fa-chart-area"></i>
                                 <h5>حجم مسئولیت ها</h5>
                             </div>
-                            <div className="col-12 p-3 mt-3 mb-4 vertical-centerlize">
+                            <div className="col-12 pr-0 pl-0 small-section-charts p-md-3 pt-3 pb-3">
                                 <canvas id="myChart3" aria-label="Hello ARIA World" role="img"></canvas>
                             </div>
                         </div>

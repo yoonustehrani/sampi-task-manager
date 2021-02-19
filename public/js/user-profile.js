@@ -73790,7 +73790,7 @@ var UserProfile = /*#__PURE__*/function (_Component) {
       })) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "text-secondary text-center"
       }, "\u0645\u0648\u0631\u062F\u06CC \u0628\u0631\u0627\u06CC \u0646\u0645\u0627\u06CC\u0634 \u0648\u062C\u0648\u062F \u0646\u062F\u0627\u0631\u062F")))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "statistics-section col-12 col-md-8 float-right"
+        className: "statistics-section col-12 col-md-8 float-right mt-4 mt-md-0 pr-0 pl-0 pr-md-3 pl-md-3"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "wide-section-statistics col-12 mb-1 bg-light"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -73798,41 +73798,41 @@ var UserProfile = /*#__PURE__*/function (_Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-handshake"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, "\u0645\u0633\u0626\u0648\u0644\u06CC\u062A \u0647\u0627")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-12 wide-section-charts"
+        className: "col-12 wide-section-charts pl-0 pr-0 pl-md-3 pr-md-3"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-12 col-md-9 wide-chart"
+        className: "col-12 col-md-9 wide-chart p-0"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-12 p-3 mt-3 mb-4"
+        className: "mt-3 mb-3 pr-0 pl-0 pr-md-3 pl-md-3 pb-2 pb-md-0"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Charts_MonthlyChart__WEBPACK_IMPORTED_MODULE_8__["default"], {
         Data: charts[0].data,
         Title: charts[0].title,
         id: 1
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-12 col-md-3"
+        className: "col-6 offset-3 offset-md-0 col-md-3 p-0 p-md-3 mb-2 mb-md-0"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_circular_progressbar__WEBPACK_IMPORTED_MODULE_6__["CircularProgressbar"], {
-        value: 0,
-        text: "0%"
+        value: 20,
+        text: "20%"
       })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "small-chart-sections-container col-12 p-0"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "text-center bg-light"
+        className: "text-center bg-light col-12 col-md-6 mt-3 mt-md-0"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "chart-title-section title-section col-12 p-2"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-chart-line"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, "\u0627\u062A\u0645\u0627\u0645 \u0628\u0647 \u0645\u0648\u0642\u0639 \u0645\u0633\u0626\u0648\u0644\u06CC\u062A \u0647\u0627\u06CC")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-12 col-md-6 offset-md-3 vertical-centerlize"
+        className: "col-6 offset-3 small-section-charts p-md-3 pt-3 pb-3"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_circular_progressbar__WEBPACK_IMPORTED_MODULE_6__["CircularProgressbar"], {
         value: 0,
         text: "0%"
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "bg-light"
+        className: "bg-light col-12 col-md-6 mt-3 mt-md-0"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "chart-title-section title-section col-12 p-2"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-chart-bar"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, "\u0645\u0633\u0626\u0648\u0644\u06CC\u062A \u0647\u0627\u06CC \u0633\u0627\u062E\u062A\u0647 \u0634\u062F\u0647")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-12 p-3 mt-3 mb-4 vertical-centerlize"
+        className: "col-12 pr-0 pl-0 small-section-charts p-md-3 pt-3 pb-3"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Charts_MonthlyChart__WEBPACK_IMPORTED_MODULE_8__["default"], {
         Data: charts[1].data,
         Title: charts[1].title,
@@ -73840,24 +73840,24 @@ var UserProfile = /*#__PURE__*/function (_Component) {
       })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "small-chart-sections-container col-12 p-0"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "text-center bg-light"
+        className: "text-center bg-light col-12 col-md-6 mt-3 mt-md-0"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "chart-title-section title-section col-12 p-2"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-chart-pie"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, "\u067E\u06CC\u0634\u0631\u0641\u062A \u062F\u0631 \u0633\u0631\u0639\u062A")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-12 col-md-6 offset-md-3 vertical-centerlize"
+        className: "col-6 offset-3 small-section-charts p-md-3 pt-3 pb-3"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_circular_progressbar__WEBPACK_IMPORTED_MODULE_6__["CircularProgressbar"], {
         value: 0,
         text: "0%"
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "bg-light"
+        className: "bg-light col-12 col-md-6 mt-3 mt-md-0"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "chart-title-section title-section col-12 p-2"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-chart-area"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, "\u062D\u062C\u0645 \u0645\u0633\u0626\u0648\u0644\u06CC\u062A \u0647\u0627")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-12 p-3 mt-3 mb-4 vertical-centerlize"
+        className: "col-12 pr-0 pl-0 small-section-charts p-md-3 pt-3 pb-3"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("canvas", {
         id: "myChart3",
         "aria-label": "Hello ARIA World",
