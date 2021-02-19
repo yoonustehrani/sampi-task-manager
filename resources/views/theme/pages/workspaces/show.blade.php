@@ -13,10 +13,12 @@
             </h4>
         </div>
         <div class="workspace-sub-info float-right col-12">
-            <span><i class="fas fa-tasks ml-1 animated heartBeat delay-2s"></i><span class="number ml-1">{{ $workspace->tasks_count }}</span>مسئولیت</span>
+            <a id="tasks-quick-scroll" class="rtl" href="#tasks">
+                <span><i class="fas fa-tasks ml-1 animated heartBeat delay-2s"></i><span class="number ml-1">{{ $workspace->tasks_count }}</span>مسئولیت</span>
+            </a>
             <span><i class="fas fa-thumbtack ml-1 animated heartBeat delay-2s"></i><span class="number ml-1">{{ $workspace->tasks_count - $workspace->finished_tasks_count }}</span>مسئولیت جاری</span>
             <span><i class="far fa-check-square ml-1 animated heartBeat delay-2s"></i><span class="number ml-1">{{ $workspace->finished_tasks_count }}</span>مسئولیت انجام شده</span>
-            <a style="direction: rtl;" href="{{ route('task-manager.demands.index', ['workspace' => $workspace->id]) }}">
+            <a class="rtl" href="{{ route('task-manager.demands.index', ['workspace' => $workspace->id]) }}">
                 <span><i class="far fa-check-square ml-1 animated heartBeat delay-2s"></i><span class="number ml-1">{{ $workspace->demands_count }}</span><b>خواسته</b></span>
             </a>
             <span><i class="far fa-comments ml-1 animated heartBeat delay-2s"></i><span class="number ml-1">{{ $workspace->demands_left_count }}</span>خواسته جاری</span>
@@ -89,6 +91,11 @@
         const CAN_VIEW_AS_ADMIN = {{ \Gate::allows('update', $workspace) ? 'true' : 'false' }};
         var VIEW_AS_ADMIN       = {{ request()->view_as_admin == 'true' ? 'true' : 'false' }}; 
         var simple_search_url = "{{ route('api.task-manager.tasks.search.simple', ['api_token' => auth()->user()->api_token]) }}"
+        $("#tasks-quick-scroll").on("click", function() {
+            $(".contentbar").animate({
+                scrollTop: $("#filter-box").offset().top
+            }, 1000);
+        })
     </script>
     <script src="{{ asset('js/datepicker.js') }}"></script>
     <script src="{{ asset('js/workspace.js') }}"></script>

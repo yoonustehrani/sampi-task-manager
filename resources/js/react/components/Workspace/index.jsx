@@ -324,7 +324,7 @@ export default class Workspace extends Component {
                         </div>
                     </div>
                     <div className="result-container col-12 mt-3 active">
-                        <div className="filter-box mt-2 mb-2 p-3 col-12">
+                        <div id="filter-box" className="filter-box mt-2 mb-2 p-3 col-12">
                             <div className="filter-option col-12 col-md-6 col-lg-3 mb-3 mb-lg-0 text-center">
                                 <span>جستجو در: </span>
                                 <select id="tasks_relation_select" defaultValue="all">
