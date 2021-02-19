@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
+import { getUser, getWorkspace, redirectTo } from '../../../../helpers';
 
 class Workspace extends Component {
     constructor(props) {
         super(props)
     }
     render() {
-        let { index, avatar_pic, title, users, tasks_count, finished_tasks_count, demands_left_count, workspace_url } = this.props;
+        let { index, avatar_pic, title, users, tasks_count, finished_tasks_count, demands_left_count, workspace_url, id } = this.props;
         return (
-            <tr className="animated fadeIn" onClick={this.props.onClick}>
+            <tr className="animated fadeIn" onClick={() => redirectTo(getWorkspace(id))}>
                 <th scope="row">{ index + 1 }</th>
                 <td className="text-right">
                     <img className="workspace_avatar" src={APP_PATH + avatar_pic} />
@@ -38,7 +39,7 @@ class Workspace extends Component {
                                                 </div>
                                                 <div className="user-info ml-2">
                                                     <p>{ user.fullname }</p>
-                                                    <a href={"#user"}>@{user.name}</a>
+                                                    <a href={getUser(user.id)}>@{user.name}</a>
                                                 </div>
                                             </div>
                                             <div className="user-label-container">

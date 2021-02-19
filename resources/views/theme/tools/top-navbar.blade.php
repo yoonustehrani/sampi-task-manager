@@ -1,7 +1,7 @@
 <div class="col-12 navbar-top">
     <div>
         <div class="admin-info-container float-left">
-            <a href="#" class="float-left mr-2">
+            <a href="{{ route("task-manager.users.show", ["user" => auth()->user()->id]) }}" class="float-left mr-2">
                 <img src="{{ asset(auth()->user()->avatar_pic ?: 'images/male-avatar.svg') }}" alt="{{ auth()->user()->name }} profile photo">
             </a>
             <div>

@@ -53,7 +53,7 @@
                                             </div>
                                             <div class="user-info ml-2">
                                                 <p>{{ $user->fullname }}</p>
-                                                <a href="">{{"@".$user->name }}</a>
+                                                <a href="{{ route('task-manager.users.show', ['user' => $user->id]) }}">{{"@".$user->name }}</a>
                                             </div>
                                         </div>
                                         <div class="user-label-container">
@@ -91,7 +91,7 @@
                         <form action="{{ route('task-manager.workspaces.destroy', ['workspace' => $workspace->id]) }}" method="post">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-sm btn-danger">
+                            <button type="submit" class="btn btn-sm btn-danger delete-btn" deleting-item="workspace">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </form>
@@ -106,3 +106,7 @@
         {{ $workspaces->links() }}
     </div>
 @endsection
+
+@push('scripts')
+    <script src="{{ asset('js/confirmDelete.js') }}"></script>
+@endpush

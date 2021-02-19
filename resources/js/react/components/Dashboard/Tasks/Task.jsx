@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { setPriority, redirectTo, sweetError, sweetSuccess } from '../../../../helpers'
+import { setPriority, redirectTo, sweetError, sweetSuccess, getUser } from '../../../../helpers'
 
 class Task extends Component {
     constructor(props) {
@@ -61,7 +61,7 @@ class Task extends Component {
                                                 </div>
                                                 <div className="user-info ml-2">
                                                     <p>{ user.fullname }</p>
-                                                    <a href={"#user"}>@{user.name}</a>
+                                                    <a href={getUser(user.id)}>@{user.name}</a>
                                                 </div>
                                             </div>
                                             <div className="user-label-container">

@@ -48,7 +48,7 @@
                         <form action="{{ route('task-manager.demands.destroy', ['demand' => $demand->id, 'workspace' => $workspace->id]) }}" method="post">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-outline-danger btn-sm">حذف <i class="fas fa-trash"></i></button>
+                        <button type="submit" class="btn btn-outline-danger btn-sm delete-btn" deleting-item="demand">حذف <i class="fas fa-trash"></i></button>
                         </form>
                     </div>
                     @endcan
@@ -160,5 +160,6 @@
 @endsection
 
 @push('scripts')
+    <script src="{{ asset('js/confirmDelete.js') }}"></script>
     <script src="{{ asset('js/demand.js') }}"></script>
 @endpush

@@ -4,7 +4,7 @@ import moment from 'moment-jalaali'
 moment.locale('fa')
 import TinymcEditor from '../tinymce-editor/index'
 import { formatOptionWithIcon, formatOptionWithImage, formatOption } from '../../../select2'
-import { setPriority, redirectTo, getTask, getDemand, getWorkspace, sweetError, sweetSuccess } from '../../../helpers'
+import { setPriority, redirectTo, getTask, getDemand, getWorkspace, sweetError, sweetSuccess, sweetSuccessDelete, sweetConfirm, getUser } from '../../../helpers'
 import { Spinner } from 'react-activity'
 import 'react-activity/dist/react-activity.css'
 
@@ -205,6 +205,18 @@ export default class ShowTask extends Component {
         })
     }
 
+    deleteItem = () => {
+        let { delete_task_api } = this.props
+        let { workspace } = this.state
+        sweetConfirm("آیا از حذف این مسئولیت اطمینان دارید؟", () => {
+            Axios.delete(delete_task_api).then(res => {
+                sweetSuccessDelete("مسئولیت مورد نظر با موفقیت حذف شد", getWorkspace(workspace.id))
+            }).catch(err => {
+                sweetError(err)
+            })
+        })
+    }
+
     editInfo = () => {
         let { task, finished_at_check, workspace, task_active_users, due_to_check } = this.state, { logged_in_user_id } = this.props
         return (
@@ -371,7 +383,7 @@ export default class ShowTask extends Component {
                                                 </div>
                                                 <div className="user-info ml-md-2 ml-1">
                                                     <p>{user.fullname}</p>
-                                                    <a href={"#user"}>@{user.name}</a>
+                                                    <a href={getUser(user.id)}>@{user.name}</a>
                                                 </div>
                                             </div>
                                             <div className="user-label-container">
@@ -489,7 +501,10 @@ export default class ShowTask extends Component {
                             <div className="task-detail next-line" dangerouslySetInnerHTML={{__html: task.description}}></div>
                         </div>
                     </div>
-                    <div className="text-center mt-4"><button className="btn btn-outline-info" onClick={this.changeMode.bind(this, "edit")}>ویرایش <i className="fas fa-pen-alt"></i></button></div>
+                    <div className="text-center mt-4">
+                        <button className="btn btn-outline-danger ml-2" onClick={this.deleteItem.bind(this)}>حذف <i className="fas fa-trash-alt"></i></button>
+                        <button className="btn btn-outline-info" onClick={this.changeMode.bind(this, "edit")}>ویرایش <i className="fas fa-pen-alt"></i></button>
+                    </div>
                 </div>
             )
         }

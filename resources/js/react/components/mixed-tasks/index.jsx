@@ -471,7 +471,7 @@ export default class MixedTasks extends Component {
                                                         </div>
                                                         <div className="user-info ml-2">
                                                             <p>{ user.fullname }</p>
-                                                            <a href={"#user"}>@{user.name}</a>
+                                                            <a href={getUser(user.id)}>@{user.name}</a>
                                                         </div>
                                                     </div>
                                                     <div className="user-label-container">

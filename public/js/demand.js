@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -61426,7 +61426,7 @@ module.exports = function(module) {
 /*!***************************************!*\
   !*** ./resources/js/helpers/index.js ***!
   \***************************************/
-/*! exports provided: setPriority, redirectTo, getUser, getTask, getWorkspace, getDemand, sweetError, sweetSuccess */
+/*! exports provided: setPriority, redirectTo, getUser, getTask, getWorkspace, getDemand, sweetError, sweetSuccess, sweetConfirm, sweetSuccessDelete */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -61439,6 +61439,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getDemand", function() { return getDemand; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "sweetError", function() { return sweetError; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "sweetSuccess", function() { return sweetSuccess; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "sweetConfirm", function() { return sweetConfirm; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "sweetSuccessDelete", function() { return sweetSuccessDelete; });
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_0__);
 function _slicedToArray(arr, i) {
   return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
 }
@@ -61497,6 +61501,7 @@ function _arrayWithHoles(arr) {
   if (Array.isArray(arr)) return arr;
 }
 
+
 var setPriority = function setPriority(id) {
   switch (parseInt(id)) {
     case 1:
@@ -61532,7 +61537,7 @@ var getDemand = function getDemand(workspaceId, demandId) {
 };
 var sweetError = function sweetError(errObject) {
   if (!errObject.response) {
-    Swal["default"].fire({
+    sweetalert2__WEBPACK_IMPORTED_MODULE_0___default.a["default"].fire({
       icon: "error",
       title: "خطا",
       html: 'خطا در برقراری ارتباط',
@@ -61561,7 +61566,7 @@ var sweetError = function sweetError(errObject) {
 
         err_html += "<p class=\"float-right text-center col-12\">".concat(message, "</p>");
       });
-      Swal["default"].fire({
+      sweetalert2__WEBPACK_IMPORTED_MODULE_0___default.a["default"].fire({
         icon: "error",
         title: "خطا",
         html: err_html,
@@ -61574,7 +61579,7 @@ var sweetError = function sweetError(errObject) {
 
     case 403:
     case 401:
-      Swal["default"].fire({
+      sweetalert2__WEBPACK_IMPORTED_MODULE_0___default.a["default"].fire({
         icon: "error",
         title: "خطا",
         html: "اجازه دسترسی ندارید !",
@@ -61587,7 +61592,7 @@ var sweetError = function sweetError(errObject) {
 
     default:
       if (status !== 200) {
-        Swal["default"].fire({
+        sweetalert2__WEBPACK_IMPORTED_MODULE_0___default.a["default"].fire({
           icon: "error",
           title: "خطا",
           html: "خطای سرور",
@@ -61606,13 +61611,41 @@ var sweetError = function sweetError(errObject) {
   };
 };
 var sweetSuccess = function sweetSuccess(message) {
-  Swal["default"].fire({
+  sweetalert2__WEBPACK_IMPORTED_MODULE_0___default.a["default"].fire({
     icon: "success",
     title: "موفقیت",
     text: message,
     showConfirmButton: true,
     customClass: {
       content: "persian-text"
+    }
+  });
+};
+var sweetConfirm = function sweetConfirm(message, func) {
+  sweetalert2__WEBPACK_IMPORTED_MODULE_0___default.a["default"].fire({
+    icon: "warning",
+    title: "حذف",
+    text: message,
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: "بله",
+    cancelButtonText: "خیر",
+    reverseButtons: true,
+    customClass: {
+      content: "persian-text"
+    }
+  }).then(function (res) {
+    if (res.isConfirmed) {
+      func();
+      console.log('done');
+    }
+  });
+};
+var sweetSuccessDelete = function sweetSuccessDelete(message, url) {
+  sweetalert2__WEBPACK_IMPORTED_MODULE_0___default.a["default"].fire("موفقیت", message, 'success').then(function (res) {
+    if (url && res.isConfirmed || res.isDismissed) {
+      redirectTo(url);
     }
   });
 };
@@ -63059,7 +63092,7 @@ if (document.getElementById(target)) {
 
 /***/ }),
 
-/***/ 1:
+/***/ 2:
 /*!********************************************!*\
   !*** multi ./resources/js/react/demand.js ***!
   \********************************************/

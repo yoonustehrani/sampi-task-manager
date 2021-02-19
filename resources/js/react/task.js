@@ -8,6 +8,7 @@ const workspaceApi = target.getAttribute("workspace_api")
 const loggedInUserId = parseInt(target.getAttribute("logged_in_user_id"))
 const editTaskApi = target.getAttribute("edit_task_api")
 const toggleTaskStateApi = target.getAttribute("toggle_task_state_api")
+const deleteTask = target.getAttribute("destroy-task")
 
 if (target) {
     ReactDOM.render(
@@ -17,6 +18,7 @@ if (target) {
             logged_in_user_id = { loggedInUserId }
             edit_task_api = { editTaskApi }
             toggle_task_state_api = { toggleTaskStateApi }
+            delete_task_api = { deleteTask }
         />
     ,target)
 }

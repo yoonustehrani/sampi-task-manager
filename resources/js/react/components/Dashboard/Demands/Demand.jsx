@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { setPriority, redirectTo } from '../../../../helpers'
+import { setPriority, redirectTo, getUser } from '../../../../helpers'
 
 export default class Demand extends Component {
     render() {
@@ -25,7 +25,7 @@ export default class Demand extends Component {
                                     </div>
                                     <div className="user-info ml-2">
                                         <p>{ targetUser.fullname }</p>
-                                        <a href={user_profile_route.replace("userId", targetUser.id)}>@{targetUser.name}</a>
+                                        <a href={getUser(targetUser.id)}>@{targetUser.name}</a>
                                     </div>
                                 </div>
                                 <div className="user-label-container">

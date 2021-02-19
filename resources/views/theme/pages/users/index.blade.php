@@ -25,7 +25,7 @@
         @endcomponent
         @component('theme.tools.table-body')
             @foreach ($users as $user)
-                <tr>
+                <tr onclick="getUser({{ $user->id }})">
                     <th scope="row">
                         {{ $loop->index + 1 }}
                     </th>
@@ -84,3 +84,12 @@
         {{ $users->links() }}
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        $("table").addClass("table-hover")
+        function getUser(userId) {
+            window.location.href = USER_ROUTE.replace('userId', userId)
+        }
+    </script>
+@endpush

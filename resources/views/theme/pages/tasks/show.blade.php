@@ -12,7 +12,8 @@
     logged_in_user_id = "{{ auth()->user()->id }}"
     edit_task_api = "{{ route('api.task-manager.tasks.update', ['workspace' => $task->workspace->id, 'task' => $task->id, 'api_token' => auth()->user()->api_token]) }}"
     toggle_task_state_api = "{{ route('api.task-manager.tasks.toggle_state', ['workspace' => $task->workspace->id, 'task' => $task->id, 'api_token' => auth()->user()->api_token]) }}"
-></div>
+    destroy-task = "{{ route('api.task-manager.tasks.destroy', ['task' => $task->id, 'workspace' => $task->workspace->id, 'api_token' => auth()->user()->api_token]) }}"
+    ></div>
 @endsection
 
 @push('scripts')
