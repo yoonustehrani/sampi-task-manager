@@ -1,7 +1,7 @@
 @extends('theme.panel')
 
 @section('title')
-
+({{ $task->title }})
 @endsection
 
 @section('page-content')
