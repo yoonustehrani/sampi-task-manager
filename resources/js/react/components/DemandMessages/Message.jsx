@@ -20,7 +20,7 @@ class Message extends Component {
                     {! created_at && ! failed && <span className="float-left text-left">در حال ارسال <i className="far fa-clock"></i></span>}
                     {failed && <span className="float-left text-left">ارسال نشد <i className="text-danger fas fa-times"></i></span>}
                 </p>
-                <div className="card-body" dangerouslySetInnerHTML={{ __html: text }}></div>
+                <div className="card-body rtl text-right" dangerouslySetInnerHTML={{ __html: text }}></div>
             </div>
         );
     }
