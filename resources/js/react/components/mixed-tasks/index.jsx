@@ -477,12 +477,10 @@ export default class MixedTasks extends Component {
                                                         </div>
                                                     </div>
                                                     <div className="user-label-container">
-                                                        {console.log(workspaces_users[workspace_id])}
-                                                        {console.log(user.id)}
-                                                        {/* {workspaces_users && workspaces_users[workspace_id][user.id].is_admin === 1 
+                                                        {workspaces_users && workspaces_users[workspace_id][user.id].is_admin === 1 
                                                         ? <button className="btn btn-sm btn-success rtl admin"><span>ادمین<i className="fas fa-user-tie mr-1"></i></span></button>
                                                         : <button className="btn btn-sm btn-primary rtl"><span>عضو<i className="fas fa-user mr-1"></i></span></button>
-                                                        }  */}
+                                                        } 
                                                     </div>
                                                 </div>
                                             ))}
