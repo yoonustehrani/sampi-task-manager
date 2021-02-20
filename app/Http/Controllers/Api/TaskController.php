@@ -132,8 +132,8 @@ class TaskController extends BaseController
             'title' => 'required|string',
             'group' => 'nullable|string|min:3|max:100',
             'priority' => 'required|numeric',
-            'due_to' => 'nullable',
         ]);
+        return $request->due_to;
         $this->authorize('create', Task::class);
         $user = ($request->user_id) ? \App\User::find($request->user_id) : $request->user();
         $workspace = $user->workspaces()->findOrFail($workspace);
@@ -154,7 +154,7 @@ class TaskController extends BaseController
                 );
             \DB::commit();
             $task['workspace'] = $workspace;
-            event(new TaskCreated($task));
+            // event(new TaskCreated($task));
             return $task->parent_id ? $task->load(['parent', 'users']) : $task->load('users');
         } catch(\Exception $e) {
             \DB::rollback();
