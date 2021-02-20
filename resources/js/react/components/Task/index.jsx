@@ -168,11 +168,6 @@ export default class ShowTask extends Component {
                 })
             } else {
                 let { edit_task_api, toggle_task_state_api } = this.props, { task_description, finished_at_check, first_check_state, task_due_to, due_to_check } = this.state
-                // if (finished_at_check !== first_check_state) {
-                //     Axios.put(toggle_task_state_api).catch(err => {
-                //         sweetError(err)
-                //     })
-                // }
                 Axios.put(edit_task_api, {
                     title: edited_title,
                     group: edited_group,
@@ -343,7 +338,7 @@ export default class ShowTask extends Component {
                             <div className="task-detail">
                                 {task.parent
                                     ?   <a href={getTask(task.parent.id)}>{ task.parent.title }</a>
-                                    :   <i className="fas fa-minus"></i>
+                                    :   <i className="fas fa-minus pb-1 pt-1 minus-icon"></i>
                                 }
                             </div>
                         </div>

@@ -19,7 +19,7 @@
             <span><i class="fas fa-thumbtack ml-1 animated heartBeat delay-2s"></i><span class="number ml-1">{{ $workspace->tasks_count - $workspace->finished_tasks_count }}</span>مسئولیت جاری</span>
             <span><i class="far fa-check-square ml-1 animated heartBeat delay-2s"></i><span class="number ml-1">{{ $workspace->finished_tasks_count }}</span>مسئولیت انجام شده</span>
             <a class="rtl" href="{{ route('task-manager.demands.index', ['workspace' => $workspace->id]) }}">
-                <span><i class="far fa-check-square ml-1 animated heartBeat delay-2s"></i><span class="number ml-1">{{ $workspace->demands_count }}</span><b>خواسته</b></span>
+                <span><i class="fas fa-clipboard-list ml-1 animated heartBeat delay-2s"></i><span class="number ml-1">{{ $workspace->demands_count }}</span><b>خواسته</b></span>
             </a>
             <span><i class="far fa-comments ml-1 animated heartBeat delay-2s"></i><span class="number ml-1">{{ $workspace->demands_left_count }}</span>خواسته جاری</span>
             <span><i class="far fa-check-circle ml-1 animated heartBeat delay-2s"></i><span class="number ml-1">{{ $workspace->demands_count -  $workspace->demands_left_count }}</span>خواسته انجام شده</span>

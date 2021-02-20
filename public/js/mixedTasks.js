@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ 	return __webpack_require__(__webpack_require__.s = 7);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -61500,6 +61500,26 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
       });
     });
 
+    _defineProperty(_assertThisInitialized(_this), "emptyFields", function () {
+      $("#new-task-title").val("");
+      $("#new-task-priority").val("1").change();
+      $("#new-task-members").val("").change();
+      $("#parent-task-select").val("").change();
+      $("#new-task-project-select").val("").change();
+      $("#new-task-group").val("");
+      var due_to_input = $("input[name='due_to']");
+      var defate = new Date().valueOf();
+
+      _this.pdt.setDate(defate);
+
+      due_to_input.val(defate / 1000);
+
+      _this.setState({
+        task_due_to: due_to_input.val(),
+        new_task_description: ""
+      });
+    });
+
     _defineProperty(_assertThisInitialized(_this), "addtask", function () {
       var post_task_api = _this.props.post_task_api,
           _this$state2 = _this.state,
@@ -61522,7 +61542,7 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
         group: group,
         parent_id: related_task,
         users: users,
-        due_to: !due_to_check ? null : task_due_to.toString()
+        due_to: !due_to_check ? null : Math.trunc(task_due_to)
       }).then(function (res) {
         var data = res.data;
         var usersObj = {};
@@ -61547,15 +61567,9 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
           });
         }
 
-        Swal["default"].fire({
-          icon: 'success',
-          title: "موفقیت",
-          text: "مسئولیت جدید ثبت شد",
-          showConfirmButton: true,
-          customClass: {
-            content: 'persian-text'
-          }
-        });
+        Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["sweetSuccess"])("مسئولیت جدید ثبت شد");
+
+        _this.emptyFields();
       })["catch"](function (err) {
         Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["sweetError"])(err);
       });
@@ -61699,8 +61713,7 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
       });
       var defate = new Date().valueOf();
       this.pdt.setDate(defate);
-      due_to_input.val(defate / 1000); // due_to_input.val(defate)
-
+      due_to_input.val(defate / 1000);
       this.setState({
         task_due_to: due_to_input.val()
       }); // here we will use select2, jquery and react states to make a connection between three select2s and the options inside them(warning: do not move this code to another js file(like select2.js) or out of this order)
@@ -61770,6 +61783,7 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
           viewing_as_admin = _this$state3.viewing_as_admin,
           allUsers = _this$state3.allUsers,
           due_to_check = _this$state3.due_to_check,
+          new_task_description = _this$state3.new_task_description,
           logged_in_user_id = this.props.logged_in_user_id;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, CAN_VIEW_AS_ADMIN && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-check col-12 text-right"
@@ -61923,7 +61937,7 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
             key: i,
             value: user.id,
-            img_address: APP_PATH + user !== null ? user.avatar_pic : "iamges/male-avatar.svg",
+            img_address: APP_PATH + (user !== null ? user.avatar_pic : "iamges/male-avatar.svg"),
             is_admin: user.is_admin
           }, user.fullname);
         }
@@ -61932,7 +61946,8 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "tinymc-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_tinymce_editor_index__WEBPACK_IMPORTED_MODULE_6__["default"], {
-        changeContent: this.onDescriptionChange
+        changeContent: this.onDescriptionChange,
+        value: new_task_description
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "text-center mt-2"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
@@ -62210,8 +62225,11 @@ var TinymcEditor = /*#__PURE__*/function (_React$Component) {
   _createClass(TinymcEditor, [{
     key: "render",
     value: function render() {
-      var initialValue = this.props.initialValue;
+      var _this$props = this.props,
+          initialValue = _this$props.initialValue,
+          value = _this$props.value;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_tinymce_tinymce_react__WEBPACK_IMPORTED_MODULE_1__["Editor"], {
+        value: value,
         initialValue: initialValue ? initialValue : "",
         tinymceScriptSrc: "".concat(APP_PATH, "js/tinymce/tinymce.js"),
         onEditorChange: this.handleEditorChange,
@@ -62423,7 +62441,7 @@ renderWithImg("#new-task-project-select", "پروژه مربوطه را انتخ
 
 /***/ }),
 
-/***/ 4:
+/***/ 7:
 /*!************************************************!*\
   !*** multi ./resources/js/react/mixedTasks.js ***!
   \************************************************/

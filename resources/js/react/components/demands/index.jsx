@@ -5,7 +5,7 @@ moment.locale('fa')
 import axios from 'axios'
 import 'react-activity/dist/react-activity.css'
 import TinymcEditor from '../tinymce-editor/index'
-import { setPriority, redirectTo, sweetError, getUser, getTask, getDemand, getWorkspace } from '../../../helpers'
+import { setPriority, redirectTo, sweetError, getUser, getTask, getDemand, getWorkspace, sweetSuccess } from '../../../helpers'
 import { simpleSearch, renderWithImg } from '../../../select2'
 
 export default class Demands extends Component {
@@ -104,6 +104,16 @@ export default class Demands extends Component {
         })
     }
 
+    emptyFields = () => {
+        $("#new-demand-title").val("")
+        $("#new-task-priority").val("1").change()
+        $("#new-demand-member").val("").change()
+        $("#related-task-select").val("").change()
+        this.setState({
+            new_demand_description: ""
+        })
+    }
+
     addDemand = () => {
         let { post_new_ticket_api } = this.props, { new_demand_description, workspace_users, target_user_id } = this.state
         let title = $("#new-demand-title").val(), priority = parseInt($("#new-task-priority").val()), toUser = $("#new-demand-member").val(), related_task = $("#related-task-select").val() === "0" ? "" : $("#related-task-select").val()
@@ -136,15 +146,8 @@ export default class Demands extends Component {
                     })
                 })   
             }
-            Swal.default.fire({
-                icon: 'success',
-                title: "موفقیت",
-                text: "درخواست شما ارسال شد",
-                showConfirmButton: true,
-                customClass: {
-                    content: 'persian-text'
-                }
-            })
+            sweetSuccess("درخواست شما ارسال شد")
+            this.emptyFields()
         }).catch(err => {
             sweetError(err);
         })
@@ -209,7 +212,7 @@ export default class Demands extends Component {
     }
     
     render() {
-        let { demands, needs, all, isGetting, workspace, already_added_needs, workspace_users, viewing_as_admin, allUsers, current_tab } = this.state, { user_profile_route, task_route, logged_in_user_id, demand_show_route } = this.props
+        let { demands, needs, all, isGetting, workspace, already_added_needs, workspace_users, viewing_as_admin, allUsers, current_tab, new_demand_description } = this.state, { user_profile_route, task_route, logged_in_user_id, demand_show_route } = this.props
         return (
             <div>
                 {CAN_VIEW_AS_ADMIN &&
@@ -415,7 +418,7 @@ export default class Demands extends Component {
                                     <span className="input-group-text">توضیحات</span>
                                 </div> */}
                                 <div className="tinymc-container">
-                                    <TinymcEditor changeContent={this.onDescriptionChange} />
+                                    <TinymcEditor changeContent={this.onDescriptionChange} value={new_demand_description} />
                                 </div>
                             </div>
                             <div className="text-center mt-2">

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import { getTask, getDemand, getUser, getWorkspace, sweetError, setPriority, redirectTo } from '../../../helpers'
+import { getTask, getDemand, getUser, getWorkspace, sweetError, sweetSuccess, setPriority, redirectTo } from '../../../helpers'
 import { renderWithImg } from '../../../select2'
 import { Digital, Spinner } from 'react-activity'
 import 'react-activity/lib/Digital/Digital.css'
@@ -131,6 +131,17 @@ export default class MixedDemands extends Component {
         })
     }
 
+    emptyFields = () => {
+        $("#new-demand-title").val("")
+        $("#new-task-priority").val("1").change()
+        $("#new-demand-member").val("").change()
+        $("#task-select").val("").change()
+        $("#new-demand-project-select").val("").change()
+        this.setState({
+            new_demand_description: ""
+        })
+    }
+
     addDemand = () => {
         let { post_demand_api } = this.props, { new_demand_description, workspaces_users, viewing_as_admin, target_user_id } = this.state
         let title = $("#new-demand-title").val(), priority = parseInt($("#new-task-priority").val()), toUser = $("#new-demand-member").val(), related_task = $("#task-select").val() === "0" ? "" : $("#task-select").val(), workspaceId = $("#new-demand-project-select").val()
@@ -166,15 +177,8 @@ export default class MixedDemands extends Component {
                     })
                 })   
             }
-            Swal.default.fire({
-                icon: 'success',
-                title: "موفقیت",
-                text: "درخواست شما ارسال شد",
-                showConfirmButton: true,
-                customClass: {
-                    content: 'persian-text'
-                }
-            })
+            sweetSuccess("درخواست شما ارسال شد")
+            this.emptyFields()
         }).catch(err => {
             sweetError(err)
         })
@@ -281,7 +285,7 @@ export default class MixedDemands extends Component {
     }
 
     render() {
-        let { demands, needs, isGetting, already_added_needs, workspaces, workspaces_users, selected_workspace, current_tab, viewing_as_admin, allUsers, all } = this.state, { logged_in_user_id, demand_show_route } = this.props
+        let { demands, needs, isGetting, already_added_needs, workspaces, workspaces_users, selected_workspace, current_tab, viewing_as_admin, allUsers, all, new_demand_description } = this.state, { logged_in_user_id, demand_show_route } = this.props
         return (
             <div>
                 {CAN_VIEW_AS_ADMIN &&
@@ -510,7 +514,7 @@ export default class MixedDemands extends Component {
                                     <span className="input-group-text">توضیحات</span>
                                 </div> */}
                                 <div className="tinymc-container">
-                                    <TinymcEditor changeContent={this.onDescriptionChange} />
+                                    <TinymcEditor changeContent={this.onDescriptionChange} value={new_demand_description} />
                                 </div>
                             </div>
                             <div className="text-center mt-2">
@@ -576,7 +580,7 @@ export default class MixedDemands extends Component {
                                         <td>{ title }</td>
                                         <td className="text-right">
                                             <img className="workspace_avatar" src={APP_PATH + (workspaces && workspaces[workspace_id].avatar_pic !== null ? workspaces[workspace_id].avatar_pic : "images/idea.svg")} />
-                                            <a href={getWorkspace(workspace_id)}>{workspaces[need.workspace_id].title}</a>
+                                            <a href={getWorkspace(workspace_id)}>{workspaces && workspaces[need.workspace_id].title}</a>
                                         </td>
                                         <td>
                                             <div className="employees-container horizontal-centerlize">
