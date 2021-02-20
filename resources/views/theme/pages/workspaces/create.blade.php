@@ -21,7 +21,7 @@
             <input type="text" value="{{ old('avatar_pic') }}" name="avatar_pic" id="avatar_pic" class="form-control text-left d-ltr" placeholder="{{ __('avatar_pic') }}">
         </div>
         <br><br><br>
-        <div class="col-lg-4 col-md-6 col-12 input-group float-right mb-3">
+        <div class="col-lg-4 col-md-6 col-12 input-group float-right mb-3 ">
             <div class="input-group-append">
                 <span class="input-group-text"><i class="fas fa-user-tag"></i></span>
             </div>
@@ -33,7 +33,7 @@
             </select>
         </div>
         <br><br><br>
-        <div class="col-lg-6 col-md-6 col-12 input-group float-right mb-3">
+        <div class="col-md-6 offset-md-6 col-12 input-group float-right mb-3">
             <textarea required rows="10" name="description" id="description" class="form-control" placeholder="{{ __('description') }}">{{ old('description') }}</textarea>
         </div>
         <div class="col-12 p-3 float-right text-right">
