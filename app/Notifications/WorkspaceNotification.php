@@ -46,7 +46,8 @@ class WorkspaceNotification extends Notification
     {
         $workspace_url = route('task-manager.workspaces.show', ['workspace' => $this->workspace->id]);
         return (new MailMessage)
-                    ->greeting("$notifiable->fullname عزیز سلام")
+                    ->greeting("{$notifiable->fullname} عزیز سلام")
+                    ->subject("شما به پروژه {$this->workspace->title} اضافه شدید.")
                     ->line("پروژه {$this->workspace->title} در سیستم مدیریت پروژه Sampi ایجاد شده است.")
                     ->action('مشاهده پروژه', $workspace_url)
                     ->line('موفق و پیروز باشید.');

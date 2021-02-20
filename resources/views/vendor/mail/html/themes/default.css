@@ -24,7 +24,8 @@ ul,
 ol,
 blockquote {
     line-height: 1.4;
-    text-align: left;
+    text-align: right;
+    direction: rtl;
 }
 
 a {
@@ -42,28 +43,32 @@ h1 {
     font-size: 18px;
     font-weight: bold;
     margin-top: 0;
-    text-align: left;
+    text-align: right;
+    direction: rtl;
 }
 
 h2 {
     font-size: 16px;
     font-weight: bold;
     margin-top: 0;
-    text-align: left;
+    text-align: right;
+    direction: rtl;
 }
 
 h3 {
     font-size: 14px;
     font-weight: bold;
     margin-top: 0;
-    text-align: left;
+    text-align: right;
+    direction: rtl;
 }
 
 p {
     font-size: 16px;
     line-height: 1.5em;
     margin-top: 0;
-    text-align: left;
+    text-align: right;
+    direction: rtl;
 }
 
 p.sub {

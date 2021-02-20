@@ -2,6 +2,8 @@
 
 namespace App\Traits;
 
+use App\Broadcasting\TelegramChannel;
+
 trait UserNotifiableChannelsTrait
 {
     public function user_channels(\App\User $user)
