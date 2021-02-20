@@ -61470,6 +61470,8 @@ var ShowTask = /*#__PURE__*/function (_Component) {
             onSelect: function onSelect(unix) {
               due_to_input.val(unix / 1000);
 
+              _this.pdt.setDate(unix);
+
               _this.setState({
                 task_due_to: due_to_input.val()
               });

@@ -77697,6 +77697,8 @@ var Workspace = /*#__PURE__*/function (_Component) {
         onSelect: function onSelect(unix) {
           due_to_input.val(unix / 1000);
 
+          _this2.pdt.setDate(unix);
+
           _this2.setState({
             task_due_to: due_to_input.val()
           });
