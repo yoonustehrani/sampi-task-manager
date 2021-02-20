@@ -179,10 +179,10 @@ class TaskController extends BaseController
                 $task->group = $request->group ?: $this->default_group;
                 $task->priority_id = $request->priority;
                 $task->due_to = $request->due_to ?: null;
-                if ($request->finished) {
-                    $task->finished_at = $task->finished_at ? null : now();
-                    $task->finisher_id = $request->user()->id;
-                }
+                $finisher = $task->finisher_id ?: $request->user()->id;
+                $finished_at = $task->finished_at ?: now();
+                $task->finisher_id = $request->finished ? $finisher : null;
+                $task->finished_at = $request->finished ? $finished_at : null;
                 $task->save();
                 $users = $request->input('users') ?: [];
                 $task->users()->sync(
@@ -207,8 +207,8 @@ class TaskController extends BaseController
     {
         $user = ($request->user_id) ? \App\User::find($request->user_id) : $request->user();
         $task = $user->tasks()->findOrFail($task);
+        $task->finisher_id = $task->finished_at ? null : $user->id;
         $task->finished_at = $task->finished_at ? null : now();
-        $task->finisher_id = $user->id;
         if ($task->save()) {
             if ($task->finished_at) {
                 $task->load('workspace', 'finisher');
