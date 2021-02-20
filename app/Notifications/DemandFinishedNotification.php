@@ -46,7 +46,8 @@ class DemandFinishedNotification extends Notification
         $demand = $this->demand;
         $demand_url = route('task-manager.demands.show', ['workspace' => $demand->workspace_id, 'demand' => $demand->id]);
         return (new MailMessage)
-                    ->greeting("$notifiable->fullname عزیز سلام")
+                    ->subject("اتمام درخواست {$demand->title}")
+                    ->greeting("{$notifiable->fullname} عزیز سلام")
                     ->line("درخواست شما مبنی بر {$demand->title} توسط {$demand->to->fullname} بسته شده است.")
                     ->action('مشاهده درخواست', $demand_url)
                     ->line('موفق و پیروز باشید !');

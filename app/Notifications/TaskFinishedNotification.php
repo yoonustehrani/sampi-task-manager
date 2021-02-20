@@ -47,8 +47,9 @@ class TaskFinishedNotification extends Notification
         // $workspace_url = route('task-manager.workspaces.show', ['workspace' => $task->workspace->id]);
         $task_url = route('task-manager.tasks.show', ['task' => $task->id]);
         return (new MailMessage)
-                    ->greeting("$notifiable->fullname عزیز سلام")
-                    ->line("مسئولیت با عنوان <b>{$task->title}</b> از پروژه {$task->workspace->title} اتمام یافت.")
+                    ->greeting("{$notifiable->fullname} عزیز سلام")
+                    ->subject("مسئولیت {$task->title} پایان یافت !")
+                    ->line("مسئولیت با عنوان {$task->title} از پروژه {$task->workspace->title} اتمام یافت.")
                     ->action('مشاهده', $task_url)
                     ->line('پیروز و سربلند باشید !');
     }
