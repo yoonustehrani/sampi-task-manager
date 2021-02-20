@@ -60,6 +60,9 @@ class EventServiceProvider extends ServiceProvider
         \App\Events\DemandMessageCreated::class => [
             \App\Listeners\SendDemandMessageCreatedNotification::class
         ],
+        \App\Events\DemandFinished::class => [
+            '\App\Listeners\SendDemandFinishedNotification'
+        ],
     ];
 
     /**
