@@ -12462,6 +12462,33 @@ i.finished-status-icon {
   z-index: 99;
 }
 
+i.rotate-animation {
+  -webkit-animation: rotate-animation infinite 1.5s linear;
+          animation: rotate-animation infinite 1.5s linear;
+}
+
+@-webkit-keyframes rotate-animation {
+  0% {
+    transform-origin: center;
+  }
+
+  100% {
+    transform-origin: center;
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rotate-animation {
+  0% {
+    transform-origin: center;
+  }
+
+  100% {
+    transform-origin: center;
+    transform: rotate(360deg);
+  }
+}
+
 .select2-container {
   box-sizing: border-box;
   display: inline-block;

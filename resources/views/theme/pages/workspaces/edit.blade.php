@@ -56,9 +56,9 @@
                 @endforeach
             </select>
         </div>
-        <br><br><br><hr>
-        <div class="col-lg-6 col-md-6 col-12 input-group float-right mb-3">
-            <textarea required rows="10" name="description" id="description" class="form-control" placeholder="{{ __('description') }}">{{ old('description') ?: $workspace->description }}</textarea>
+        {{-- <br><br><br><hr> --}}
+        <div class="col-12 input-group float-right mt-4 pt-3" style="border-top: 1px solid rgba(0, 0, 0, 0.1)">
+            <textarea required rows="10" name="description" id="description" class="form-control col-lg-6 col-md-6 offset-md-6 col-12" placeholder="{{ __('description') }}">{{ old('description') ?: $workspace->description }}</textarea>
         </div>
         <div class="col-12 p-3 float-right text-right">
             <button type="submit" class="btn btn-outline-primary">{{ __('save') }}</button>

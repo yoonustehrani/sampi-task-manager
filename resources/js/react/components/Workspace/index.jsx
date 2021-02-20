@@ -176,6 +176,7 @@ export default class Workspace extends Component {
             viewMode: 'day',
             onSelect: unix => {
                 due_to_input.val(unix / 1000)
+                this.pdt.setDate(unix)
                 this.setState({
                     task_due_to: due_to_input.val()
                 })

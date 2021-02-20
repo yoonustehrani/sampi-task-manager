@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ 	return __webpack_require__(__webpack_require__.s = 5);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -61470,6 +61470,8 @@ var ShowTask = /*#__PURE__*/function (_Component) {
             onSelect: function onSelect(unix) {
               due_to_input.val(unix / 1000);
 
+              _this.pdt.setDate(unix);
+
               _this.setState({
                 task_due_to: due_to_input.val()
               });
@@ -62329,7 +62331,7 @@ renderWithImg("#new-task-project-select", "پروژه مربوطه را انتخ
 
 /***/ }),
 
-/***/ 4:
+/***/ 5:
 /*!******************************************!*\
   !*** multi ./resources/js/react/task.js ***!
   \******************************************/

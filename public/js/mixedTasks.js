@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 7);
+/******/ 	return __webpack_require__(__webpack_require__.s = 8);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -61682,6 +61682,8 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
         onSelect: function onSelect(unix) {
           due_to_input.val(unix / 1000);
 
+          _this2.pdt.setDate(unix);
+
           _this2.setState({
             task_due_to: due_to_input.val()
           });
@@ -62441,7 +62443,7 @@ renderWithImg("#new-task-project-select", "پروژه مربوطه را انتخ
 
 /***/ }),
 
-/***/ 7:
+/***/ 8:
 /*!************************************************!*\
   !*** multi ./resources/js/react/mixedTasks.js ***!
   \************************************************/
