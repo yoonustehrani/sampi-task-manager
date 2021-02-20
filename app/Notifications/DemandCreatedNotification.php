@@ -43,10 +43,13 @@ class DemandCreatedNotification extends Notification
      */
     public function toMail($notifiable)
     {
+        $demand = $this->demand;
+        $demand_url = route('task-manager.demands.show', ['workspace' => $demand->workspace_id, 'demand' => $demand->id]);
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+                    ->line("{$notifiable->fullname} عزیز")
+                    ->line("{$demand->from->fullname} درخواست جدیدی با عنوان {$demand->title} از شما دارد.")
+                    ->action('مشاهده درخواست', $demand_url)
+                    ->line('موفق و پیروز باشید !');
     }
 
     public function toTelegram($notifiable)
