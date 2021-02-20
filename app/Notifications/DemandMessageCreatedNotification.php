@@ -49,6 +49,7 @@ class DemandMessageCreatedNotification extends Notification
         $message = $this->message;
         $demand_url = route('task-manager.demands.show', ['workspace' => $demand->workspace_id, 'demand' => $demand->id]);  
         return (new MailMessage)
+                    ->greeting("$notifiable->fullname عزیز سلام")
                     ->line("پیام جدید از سوی {$message->user->fullname} برای درخواست <b>{$demand->title}</b> ارسال شده است.")
                     ->action('مشاهده پیام', $demand_url)
                     ->line('موفق و سربلند باشید !');

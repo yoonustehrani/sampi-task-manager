@@ -46,7 +46,7 @@ class TaskCreatedNotification extends Notification
         $task = $this->task;
         $task_url = route('task-manager.tasks.show', ['task' => $task->id]);
         return (new MailMessage)
-                    ->line("{$notifiable->fullname} عزیز")
+                    ->greeting("$notifiable->fullname عزیز سلام")
                     ->line("مسئولیت جدید با عنوان <b>{$task->title}</b> در پروژه {$task->workspace->title} در سیستم مدیریت پروژه Sampi ایجاد شده است.")
                     ->action('مشاهده', $task_url)
                     ->line('پیروز و سربلند باشید !');

@@ -2,6 +2,7 @@
 
 use App\Broadcasting\TelegramChannel;
 use App\Events\WorkspaceCreated;
+use App\Notifications\WorkspaceNotification;
 use App\User;
 use App\Workspace;
 use Carbon\Carbon;
@@ -25,6 +26,10 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', function () {
+    $user = auth()->user() ?: \Auth::loginUsingId(2);
+    $workspace = Workspace::first();
+    $user->notifyNow(new WorkspaceNotification(['mail'], $workspace));
+    return 'sent !';
     return view('index');
 });
 
