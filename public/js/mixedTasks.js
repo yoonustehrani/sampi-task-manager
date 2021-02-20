@@ -61634,17 +61634,19 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
       });
     });
 
-    _defineProperty(_assertThisInitialized(_this), "handleMore", function (filtering) {
-      filtering ? _this.setState({
-        tasks: {
-          data: [],
-          nextPage: 1,
-          hasMore: true
-        },
-        already_added_tasks: {}
-      }, function () {
-        return _this.getData(true);
-      }) : _this.getData();
+    _defineProperty(_assertThisInitialized(_this), "handleMore", function (filtering, e) {
+      if (e.type === "click" || e.keyCode === 13) {
+        filtering ? _this.setState({
+          tasks: {
+            data: [],
+            nextPage: 1,
+            hasMore: true
+          },
+          already_added_tasks: {}
+        }, function () {
+          return _this.getData(true);
+        }) : _this.getData();
+      }
     });
 
     _defineProperty(_assertThisInitialized(_this), "toggleAddBox", function () {
@@ -62158,7 +62160,8 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
         type: "text",
         id: "tasks-search-input",
         className: "form-control",
-        placeholder: "\u062C\u0633\u062A\u062C\u0648 \u062F\u0631 \u0645\u0633\u0626\u0648\u0644\u06CC\u062A \u0647\u0627"
+        placeholder: "\u062C\u0633\u062A\u062C\u0648 \u062F\u0631 \u0645\u0633\u0626\u0648\u0644\u06CC\u062A \u0647\u0627",
+        onKeyDown: this.handleMore.bind(this, true)
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "input-group-append"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
