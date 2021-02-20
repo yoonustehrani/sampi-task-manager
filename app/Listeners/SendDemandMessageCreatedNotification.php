@@ -9,6 +9,7 @@ use Illuminate\Queue\InteractsWithQueue;
 
 class SendDemandMessageCreatedNotification
 {
+    use UserNotifiableChannelsTrait;
     /**
      * Create the event listener.
      *

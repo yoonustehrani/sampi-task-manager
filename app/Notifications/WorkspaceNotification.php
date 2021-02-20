@@ -44,16 +44,18 @@ class WorkspaceNotification extends Notification
      */
     public function toMail($notifiable)
     {
+        $workspace_url = route('task-manager.workspaces.show', ['workspace' => $this->workspace->id]);
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+                    ->line("$notifiable->fullname عزیز")
+                    ->line("پروژه {$this->workspace->title} در سیستم مدیریت پروژه Sampi ایجاد شده است.")
+                    ->action('مشاهده پروژه', $workspace_url)
+                    ->line('موفق و پیروز باشید.');
     }
 
     public function toTelegram($notifiable)
     {
         $chat_id = $notifiable->telegram_chat_id;
-        $workspace_url = "http://ourobot.ir/task-manager/workspaces/{$this->workspace->id}";
+        $workspace_url = route('task-manager.workspaces.show', ['workspace' => $this->workspace->id]);
         $text = "
 {$notifiable->fullname} عزیز
 پروژه <a href=\"{$workspace_url}\">{$this->workspace->title}</a> در سیستم مدیریت پروژه Sampi ایجاد شده است.

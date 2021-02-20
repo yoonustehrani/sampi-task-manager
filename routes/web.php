@@ -1,5 +1,6 @@
 <?php
 
+use App\Broadcasting\TelegramChannel;
 use App\Events\WorkspaceCreated;
 use App\User;
 use App\Workspace;

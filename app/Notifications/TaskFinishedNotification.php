@@ -43,10 +43,14 @@ class TaskFinishedNotification extends Notification
      */
     public function toMail($notifiable)
     {
+        $task = $this->task;
+        // $workspace_url = route('task-manager.workspaces.show', ['workspace' => $task->workspace->id]);
+        $task_url = route('task-manager.tasks.show', ['task' => $task->id]);
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+                    ->line("{$notifiable->fullname} عزیز")
+                    ->line("مسئولیت با عنوان <b>{$task->title}</b> از پروژه {$task->workspace->title} اتمام یافت.")
+                    ->action('مشاهده', $task_url)
+                    ->line('پیروز و سربلند باشید !');
     }
 
     public function toTelegram($notifiable)
@@ -54,7 +58,7 @@ class TaskFinishedNotification extends Notification
         $chat_id = $notifiable->telegram_chat_id;
         $task = $this->task;
         $workspace_url = "http://ourobot.ir/task-manager/workspaces/{$task->workspace->id}";
-        $task_url = "http://ourobot.ir/task-manager/tasks/{$task->id}";    
+        $task_url = "http://ourobot.ir/task-manager/tasks/{$task->id}";
         $finisher = "";
         if ($task->finisher) {
             $finisher .= "توسط : ";

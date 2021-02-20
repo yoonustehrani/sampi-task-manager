@@ -43,10 +43,13 @@ class TaskCreatedNotification extends Notification
      */
     public function toMail($notifiable)
     {
+        $task = $this->task;
+        $task_url = route('task-manager.tasks.show', ['task' => $task->id]);
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+                    ->line("{$notifiable->fullname} عزیز")
+                    ->line("مسئولیت جدید با عنوان <b>{$task->title}</b> در پروژه {$task->workspace->title} در سیستم مدیریت پروژه Sampi ایجاد شده است.")
+                    ->action('مشاهده', $task_url)
+                    ->line('پیروز و سربلند باشید !');
     }
 
     public function toTelegram($notifiable)
