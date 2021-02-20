@@ -281,12 +281,12 @@ export default class MixedDemands extends Component {
         return (
             <div>
                 {CAN_VIEW_AS_ADMIN &&
-                    <div className="form-check col-12 text-right">
+                    <div className="form-check col-12 text-right mb-4">
                         <input className="form-check-input c-p" type="checkbox" value={viewing_as_admin} id="flexCheckDefault" onChange={this.setViewAsAdmin} />
                         <label className="form-check-label c-p" htmlFor="flexCheckDefault">
                             مشاهده به عنوان ادمین
                         </label>
-                        <div className="add-task-section rtl mt-2 mb-4 animated slideInLeft d-none" ref={this.adminViewRef}>
+                        <div className="add-task-section rtl mt-2 animated slideInLeft d-none" ref={this.adminViewRef}>
                             <div className="input-group col-12 col-md-4 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line-all">
                                 <div className="input-group-prepend">
                                     <span className="input-group-text">مخاطب</span>
