@@ -61196,7 +61196,7 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
           className: "text-right"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
           className: "workspace_avatar",
-          src: APP_PATH + (workspaces[need.workspace_id].avatar_pic !== null ? workspaces[need.workspace_id].avatar_pic : "images/idea.svg")
+          src: APP_PATH + (workspaces && workspaces[workspace_id].avatar_pic !== null ? workspaces[workspace_id].avatar_pic : "images/idea.svg")
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
           href: Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["getWorkspace"])(workspace_id)
         }, workspaces[need.workspace_id].title)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {

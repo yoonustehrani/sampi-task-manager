@@ -571,7 +571,7 @@ export default class MixedDemands extends Component {
                                         <th scope="row">{i + 1}</th>
                                         <td>{ title }</td>
                                         <td className="text-right">
-                                            <img className="workspace_avatar" src={APP_PATH + (workspaces[need.workspace_id].avatar_pic !== null ? workspaces[need.workspace_id].avatar_pic : "images/idea.svg")} />
+                                            <img className="workspace_avatar" src={APP_PATH + (workspaces && workspaces[workspace_id].avatar_pic !== null ? workspaces[workspace_id].avatar_pic : "images/idea.svg")} />
                                             <a href={getWorkspace(workspace_id)}>{workspaces[need.workspace_id].title}</a>
                                         </td>
                                         <td>
