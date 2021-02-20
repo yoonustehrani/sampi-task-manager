@@ -8,7 +8,7 @@ use App\Traits\UserNotifiableChannelsTrait;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
-class SendDemandCreatedNotification
+class SendDemandFinishedNotification
 {
     use UserNotifiableChannelsTrait;
     /**
