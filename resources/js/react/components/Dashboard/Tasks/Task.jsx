@@ -20,6 +20,7 @@ class Task extends Component {
             sweetSuccess("وضعیت اتمام با موفقیت تغییر یافت")
             e.target.classList.toggle("fa-times-circle")
             e.target.classList.toggle("fa-check-circle")
+            e.target.parentElement.nextSibling.innerHTML = res.data.finished_at ? moment(res.data.finished_at).fromNow() : '<i class="fas fa-calendar-times fa-3x"></i>'
         }).catch(err => {
             sweetError(err)
         })

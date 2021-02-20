@@ -12,7 +12,7 @@ class Task extends Model
     use SoftDeletes, SearchableTrait;
     protected $fillable = ['title', 'description', 'parent_id', 'group', 'workspace_id', 'creator_id', 'finisher_id', 'priority_id', 'due_to', 'finished_at'];
     protected $dates = [
-        'due_to', 'created_at', 'updated_at', 'deleted_at'
+     'created_at', 'updated_at', 'deleted_at', 'due_to'
     ];
     protected $casts = [
         // 'due_to' => 'datetime',
@@ -71,9 +71,10 @@ class Task extends Model
 
     public function setDueToAttribute($date)
     {
-        if ($date) {
-            $this->attributes['due_to'] = Carbon::parse($date)->tz(config('app.timezone'));
-        }
-        return $date;
+        $this->attributes['due_to'] = $date ? Carbon::parse($date)->tz(config('app.timezone')) : null;
     }
+    // public function getDueToAttribute($date)
+    // {
+        // return 
+    // }
 }

@@ -168,11 +168,11 @@ export default class ShowTask extends Component {
                 })
             } else {
                 let { edit_task_api, toggle_task_state_api } = this.props, { task_description, finished_at_check, first_check_state, task_due_to, due_to_check } = this.state
-                if (finished_at_check !== first_check_state) {
-                    Axios.put(toggle_task_state_api).catch(err => {
-                        sweetError(err)
-                    })
-                }
+                // if (finished_at_check !== first_check_state) {
+                //     Axios.put(toggle_task_state_api).catch(err => {
+                //         sweetError(err)
+                //     })
+                // }
                 Axios.put(edit_task_api, {
                     title: edited_title,
                     group: edited_group,
@@ -180,7 +180,8 @@ export default class ShowTask extends Component {
                     users: edited_users,
                     description: task_description,
                     due_to: due_to_check ? Math.trunc(task_due_to) : null,
-                    parent_id: parent_id.length === 0 ? null : parent_id
+                    parent_id: parent_id.length === 0 ? null : parent_id,
+                    finished: finished_at_check
                 }).then(res => {
                     let { data } = res
                     this.setState(prevState => {
