@@ -146,12 +146,13 @@ class TaskController extends BaseController
                 $task->priority_id = $request->priority;
                 $task->due_to = $request->due_to ?: null;
                 $task->creator_id = $request->user()->id;
-                $task = $workspace->tasks()->create($task->toArray());
+                $task = $workspace->tasks()->save($task);
                 $users = $request->input('users') ?: [];
                 $task->users()->attach(
                     array_merge($users, [(string) $request->user()->id])
                 );
             \DB::commit();
+            return $task;
             $task['workspace'] = $workspace;
             // event(new TaskCreated($task));
             return $task->parent_id ? $task->load(['parent', 'users']) : $task->load('users');
