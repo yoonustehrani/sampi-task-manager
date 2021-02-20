@@ -297,7 +297,7 @@ export default class UserProfile extends Component {
                                             return (
                                                 <div key={i} className="task-item user-work-item" onClick={() => redirectTo(getTask(task.id))}>
                                                     <h6 className="text-right small-font">{ (task.title.length + task.group.length) < 33 ? content : content.substring(0, 30) + " ..." }</h6>
-                                                    <span className="small-font">{moment(task.due_to).fromNow()} {task.finished_at !== null ? <i className="fas fa-check"></i> : <i className="fas fa-times"></i>}</span>
+                                                    <span className="small-font rtl">{moment(task.created_at).fromNow()} {task.finished_at !== null ? <i className="fas fa-check"></i> : <i className="fas fa-times"></i>}</span>
                                                 </div>
                                             )
                                         })
@@ -342,12 +342,12 @@ export default class UserProfile extends Component {
                                         ? mixed_demands.map((demand, i) => (
                                             <div key={i} className="demand-item hover-bg" onClick={() => redirectTo(getDemand(demand.workspace_id, demand.id))}>
                                                 <div>
-                                                    <i className={`mr-1 fas ${demand.finished_at === null ? "fa-times" : "fa-cehck"}`}></i>
+                                                    <i className={`mr-1 fas ${demand.finished_at === null ? "fa-times" : "fa-check"}`}></i>
                                                     <img src={APP_PATH + `${TargetUser.avatar_pic ? TargetUser.avatar_pic : 'images/male-avatar.svg'}`} alt="" />
                                                 </div>
                                                 <i className="fas fa-long-arrow-alt-right"></i>
                                                 <div className="demand-sender">
-                                                    <h6 className="ml-1 small-font">{ demand.title.length < 30 ? demand.title : demand.title.substring(0, 27) + " ..." }</h6>
+                                                    <h6 className="ml-2 small-font">{ demand.title.length < 30 ? demand.title : demand.title.substring(0, 27) + " ..." }</h6>
                                                     <img src={APP_PATH + `${demand.from.avatar_pic ? demand.from.avatar_pic : 'images/male-avatar.svg'}`} alt=""/>
                                                 </div>
                                             </div>
@@ -399,7 +399,7 @@ export default class UserProfile extends Component {
                                                 <i className="fas fa-long-arrow-alt-left"></i>
                                                 <div>
                                                     <img src={APP_PATH + `${need.to.avatar_pic ? need.to.avatar_pic : 'images/male-avatar.svg'}`} alt=""/>
-                                                    <i className={`ml-1 fas ${need.finished_at === null ? "fa-times" : "fa-cehck"}`}></i>
+                                                    <i className={`ml-2 fas ${need.finished_at === null ? "fa-times" : "fa-check"}`}></i>
                                                 </div>
                                             </div>
                                         ))
