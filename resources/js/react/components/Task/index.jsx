@@ -234,7 +234,7 @@ export default class ShowTask extends Component {
                         </div>
                         <input id="task-group-edit" type="text" className="form-control" defaultValue={task.group}/>
                     </div>
-                    <div className="input-group col-12 col-md-6 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3 input-group-single-line-all">
+                    <div className="input-group col-12 col-md-6 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3 input-group-single-line">
                         <div className="input-group-prepend">
                             <span className="input-group-text">زیر مجموعه</span>
                         </div>

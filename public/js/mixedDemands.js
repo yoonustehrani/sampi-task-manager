@@ -60764,7 +60764,7 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
           logged_in_user_id = _this$props2.logged_in_user_id,
           demand_show_route = _this$props2.demand_show_route;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, CAN_VIEW_AS_ADMIN && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "form-check col-12 text-right"
+        className: "form-check col-12 text-right mb-4"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         className: "form-check-input c-p",
         type: "checkbox",
@@ -60775,7 +60775,7 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
         className: "form-check-label c-p",
         htmlFor: "flexCheckDefault"
       }, "\u0645\u0634\u0627\u0647\u062F\u0647 \u0628\u0647 \u0639\u0646\u0648\u0627\u0646 \u0627\u062F\u0645\u06CC\u0646"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "add-task-section rtl mt-2 mb-4 animated slideInLeft d-none",
+        className: "add-task-section rtl mt-2 animated slideInLeft d-none",
         ref: this.adminViewRef
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "input-group col-12 col-md-4 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line-all"
@@ -61196,7 +61196,7 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
           className: "text-right"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
           className: "workspace_avatar",
-          src: APP_PATH + (workspaces[need.workspace_id].avatar_pic !== null ? workspaces[need.workspace_id].avatar_pic : "images/idea.svg")
+          src: APP_PATH + (workspaces && workspaces[workspace_id].avatar_pic !== null ? workspaces[workspace_id].avatar_pic : "images/idea.svg")
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
           href: Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["getWorkspace"])(workspace_id)
         }, workspaces[need.workspace_id].title)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -61356,7 +61356,8 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
             to = item.to,
             from = item.from,
             id = item.id,
-            workspace_id = item.workspace_id;
+            workspace_id = item.workspace_id,
+            workspace = item.workspace;
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
           key: i,
           className: "animated fadeIn",
@@ -61369,10 +61370,10 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
           className: "text-right"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
           className: "workspace_avatar",
-          src: APP_PATH + (workspaces[workspace_id].avatar_pic !== null ? workspaces[workspace_id].avatar_pic : "images/idea.svg")
+          src: APP_PATH + (workspace.avatar_pic !== null ? workspace.avatar_pic : "images/idea.svg")
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
           href: Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["getWorkspace"])(workspace_id)
-        }, workspaces[workspace_id].title)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }, workspace.title)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "employees-container horizontal-centerlize"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, from.fullname), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "dropdown-users d-none",

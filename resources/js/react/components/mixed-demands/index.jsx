@@ -281,12 +281,12 @@ export default class MixedDemands extends Component {
         return (
             <div>
                 {CAN_VIEW_AS_ADMIN &&
-                    <div className="form-check col-12 text-right">
+                    <div className="form-check col-12 text-right mb-4">
                         <input className="form-check-input c-p" type="checkbox" value={viewing_as_admin} id="flexCheckDefault" onChange={this.setViewAsAdmin} />
                         <label className="form-check-label c-p" htmlFor="flexCheckDefault">
                             مشاهده به عنوان ادمین
                         </label>
-                        <div className="add-task-section rtl mt-2 mb-4 animated slideInLeft d-none" ref={this.adminViewRef}>
+                        <div className="add-task-section rtl mt-2 animated slideInLeft d-none" ref={this.adminViewRef}>
                             <div className="input-group col-12 col-md-4 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line-all">
                                 <div className="input-group-prepend">
                                     <span className="input-group-text">مخاطب</span>
@@ -571,7 +571,7 @@ export default class MixedDemands extends Component {
                                         <th scope="row">{i + 1}</th>
                                         <td>{ title }</td>
                                         <td className="text-right">
-                                            <img className="workspace_avatar" src={APP_PATH + (workspaces[need.workspace_id].avatar_pic !== null ? workspaces[need.workspace_id].avatar_pic : "images/idea.svg")} />
+                                            <img className="workspace_avatar" src={APP_PATH + (workspaces && workspaces[workspace_id].avatar_pic !== null ? workspaces[workspace_id].avatar_pic : "images/idea.svg")} />
                                             <a href={getWorkspace(workspace_id)}>{workspaces[need.workspace_id].title}</a>
                                         </td>
                                         <td>
@@ -684,14 +684,14 @@ export default class MixedDemands extends Component {
                         </thead>
                         <tbody>
                             {all && all.data.length > 0 && all.data.map((item, i) => {
-                                let { title, task, priority, due_to, finished_at, to, from, id, workspace_id } = item
+                                let { title, task, priority, due_to, finished_at, to, from, id, workspace_id, workspace } = item
                                 return (
                                     <tr key={i} className="animated fadeIn" onClick={() => redirectTo(getDemand(workspace_id, id))}>
                                         <th scope="row">{i + 1}</th>
                                         <td>{ title }</td>
                                         <td className="text-right">
-                                            <img className="workspace_avatar" src={APP_PATH + (workspaces[workspace_id].avatar_pic !== null ? workspaces[workspace_id].avatar_pic : "images/idea.svg")} />
-                                            <a href={getWorkspace(workspace_id)}>{workspaces[workspace_id].title}</a>
+                                            <img className="workspace_avatar" src={APP_PATH + (workspace.avatar_pic !== null ? workspace.avatar_pic : "images/idea.svg")} />
+                                            <a href={getWorkspace(workspace_id)}>{workspace.title}</a>
                                         </td>
                                         <td>
                                             <div className="employees-container horizontal-centerlize">
