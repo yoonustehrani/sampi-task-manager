@@ -71395,8 +71395,10 @@ if ($(window).width() > 576) {
 }
 
 $("#refresh-btn").on("click", function () {
-  $(this.childNodes.item(1)).addClass("rotate-animation");
-  location.reload(true);
+  $(this.childNodes.item(1)).addClass("rotate-animation"); // location.reload(true)
+  // window.location.href = window.location.href
+
+  javascript: location.reload(true);
 });
 
 /***/ }),
