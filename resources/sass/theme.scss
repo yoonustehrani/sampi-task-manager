@@ -625,3 +625,17 @@ i.finished-status-icon {
     position: relative;
     z-index: 99;
 }
+
+i.rotate-animation {
+    animation: rotate-animation infinite 1.5s linear;
+}
+
+@keyframes rotate-animation {
+    0% {
+        transform-origin: center;
+    }
+    100% {
+        transform-origin: center;
+        transform: rotate(360deg)
+    }
+}
