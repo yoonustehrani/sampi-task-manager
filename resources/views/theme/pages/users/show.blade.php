@@ -13,6 +13,7 @@
         data-chart-completed="{{ route('api.task-manager.chart.tasks', ['type' => 'completed', 'api_token' => auth()->user()->api_token]) }}"
         data-chart-ontime="{{ route('api.task-manager.chart.tasks', ['type' => 'ontime', 'api_token' => auth()->user()->api_token]) }}"
         data-chart-yearly="{{ route('api.task-manager.chart.tasks', ['type' => 'yearly', 'api_token' => auth()->user()->api_token]) }}"
+        task-counter = "{{ route('api.task-manager.counter.tasks', ['api_token' => auth()->user()->api_token]) }}"
     ></div>
 @endsection
 

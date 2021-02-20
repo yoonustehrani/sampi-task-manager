@@ -149,38 +149,30 @@ export default class UserProfile extends Component {
         //     let { data } = res.data;
             
         // })
-        let statisticApis = [workspace_counter, task_counter, demand_counter], statistics = {}
+        let statisticApis = [task_counter], statistics = {}
         this.setState({
             isGetting: true
         })
-        // statisticApis.map((url, i) => {
-        //     Axios.get(url).then(res => {
-        //         let { data } = res
-        //         this.setState(preState => {
-        //             let catagory
-        //             switch (i) {
-        //                 case 0:
-        //                     catagory = "workspaceCounter"
-        //                     break;
-
-        //                 case 1:
-        //                     catagory = "taskCounter"
-        //                     break;
-
-        //                 case 2:
-        //                     catagory = "demandCounter"
-        //                     break;
+        statisticApis.map((url, i) => {
+            Axios.get(url).then(res => {
+                let { data } = res
+                this.setState(preState => {
+                    let catagory
+                    switch (i) {
+                        case 0:
+                            catagory = "taskCounter"
+                            break;
                     
-        //                 default:
-        //                     break;
-        //             }
-        //             statistics[catagory] = data
-        //             return ({
-        //                 statistics: statistics
-        //             })
-        //         })
-        //     })
-        // })
+                        default:
+                            break;
+                    }
+                    statistics[catagory] = data
+                    return ({
+                        statistics: statistics
+                    })
+                })
+            })
+        })
         Axios.get(`${workspacesApi}&user_id=${TargetUser.id}`).then(res => {
             let { data } = res
             this.setState({workspaces: data}, () => {
@@ -211,10 +203,16 @@ export default class UserProfile extends Component {
     render() {
         let { mixed_tasks, statistics, isGetting, workspaces, navbar, mixed_demands, mixed_needs, charts } = this.state
         let { workspace_route, task_route, demand_show_route, user_profile_route } = this.props
-        let roles = ""
+        let roles = "", all_tasks_count = 0, finished_tasks_percentage = 0, expired_tasks_percentage = 0
         TargetUser.roles.map((role, i) => {
             roles += role.label + `${i + 1 !== TargetUser.roles.length ? " - " : ""}`                       
         })
+        if (statistics.taskCounter) {
+            let { finished, unfinished, expired } = statistics.taskCounter
+            all_tasks_count = finished.count + unfinished.count
+            finished_tasks_percentage = all_tasks_count > 0 ? Math.round(100 * (finished.count / all_tasks_count)) : 0
+            expired_tasks_percentage = all_tasks_count > 0 ? Math.round(100 * (expired.count / all_tasks_count)) : 0
+        }
         return (
             <div>
                 <div className="user-info-section col-12 col-md-4 pl-0 pr-0 float-right">
@@ -416,7 +414,7 @@ export default class UserProfile extends Component {
                     <div className="wide-section-statistics col-12 mb-1 bg-light">
                         <div className="chart-title-section title-section col-12 p-2">
                             <i className="fas fa-handshake"></i>
-                            <h5>مسئولیت ها</h5>
+                            <h5>درصد تکمیل مسئولیت ها</h5>
                         </div>
                         <div className="col-12 wide-section-charts pl-0 pr-0 pl-md-3 pr-md-3">
                             <div className="col-12 col-md-9 wide-chart p-0">
@@ -425,24 +423,15 @@ export default class UserProfile extends Component {
                                 </div>                            
                             </div>
                             <div className="col-6 offset-3 offset-md-0 col-md-3 p-0 p-md-3 mb-2 mb-md-0">
-                                <CircularProgressbar value={20} text={`20%`} />
+                                <CircularProgressbar value={finished_tasks_percentage} text={`${finished_tasks_percentage}%`} />
                             </div>
                         </div>
                     </div>
-                    <div className="small-chart-sections-container col-12 p-0">
-                        <div className="text-center bg-light col-12 col-md-6 mt-3 mt-md-0">
+                    <div className="wide-section-statistics col-12 p-0">
+                        <div className="bg-light col-12 mt-3 mt-md-0">
                             <div className="chart-title-section title-section col-12 p-2">
-                                <i className="fas fa-chart-line"></i>
-                                <h5>اتمام به موقع مسئولیت های</h5>
-                            </div>
-                            <div className="col-6 offset-3 small-section-charts p-md-3 pt-3 pb-3">
-                                <CircularProgressbar value={0} text={`0%`} />
-                            </div>
-                        </div>
-                        <div className="bg-light col-12 col-md-6 mt-3 mt-md-0">
-                            <div className="chart-title-section title-section col-12 p-2">
-                                <i className="fas fa-chart-bar"></i>
-                                <h5>مسئولیت های ساخته شده</h5>
+                                <i className="fas fa-business-time"></i>
+                                <h5>تکمیل به موقع مسئولیت ها</h5>
                             </div>
                             <div className="col-12 pr-0 pl-0 small-section-charts p-md-3 pt-3 pb-3">
                                 <MonthlyChart Data={charts[1].data} Title={charts[1].title} id={2}/>
@@ -453,13 +442,22 @@ export default class UserProfile extends Component {
                         <div className="text-center bg-light col-12 col-md-6 mt-3 mt-md-0">
                             <div className="chart-title-section title-section col-12 p-2">
                                 <i className="fas fa-chart-pie"></i>
-                                <h5>پیشرفت در سرعت</h5>
+                                <h5>وظایف عقب افتاده</h5>
+                            </div>
+                            <div className="col-6 offset-3 small-section-charts p-md-3 pt-3 pb-3">
+                                <CircularProgressbar value={expired_tasks_percentage} text={`${expired_tasks_percentage}%`} />
+                            </div>
+                        </div>
+                        <div className="text-center bg-light col-12 col-md-6 mt-3 mt-md-0">
+                            <div className="chart-title-section title-section col-12 p-2">
+                                <i className="fas fa-tasks"></i>
+                                <h5>وضعیت تکمیل نیاز ها</h5>
                             </div>
                             <div className="col-6 offset-3 small-section-charts p-md-3 pt-3 pb-3">
                                 <CircularProgressbar value={0} text={`0%`} />
                             </div>
                         </div>
-                        <div className="bg-light col-12 col-md-6 mt-3 mt-md-0">
+                        {/* <div className="bg-light col-12 col-md-6 mt-3 mt-md-0">
                             <div className="chart-title-section title-section col-12 p-2">
                                 <i className="fas fa-chart-area"></i>
                                 <h5>حجم مسئولیت ها</h5>
@@ -467,7 +465,7 @@ export default class UserProfile extends Component {
                             <div className="col-12 pr-0 pl-0 small-section-charts p-md-3 pt-3 pb-3">
                                 <canvas id="myChart3" aria-label="Hello ARIA World" role="img"></canvas>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>

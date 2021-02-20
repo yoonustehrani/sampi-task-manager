@@ -76753,36 +76753,34 @@ var UserProfile = /*#__PURE__*/function (_Component) {
       //     let { data } = res.data;
       // })
 
-      var statisticApis = [workspace_counter, task_counter, demand_counter],
+      var statisticApis = [task_counter],
           statistics = {};
       this.setState({
         isGetting: true
-      }); // statisticApis.map((url, i) => {
-      //     Axios.get(url).then(res => {
-      //         let { data } = res
-      //         this.setState(preState => {
-      //             let catagory
-      //             switch (i) {
-      //                 case 0:
-      //                     catagory = "workspaceCounter"
-      //                     break;
-      //                 case 1:
-      //                     catagory = "taskCounter"
-      //                     break;
-      //                 case 2:
-      //                     catagory = "demandCounter"
-      //                     break;
-      //                 default:
-      //                     break;
-      //             }
-      //             statistics[catagory] = data
-      //             return ({
-      //                 statistics: statistics
-      //             })
-      //         })
-      //     })
-      // })
+      });
+      statisticApis.map(function (url, i) {
+        axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(url).then(function (res) {
+          var data = res.data;
 
+          _this2.setState(function (preState) {
+            var catagory;
+
+            switch (i) {
+              case 0:
+                catagory = "taskCounter";
+                break;
+
+              default:
+                break;
+            }
+
+            statistics[catagory] = data;
+            return {
+              statistics: statistics
+            };
+          });
+        });
+      });
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("".concat(workspacesApi, "&user_id=").concat(TargetUser.id)).then(function (res) {
         var data = res.data;
 
@@ -76830,10 +76828,24 @@ var UserProfile = /*#__PURE__*/function (_Component) {
           task_route = _this$props4.task_route,
           demand_show_route = _this$props4.demand_show_route,
           user_profile_route = _this$props4.user_profile_route;
-      var roles = "";
+      var roles = "",
+          all_tasks_count = 0,
+          finished_tasks_percentage = 0,
+          expired_tasks_percentage = 0;
       TargetUser.roles.map(function (role, i) {
         roles += role.label + "".concat(i + 1 !== TargetUser.roles.length ? " - " : "");
       });
+
+      if (statistics.taskCounter) {
+        var _statistics$taskCount = statistics.taskCounter,
+            finished = _statistics$taskCount.finished,
+            unfinished = _statistics$taskCount.unfinished,
+            expired = _statistics$taskCount.expired;
+        all_tasks_count = finished.count + unfinished.count;
+        finished_tasks_percentage = all_tasks_count > 0 ? Math.round(100 * (finished.count / all_tasks_count)) : 0;
+        expired_tasks_percentage = all_tasks_count > 0 ? Math.round(100 * (expired.count / all_tasks_count)) : 0;
+      }
+
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "user-info-section col-12 col-md-4 pl-0 pr-0 float-right"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -77178,7 +77190,7 @@ var UserProfile = /*#__PURE__*/function (_Component) {
         className: "chart-title-section title-section col-12 p-2"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-handshake"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, "\u0645\u0633\u0626\u0648\u0644\u06CC\u062A \u0647\u0627")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, "\u062F\u0631\u0635\u062F \u062A\u06A9\u0645\u06CC\u0644 \u0645\u0633\u0626\u0648\u0644\u06CC\u062A \u0647\u0627")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-12 wide-section-charts pl-0 pr-0 pl-md-3 pr-md-3"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-12 col-md-9 wide-chart p-0"
@@ -77191,28 +77203,17 @@ var UserProfile = /*#__PURE__*/function (_Component) {
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-6 offset-3 offset-md-0 col-md-3 p-0 p-md-3 mb-2 mb-md-0"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_circular_progressbar__WEBPACK_IMPORTED_MODULE_6__["CircularProgressbar"], {
-        value: 20,
-        text: "20%"
+        value: finished_tasks_percentage,
+        text: "".concat(finished_tasks_percentage, "%")
       })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "small-chart-sections-container col-12 p-0"
+        className: "wide-section-statistics col-12 p-0"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "text-center bg-light col-12 col-md-6 mt-3 mt-md-0"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "chart-title-section title-section col-12 p-2"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-chart-line"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, "\u0627\u062A\u0645\u0627\u0645 \u0628\u0647 \u0645\u0648\u0642\u0639 \u0645\u0633\u0626\u0648\u0644\u06CC\u062A \u0647\u0627\u06CC")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-6 offset-3 small-section-charts p-md-3 pt-3 pb-3"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_circular_progressbar__WEBPACK_IMPORTED_MODULE_6__["CircularProgressbar"], {
-        value: 0,
-        text: "0%"
-      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "bg-light col-12 col-md-6 mt-3 mt-md-0"
+        className: "bg-light col-12 mt-3 mt-md-0"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "chart-title-section title-section col-12 p-2"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-chart-bar"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, "\u0645\u0633\u0626\u0648\u0644\u06CC\u062A \u0647\u0627\u06CC \u0633\u0627\u062E\u062A\u0647 \u0634\u062F\u0647")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "fas fa-business-time"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, "\u062A\u06A9\u0645\u06CC\u0644 \u0628\u0647 \u0645\u0648\u0642\u0639 \u0645\u0633\u0626\u0648\u0644\u06CC\u062A \u0647\u0627")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-12 pr-0 pl-0 small-section-charts p-md-3 pt-3 pb-3"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Charts_MonthlyChart__WEBPACK_IMPORTED_MODULE_8__["default"], {
         Data: charts[1].data,
@@ -77226,23 +77227,22 @@ var UserProfile = /*#__PURE__*/function (_Component) {
         className: "chart-title-section title-section col-12 p-2"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-chart-pie"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, "\u067E\u06CC\u0634\u0631\u0641\u062A \u062F\u0631 \u0633\u0631\u0639\u062A")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, "\u0648\u0638\u0627\u06CC\u0641 \u0639\u0642\u0628 \u0627\u0641\u062A\u0627\u062F\u0647")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-6 offset-3 small-section-charts p-md-3 pt-3 pb-3"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_circular_progressbar__WEBPACK_IMPORTED_MODULE_6__["CircularProgressbar"], {
+        value: expired_tasks_percentage,
+        text: "".concat(expired_tasks_percentage, "%")
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "text-center bg-light col-12 col-md-6 mt-3 mt-md-0"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "chart-title-section title-section col-12 p-2"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-tasks"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, "\u0648\u0636\u0639\u06CC\u062A \u062A\u06A9\u0645\u06CC\u0644 \u0646\u06CC\u0627\u0632 \u0647\u0627")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-6 offset-3 small-section-charts p-md-3 pt-3 pb-3"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_circular_progressbar__WEBPACK_IMPORTED_MODULE_6__["CircularProgressbar"], {
         value: 0,
         text: "0%"
-      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "bg-light col-12 col-md-6 mt-3 mt-md-0"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "chart-title-section title-section col-12 p-2"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-chart-area"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, "\u062D\u062C\u0645 \u0645\u0633\u0626\u0648\u0644\u06CC\u062A \u0647\u0627")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-12 pr-0 pl-0 small-section-charts p-md-3 pt-3 pb-3"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("canvas", {
-        id: "myChart3",
-        "aria-label": "Hello ARIA World",
-        role: "img"
       }))))));
     }
   }]);
@@ -77278,6 +77278,7 @@ var mixedTasks = target.getAttribute('data-mixed-tasks');
 var chart_one = target.getAttribute("data-chart-completed");
 var chart_two = target.getAttribute("data-chart-ontime");
 var chart_three = target.getAttribute("data-chart-yearly");
+var task_counter = target.getAttribute("task-counter");
 
 if (target) {
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_user_profile_index__WEBPACK_IMPORTED_MODULE_2__["default"], {
@@ -77286,7 +77287,8 @@ if (target) {
     mixedDemandsApi: mixedDemands,
     chart_one: chart_one,
     chart_two: chart_two,
-    chart_three: chart_three
+    chart_three: chart_three,
+    task_counter: task_counter
   }), target);
 }
 
