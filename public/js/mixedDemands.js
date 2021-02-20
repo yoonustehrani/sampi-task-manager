@@ -60421,9 +60421,12 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
         }
 
         return {
-          current_tab: activeTab
+          current_tab: activeTab,
+          api_target: "mixed"
         };
       }, function () {
+        $("#".concat(activeTab, "-search-input")).val("");
+
         _this.setState(_defineProperty({}, activeTab, {
           data: [],
           nextPage: 1,

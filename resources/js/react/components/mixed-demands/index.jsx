@@ -65,9 +65,11 @@ export default class MixedDemands extends Component {
                     break;
             }
             return ({
-                current_tab: activeTab
+                current_tab: activeTab,
+                api_target: "mixed"
             })
         }, () => {
+            $(`#${activeTab}-search-input`).val("")
             this.setState({[activeTab]: {data: [], nextPage: 1, hasMore: true}}, () => this.getData())
         })
     }
