@@ -62,8 +62,10 @@ export default class MixedTasks extends Component {
         })
     }
 
-    handleMore = (filtering) => {
-        filtering ? this.setState({tasks: {data: [], nextPage: 1, hasMore: true}, already_added_tasks: {}}, () => this.getData(true)) : this.getData()
+    handleMore = (filtering, e) => {
+        if (e.type === "click" || e.keyCode === 13) {
+            filtering ? this.setState({tasks: {data: [], nextPage: 1, hasMore: true}, already_added_tasks: {}}, () => this.getData(true)) : this.getData()
+        }
     }
 
     toggleAddBox = () => {
@@ -398,7 +400,7 @@ export default class MixedTasks extends Component {
                             <div className="input-group-prepend">
                                 <button className="btn btn-primary" onClick={this.handleMore.bind(this, true)}>جستجو</button>
                             </div>
-                            <input type="text" id="tasks-search-input" className="form-control" placeholder="جستجو در مسئولیت ها"/>
+                            <input type="text" id="tasks-search-input" className="form-control" placeholder="جستجو در مسئولیت ها" onKeyDown={this.handleMore.bind(this, true)} />
                             <div className="input-group-append">
                                 <button className="btn btn-info" onClick={this.toggleFilterBox}>فیلتر ها<i className="fas fa-filter"></i></button>
                             </div>

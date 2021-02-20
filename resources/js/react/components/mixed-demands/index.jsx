@@ -65,9 +65,11 @@ export default class MixedDemands extends Component {
                     break;
             }
             return ({
-                current_tab: activeTab
+                current_tab: activeTab,
+                api_target: "mixed"
             })
         }, () => {
+            $(`#${activeTab}-search-input`).val("")
             this.setState({[activeTab]: {data: [], nextPage: 1, hasMore: true}}, () => this.getData())
         })
     }
@@ -106,9 +108,11 @@ export default class MixedDemands extends Component {
         })
     }
 
-    handleMore = (filtering) => {
-        let { current_tab } = this.state
-        filtering ? this.setState({[current_tab]: {data: [], nextPage: 1, hasMore: true}, already_added_needs: {}}, () => this.getData(true)) : this.getData()
+    handleMore = (filtering, e) => {
+        if (e.type === "click" || e.keyCode === 13) {
+            let { current_tab } = this.state
+            filtering ? this.setState({[current_tab]: {data: [], nextPage: 1, hasMore: true}, already_added_needs: {}}, () => this.getData(true)) : this.getData()
+        }
     }
 
     toggleAddBox = () => {
@@ -328,7 +332,7 @@ export default class MixedDemands extends Component {
                             <div className="input-group-prepend">
                                 <button className="btn btn-primary" onClick={this.handleMore.bind(this, true)}>جستجو</button>
                             </div>
-                            <input type="text" id="demands-search-input" className="form-control" placeholder="جستجو در خواسته ها"/>
+                            <input type="text" id="demands-search-input" className="form-control" placeholder="جستجو در خواسته ها" onKeyDown={this.handleMore.bind(this, true)} />
                             <div className="input-group-append">
                                 <button className="btn btn-info" onClick={this.toggleFilterBox.bind(this, 0)}>فیلتر ها<i className="fas fa-filter"></i></button>
                             </div>
@@ -519,7 +523,7 @@ export default class MixedDemands extends Component {
                             <div className="input-group-prepend">
                                 <button className="btn btn-primary" onClick={this.handleMore.bind(this, true)}>جستجو</button>
                             </div>
-                            <input type="text" id="needs-search-input" className="form-control" placeholder="جستجو در نیاز ها"/>
+                            <input type="text" id="needs-search-input" className="form-control" placeholder="جستجو در نیاز ها" onKeyDown={this.handleMore.bind(this, true)} />
                             <div className="input-group-append">
                                 <button className="btn btn-info" onClick={this.toggleFilterBox.bind(this, 1)}>فیلتر ها<i className="fas fa-filter"></i></button>
                             </div>
@@ -637,7 +641,7 @@ export default class MixedDemands extends Component {
                             <div className="input-group-prepend">
                                 <button className="btn btn-primary" onClick={this.handleMore.bind(this, true)}>جستجو</button>
                             </div>
-                            <input type="text" id="all-search-input" className="form-control" placeholder="جستجو در همه"/>
+                            <input type="text" id="all-search-input" className="form-control" placeholder="جستجو در همه" onKeyDown={this.handleMore.bind(this, true)} />
                             <div className="input-group-append">
                                 <button className="btn btn-info" onClick={this.toggleFilterBox.bind(this, 2)}>فیلتر ها<i className="fas fa-filter"></i></button>
                             </div>

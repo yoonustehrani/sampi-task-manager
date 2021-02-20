@@ -60421,9 +60421,12 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
         }
 
         return {
-          current_tab: activeTab
+          current_tab: activeTab,
+          api_target: "mixed"
         };
       }, function () {
+        $("#".concat(activeTab, "-search-input")).val("");
+
         _this.setState(_defineProperty({}, activeTab, {
           data: [],
           nextPage: 1,
@@ -60489,17 +60492,19 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
       });
     });
 
-    _defineProperty(_assertThisInitialized(_this), "handleMore", function (filtering) {
-      var _this$setState2;
+    _defineProperty(_assertThisInitialized(_this), "handleMore", function (filtering, e) {
+      if (e.type === "click" || e.keyCode === 13) {
+        var _this$setState2;
 
-      var current_tab = _this.state.current_tab;
-      filtering ? _this.setState((_this$setState2 = {}, _defineProperty(_this$setState2, current_tab, {
-        data: [],
-        nextPage: 1,
-        hasMore: true
-      }), _defineProperty(_this$setState2, "already_added_needs", {}), _this$setState2), function () {
-        return _this.getData(true);
-      }) : _this.getData();
+        var current_tab = _this.state.current_tab;
+        filtering ? _this.setState((_this$setState2 = {}, _defineProperty(_this$setState2, current_tab, {
+          data: [],
+          nextPage: 1,
+          hasMore: true
+        }), _defineProperty(_this$setState2, "already_added_needs", {}), _this$setState2), function () {
+          return _this.getData(true);
+        }) : _this.getData();
+      }
     });
 
     _defineProperty(_assertThisInitialized(_this), "toggleAddBox", function () {
@@ -60830,7 +60835,8 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
         type: "text",
         id: "demands-search-input",
         className: "form-control",
-        placeholder: "\u062C\u0633\u062A\u062C\u0648 \u062F\u0631 \u062E\u0648\u0627\u0633\u062A\u0647 \u0647\u0627"
+        placeholder: "\u062C\u0633\u062A\u062C\u0648 \u062F\u0631 \u062E\u0648\u0627\u0633\u062A\u0647 \u0647\u0627",
+        onKeyDown: this.handleMore.bind(this, true)
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "input-group-append"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
@@ -61097,7 +61103,8 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
         type: "text",
         id: "needs-search-input",
         className: "form-control",
-        placeholder: "\u062C\u0633\u062A\u062C\u0648 \u062F\u0631 \u0646\u06CC\u0627\u0632 \u0647\u0627"
+        placeholder: "\u062C\u0633\u062A\u062C\u0648 \u062F\u0631 \u0646\u06CC\u0627\u0632 \u0647\u0627",
+        onKeyDown: this.handleMore.bind(this, true)
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "input-group-append"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
@@ -61267,7 +61274,8 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
         type: "text",
         id: "all-search-input",
         className: "form-control",
-        placeholder: "\u062C\u0633\u062A\u062C\u0648 \u062F\u0631 \u0647\u0645\u0647"
+        placeholder: "\u062C\u0633\u062A\u062C\u0648 \u062F\u0631 \u0647\u0645\u0647",
+        onKeyDown: this.handleMore.bind(this, true)
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "input-group-append"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
