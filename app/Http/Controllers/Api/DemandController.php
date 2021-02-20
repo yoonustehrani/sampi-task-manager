@@ -77,7 +77,7 @@ class DemandController extends BaseController
                 $user_demands = $user_demands->whereNull('finished_at');
                 break;
         }
-        $user_demands = $this->decide_ordered($request, $user_demands)->withCount('messages'); 
+        $user_demands = $this->decide_ordered($request, $user_demands)->withCount('messages')->whereHas('workspace'); 
         if ($with) {
             $user_demands = $user_demands->with($with, 'task', 'priority:id,title', 'workspace');
         } else {
@@ -95,7 +95,7 @@ class DemandController extends BaseController
         $user = ($request->user_id) ? \App\User::find($request->user_id) : $request->user();
         $relationship = $this->model_relationship($request->relationship, $user, '_demands', 'demands');
         $with = $relationship == 'demands' ? 'to' : 'from';
-        $user_demands = $user->{$relationship}();
+        $user_demands = $user->{$relationship}()->whereHas('workspace');
         $user_demands = $this->decide_ordered($request, $user_demands)
                         ->withCount('messages')
                         ->with($with, 'task', 'priority:id,title', 'workspace')

@@ -37,6 +37,7 @@ class DemandController extends Controller
     public function show(Workspace $workspace, $demand)
     {
         $demand = $workspace->demands()
+        ->whereHas('workspace')
         ->with(['from', 'to', 'priority', 'messages' => function($q) {
             $q->latest()->limit(1);
         }])

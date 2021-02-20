@@ -21,6 +21,7 @@
     </script>
     <script src="{{ asset('js/app.js') }}"></script>
     @include('partials.error')
+    @include('partials.flash')
     @stack('scripts')
 </body>
 </html>
