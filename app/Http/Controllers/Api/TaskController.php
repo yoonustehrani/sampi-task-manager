@@ -132,7 +132,6 @@ class TaskController extends BaseController
             'title' => 'required|string',
             'group' => 'nullable|string|min:3|max:100',
             'priority' => 'required|numeric',
-            'due_to' => 'nullable',
         ]);
         $this->authorize('create', Task::class);
         $user = ($request->user_id) ? \App\User::find($request->user_id) : $request->user();
@@ -154,7 +153,7 @@ class TaskController extends BaseController
                 );
             \DB::commit();
             $task['workspace'] = $workspace;
-            event(new TaskCreated($task));
+            // event(new TaskCreated($task));
             return $task->parent_id ? $task->load(['parent', 'users']) : $task->load('users');
         } catch(\Exception $e) {
             \DB::rollback();
@@ -183,7 +182,12 @@ class TaskController extends BaseController
                 $finished_at = $task->finished_at ?: now();
                 $task->finisher_id = $request->finished ? $finisher : null;
                 $task->finished_at = $request->finished ? $finished_at : null;
-                $task->save();
+                if ($task->save()) {
+                    if ($task->finished_at) {
+                        $task->load('workspace', 'finisher');
+                        event(new TaskFinished($task));
+                    }
+                };
                 $users = $request->input('users') ?: [];
                 $task->users()->sync(
                     array_merge($users, [(string) $request->user()->id])

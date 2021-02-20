@@ -8,7 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class DemandCreatedNotification extends Notification
+class DemandFinishedNotification extends Notification
 {
     use Queueable;
     public $via;
@@ -47,7 +47,7 @@ class DemandCreatedNotification extends Notification
         $demand_url = route('task-manager.demands.show', ['workspace' => $demand->workspace_id, 'demand' => $demand->id]);
         return (new MailMessage)
                     ->greeting("$notifiable->fullname عزیز سلام")
-                    ->line("{$demand->from->fullname} درخواست جدیدی با عنوان {$demand->title} از شما دارد.")
+                    ->line("درخواست شما مبنی بر {$demand->title} توسط {$demand->to->fullname} بسته شده است.")
                     ->action('مشاهده درخواست', $demand_url)
                     ->line('موفق و پیروز باشید !');
     }
@@ -58,19 +58,19 @@ class DemandCreatedNotification extends Notification
         $demand = $this->demand;
         $workspace_url = route('task-manager.workspaces.show', ['workspace' => $demand->workspace_id]);
         $demand_url = route('task-manager.demands.show', ['workspace' => $demand->workspace_id, 'demand' => $demand->id]);
-        $from = "";
-        if ($demand->from) {
-            $from .= "درخواست دهنده : ";
-            if ($demand->from->telegram_chat_id) {
-                $from .= "<a href=\"tg://user?id={$demand->from->telegram_chat_id}\">{$demand->from->fullname}</a>\n";
+        $to = "طرف مقابل";
+        if ($demand->to) {
+            if ($demand->to->telegram_chat_id) {
+                $to = "<a href=\"tg://user?id={$demand->to->telegram_chat_id}\">{$demand->to->fullname}</a>\n";
             } else {
-                $from .= "{$demand->from->fullname}\n";
+                $to = "{$demand->to->fullname}\n";
             }
         }
         $text = "
 {$notifiable->fullname} عزیز
-درخواستی جدید با عنوان <b>{$demand->title}</b> در پروژه <a href=\"{$workspace_url}\">{$demand->workspace->title}</a> در سیستم مدیریت پروژه Sampi ایجاد شده است.
-{$from}
+درخواست شما تحت عنوان <b>{$demand->title}</b> توسط {$to} بسته شده است.
+- پروژه <a href=\"{$workspace_url}\">{$demand->workspace->title}</a>
+
 Sampi Task Manager (http://ourobot.ir)";
         $tg = new TelegramBot(config('services.telegram.task_manager.bot_token'));
         $keyboard = [

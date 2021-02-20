@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Demand;
 use App\DemandMessage;
 use App\Events\DemandCreated;
+use App\Events\DemandFinished;
 use App\Events\DemandMessageCreated;
 use App\User;
 use App\Workspace;
@@ -120,8 +121,6 @@ class DemandController extends BaseController
             'title' => 'required|string|min:3|max:255',
             'target_user'  => 'required|numeric',
             'priority' => 'required|numeric',
-            'task'     => 'nullable|numeric',
-            'due_to'   => 'nullable|numeric',
         ]);
         try {
             \DB::beginTransaction();
@@ -168,10 +167,7 @@ class DemandController extends BaseController
         $this->authorize('update', $demand);
         $request->validate([
             'title' => 'required|string|min:3|max:255',
-            // 'target_user'  => 'required|numeric',
             'priority' => 'required|numeric',
-            // 'task'     => 'nullable|numeric',
-            // 'due_to'   => 'nullable|numeric',
         ]);
         try {
             \DB::beginTransaction();
@@ -200,8 +196,16 @@ class DemandController extends BaseController
     {
         $this->authorize('toggle_state', $demand);
         $demand->finished_at = $demand->finished_at ? null : now();
-        $demand->save();
-        return ['okay' => true, 'value' => $demand->finished_at];
+        if ($demand->save()) {
+            $demand->load('from', 'to');
+            event(new DemandFinished($demand));
+            return ['okay' => true, 'value' => $demand->finished_at];
+        };
+        response()->json([
+            'okay' => false, 'errors' => [
+                'whole' => 'ذخیره نشد',
+            ]
+        ], 422);
     }
     public function new_message(Request $request, Demand $demand)
     {

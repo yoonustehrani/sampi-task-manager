@@ -3,12 +3,12 @@
 namespace App\Listeners;
 
 use App\Broadcasting\TelegramChannel;
-use App\Notifications\TaskFinishedNotification;
+use App\Notifications\DemandFinishedNotification;
 use App\Traits\UserNotifiableChannelsTrait;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
-class SendTaskFinishedNotification
+class SendDemandFinishedNotification
 {
     use UserNotifiableChannelsTrait;
     /**
@@ -29,14 +29,10 @@ class SendTaskFinishedNotification
      */
     public function handle($event)
     {
-        $users = $event->task->users;
-        foreach ($users as $user) {
-            if ($user->id != $event->task->finisher_id) {
-                $channels = $this->user_channels($user);
-                if (count($channels) > 0) {
-                    $user->notifyNow(new TaskFinishedNotification($channels, $event->task));
-                }
-            }
+        $user = $event->demand->from;
+        $channels = $this->user_channels($user);
+        if (count($channels) > 0) {
+            $user->notifyNow(new DemandFinishedNotification($channels, $event->demand));
         }
     }
 }
