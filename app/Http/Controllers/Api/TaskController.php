@@ -132,7 +132,7 @@ class TaskController extends BaseController
             'title' => 'required|string',
             'group' => 'nullable|string|min:3|max:100',
             'priority' => 'required|numeric',
-            'due_to' => 'nullable|numeric',
+            'due_to' => 'nullable',
         ]);
         $this->authorize('create', Task::class);
         $user = ($request->user_id) ? \App\User::find($request->user_id) : $request->user();
