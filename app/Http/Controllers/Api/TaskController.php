@@ -168,7 +168,6 @@ class TaskController extends BaseController
             'title' => 'required|string',
             'group' => 'nullable|string|min:3|max:100',
             'priority' => 'required|numeric',
-            'due_to' => 'nullable|numeric',
         ]);
         $task = Task::where('workspace_id', $workspace)->findOrFail($task);
         $this->authorize('update', $task);
