@@ -152,7 +152,6 @@ class TaskController extends BaseController
                     array_merge($users, [(string) $request->user()->id])
                 );
             \DB::commit();
-            return $task;
             $task['workspace'] = $workspace;
             // event(new TaskCreated($task));
             return $task->parent_id ? $task->load(['parent', 'users']) : $task->load('users');
