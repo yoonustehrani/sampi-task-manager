@@ -71,7 +71,7 @@ class Task extends Model
 
     public function setDueToAttribute($date)
     {
-        $this->attributes['due_to'] = $date ? Carbon::parse($date)->tz(config('app.timezone')) : null;
+        $this->attributes['due_to'] = $date ? Carbon::parse(((int) $date))->tz(config('app.timezone')) : null;
     }
     // public function getDueToAttribute($date)
     // {

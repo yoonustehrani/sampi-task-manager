@@ -133,7 +133,6 @@ class TaskController extends BaseController
             'group' => 'nullable|string|min:3|max:100',
             'priority' => 'required|numeric',
         ]);
-        return $request->due_to;
         $this->authorize('create', Task::class);
         $user = ($request->user_id) ? \App\User::find($request->user_id) : $request->user();
         $workspace = $user->workspaces()->findOrFail($workspace);
