@@ -61517,13 +61517,11 @@ var ShowTask = /*#__PURE__*/function (_Component) {
               finished_at_check = _this$state2.finished_at_check,
               first_check_state = _this$state2.first_check_state,
               task_due_to = _this$state2.task_due_to,
-              due_to_check = _this$state2.due_to_check;
-
-          if (finished_at_check !== first_check_state) {
-            axios__WEBPACK_IMPORTED_MODULE_1___default.a.put(toggle_task_state_api)["catch"](function (err) {
-              Object(_helpers__WEBPACK_IMPORTED_MODULE_5__["sweetError"])(err);
-            });
-          }
+              due_to_check = _this$state2.due_to_check; // if (finished_at_check !== first_check_state) {
+          //     Axios.put(toggle_task_state_api).catch(err => {
+          //         sweetError(err)
+          //     })
+          // }
 
           axios__WEBPACK_IMPORTED_MODULE_1___default.a.put(edit_task_api, {
             title: edited_title,
@@ -61532,7 +61530,8 @@ var ShowTask = /*#__PURE__*/function (_Component) {
             users: edited_users,
             description: task_description,
             due_to: due_to_check ? Math.trunc(task_due_to) : null,
-            parent_id: parent_id.length === 0 ? null : parent_id
+            parent_id: parent_id.length === 0 ? null : parent_id,
+            finished: finished_at_check
           }).then(function (res) {
             var data = res.data;
 
