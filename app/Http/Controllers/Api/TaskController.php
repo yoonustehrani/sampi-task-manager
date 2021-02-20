@@ -183,7 +183,12 @@ class TaskController extends BaseController
                 $finished_at = $task->finished_at ?: now();
                 $task->finisher_id = $request->finished ? $finisher : null;
                 $task->finished_at = $request->finished ? $finished_at : null;
-                $task->save();
+                if ($task->save()) {
+                    if ($task->finished_at) {
+                        $task->load('workspace', 'finisher');
+                        event(new TaskFinished($task));
+                    }
+                };
                 $users = $request->input('users') ?: [];
                 $task->users()->sync(
                     array_merge($users, [(string) $request->user()->id])
