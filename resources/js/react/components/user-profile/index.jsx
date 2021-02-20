@@ -213,7 +213,7 @@ export default class UserProfile extends Component {
         let { workspace_route, task_route, demand_show_route, user_profile_route } = this.props
         let roles = ""
         TargetUser.roles.map((role, i) => {
-            roles += role.label + `${i !== 0 ? "-" : ""}`                       
+            roles += role.label + `${i + 1 !== TargetUser.roles.length ? " - " : ""}`                       
         })
         return (
             <div>
@@ -248,7 +248,7 @@ export default class UserProfile extends Component {
                                             <div className="workspace-img-container ml-1">
                                                 <img src={APP_PATH + (workspace.avatar_pic !== null ? workspace.avatar_pic : "images/idea.svg")} alt=""/>
                                             </div>
-                                            <div className="workspace-item-text-info">
+                                            <div className="workspace-item-text-info" title={workspace.description}>
                                                 <h6>{ workspace.title }</h6>
                                                 <span>{ workspace.description.length < 50 ? workspace.description : workspace.description.substring(0, 47) + " ..." }</span>
                                             </div>
@@ -295,7 +295,7 @@ export default class UserProfile extends Component {
                                         ? mixed_tasks.map((task, i) => {
                                             let content = task.title + " (" + task.group + ")"
                                             return (
-                                                <div key={i} className="task-item user-work-item" onClick={() => redirectTo(getTask(task.id))}>
+                                                <div key={i} className="task-item user-work-item" title={content} onClick={() => redirectTo(getTask(task.id))}>
                                                     <h6 className="text-right small-font">{ (task.title.length + task.group.length) < 33 ? content : content.substring(0, 30) + " ..." }</h6>
                                                     <span className="small-font rtl">{moment(task.created_at).fromNow()} {task.finished_at !== null ? <i className="fas fa-check"></i> : <i className="fas fa-times"></i>}</span>
                                                 </div>
@@ -340,7 +340,7 @@ export default class UserProfile extends Component {
                                 <div className="scrollable-items scrollable-shadow user-tasks-container col-12 mt-4">
                                     {mixed_demands && mixed_demands.length > 0 && !isGetting
                                         ? mixed_demands.map((demand, i) => (
-                                            <div key={i} className="demand-item hover-bg" onClick={() => redirectTo(getDemand(demand.workspace_id, demand.id))}>
+                                            <div key={i} className="demand-item hover-bg" title={demand.title} onClick={() => redirectTo(getDemand(demand.workspace_id, demand.id))}>
                                                 <div>
                                                     <i className={`mr-1 fas ${demand.finished_at === null ? "fa-times" : "fa-check"}`}></i>
                                                     <img src={APP_PATH + `${TargetUser.avatar_pic ? TargetUser.avatar_pic : 'images/male-avatar.svg'}`} alt="" />
@@ -391,7 +391,7 @@ export default class UserProfile extends Component {
                                 <div className="scrollable-items scrollable-shadow user-tasks-container col-12 mt-4">
                                     {mixed_needs && mixed_needs.length > 0 && !isGetting
                                         ? mixed_needs.map((need, i) => (
-                                            <div key={i} className="demand-item hover-bg" onClick={() => redirectTo(getDemand(need.workspace_id, need.id))}>
+                                            <div key={i} className="demand-item hover-bg" title={need.title} onClick={() => redirectTo(getDemand(need.workspace_id, need.id))}>
                                                 <div className="demand-sender">
                                                     <img src={APP_PATH + `${TargetUser.avatar_pic ? TargetUser.avatar_pic : 'images/male-avatar.svg'}`} alt="" />
                                                     <h6 className="mr-1 small-font">{ need.title.length < 30 ? need.title : need.title.substring(0, 27) + " ..." }</h6>

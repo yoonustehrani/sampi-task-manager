@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -61517,12 +61517,7 @@ var ShowTask = /*#__PURE__*/function (_Component) {
               finished_at_check = _this$state2.finished_at_check,
               first_check_state = _this$state2.first_check_state,
               task_due_to = _this$state2.task_due_to,
-              due_to_check = _this$state2.due_to_check; // if (finished_at_check !== first_check_state) {
-          //     Axios.put(toggle_task_state_api).catch(err => {
-          //         sweetError(err)
-          //     })
-          // }
-
+              due_to_check = _this$state2.due_to_check;
           axios__WEBPACK_IMPORTED_MODULE_1___default.a.put(edit_task_api, {
             title: edited_title,
             group: edited_group,
@@ -61766,7 +61761,7 @@ var ShowTask = /*#__PURE__*/function (_Component) {
         }, task.parent ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
           href: Object(_helpers__WEBPACK_IMPORTED_MODULE_5__["getTask"])(task.parent.id)
         }, task.parent.title) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-          className: "fas fa-minus"
+          className: "fas fa-minus pb-1 pt-1 minus-icon"
         }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "mt-3 col-12 col-md-5"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -62117,8 +62112,11 @@ var TinymcEditor = /*#__PURE__*/function (_React$Component) {
   _createClass(TinymcEditor, [{
     key: "render",
     value: function render() {
-      var initialValue = this.props.initialValue;
+      var _this$props = this.props,
+          initialValue = _this$props.initialValue,
+          value = _this$props.value;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_tinymce_tinymce_react__WEBPACK_IMPORTED_MODULE_1__["Editor"], {
+        value: value,
         initialValue: initialValue ? initialValue : "",
         tinymceScriptSrc: "".concat(APP_PATH, "js/tinymce/tinymce.js"),
         onEditorChange: this.handleEditorChange,
@@ -62331,7 +62329,7 @@ renderWithImg("#new-task-project-select", "پروژه مربوطه را انتخ
 
 /***/ }),
 
-/***/ 3:
+/***/ 4:
 /*!******************************************!*\
   !*** multi ./resources/js/react/task.js ***!
   \******************************************/

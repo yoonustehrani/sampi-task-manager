@@ -5,7 +5,7 @@ import moment from 'moment'
 moment.locale('fa')
 import { Squares } from 'react-activity'
 import 'react-activity/dist/react-activity.css'
-import { setPriority, redirectTo, sweetError } from '../../../helpers'
+import { setPriority, redirectTo, sweetError, sweetSuccess } from '../../../helpers'
 import { simpleSearch, renderWithImg } from '../../../select2'
 import Task from './Task'
 
@@ -88,6 +88,22 @@ export default class Workspace extends Component {
         }
     }
 
+    emptyFields = () => {
+        $("#new-task-title").val("")
+        $("#new-task-priority").val("1").change()
+        $("#new-task-members").val("").change()
+        $("#parent-task-select").val("").change()
+        $("#new-task-group").val("")
+        const due_to_input = $("input[name='due_to']")
+        let defate = new Date().valueOf()
+        this.pdt.setDate(defate)
+        due_to_input.val(defate / 1000)
+        this.setState({
+            task_due_to: due_to_input.val(),
+            new_task_description: ""
+        })
+    }
+
     addTask = () => {
         let { add_task_api } = this.props, { new_task_description, workspace_users, due_to_check, target_user_id, viewing_as_admin, task_due_to } = this.state
         let title = $("#new-task-title").val(), group = $("#new-task-group").val(), priority = parseInt($("#new-task-priority").val()), users = $("#new-task-members").val(), description = new_task_description, due_to = $("input[name='due_to']").val(), parent_id = $("#parent-task-select").val()
@@ -97,7 +113,7 @@ export default class Workspace extends Component {
             group: group,
             users: users,
             description: new_task_description,
-            due_to: !due_to_check ? null : task_due_to.toString(),
+            due_to: !due_to_check ? null : Math.trunc(task_due_to),
             parent_id: parent_id
         }).then(res => {
             let { data } = res
@@ -125,15 +141,8 @@ export default class Workspace extends Component {
                     })
                 })
             }
-            Swal.default.fire({
-                icon: 'success',
-                title: "موفقیت",
-                text: "کار شما به لیست افزوده شد",
-                showConfirmButton: true,
-                customClass: {
-                    content: "persian-text"
-                }
-            })
+            sweetSuccess("مسئولیت شما به لیست افزوده شد")
+            this.emptyFields()
         }).catch(err => {
             sweetError(err)
         })
@@ -216,7 +225,7 @@ export default class Workspace extends Component {
     }
     
     render() {
-        let { isGetting, tasks, workspace_users, workspace, viewing_as_admin, allUsers, due_to_check } = this.state
+        let { isGetting, tasks, workspace_users, workspace, viewing_as_admin, allUsers, due_to_check, new_task_description } = this.state
         let { taskRoute, toggle_task_state_api } = this.props
         return (
             <div>
@@ -307,7 +316,7 @@ export default class Workspace extends Component {
                                     { workspace ? workspace.users.map((user, i) => {
                                         if (user.id !== CurrentUser.id) {
                                             return (
-                                                <option key={i} value={user.id} img_address={APP_PATH + user.avatar_pic} is_admin={user.pivot.is_admin}>{user.fullname}</option>
+                                                <option key={i} value={user.id} img_address={APP_PATH + (user.avatar_pic ? user.avatar_pic : "images/male-avatar.svg")} is_admin={user.pivot.is_admin}>{user.fullname}</option>
                                             )                                            
                                         }
                                     }) : null }
@@ -315,7 +324,7 @@ export default class Workspace extends Component {
                             </div>
                             <div className="input-group col-12 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3 mb-3">
                                 <div className="tinymc-container">
-                                    <TinymcEditor changeContent={this.onDescriptionChange} />
+                                    <TinymcEditor changeContent={this.onDescriptionChange} value={new_task_description} />
                                 </div>
                             </div>
                             <div className="text-center mt-2">

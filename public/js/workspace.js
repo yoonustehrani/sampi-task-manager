@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -77543,6 +77543,25 @@ var Workspace = /*#__PURE__*/function (_Component) {
       }
     });
 
+    _defineProperty(_assertThisInitialized(_this), "emptyFields", function () {
+      $("#new-task-title").val("");
+      $("#new-task-priority").val("1").change();
+      $("#new-task-members").val("").change();
+      $("#parent-task-select").val("").change();
+      $("#new-task-group").val("");
+      var due_to_input = $("input[name='due_to']");
+      var defate = new Date().valueOf();
+
+      _this.pdt.setDate(defate);
+
+      due_to_input.val(defate / 1000);
+
+      _this.setState({
+        task_due_to: due_to_input.val(),
+        new_task_description: ""
+      });
+    });
+
     _defineProperty(_assertThisInitialized(_this), "addTask", function () {
       var add_task_api = _this.props.add_task_api,
           _this$state2 = _this.state,
@@ -77565,7 +77584,7 @@ var Workspace = /*#__PURE__*/function (_Component) {
         group: group,
         users: users,
         description: new_task_description,
-        due_to: !due_to_check ? null : task_due_to.toString(),
+        due_to: !due_to_check ? null : Math.trunc(task_due_to),
         parent_id: parent_id
       }).then(function (res) {
         var data = res.data;
@@ -77601,15 +77620,9 @@ var Workspace = /*#__PURE__*/function (_Component) {
           });
         }
 
-        Swal["default"].fire({
-          icon: 'success',
-          title: "موفقیت",
-          text: "کار شما به لیست افزوده شد",
-          showConfirmButton: true,
-          customClass: {
-            content: "persian-text"
-          }
-        });
+        Object(_helpers__WEBPACK_IMPORTED_MODULE_6__["sweetSuccess"])("مسئولیت شما به لیست افزوده شد");
+
+        _this.emptyFields();
       })["catch"](function (err) {
         Object(_helpers__WEBPACK_IMPORTED_MODULE_6__["sweetError"])(err);
       });
@@ -77775,7 +77788,8 @@ var Workspace = /*#__PURE__*/function (_Component) {
           workspace = _this$state3.workspace,
           viewing_as_admin = _this$state3.viewing_as_admin,
           allUsers = _this$state3.allUsers,
-          due_to_check = _this$state3.due_to_check;
+          due_to_check = _this$state3.due_to_check,
+          new_task_description = _this$state3.new_task_description;
       var _this$props = this.props,
           taskRoute = _this$props.taskRoute,
           toggle_task_state_api = _this$props.toggle_task_state_api;
@@ -77923,7 +77937,7 @@ var Workspace = /*#__PURE__*/function (_Component) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
             key: i,
             value: user.id,
-            img_address: APP_PATH + user.avatar_pic,
+            img_address: APP_PATH + (user.avatar_pic ? user.avatar_pic : "images/male-avatar.svg"),
             is_admin: user.pivot.is_admin
           }, user.fullname);
         }
@@ -77932,7 +77946,8 @@ var Workspace = /*#__PURE__*/function (_Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "tinymc-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_tinymce_editor_index__WEBPACK_IMPORTED_MODULE_1__["default"], {
-        changeContent: this.onDescriptionChange
+        changeContent: this.onDescriptionChange,
+        value: new_task_description
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "text-center mt-2"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
@@ -78127,8 +78142,11 @@ var TinymcEditor = /*#__PURE__*/function (_React$Component) {
   _createClass(TinymcEditor, [{
     key: "render",
     value: function render() {
-      var initialValue = this.props.initialValue;
+      var _this$props = this.props,
+          initialValue = _this$props.initialValue,
+          value = _this$props.value;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_tinymce_tinymce_react__WEBPACK_IMPORTED_MODULE_1__["Editor"], {
+        value: value,
         initialValue: initialValue ? initialValue : "",
         tinymceScriptSrc: "".concat(APP_PATH, "js/tinymce/tinymce.js"),
         onEditorChange: this.handleEditorChange,
@@ -78343,7 +78361,7 @@ renderWithImg("#new-task-project-select", "پروژه مربوطه را انتخ
 
 /***/ }),
 
-/***/ 1:
+/***/ 2:
 /*!***********************************************!*\
   !*** multi ./resources/js/react/workspace.js ***!
   \***********************************************/

@@ -8,9 +8,10 @@ export default class TinymcEditor extends React.Component {
     }
 
     render() {
-        let { initialValue } = this.props
+        let { initialValue, value } = this.props
         return (
             <Editor
+                value={value}
                 initialValue={initialValue ? initialValue : ""}
                 tinymceScriptSrc={`${APP_PATH}js/tinymce/tinymce.js`}
                 onEditorChange={this.handleEditorChange}

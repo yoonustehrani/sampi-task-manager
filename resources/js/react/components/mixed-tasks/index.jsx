@@ -120,6 +120,23 @@ export default class MixedTasks extends Component {
         })
     }
 
+    emptyFields = () => {
+        $("#new-task-title").val("")
+        $("#new-task-priority").val("1").change()
+        $("#new-task-members").val("").change()
+        $("#parent-task-select").val("").change()
+        $("#new-task-project-select").val("").change()
+        $("#new-task-group").val("")
+        const due_to_input = $("input[name='due_to']")
+        let defate = new Date().valueOf()
+        this.pdt.setDate(defate)
+        due_to_input.val(defate / 1000)
+        this.setState({
+            task_due_to: due_to_input.val(),
+            new_task_description: ""
+        })
+    }
+
     addtask = () => {
         let { post_task_api } = this.props, { new_task_description, workspace_users, target_user_id, viewing_as_admin, due_to_check, task_due_to } = this.state
         let title = $("#new-task-title").val(), priority = parseInt($("#new-task-priority").val()), users = $("#new-task-members").val(), related_task = $("#parent-task-select").val() === "0" ? "" : $("#parent-task-select").val(), workspaceId = $("#new-task-project-select").val(), group = $("#new-task-group").val(), due_to = $("input[name='due_to']").val()
@@ -129,7 +146,7 @@ export default class MixedTasks extends Component {
             group: group,
             parent_id: related_task,
             users: users,
-            due_to: !due_to_check ? null : task_due_to.toString(),
+            due_to: !due_to_check ? null : Math.trunc(task_due_to),
         }).then(res => {
             let { data } = res
             let usersObj = {}
@@ -151,19 +168,12 @@ export default class MixedTasks extends Component {
                         }),
                         already_added_tasks: Object.assign({}, prevState.already_added_tasks, {
                             [data.id]: data.id
-                        })
+                        }),
                     })
                 })   
             }
-            Swal.default.fire({
-                icon: 'success',
-                title: "موفقیت",
-                text: "مسئولیت جدید ثبت شد",
-                showConfirmButton: true,
-                customClass: {
-                    content: 'persian-text'
-                }
-            })
+            sweetSuccess("مسئولیت جدید ثبت شد")
+            this.emptyFields()
         }).catch(err => {
             sweetError(err)
         })
@@ -240,7 +250,6 @@ export default class MixedTasks extends Component {
         let defate = new Date().valueOf()
         this.pdt.setDate(defate)
         due_to_input.val(defate / 1000)
-        // due_to_input.val(defate)
         this.setState({
             task_due_to: due_to_input.val()
         })
@@ -281,7 +290,7 @@ export default class MixedTasks extends Component {
     }
 
     render() {
-        let { isGetting, already_added_tasks, workspaces, workspaces_users, selected_workspace, tasks, viewing_as_admin, allUsers, due_to_check } = this.state, { logged_in_user_id } = this.props
+        let { isGetting, already_added_tasks, workspaces, workspaces_users, selected_workspace, tasks, viewing_as_admin, allUsers, due_to_check, new_task_description } = this.state, { logged_in_user_id } = this.props
 
         return (
             <div>
@@ -380,7 +389,7 @@ export default class MixedTasks extends Component {
                                     { workspaces_users && selected_workspace ? Object.values(workspaces_users[parseInt(selected_workspace)]).map((user, i) => {
                                         if (user.id !== logged_in_user_id) {
                                             return (
-                                                <option key={i} value={user.id} img_address={APP_PATH + user!== null ? user.avatar_pic : "iamges/male-avatar.svg" } is_admin={user.is_admin}>{user.fullname}</option>
+                                                <option key={i} value={user.id} img_address={APP_PATH + (user !== null ? user.avatar_pic : "iamges/male-avatar.svg") } is_admin={user.is_admin}>{user.fullname}</option>
                                             )                                            
                                         }
                                     }) : null }
@@ -388,7 +397,7 @@ export default class MixedTasks extends Component {
                             </div>
                             <div className="input-group col-12 pl-0 pr-0 mt-3">
                                 <div className="tinymc-container">
-                                    <TinymcEditor changeContent={this.onDescriptionChange} />
+                                    <TinymcEditor changeContent={this.onDescriptionChange} value={new_task_description} />
                                 </div>
                             </div>
                             <div className="text-center mt-2">

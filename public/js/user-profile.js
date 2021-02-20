@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -76832,7 +76832,7 @@ var UserProfile = /*#__PURE__*/function (_Component) {
           user_profile_route = _this$props4.user_profile_route;
       var roles = "";
       TargetUser.roles.map(function (role, i) {
-        roles += role.label + "".concat(i !== 0 ? "-" : "");
+        roles += role.label + "".concat(i + 1 !== TargetUser.roles.length ? " - " : "");
       });
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "user-info-section col-12 col-md-4 pl-0 pr-0 float-right"
@@ -76882,7 +76882,8 @@ var UserProfile = /*#__PURE__*/function (_Component) {
           src: APP_PATH + (workspace.avatar_pic !== null ? workspace.avatar_pic : "images/idea.svg"),
           alt: ""
         })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "workspace-item-text-info"
+          className: "workspace-item-text-info",
+          title: workspace.description
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, workspace.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, workspace.description.length < 50 ? workspace.description : workspace.description.substring(0, 47) + " ...")));
       }) : isGetting ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-12 text-center"
@@ -76963,6 +76964,7 @@ var UserProfile = /*#__PURE__*/function (_Component) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           key: i,
           className: "task-item user-work-item",
+          title: content,
           onClick: function onClick() {
             return Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["redirectTo"])(Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["getTask"])(task.id));
           }
@@ -77049,6 +77051,7 @@ var UserProfile = /*#__PURE__*/function (_Component) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           key: i,
           className: "demand-item hover-bg",
+          title: demand.title,
           onClick: function onClick() {
             return Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["redirectTo"])(Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["getDemand"])(demand.workspace_id, demand.id));
           }
@@ -77141,6 +77144,7 @@ var UserProfile = /*#__PURE__*/function (_Component) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           key: i,
           className: "demand-item hover-bg",
+          title: need.title,
           onClick: function onClick() {
             return Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["redirectTo"])(Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["getDemand"])(need.workspace_id, need.id));
           }
@@ -77288,7 +77292,7 @@ if (target) {
 
 /***/ }),
 
-/***/ 2:
+/***/ 3:
 /*!**************************************************!*\
   !*** multi ./resources/js/react/user-profile.js ***!
   \**************************************************/
