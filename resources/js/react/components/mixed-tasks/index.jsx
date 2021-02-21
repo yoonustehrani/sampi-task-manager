@@ -334,7 +334,7 @@ export default class MixedTasks extends Component {
                                 </div>
                                 <input type="text" id="new-task-title" className="form-control" placeholder="عنوان نیاز را در این قسمت وارد کنید" />
                             </div>
-                            <div className="input-group col-12 col-md-6 pl-0 pr-0 pr-md-3 pl-md-3 float-right input-group-single-line-all">
+                            <div className="input-group col-12 col-md-6 pl-0 pr-0 pr-md-3 pl-md-3 mt-3 mt-md-0 float-right input-group-single-line-all">
                                 <div className="input-group-prepend">
                                     <span className="input-group-text">اولویت</span>
                                 </div>

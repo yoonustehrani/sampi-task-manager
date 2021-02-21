@@ -486,7 +486,7 @@ export default class MixedDemands extends Component {
                                     }
                                 </select>
                             </div>
-                            <div className="input-group col-12 col-md-4 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line-all">
+                            <div className="input-group col-12 col-md-4 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line">
                                 <div className="input-group-prepend">
                                     <span className="input-group-text">کار مربوطه</span>
                                 </div>

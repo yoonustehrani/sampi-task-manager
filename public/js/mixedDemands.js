@@ -60851,7 +60851,7 @@ var MixedDemands = /*#__PURE__*/function (_Component) {
           img_address: APP_PATH + (workspace.avatar_pic ? workspace.avatar_pic : "images/idea.svg")
         }, workspace.title);
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "input-group col-12 col-md-4 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line-all"
+        className: "input-group col-12 col-md-4 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "input-group-prepend"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {

@@ -61846,7 +61846,7 @@ var MixedTasks = /*#__PURE__*/function (_Component) {
         className: "form-control",
         placeholder: "\u0639\u0646\u0648\u0627\u0646 \u0646\u06CC\u0627\u0632 \u0631\u0627 \u062F\u0631 \u0627\u06CC\u0646 \u0642\u0633\u0645\u062A \u0648\u0627\u0631\u062F \u06A9\u0646\u06CC\u062F"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "input-group col-12 col-md-6 pl-0 pr-0 pr-md-3 pl-md-3 float-right input-group-single-line-all"
+        className: "input-group col-12 col-md-6 pl-0 pr-0 pr-md-3 pl-md-3 mt-3 mt-md-0 float-right input-group-single-line-all"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "input-group-prepend"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {

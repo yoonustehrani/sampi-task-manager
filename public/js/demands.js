@@ -60691,7 +60691,7 @@ var Demands = /*#__PURE__*/function (_Component) {
       }, "\u06A9\u0627\u0631 \u0645\u0631\u0628\u0648\u0637\u0647")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
         id: "related-task-select"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "input-group col-12 col-md-6 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line"
+        className: "input-group col-12 col-md-6 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line-all"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "input-group-prepend"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
