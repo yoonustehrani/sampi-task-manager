@@ -14,7 +14,7 @@ class Message extends Component {
                             <img src={`${APP_PATH}${user.avatar_pic ? user.avatar_pic : 'images/male-avatar.svg'}`} alt=""/>
                             <b className="mr-2">{user.fullname}</b>
                         </a>
-                        : null
+                        : <i className="fas fa-user-slash"></i>
                     }
                     {created_at && <span className="float-left text-left">{moment(created_at).format('dddd jYYYY/jMM/jDD H:m:s')} <i className="far fa-clock"></i></span>}
                     {! created_at && ! failed && <span className="float-left text-left">در حال ارسال <i className="far fa-clock"></i></span>}

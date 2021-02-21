@@ -62385,7 +62385,9 @@ var Message = /*#__PURE__*/function (_Component) {
         alt: ""
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", {
         className: "mr-2"
-      }, user.fullname)) : null, created_at && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      }, user.fullname)) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-user-slash"
+      }), created_at && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "float-left text-left"
       }, moment_jalaali__WEBPACK_IMPORTED_MODULE_2___default()(created_at).format('dddd jYYYY/jMM/jDD H:m:s'), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "far fa-clock"
@@ -62777,7 +62779,7 @@ var DemandMessages = /*#__PURE__*/function (_Component) {
       var updateDemand = this.props.updateDemand;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
         className: "h-100"
-      }, demand && demand.to.id == CurrentUser.id && !demand.finished_at && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+      }, demand && demand.to && demand.to.id == CurrentUser.id && !demand.finished_at && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
         className: "col-12 float-left text-center p-3"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
         onClick: this.handleToggleDemand,

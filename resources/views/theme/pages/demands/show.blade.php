@@ -31,17 +31,25 @@
                     </div>
                     <div class="box-body-row col-12">
                         <b>از :</b>
-                        <a href="{{ route('task-manager.users.show', ['user' => $demand->from->id]) }}" class="avatar-pic text-secondary">
-                            <img src="{{ asset($demand->from->avatar_pic ?: 'images/male-avatar.svg') }}" alt="">
-                            @if($demand->from->id == auth()->user()->id) من @else {{ $demand->from->fullname }} @endif
-                        </a>
+                        @if ($demand->from)
+                            <a href="{{ route('task-manager.users.show', ['user' => $demand->from->id]) }}" class="avatar-pic text-secondary">
+                                <img src="{{ asset($demand->from->avatar_pic ?: 'images/male-avatar.svg') }}" alt="">
+                                @if($demand->from->id == auth()->user()->id) من @else {{ $demand->from->fullname }} @endif
+                            </a>
+                        @else
+                            <i class="fas fa-user-slash"></i>
+                        @endif
                     </div>
                     <div class="box-body-row col-12">
                         <b>به :</b>
-                        <a href="{{ route('task-manager.users.show', ['user' => $demand->to->id]) }}" class="avatar-pic text-secondary">
-                            <img src="{{ asset($demand->to->avatar_pic ?: 'images/male-avatar.svg') }}" alt="">
-                            @if($demand->to->id == auth()->user()->id) من @else {{ $demand->to->fullname }} @endif
-                        </a>
+                        @if ($demand->to)
+                            <a href="{{ route('task-manager.users.show', ['user' => $demand->to->id]) }}" class="avatar-pic text-secondary">
+                                <img src="{{ asset($demand->to->avatar_pic ?: 'images/male-avatar.svg') }}" alt="">
+                                @if($demand->to->id == auth()->user()->id) من @else {{ $demand->to->fullname }} @endif
+                            </a>
+                        @else
+                            <i class="fas fa-user-slash"></i>
+                        @endif
                     </div>
                     @can('delete', $demand)
                     <div class="box-body-row col-12 text-center">

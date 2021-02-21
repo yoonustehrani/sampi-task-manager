@@ -16,27 +16,29 @@ export default class Demand extends Component {
                 <td>{task !== null ? <a href={task_route.replace("taskId", task.id)}>{ task.title }</a> : <i className="fas fa-minus fa-3x"></i>}</td>
                 <td>
                     <div className="employees-container horizontal-centerlize">
-                        <span>{targetUser.fullname}</span>
-                        <div className="dropdown-users d-none" onClick={(e) => e.stopPropagation()}>
-                            <div className="user-dropdown-item animated jackInTheBox">
-                                <div className="user-right-flex">
-                                    <div className="user-img-container ml-2">
-                                        <img src={targetUser.avatar_pic !== null ? APP_PATH + targetUser.avatar_pic : APP_PATH + 'images/male-avatar.svg'} />
+                        <span>{targetUser ? targetUser.fullname : <i className="fas fa-user-slash"></i>}</span>
+                        { targetUser &&
+                            <div className="dropdown-users d-none" onClick={(e) => e.stopPropagation()}>
+                                <div className="user-dropdown-item animated jackInTheBox">
+                                    <div className="user-right-flex">
+                                        <div className="user-img-container ml-2">
+                                            <img src={targetUser.avatar_pic !== null ? APP_PATH + targetUser.avatar_pic : APP_PATH + 'images/male-avatar.svg'} />
+                                        </div>
+                                        <div className="user-info ml-2">
+                                            <p>{ targetUser.fullname }</p>
+                                            <a href={getUser(targetUser.id)}>@{targetUser.name}</a>
+                                        </div>
                                     </div>
-                                    <div className="user-info ml-2">
-                                        <p>{ targetUser.fullname }</p>
-                                        <a href={getUser(targetUser.id)}>@{targetUser.name}</a>
+                                    <div className="user-label-container">
+                                        {
+                                            workspaces_users && workspaces_users[workspace.id][targetUser.id].is_admin === 1 
+                                            ? <button className="btn btn-sm btn-success rtl admin p-1"><span>ادمین<i className="fas fa-user-tie mr-1"></i></span></button>
+                                            : <button className="btn btn-sm btn-primary rtl"><span>عضو<i className="fas fa-user mr-1"></i></span></button>
+                                        } 
                                     </div>
-                                </div>
-                                <div className="user-label-container">
-                                    {
-                                        workspaces_users && workspaces_users[workspace.id][targetUser.id].is_admin === 1 
-                                        ? <button className="btn btn-sm btn-success rtl admin p-1"><span>ادمین<i className="fas fa-user-tie mr-1"></i></span></button>
-                                        : <button className="btn btn-sm btn-primary rtl"><span>عضو<i className="fas fa-user mr-1"></i></span></button>
-                                    } 
-                                </div>
-                            </div>                                                
-                        </div>
+                                </div>                                                
+                            </div>   
+                        }
                     </div>
                 </td>
                 <td>{ messages_count }</td>
