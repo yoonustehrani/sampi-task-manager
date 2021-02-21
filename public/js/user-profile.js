@@ -77204,7 +77204,17 @@ var UserProfile = /*#__PURE__*/function (_Component) {
         className: "col-6 offset-3 offset-md-0 col-md-3 p-0 p-md-3 mb-2 mb-md-0"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_circular_progressbar__WEBPACK_IMPORTED_MODULE_6__["CircularProgressbar"], {
         value: finished_tasks_percentage,
-        text: "".concat(finished_tasks_percentage, "%")
+        text: "".concat(finished_tasks_percentage, "%"),
+        strokeWidth: 4 // background
+        ,
+        styles: Object(react_circular_progressbar__WEBPACK_IMPORTED_MODULE_6__["buildStyles"])({
+          strokeLinecap: 'butt',
+          pathTransitionDuration: 1,
+          trailColor: '#B0CCEF',
+          pathColor: '#4C88DF',
+          textColor: '#000401' // backgroundColor: '#1E235A'
+
+        })
       })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "wide-section-statistics col-12 p-0"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -77231,7 +77241,16 @@ var UserProfile = /*#__PURE__*/function (_Component) {
         className: "col-6 offset-3 small-section-charts p-md-3 pt-3 pb-3"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_circular_progressbar__WEBPACK_IMPORTED_MODULE_6__["CircularProgressbar"], {
         value: expired_tasks_percentage,
-        text: "".concat(expired_tasks_percentage, "%")
+        text: "".concat(expired_tasks_percentage, "%"),
+        strokeWidth: 10 // background
+        ,
+        styles: Object(react_circular_progressbar__WEBPACK_IMPORTED_MODULE_6__["buildStyles"])({
+          pathTransitionDuration: 1,
+          trailColor: '#DADAD9',
+          pathColor: '#0186D0',
+          textColor: '#000401' // backgroundColor: '#1E235A'
+
+        })
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "text-center bg-light col-12 col-md-6 mt-3 mt-md-0"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -77242,7 +77261,18 @@ var UserProfile = /*#__PURE__*/function (_Component) {
         className: "col-6 offset-3 small-section-charts p-md-3 pt-3 pb-3"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_circular_progressbar__WEBPACK_IMPORTED_MODULE_6__["CircularProgressbar"], {
         value: 0,
-        text: "0%"
+        text: "0%" // background
+        // backgroundPadding={3}
+        ,
+        strokeWidth: 10,
+        styles: Object(react_circular_progressbar__WEBPACK_IMPORTED_MODULE_6__["buildStyles"])({
+          pathTransitionDuration: 1,
+          strokeLinecap: 'butt',
+          trailColor: '#E0E0E0',
+          pathColor: '#0175AE',
+          textColor: '#000401' // backgroundColor: '#3F51B5'
+
+        })
       }))))));
     }
   }]);

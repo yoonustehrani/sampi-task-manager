@@ -4,7 +4,7 @@ import { getDemand, getTask, getUser, getWorkspace, redirectTo } from '../../../
 import moment from 'moment-jalaali'
 import { Sentry } from 'react-activity'
 import 'react-activity/lib/Sentry/Sentry.css'
-import { CircularProgressbar } from 'react-circular-progressbar';
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import MonthlyChart from './Charts/MonthlyChart'
 
@@ -423,7 +423,20 @@ export default class UserProfile extends Component {
                                 </div>                            
                             </div>
                             <div className="col-6 offset-3 offset-md-0 col-md-3 p-0 p-md-3 mb-2 mb-md-0">
-                                <CircularProgressbar value={finished_tasks_percentage} text={`${finished_tasks_percentage}%`} />
+                                <CircularProgressbar 
+                                    value={finished_tasks_percentage} 
+                                    text={`${finished_tasks_percentage}%`}
+                                    strokeWidth={4}
+                                    // background
+                                    styles={buildStyles({
+                                        strokeLinecap: 'butt',
+                                        pathTransitionDuration: 1,
+                                        trailColor: '#B0CCEF',
+                                        pathColor: '#4C88DF',
+                                        textColor: '#000401',
+                                        // backgroundColor: '#1E235A'
+                                    })}
+                                 />
                             </div>
                         </div>
                     </div>
@@ -445,7 +458,19 @@ export default class UserProfile extends Component {
                                 <h5>وظایف عقب افتاده</h5>
                             </div>
                             <div className="col-6 offset-3 small-section-charts p-md-3 pt-3 pb-3">
-                                <CircularProgressbar value={expired_tasks_percentage} text={`${expired_tasks_percentage}%`} />
+                                <CircularProgressbar
+                                    value={expired_tasks_percentage} 
+                                    text={`${expired_tasks_percentage}%`}
+                                    strokeWidth={10}
+                                    // background
+                                    styles={buildStyles({
+                                        pathTransitionDuration: 1,
+                                        trailColor: '#DADAD9',
+                                        pathColor: '#0186D0',
+                                        textColor: '#000401',
+                                        // backgroundColor: '#1E235A'
+                                    })}
+                                />
                             </div>
                         </div>
                         <div className="text-center bg-light col-12 col-md-6 mt-3 mt-md-0">
@@ -454,7 +479,21 @@ export default class UserProfile extends Component {
                                 <h5>وضعیت تکمیل نیاز ها</h5>
                             </div>
                             <div className="col-6 offset-3 small-section-charts p-md-3 pt-3 pb-3">
-                                <CircularProgressbar value={0} text={`0%`} />
+                                <CircularProgressbar 
+                                    value={0} 
+                                    text={`0%`}
+                                    // background
+                                    // backgroundPadding={3}
+                                    strokeWidth={10}
+                                    styles={buildStyles({
+                                        pathTransitionDuration: 1,
+                                        strokeLinecap: 'butt',
+                                        trailColor: '#E0E0E0',
+                                        pathColor: '#0175AE',
+                                        textColor: '#000401',
+                                        // backgroundColor: '#3F51B5'
+                                    })}
+                                />
                             </div>
                         </div>
                         {/* <div className="bg-light col-12 col-md-6 mt-3 mt-md-0">
