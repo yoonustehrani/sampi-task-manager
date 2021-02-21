@@ -185,10 +185,10 @@ export default class Dashboard extends Component {
                 <div className="analysis-boxes analysis-container">
                     <CounterTab Title="پروژه های من" Item={statistics.workspaceCounter ? statistics.workspaceCounter.all : null} CustomClasses="projects" Icon="fas fa-project-diagram"/>
                     <CounterTab Title="وظایف انجام شده" Item={statistics.taskCounter ? statistics.taskCounter.finished : null} CustomClasses="finished-tasks" Icon="fas fa-check-double"/>
-                    <CounterTab Title="نیازهای جاری" Item={statistics.demandCounter ? statistics.demandCounter.demands.unfinished : null} CustomClasses="finished-demands" Icon="fas fa-check"/>
+                    <CounterTab Title="نیازهای جاری" Item={statistics.demandCounter ? statistics.demandCounter.demands.unfinished : null} CustomClasses="finished-demands" Icon="fas fa-clipboard-list"/>
                     <CounterTab Title="وظایف عقب افتاده" Item={statistics.taskCounter ? statistics.taskCounter.expired : null} CustomClasses="delayed-tasks" Icon="fas fa-hourglass-end"/>
                     <CounterTab Title="وظایف جاری" Item={statistics.taskCounter ? statistics.taskCounter.unfinished : null} CustomClasses="current-tasks" Icon="fas fa-tasks"/>
-                    <CounterTab Title="خواسته های جاری" Item={statistics.demandCounter ? statistics.demandCounter.asked_demands.unfinished : null} CustomClasses="current-demands" Icon="fas fa-list-alt"/>
+                    <CounterTab Title="خواسته های جاری" Item={statistics.demandCounter ? statistics.demandCounter.asked_demands.unfinished : null} CustomClasses="current-demands" Icon="fas fa-comment-dots"/>
                 </div>
                 <div className="col-12 dashboard-tab-container">
                     <nav className="tab-title-bar text-center">

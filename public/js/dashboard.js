@@ -59951,7 +59951,7 @@ var Dashboard = /*#__PURE__*/function (_Component) {
         Title: "\u0646\u06CC\u0627\u0632\u0647\u0627\u06CC \u062C\u0627\u0631\u06CC",
         Item: statistics.demandCounter ? statistics.demandCounter.demands.unfinished : null,
         CustomClasses: "finished-demands",
-        Icon: "fas fa-check"
+        Icon: "fas fa-clipboard-list"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_CounterTab__WEBPACK_IMPORTED_MODULE_6__["default"], {
         Title: "\u0648\u0638\u0627\u06CC\u0641 \u0639\u0642\u0628 \u0627\u0641\u062A\u0627\u062F\u0647",
         Item: statistics.taskCounter ? statistics.taskCounter.expired : null,
@@ -59966,7 +59966,7 @@ var Dashboard = /*#__PURE__*/function (_Component) {
         Title: "\u062E\u0648\u0627\u0633\u062A\u0647 \u0647\u0627\u06CC \u062C\u0627\u0631\u06CC",
         Item: statistics.demandCounter ? statistics.demandCounter.asked_demands.unfinished : null,
         CustomClasses: "current-demands",
-        Icon: "fas fa-list-alt"
+        Icon: "fas fa-comment-dots"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-12 dashboard-tab-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
