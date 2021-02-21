@@ -68,7 +68,7 @@
                             <form action="{{ route('task-manager.users.destroy', ['user' => $user->id]) }}" method="post">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-danger">
+                                <button type="submit" class="btn btn-sm btn-danger delete-btn" deleting-item="user">
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </form>
@@ -92,4 +92,5 @@
             window.location.href = USER_ROUTE.replace('userId', userId)
         }
     </script>
+    <script src="{{ asset('js/confirmDelete.js') }}"></script>
 @endpush

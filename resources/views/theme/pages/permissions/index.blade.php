@@ -40,7 +40,7 @@
                         <form action="{{ route('task-manager.permissions.destroy', ['permission' => $permission->id]) }}" method="post">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-sm btn-danger">
+                        <button type="submit" class="btn btn-sm btn-danger delete-btn" deleting-item="permission">
                             <i class="fas fa-trash"></i>
                         </button>
                         </form>
@@ -53,3 +53,7 @@
         {{ $permissions->links() }}
     </div>
 @endsection
+
+@push('scripts')
+    <script src="{{ asset('js/confirmDelete.js') }}"></script>
+@endpush

@@ -49,7 +49,7 @@
                         <form action="{{ route('task-manager.roles.destroy', ['role' => $role->id]) }}" method="post">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-sm btn-danger">
+                        <button type="submit" class="btn btn-sm btn-danger delete-btn" deleting-item="role">
                             <i class="fas fa-trash"></i>
                         </button>
                         </form>
@@ -61,3 +61,7 @@
         @endcomponent
     @endcomponent
 @endsection
+
+@push('scripts')
+    <script src="{{ asset('js/confirmDelete.js') }}"></script>
+@endpush

@@ -1,9 +1,9 @@
-import { sweetConfirm } from './helpers'
+import { sweetConfirm, sweetFailDelete } from './helpers'
 
 $(".delete-btn").on("click", function(e) {
     e.preventDefault()
+    e.stopPropagation()
     let deleting_item
-    console.log(e.target.getAttribute("deleting-item"))
     switch (e.target.getAttribute("deleting-item")) {
         case "workspace":
             deleting_item = "پروژه"
@@ -13,11 +13,29 @@ $(".delete-btn").on("click", function(e) {
             deleting_item = "درخواست"
             break;
 
+        case "user":
+            deleting_item = "کاربر"
+            break;
+
+        case "permission":
+            deleting_item = "مجوز"
+            break;
+
+        case "priority":
+            deleting_item = "اولویت"
+            break;
+
+        case "role":
+            deleting_item = "سمت"
+            break;
+
         default:
-            deleting_item = "مورد"
+            sweetFailDelete()
             break;
     }
-    sweetConfirm(`آیا از حذف این ${deleting_item} مطمئن هستید؟`, () => {
-        $(e.target).parent().submit()
-    })
+    if (deleting_item) {
+        sweetConfirm(`آیا از حذف این ${deleting_item} مطمئن هستید؟`, () => {
+            $(e.target).parent().submit()
+        })
+    }
 })

@@ -143,3 +143,11 @@ export const sweetSuccessDelete = (message, url) => {
         }
     })
 }
+
+export const sweetFailDelete = () => {
+    Swal.default.fire(
+        "خطا",
+        "لطفا دوباره تلاش کنید",
+        'error'
+    )
+}
