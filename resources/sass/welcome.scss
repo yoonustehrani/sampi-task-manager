@@ -1,6 +1,9 @@
 body {
     background-image: linear-gradient(to bottom right,#392C81, #7A1F80);
-    direction: rtl;
+}
+
+.rtl {
+    direction: rtl !important;
 }
 
 .vertical-center {
@@ -13,6 +16,8 @@ body {
 
 .main-division {
     background-color: rgba(0,0,0,0.1);
+    overflow-y: auto;
+    overflow-x: hidden;
     .left-section {
         height: 100%;
         display: flex;

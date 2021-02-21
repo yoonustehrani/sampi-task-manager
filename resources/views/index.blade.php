@@ -16,7 +16,7 @@
                 <p class="m-0">Sampi Tech Group</p>
             </div>
         </div>
-        <div class="col-md-6 col-12 float-left mb-md-0 mb-3 p-3 right-section">
+        <div class="col-md-6 col-12 float-left mb-md-0 mb-3 p-3 right-section rtl">
             <p class="col-12 float-left text-center"><i class="fas fa-list"></i> ماژول ها</p>
             <div class="float-left module-section">
                 <ul class="col-md-6 col-12 p-0 module-list float-right">

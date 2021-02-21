@@ -2468,7 +2468,7 @@ module.exports = {
 
 /***/ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/react-activity/lib/Spinner/Spinner.css":
 /*!*********************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader??ref--6-1!./node_modules/postcss-loader/src??ref--6-2!./node_modules/react-activity/lib/Spinner/Spinner.css ***!
+  !*** ./node_modules/css-loader??ref--7-1!./node_modules/postcss-loader/src??ref--7-2!./node_modules/react-activity/lib/Spinner/Spinner.css ***!
   \*********************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -28385,7 +28385,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(/*! !../../../css-loader??ref--6-1!../../../postcss-loader/src??ref--6-2!./Spinner.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/react-activity/lib/Spinner/Spinner.css");
+var content = __webpack_require__(/*! !../../../css-loader??ref--7-1!../../../postcss-loader/src??ref--7-2!./Spinner.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/react-activity/lib/Spinner/Spinner.css");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -62500,15 +62500,27 @@ if (document.getElementById(target)) {
 
 /***/ }),
 
+/***/ "./resources/sass/welcome.scss":
+/*!*************************************!*\
+  !*** ./resources/sass/welcome.scss ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
 /***/ 0:
-/*!**********************************************************************!*\
-  !*** multi ./resources/js/react/demand.js ./resources/sass/app.scss ***!
-  \**********************************************************************/
+/*!****************************************************************************************************!*\
+  !*** multi ./resources/js/react/demand.js ./resources/sass/app.scss ./resources/sass/welcome.scss ***!
+  \****************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! I:\projects\task-manager\resources\js\react\demand.js */"./resources/js/react/demand.js");
-module.exports = __webpack_require__(/*! I:\projects\task-manager\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! I:\projects\task-manager\resources\sass\app.scss */"./resources/sass/app.scss");
+module.exports = __webpack_require__(/*! I:\projects\task-manager\resources\sass\welcome.scss */"./resources/sass/welcome.scss");
 
 
 /***/ })

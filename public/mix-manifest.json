@@ -3,6 +3,7 @@
     "/js/dashboard.js": "/js/dashboard.js",
     "/js/demand.js": "/js/demand.js",
     "/css/app.css": "/css/app.css",
+    "/css/welcome.css": "/css/welcome.css",
     "/js/demands.js": "/js/demands.js",
     "/js/mixedDemands.js": "/js/mixedDemands.js",
     "/js/mixedTasks.js": "/js/mixedTasks.js",
