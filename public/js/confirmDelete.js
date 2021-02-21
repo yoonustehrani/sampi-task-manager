@@ -3736,12 +3736,13 @@ if (typeof this !== 'undefined' && this.Sweetalert2){  this.swal = this.sweetAle
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./helpers */ "./resources/js/helpers/index.js");
 
-$(".delete-btn").on("click", function (e) {
+
+function handleDelete(e) {
   e.preventDefault();
   e.stopPropagation();
-  var deleting_item;
+  var deleting_item = e.target.getAttribute("deleting-item") ? e.target.getAttribute("deleting-item") : $(e.target).parent().attr("deleting-item");
 
-  switch (e.target.getAttribute("deleting-item")) {
+  switch (deleting_item) {
     case "workspace":
       deleting_item = "پروژه";
       break;
@@ -3773,9 +3774,16 @@ $(".delete-btn").on("click", function (e) {
 
   if (deleting_item) {
     Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["sweetConfirm"])("\u0622\u06CC\u0627 \u0627\u0632 \u062D\u0630\u0641 \u0627\u06CC\u0646 ".concat(deleting_item, " \u0645\u0637\u0645\u0626\u0646 \u0647\u0633\u062A\u06CC\u062F\u061F"), function () {
-      $(e.target).parent().submit();
+      e.target.getAttribute("deleting-item") ? $(e.target).parent().submit() : $(e.target).parent().parent().submit();
     });
   }
+}
+
+$(".delete-btn").on("click", function (e) {
+  return handleDelete(e);
+});
+$(".delete-btn").children().on("click", function (e) {
+  return handleDelete(e);
 });
 
 /***/ }),
@@ -3997,7 +4005,6 @@ var sweetConfirm = function sweetConfirm(message, func) {
   }).then(function (res) {
     if (res.isConfirmed) {
       func();
-      console.log('done');
     }
   });
 };

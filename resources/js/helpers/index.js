@@ -127,7 +127,6 @@ export const sweetConfirm = (message, func) => {
     }).then((res) => {
         if (res.isConfirmed) {
             func()
-            console.log('done')
         }
     })
 }

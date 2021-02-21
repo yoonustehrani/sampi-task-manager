@@ -76375,7 +76375,6 @@ var sweetConfirm = function sweetConfirm(message, func) {
   }).then(function (res) {
     if (res.isConfirmed) {
       func();
-      console.log('done');
     }
   });
 };

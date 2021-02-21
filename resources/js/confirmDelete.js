@@ -1,10 +1,10 @@
 import { sweetConfirm, sweetFailDelete } from './helpers'
 
-$(".delete-btn").on("click", function(e) {
+function handleDelete (e) {
     e.preventDefault()
     e.stopPropagation()
-    let deleting_item
-    switch (e.target.getAttribute("deleting-item")) {
+    let deleting_item = e.target.getAttribute("deleting-item") ? e.target.getAttribute("deleting-item") : $(e.target).parent().attr("deleting-item")
+    switch (deleting_item) {
         case "workspace":
             deleting_item = "پروژه"
             break;
@@ -35,7 +35,10 @@ $(".delete-btn").on("click", function(e) {
     }
     if (deleting_item) {
         sweetConfirm(`آیا از حذف این ${deleting_item} مطمئن هستید؟`, () => {
-            $(e.target).parent().submit()
+            e.target.getAttribute("deleting-item") ? $(e.target).parent().submit() : $(e.target).parent().parent().submit()
         })
     }
-})
+}
+
+$(".delete-btn").on("click", (e) => handleDelete(e))
+$(".delete-btn").children().on("click", (e) => handleDelete(e))
