@@ -311,27 +311,29 @@ export default class Demands extends Component {
                                         <td>{ title }</td>
                                         <td>
                                             <div className="employees-container horizontal-centerlize">
-                                                <span>{ from.fullname }</span>
-                                                <div className="dropdown-users d-none" onClick={(e) => e.stopPropagation()}>
-                                                    <div className="user-dropdown-item animated jackInTheBox">
-                                                        <div className="user-right-flex">
-                                                            <div className="user-img-container ml-2">
-                                                                <img src={from.avatar_pic !== null ? APP_PATH + from.avatar_pic : APP_PATH + 'images/male-avatar.svg'} />
+                                                <span>{ from ? from.fullname : <i className="fas fa-user-slash"></i> }</span>
+                                                {from &&
+                                                    <div className="dropdown-users d-none" onClick={(e) => e.stopPropagation()}>
+                                                        <div className="user-dropdown-item animated jackInTheBox">
+                                                            <div className="user-right-flex">
+                                                                <div className="user-img-container ml-2">
+                                                                    <img src={from.avatar_pic !== null ? APP_PATH + from.avatar_pic : APP_PATH + 'images/male-avatar.svg'} />
+                                                                </div>
+                                                                <div className="user-info ml-2">
+                                                                    <p>{ from.fullname }</p>
+                                                                    <a href={user_profile_route.replace("userId", from.id)}>@{from.name}</a>
+                                                                </div>
                                                             </div>
-                                                            <div className="user-info ml-2">
-                                                                <p>{ from.fullname }</p>
-                                                                <a href={user_profile_route.replace("userId", from.id)}>@{from.name}</a>
+                                                            <div className="user-label-container">
+                                                                {
+                                                                    workspace_users && workspace_users[from.id] && workspace_users[from.id].is_admin === 1 
+                                                                    ? <button className="btn btn-sm btn-success rtl admin p-1"><span>ادمین<i className="fas fa-user-tie mr-1"></i></span></button>
+                                                                    : <button className="btn btn-sm btn-primary rtl"><span>عضو<i className="fas fa-user mr-1"></i></span></button>
+                                                                }
                                                             </div>
-                                                        </div>
-                                                        <div className="user-label-container">
-                                                            {
-                                                                workspace_users && workspace_users[from.id] && workspace_users[from.id].is_admin === 1 
-                                                                ? <button className="btn btn-sm btn-success rtl admin p-1"><span>ادمین<i className="fas fa-user-tie mr-1"></i></span></button>
-                                                                : <button className="btn btn-sm btn-primary rtl"><span>عضو<i className="fas fa-user mr-1"></i></span></button>
-                                                            }
-                                                        </div>
-                                                    </div>                                                
-                                                </div>
+                                                        </div>                                                
+                                                    </div>
+                                                }
                                             </div>
                                         </td>
 
@@ -475,27 +477,29 @@ export default class Demands extends Component {
                                         <td>{ title }</td>
                                         <td>
                                             <div className="employees-container horizontal-centerlize">
-                                                <span>{ to.fullname }</span>
-                                                <div className="dropdown-users d-none" onClick={(e) => e.stopPropagation()}>
-                                                    <div className="user-dropdown-item animated jackInTheBox">
-                                                        <div className="user-right-flex">
-                                                            <div className="user-img-container ml-2">
-                                                                <img src={to.avatar_pic !== null ? APP_PATH + to.avatar_pic : APP_PATH + 'images/male-avatar.svg'} />
+                                                <span>{ to ? to.fullname : <i className="fas fa-user-slash"></i> }</span>
+                                                {to &&
+                                                    <div className="dropdown-users d-none" onClick={(e) => e.stopPropagation()}>
+                                                        <div className="user-dropdown-item animated jackInTheBox">
+                                                            <div className="user-right-flex">
+                                                                <div className="user-img-container ml-2">
+                                                                    <img src={to.avatar_pic !== null ? APP_PATH + to.avatar_pic : APP_PATH + 'images/male-avatar.svg'} />
+                                                                </div>
+                                                                <div className="user-info ml-2">
+                                                                    <p>{ to.fullname }</p>
+                                                                    <a href={user_profile_route.replace("userId", to.id)}>@{to.name}</a>
+                                                                </div>
                                                             </div>
-                                                            <div className="user-info ml-2">
-                                                                <p>{ to.fullname }</p>
-                                                                <a href={user_profile_route.replace("userId", to.id)}>@{to.name}</a>
+                                                            <div className="user-label-container">
+                                                                {
+                                                                    workspace_users && workspace_users[to.id].is_admin === 1 
+                                                                    ? <button className="btn btn-sm btn-success rtl admin p-1"><span>ادمین<i className="fas fa-user-tie mr-1"></i></span></button>
+                                                                    : <button className="btn btn-sm btn-primary rtl"><span>عضو<i className="fas fa-user mr-1"></i></span></button>
+                                                                } 
                                                             </div>
-                                                        </div>
-                                                        <div className="user-label-container">
-                                                            {
-                                                                workspace_users && workspace_users[to.id].is_admin === 1 
-                                                                ? <button className="btn btn-sm btn-success rtl admin p-1"><span>ادمین<i className="fas fa-user-tie mr-1"></i></span></button>
-                                                                : <button className="btn btn-sm btn-primary rtl"><span>عضو<i className="fas fa-user mr-1"></i></span></button>
-                                                            } 
-                                                        </div>
-                                                    </div>                                                
-                                                </div>
+                                                        </div>                                                
+                                                    </div>
+                                                }
                                             </div>
                                         </td>
                                         <td>{task !== null ? <a href={task_route.replace("taskId", task.id)}>{ task.title }</a> : <i className="fas fa-minus fa-3x"></i>}</td>
@@ -581,52 +585,56 @@ export default class Demands extends Component {
                                         <td>{ title }</td>
                                         <td>
                                             <div className="employees-container horizontal-centerlize">
-                                                <span>{ from.fullname }</span>
-                                                <div className="dropdown-users d-none" onClick={(e) => e.stopPropagation()}>
-                                                    <div className="user-dropdown-item animated jackInTheBox">
-                                                        <div className="user-right-flex">
-                                                            <div className="user-img-container ml-2">
-                                                                <img src={from.avatar_pic !== null ? APP_PATH + from.avatar_pic : APP_PATH + 'images/male-avatar.svg'} />
+                                                <span>{ from ? from.fullname : <i className="fas fa-user-slash"></i> }</span>
+                                                {from &&
+                                                    <div className="dropdown-users d-none" onClick={(e) => e.stopPropagation()}>
+                                                        <div className="user-dropdown-item animated jackInTheBox">
+                                                            <div className="user-right-flex">
+                                                                <div className="user-img-container ml-2">
+                                                                    <img src={from.avatar_pic !== null ? APP_PATH + from.avatar_pic : APP_PATH + 'images/male-avatar.svg'} />
+                                                                </div>
+                                                                <div className="user-info ml-2">
+                                                                    <p>{ from.fullname }</p>
+                                                                    <a href={getUser(from.id)}>@{from.name}</a>
+                                                                </div>
                                                             </div>
-                                                            <div className="user-info ml-2">
-                                                                <p>{ from.fullname }</p>
-                                                                <a href={getUser(from.id)}>@{from.name}</a>
+                                                            <div className="user-label-container">
+                                                                {
+                                                                    workspace_users && workspace_users[from.id].is_admin === 1 
+                                                                    ? <button className="btn btn-sm btn-success rtl admin p-1"><span>ادمین<i className="fas fa-user-tie mr-1"></i></span></button>
+                                                                    : <button className="btn btn-sm btn-primary rtl"><span>عضو<i className="fas fa-user mr-1"></i></span></button>
+                                                                } 
                                                             </div>
-                                                        </div>
-                                                        <div className="user-label-container">
-                                                            {
-                                                                workspace_users && workspace_users[from.id].is_admin === 1 
-                                                                ? <button className="btn btn-sm btn-success rtl admin p-1"><span>ادمین<i className="fas fa-user-tie mr-1"></i></span></button>
-                                                                : <button className="btn btn-sm btn-primary rtl"><span>عضو<i className="fas fa-user mr-1"></i></span></button>
-                                                            } 
-                                                        </div>
-                                                    </div>                                                
-                                                </div>
+                                                        </div>                                                
+                                                    </div>
+                                                }
                                             </div>
                                         </td>
                                         <td>
                                             <div className="employees-container horizontal-centerlize">
-                                                <span>{ to.fullname }</span>
-                                                <div className="dropdown-users d-none" onClick={(e) => e.stopPropagation()}>
-                                                    <div className="user-dropdown-item animated jackInTheBox">
-                                                        <div className="user-right-flex">
-                                                            <div className="user-img-container ml-2">
-                                                                <img src={to.avatar_pic !== null ? APP_PATH + to.avatar_pic : APP_PATH + 'images/male-avatar.svg'} />
+                                                <span>{ to ? to.fullname : <i className="fas fa-user-slash"></i> }</span>
+                                                {to && 
+                                                    <div className="dropdown-users d-none" onClick={(e) => e.stopPropagation()}>
+                                                        <div className="user-dropdown-item animated jackInTheBox">
+                                                            <div className="user-right-flex">
+                                                                <div className="user-img-container ml-2">
+                                                                    <img src={to.avatar_pic !== null ? APP_PATH + to.avatar_pic : APP_PATH + 'images/male-avatar.svg'} />
+                                                                </div>
+                                                                <div className="user-info ml-2">
+                                                                    <p>{ to.fullname }</p>
+                                                                    <a href={getUser(to.id)}>@{to.name}</a>
+                                                                </div>
                                                             </div>
-                                                            <div className="user-info ml-2">
-                                                                <p>{ to.fullname }</p>
-                                                                <a href={getUser(to.id)}>@{to.name}</a>
+                                                            <div className="user-label-container">
+                                                                {
+                                                                    workspace_users && workspace_users[to.id].is_admin === 1 
+                                                                    ? <button className="btn btn-sm btn-success rtl admin p-1"><span>ادمین<i className="fas fa-user-tie mr-1"></i></span></button>
+                                                                    : <button className="btn btn-sm btn-primary rtl"><span>عضو<i className="fas fa-user mr-1"></i></span></button>
+                                                                } 
                                                             </div>
-                                                        </div>
-                                                        <div className="user-label-container">
-                                                            {
-                                                                workspace_users && workspace_users[to.id].is_admin === 1 
-                                                                ? <button className="btn btn-sm btn-success rtl admin p-1"><span>ادمین<i className="fas fa-user-tie mr-1"></i></span></button>
-                                                                : <button className="btn btn-sm btn-primary rtl"><span>عضو<i className="fas fa-user mr-1"></i></span></button>
-                                                            } 
-                                                        </div>
-                                                    </div>                                                
-                                                </div>
+                                                        </div>                                                
+                                                    </div>
+                                                }
                                             </div>
                                         </td>
                                         <td>{task !== null ? <a href={getTask(task.id)}>{ task.title }</a> : <i className="fas fa-minus fa-3x"></i>}</td>
