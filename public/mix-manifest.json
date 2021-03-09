@@ -1,13 +1,12 @@
 {
     "/js/app.js": "/js/app.js",
-    "/js/confirmDelete.js": "/js/confirmDelete.js",
-    "/css/app.css": "/css/app.css",
-    "/css/welcome.css": "/css/welcome.css",
     "/js/dashboard.js": "/js/dashboard.js",
     "/js/demand.js": "/js/demand.js",
     "/js/demands.js": "/js/demands.js",
     "/js/mixedDemands.js": "/js/mixedDemands.js",
     "/js/mixedTasks.js": "/js/mixedTasks.js",
+    "/js/select2.js": "/js/select2.js",
+    "/css/app.css": "/css/app.css",
     "/js/task.js": "/js/task.js",
     "/js/user-profile.js": "/js/user-profile.js",
     "/js/workspace.js": "/js/workspace.js"
