@@ -131,7 +131,7 @@ export default class UserProfile extends Component {
         let fromdate  = moment().locale('en').subtract(31, 'day').format('YYYY-M-D');
         let todate = moment().locale('en').add(1, 'day').format('YYYY-M-D');
         [chart_one, chart_two].map((chart_url, i) => {
-            chart_url += `&start_date=${fromdate}&end_date=${todate}`;
+            chart_url += `&start_date=${fromdate}&end_date=${todate}&user_id=${TargetUser.id}`;
             Axios.get(chart_url).then(res => {
                 let data = res.data;
                 this.setState(prevState => {

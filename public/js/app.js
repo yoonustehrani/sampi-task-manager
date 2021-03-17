@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -71395,15 +71395,13 @@ if ($(window).width() > 576) {
 }
 
 $("#refresh-btn").on("click", function () {
-  $(this.childNodes.item(1)).addClass("rotate-animation"); // location.reload(true)
-  // window.location.href = window.location.href
-
-  javascript: location.reload(true);
+  $(this.childNodes.item(1)).addClass("rotate-animation");
+  window.location.href.endsWith("erasecache=true") ? window.location.reload(true) : window.location.href += "&erasecache=true";
 });
 
 /***/ }),
 
-/***/ 2:
+/***/ 1:
 /*!***********************************!*\
   !*** multi ./resources/js/app.js ***!
   \***********************************/

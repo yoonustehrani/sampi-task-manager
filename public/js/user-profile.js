@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 5);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -77033,7 +77033,7 @@ var UserProfile = /*#__PURE__*/function (_Component) {
       var fromdate = moment_jalaali__WEBPACK_IMPORTED_MODULE_3___default()().locale('en').subtract(31, 'day').format('YYYY-M-D');
       var todate = moment_jalaali__WEBPACK_IMPORTED_MODULE_3___default()().locale('en').add(1, 'day').format('YYYY-M-D');
       [chart_one, chart_two].map(function (chart_url, i) {
-        chart_url += "&start_date=".concat(fromdate, "&end_date=").concat(todate);
+        chart_url += "&start_date=".concat(fromdate, "&end_date=").concat(todate, "&user_id=").concat(TargetUser.id);
         axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(chart_url).then(function (res) {
           var data = res.data;
 
@@ -77622,7 +77622,7 @@ if (target) {
 
 /***/ }),
 
-/***/ 5:
+/***/ 2:
 /*!**************************************************!*\
   !*** multi ./resources/js/react/user-profile.js ***!
   \**************************************************/
