@@ -1,7 +1,20 @@
 {
     "/js/app.js": "/js/app.js",
+<<<<<<< HEAD
     "/js/cache.js": "/js/cache.js",
     "/css/app.css": "/css/app.css",
     "/css/auth.css": "/css/auth.css",
     "/js/user-profile.js": "/js/user-profile.js"
+=======
+    "/js/dashboard.js": "/js/dashboard.js",
+    "/js/demand.js": "/js/demand.js",
+    "/js/demands.js": "/js/demands.js",
+    "/js/mixedDemands.js": "/js/mixedDemands.js",
+    "/js/mixedTasks.js": "/js/mixedTasks.js",
+    "/js/select2.js": "/js/select2.js",
+    "/css/app.css": "/css/app.css",
+    "/js/task.js": "/js/task.js",
+    "/js/user-profile.js": "/js/user-profile.js",
+    "/js/workspace.js": "/js/workspace.js"
+>>>>>>> 28cdc8c160f69882c653a6c69582182875546370
 }

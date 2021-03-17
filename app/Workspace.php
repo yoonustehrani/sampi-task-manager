@@ -35,7 +35,7 @@ class Workspace extends Model
     }
     public function expired_tasks()
     {
-        return $this->tasks()->whereNotNull('due_to')->where('due_to', '<', now('Asia/Tehran'));
+        return $this->unfinished_tasks()->whereNotNull('due_to')->where('due_to', '<', now('Asia/Tehran'));
     }
     
     public function demands()

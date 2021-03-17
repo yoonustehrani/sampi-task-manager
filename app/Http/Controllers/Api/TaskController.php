@@ -153,7 +153,7 @@ class TaskController extends BaseController
                 );
             \DB::commit();
             $task['workspace'] = $workspace;
-            // event(new TaskCreated($task));
+            event(new TaskCreated($task));
             return $task->parent_id ? $task->load(['parent', 'users']) : $task->load('users');
         } catch(\Exception $e) {
             \DB::rollback();
