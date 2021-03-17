@@ -248,7 +248,7 @@ export default class UserProfile extends Component {
                                             </div>
                                             <div className="workspace-item-text-info" title={workspace.description}>
                                                 <h6>{ workspace.title }</h6>
-                                                <span>{ workspace.description.length < 50 ? workspace.description : workspace.description.substring(0, 47) + " ..." }</span>
+                                                <span className="rtl">{ workspace.description.length < 50 ? workspace.description : workspace.description.substring(0, 47) + " ..." }</span>
                                             </div>
                                         </div>
                                     ))
@@ -294,7 +294,7 @@ export default class UserProfile extends Component {
                                             let content = task.title + " (" + task.group + ")"
                                             return (
                                                 <div key={i} className="task-item user-work-item" title={content} onClick={() => redirectTo(getTask(task.id))}>
-                                                    <h6 className="text-right small-font">{ (task.title.length + task.group.length) < 33 ? content : content.substring(0, 30) + " ..." }</h6>
+                                                    <h6 className="text-right small-font rtl">{ (task.title.length + task.group.length) < 33 ? content : content.substring(0, 30) + " ..." }</h6>
                                                     <span className="small-font rtl">{moment(task.created_at).fromNow()} {task.finished_at !== null ? <i className="fas fa-check"></i> : <i className="fas fa-times"></i>}</span>
                                                 </div>
                                             )
@@ -345,7 +345,7 @@ export default class UserProfile extends Component {
                                                 </div>
                                                 <i className="fas fa-long-arrow-alt-right"></i>
                                                 <div className="demand-sender">
-                                                    <h6 className="ml-2 small-font">{ demand.title.length < 30 ? demand.title : demand.title.substring(0, 27) + " ..." }</h6>
+                                                    <h6 className="ml-2 small-font rtl">{ demand.title.length < 30 ? demand.title : demand.title.substring(0, 27) + " ..." }</h6>
                                                     <img src={APP_PATH + `${demand.from.avatar_pic ? demand.from.avatar_pic : 'images/male-avatar.svg'}`} alt=""/>
                                                 </div>
                                             </div>
@@ -392,7 +392,7 @@ export default class UserProfile extends Component {
                                             <div key={i} className="demand-item hover-bg" title={need.title} onClick={() => redirectTo(getDemand(need.workspace_id, need.id))}>
                                                 <div className="demand-sender">
                                                     <img src={APP_PATH + `${TargetUser.avatar_pic ? TargetUser.avatar_pic : 'images/male-avatar.svg'}`} alt="" />
-                                                    <h6 className="mr-1 small-font">{ need.title.length < 30 ? need.title : need.title.substring(0, 27) + " ..." }</h6>
+                                                    <h6 className="mr-1 small-font rtl">{ need.title.length < 30 ? need.title : need.title.substring(0, 27) + " ..." }</h6>
                                                 </div>
                                                 <i className="fas fa-long-arrow-alt-left"></i>
                                                 <div>
