@@ -154,7 +154,7 @@ export default class UserProfile extends Component {
             isGetting: true
         })
         statisticApis.map((url, i) => {
-            Axios.get(url).then(res => {
+            Axios.get(`${url}&user_id=${TargetUser.id}`).then(res => {
                 let { data } = res
                 this.setState(preState => {
                     let catagory
