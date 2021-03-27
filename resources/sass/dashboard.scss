@@ -237,7 +237,7 @@ div.employees-container {
                 justify-content: flex-start;
                 align-items: flex-start;
                 > a {
-                    direction: ltr;
+                    direction: ltr !important;
                     color: #000000;
                     cursor: pointer;
                     transition: 0.3s;

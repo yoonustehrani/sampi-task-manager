@@ -147,6 +147,7 @@ export default class MixedTasks extends Component {
             parent_id: related_task,
             users: users,
             due_to: !due_to_check ? null : Math.trunc(task_due_to),
+            description: new_task_description
         }).then(res => {
             let { data } = res
             let usersObj = {}
@@ -312,7 +313,7 @@ export default class MixedTasks extends Component {
                                     { allUsers ? allUsers.map((user, i) => {
                                         if (user.id !== CurrentUser.id) {
                                             return (
-                                                <option key={i} value={user.id} img_address={user !== null && user.avatar_pic !== null ? APP_PATH + user.avatar_pic : APP_PATH + 'images/male-avatar.svg'}>{user.fullname}</option>
+                                                <option key={i} value={user.id} img_address={user !== null && user.avatar_pic !== null ? APP_PATH + user.avatar_pic : APP_PATH + 'images/user-avatar.png'}>{user.fullname}</option>
                                             )                                            
                                         }
                                     }) : null }
@@ -390,7 +391,7 @@ export default class MixedTasks extends Component {
                                     { workspaces_users && selected_workspace ? Object.values(workspaces_users[parseInt(selected_workspace)]).map((user, i) => {
                                         if (user.id !== logged_in_user_id) {
                                             return (
-                                                <option key={i} value={user.id} img_address={APP_PATH + (user !== null ? user.avatar_pic : "iamges/male-avatar.svg") } is_admin={user.is_admin}>{user.fullname}</option>
+                                                <option key={i} value={user.id} img_address={APP_PATH + (user && user.avatar_pic ? user.avatar_pic : "images/user-avatar.png") } is_admin={user.is_admin}>{user.fullname}</option>
                                             )                                            
                                         }
                                     }) : null }
@@ -480,7 +481,7 @@ export default class MixedTasks extends Component {
                                                 <div key={i} className="user-dropdown-item animated jackInTheBox">
                                                     <div className="user-right-flex">
                                                         <div className="user-img-container ml-2">
-                                                            <img src={user !== null && user.avatar_pic !== null ? APP_PATH + user.avatar_pic : APP_PATH + 'images/male-avatar.svg'} />
+                                                            <img src={user !== null && user.avatar_pic !== null ? APP_PATH + user.avatar_pic : APP_PATH + 'images/user-avatar.png'} />
                                                         </div>
                                                         <div className="user-info ml-2">
                                                             <p>{ user.fullname }</p>

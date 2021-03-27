@@ -14,6 +14,8 @@
         data-chart-ontime="{{ route('api.task-manager.chart.tasks', ['type' => 'ontime', 'api_token' => auth()->user()->api_token]) }}"
         data-chart-yearly="{{ route('api.task-manager.chart.tasks', ['type' => 'yearly', 'api_token' => auth()->user()->api_token]) }}"
         task-counter = "{{ route('api.task-manager.counter.tasks', ['api_token' => auth()->user()->api_token]) }}"
+        workspace-counter = "{{ route('api.task-manager.counter.workspaces', ['api_token' => auth()->user()->api_token]) }}"
+        demand-counter = "{{ route('api.task-manager.counter.demands', ['api_token' => auth()->user()->api_token]) }}"
     ></div>
 @endsection
 

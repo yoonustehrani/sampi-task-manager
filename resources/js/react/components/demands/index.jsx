@@ -231,7 +231,7 @@ export default class Demands extends Component {
                                     { allUsers ? allUsers.map((user, i) => {
                                         if (user.id !== CurrentUser.id) {
                                             return (
-                                                <option key={i} value={user.id} img_address={user.avatar_pic !== null ? APP_PATH + user.avatar_pic : APP_PATH + 'images/male-avatar.svg'}>{user.fullname}</option>
+                                                <option key={i} value={user.id} img_address={user.avatar_pic !== null ? APP_PATH + user.avatar_pic : APP_PATH + 'images/user-avatar.png'}>{user.fullname}</option>
                                             )                                            
                                         }
                                     }) : null }
@@ -317,7 +317,7 @@ export default class Demands extends Component {
                                                         <div className="user-dropdown-item animated jackInTheBox">
                                                             <div className="user-right-flex">
                                                                 <div className="user-img-container ml-2">
-                                                                    <img src={from.avatar_pic !== null ? APP_PATH + from.avatar_pic : APP_PATH + 'images/male-avatar.svg'} />
+                                                                    <img src={from.avatar_pic !== null ? APP_PATH + from.avatar_pic : APP_PATH + 'images/user-avatar.png'} />
                                                                 </div>
                                                                 <div className="user-info ml-2">
                                                                     <p>{ from.fullname }</p>
@@ -409,7 +409,7 @@ export default class Demands extends Component {
                                     { workspace ? workspace.users.map((user, i) => {
                                         if (user.id !== logged_in_user_id) {
                                             return (
-                                                <option key={i} value={user.id} img_address={user.avatar_pic !== null ? APP_PATH + user.avatar_pic : APP_PATH + 'images/male-avatar.svg'} is_admin={user.pivot.is_admin}>{user.fullname}</option>
+                                                <option key={i} value={user.id} img_address={user.avatar_pic !== null ? APP_PATH + user.avatar_pic : APP_PATH + 'images/user-avatar.png'} is_admin={user.pivot.is_admin}>{user.fullname}</option>
                                             )                                            
                                         }
                                     }) : null }
@@ -483,7 +483,7 @@ export default class Demands extends Component {
                                                         <div className="user-dropdown-item animated jackInTheBox">
                                                             <div className="user-right-flex">
                                                                 <div className="user-img-container ml-2">
-                                                                    <img src={to.avatar_pic !== null ? APP_PATH + to.avatar_pic : APP_PATH + 'images/male-avatar.svg'} />
+                                                                    <img src={to.avatar_pic !== null ? APP_PATH + to.avatar_pic : APP_PATH + 'images/user-avatar.png'} />
                                                                 </div>
                                                                 <div className="user-info ml-2">
                                                                     <p>{ to.fullname }</p>
@@ -591,7 +591,7 @@ export default class Demands extends Component {
                                                         <div className="user-dropdown-item animated jackInTheBox">
                                                             <div className="user-right-flex">
                                                                 <div className="user-img-container ml-2">
-                                                                    <img src={from.avatar_pic !== null ? APP_PATH + from.avatar_pic : APP_PATH + 'images/male-avatar.svg'} />
+                                                                    <img src={from.avatar_pic !== null ? APP_PATH + from.avatar_pic : APP_PATH + 'images/user-avatar.png'} />
                                                                 </div>
                                                                 <div className="user-info ml-2">
                                                                     <p>{ from.fullname }</p>
@@ -618,7 +618,7 @@ export default class Demands extends Component {
                                                         <div className="user-dropdown-item animated jackInTheBox">
                                                             <div className="user-right-flex">
                                                                 <div className="user-img-container ml-2">
-                                                                    <img src={to.avatar_pic !== null ? APP_PATH + to.avatar_pic : APP_PATH + 'images/male-avatar.svg'} />
+                                                                    <img src={to.avatar_pic !== null ? APP_PATH + to.avatar_pic : APP_PATH + 'images/user-avatar.png'} />
                                                                 </div>
                                                                 <div className="user-info ml-2">
                                                                     <p>{ to.fullname }</p>

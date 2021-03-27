@@ -370,7 +370,7 @@ export default class ShowTask extends Component {
                                     task.users.length > 1 &&
                                         <span>{ task.users.length }<i className="fas fa-users mr-2 pb-1 pt-1"></i></span>
                                 }
-                                <div className="dropdown-users d-none" onClick={(e) => e.stopPropagation()}>
+                                <div className="dropdown-users d-none left-5" onClick={(e) => e.stopPropagation()}>
                                 {
                                     task.users.length >= 1 && task.users.map((user, i) => (
                                         <div key={i} className="user-dropdown-item border-sharp animated flipInX all-sharp">
@@ -401,7 +401,7 @@ export default class ShowTask extends Component {
                                 <span>اتمام کننده:</span>
                             </div>
                             <div className="task-detail">
-                                {/* <a className="task-finisher"><img src={APP_PATH + 'images/male-avatar.svg'} alt="" />امیررضا منصوریان</a> */}
+                                {/* <a className="task-finisher"><img src={APP_PATH + 'images/user-avatar.png'} alt="" />امیررضا منصوریان</a> */}
                                 {task.finisher_id !== null ? (<a href="" className="task-finisher">{workspace_users[task.finisher_id].fullname}</a>) : <i className="fas fa-minus pt-1 pb-1 minus-icon"></i>}
                             </div>
                         </div>

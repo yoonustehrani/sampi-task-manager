@@ -2,7 +2,7 @@
     <div>
         <div class="admin-info-container float-left">
             <a href="{{ route("task-manager.users.show", ["user" => auth()->user()->id]) }}" class="float-left mr-2">
-                <img src="{{ asset(auth()->user()->avatar_pic ?: 'images/male-avatar.svg') }}" alt="{{ auth()->user()->name }} profile photo">
+                <img src="{{ asset(auth()->user()->avatar_pic ?: 'images/user-avatar.png') }}" alt="{{ auth()->user()->name }} profile photo">
             </a>
             <div>
                 <p class="admin-email-link">{{ auth()->user()->email }}</p>

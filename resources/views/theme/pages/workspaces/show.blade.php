@@ -46,7 +46,7 @@
                             <td>
                                 <div class="name-col-user-workspace text-right">
                                     <div class="user-info-workspace ml-2">
-                                        <img src="{{ asset($user->avatar_pic ?: 'images/male-avatar.svg') }}" alt="">
+                                        <img src="{{ asset($user->avatar_pic ?: 'images/user-avatar.png') }}" alt="">
                                         <a class="mr-2" href="{{ route('task-manager.users.show', ['user' => $user->id]) }}">{{ $user->fullname }}</a>
                                     </div>
                                     @if ($user->pivot->is_admin)

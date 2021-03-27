@@ -58,7 +58,7 @@ class Task extends Component {
                                         <div key={i} className="user-dropdown-item animated jackInTheBox">
                                             <div className="user-right-flex">
                                                 <div className="user-img-container ml-2">
-                                                    <img src={user.avatar_pic !== null ? APP_PATH + user.avatar_pic : APP_PATH + 'images/male-avatar.svg'} />
+                                                    <img src={user.avatar_pic !== null ? APP_PATH + user.avatar_pic : APP_PATH + 'images/user-avatar.png'} />
                                                 </div>
                                                 <div className="user-info ml-2">
                                                     <p>{ user.fullname }</p>

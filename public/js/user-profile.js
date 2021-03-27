@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -18124,6 +18124,25 @@ core_controller.helpers.each(
 return src;
 
 })));
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/react-activity/lib/Bounce/Bounce.css":
+/*!*******************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--5-1!./node_modules/postcss-loader/src??ref--5-2!./node_modules/react-activity/lib/Bounce/Bounce.css ***!
+  \*******************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "@keyframes bounce-pulse {\n  0% {\n    transform: translateY(0.1875em); }\n  30% {\n    transform: translateY(-0.25em); }\n  50% {\n    transform: translateY(3); } }\n.rai-bounce > div {\n  transform: translateY(0.1875em);\n  border-radius: 100%;\n  display: inline-block;\n  margin-right: 0.1875em;\n  background-color: #727981;\n  width: 0.5em;\n  height: 0.5em;\n  animation-name: bounce-pulse;\n  animation-duration: inherit;\n  animation-timing-function: ease-in-out;\n  animation-iteration-count: infinite; }\n  .rai-bounce > div:last-child {\n    margin-right: 0; }\n", ""]);
+
+// exports
 
 
 /***/ }),
@@ -43426,6 +43445,36 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ ])
 });
 ;
+
+/***/ }),
+
+/***/ "./node_modules/react-activity/lib/Bounce/Bounce.css":
+/*!***********************************************************!*\
+  !*** ./node_modules/react-activity/lib/Bounce/Bounce.css ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../css-loader??ref--5-1!../../../postcss-loader/src??ref--5-2!./Bounce.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/react-activity/lib/Bounce/Bounce.css");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
 
 /***/ }),
 
@@ -76428,8 +76477,8 @@ var MonthlyChart = /*#__PURE__*/function (_Component) {
           //     y: percentage,
           //     t: moment(date).format('jYYYY/jM/jD')
           // }
-        });
-        console.log(targetdata);
+        }); // console.log(targetdata);
+
         var myLineChart = new chart_js__WEBPACK_IMPORTED_MODULE_2___default.a(ctx, {
           type: 'line',
           data: {
@@ -76525,10 +76574,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_activity__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_activity__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var react_activity_lib_Sentry_Sentry_css__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-activity/lib/Sentry/Sentry.css */ "./node_modules/react-activity/lib/Sentry/Sentry.css");
 /* harmony import */ var react_activity_lib_Sentry_Sentry_css__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react_activity_lib_Sentry_Sentry_css__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var react_circular_progressbar__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-circular-progressbar */ "./node_modules/react-circular-progressbar/dist/index.esm.js");
-/* harmony import */ var react_circular_progressbar_dist_styles_css__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-circular-progressbar/dist/styles.css */ "./node_modules/react-circular-progressbar/dist/styles.css");
-/* harmony import */ var react_circular_progressbar_dist_styles_css__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(react_circular_progressbar_dist_styles_css__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _Charts_MonthlyChart__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Charts/MonthlyChart */ "./resources/js/react/components/user-profile/Charts/MonthlyChart.jsx");
+/* harmony import */ var react_activity_lib_Bounce_Bounce_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-activity/lib/Bounce/Bounce.css */ "./node_modules/react-activity/lib/Bounce/Bounce.css");
+/* harmony import */ var react_activity_lib_Bounce_Bounce_css__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(react_activity_lib_Bounce_Bounce_css__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var react_circular_progressbar__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-circular-progressbar */ "./node_modules/react-circular-progressbar/dist/index.esm.js");
+/* harmony import */ var react_circular_progressbar_dist_styles_css__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-circular-progressbar/dist/styles.css */ "./node_modules/react-circular-progressbar/dist/styles.css");
+/* harmony import */ var react_circular_progressbar_dist_styles_css__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(react_circular_progressbar_dist_styles_css__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _Charts_MonthlyChart__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Charts/MonthlyChart */ "./resources/js/react/components/user-profile/Charts/MonthlyChart.jsx");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -76552,6 +76603,7 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -76756,7 +76808,7 @@ var UserProfile = /*#__PURE__*/function (_Component) {
       //     let { data } = res.data;
       // })
 
-      var statisticApis = [task_counter],
+      var statisticApis = [task_counter, workspace_counter, demand_counter],
           statistics = {};
       this.setState({
         isGetting: true
@@ -76771,6 +76823,14 @@ var UserProfile = /*#__PURE__*/function (_Component) {
             switch (i) {
               case 0:
                 catagory = "taskCounter";
+                break;
+
+              case 1:
+                catagory = "workspaceCounter";
+                break;
+
+              case 2:
+                catagory = "demandCounter";
                 break;
 
               default:
@@ -76858,7 +76918,7 @@ var UserProfile = /*#__PURE__*/function (_Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "user-img-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        src: APP_PATH + (TargetUser.avatar_pic ? TargetUser.avatar_pic : 'images/male-avatar.svg'),
+        src: APP_PATH + (TargetUser.avatar_pic ? TargetUser.avatar_pic : 'images/user-avatar.png'),
         alt: ""
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "user-text-info-container"
@@ -77075,7 +77135,7 @@ var UserProfile = /*#__PURE__*/function (_Component) {
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "mr-1 fas ".concat(demand.finished_at === null ? "fa-times" : "fa-check")
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-          src: APP_PATH + "".concat(TargetUser.avatar_pic ? TargetUser.avatar_pic : 'images/male-avatar.svg'),
+          src: APP_PATH + "".concat(TargetUser.avatar_pic ? TargetUser.avatar_pic : 'images/user-avatar.png'),
           alt: ""
         })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-long-arrow-alt-right"
@@ -77084,7 +77144,7 @@ var UserProfile = /*#__PURE__*/function (_Component) {
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", {
           className: "ml-2 small-font rtl"
         }, demand.title.length < 30 ? demand.title : demand.title.substring(0, 27) + " ..."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-          src: APP_PATH + "".concat(demand.from.avatar_pic ? demand.from.avatar_pic : 'images/male-avatar.svg'),
+          src: APP_PATH + "".concat(demand.from.avatar_pic ? demand.from.avatar_pic : 'images/user-avatar.png'),
           alt: ""
         })));
       }) : isGetting ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -77168,14 +77228,14 @@ var UserProfile = /*#__PURE__*/function (_Component) {
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "demand-sender"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-          src: APP_PATH + "".concat(TargetUser.avatar_pic ? TargetUser.avatar_pic : 'images/male-avatar.svg'),
+          src: APP_PATH + "".concat(TargetUser.avatar_pic ? TargetUser.avatar_pic : 'images/user-avatar.png'),
           alt: ""
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", {
           className: "mr-1 small-font rtl"
         }, need.title.length < 30 ? need.title : need.title.substring(0, 27) + " ...")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-long-arrow-alt-left"
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-          src: APP_PATH + "".concat(need.to.avatar_pic ? need.to.avatar_pic : 'images/male-avatar.svg'),
+          src: APP_PATH + "".concat(need.to.avatar_pic ? need.to.avatar_pic : 'images/user-avatar.png'),
           alt: ""
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "ml-2 fas ".concat(need.finished_at === null ? "fa-times" : "fa-check")
@@ -77201,18 +77261,18 @@ var UserProfile = /*#__PURE__*/function (_Component) {
         className: "col-12 col-md-9 wide-chart p-0"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "mt-3 mb-3 pr-0 pl-0 pr-md-3 pl-md-3 pb-2 pb-md-0"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Charts_MonthlyChart__WEBPACK_IMPORTED_MODULE_8__["default"], {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Charts_MonthlyChart__WEBPACK_IMPORTED_MODULE_9__["default"], {
         Data: charts[0].data,
         Title: charts[0].title,
         id: 1
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-6 offset-3 offset-md-0 col-md-3 p-0 p-md-3 mb-2 mb-md-0"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_circular_progressbar__WEBPACK_IMPORTED_MODULE_6__["CircularProgressbar"], {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_circular_progressbar__WEBPACK_IMPORTED_MODULE_7__["CircularProgressbar"], {
         value: finished_tasks_percentage,
         text: "".concat(finished_tasks_percentage, "%"),
         strokeWidth: 4 // background
         ,
-        styles: Object(react_circular_progressbar__WEBPACK_IMPORTED_MODULE_6__["buildStyles"])({
+        styles: Object(react_circular_progressbar__WEBPACK_IMPORTED_MODULE_7__["buildStyles"])({
           strokeLinecap: 'butt',
           pathTransitionDuration: 1,
           trailColor: '#B0CCEF',
@@ -77230,7 +77290,7 @@ var UserProfile = /*#__PURE__*/function (_Component) {
         className: "fas fa-business-time"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, "\u062A\u06A9\u0645\u06CC\u0644 \u0628\u0647 \u0645\u0648\u0642\u0639 \u0645\u0633\u0626\u0648\u0644\u06CC\u062A \u0647\u0627")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-12 pr-0 pl-0 small-section-charts p-md-3 pt-3 pb-3"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Charts_MonthlyChart__WEBPACK_IMPORTED_MODULE_8__["default"], {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Charts_MonthlyChart__WEBPACK_IMPORTED_MODULE_9__["default"], {
         Data: charts[1].data,
         Title: charts[1].title,
         id: 2
@@ -77244,12 +77304,12 @@ var UserProfile = /*#__PURE__*/function (_Component) {
         className: "fas fa-chart-pie"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, "\u0648\u0638\u0627\u06CC\u0641 \u0639\u0642\u0628 \u0627\u0641\u062A\u0627\u062F\u0647")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-6 offset-3 small-section-charts p-md-3 pt-3 pb-3"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_circular_progressbar__WEBPACK_IMPORTED_MODULE_6__["CircularProgressbar"], {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_circular_progressbar__WEBPACK_IMPORTED_MODULE_7__["CircularProgressbar"], {
         value: expired_tasks_percentage,
         text: "".concat(expired_tasks_percentage, "%"),
         strokeWidth: 10 // background
         ,
-        styles: Object(react_circular_progressbar__WEBPACK_IMPORTED_MODULE_6__["buildStyles"])({
+        styles: Object(react_circular_progressbar__WEBPACK_IMPORTED_MODULE_7__["buildStyles"])({
           pathTransitionDuration: 1,
           trailColor: '#DADAD9',
           pathColor: '#0186D0',
@@ -77262,23 +77322,26 @@ var UserProfile = /*#__PURE__*/function (_Component) {
         className: "chart-title-section title-section col-12 p-2"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-tasks"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, "\u0648\u0636\u0639\u06CC\u062A \u062A\u06A9\u0645\u06CC\u0644 \u0646\u06CC\u0627\u0632 \u0647\u0627")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-6 offset-3 small-section-charts p-md-3 pt-3 pb-3"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_circular_progressbar__WEBPACK_IMPORTED_MODULE_6__["CircularProgressbar"], {
-        value: 0,
-        text: "0%" // background
-        // backgroundPadding={3}
-        ,
-        strokeWidth: 10,
-        styles: Object(react_circular_progressbar__WEBPACK_IMPORTED_MODULE_6__["buildStyles"])({
-          pathTransitionDuration: 1,
-          strokeLinecap: 'butt',
-          trailColor: '#E0E0E0',
-          pathColor: '#0175AE',
-          textColor: '#000401' // backgroundColor: '#3F51B5'
-
-        })
-      }))))));
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, "\u0648\u0636\u0639\u06CC\u062A \u06A9\u0627\u0631\u0628\u0631")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-12 p-md-3 pt-3 pb-3 rtl small-section-charts"
+      }, Object.keys(statistics).length >= 3 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "text-right"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-sitemap ml-2"
+      }), "\u062A\u0639\u062F\u0627\u062F \u067E\u0631\u0648\u0698\u0647 \u0647\u0627\u06CC \u062F\u0631\u06AF\u06CC\u0631: ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, statistics.workspaceCounter.all.count)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-briefcase ml-2"
+      }), "\u062A\u0639\u062F\u0627\u062F \u06A9\u0644 \u0645\u0633\u0626\u0648\u0644\u06CC\u062A \u0647\u0627: ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, statistics.taskCounter.finished.count + statistics.taskCounter.unfinished.count)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-check ml-2"
+      }), "\u062A\u0639\u062F\u0627\u062F \u0645\u0633\u0626\u0648\u0644\u06CC\u062A \u0647\u0627\u06CC \u0627\u0646\u062C\u0627\u0645 \u0634\u062F\u0647: ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, statistics.taskCounter.finished.count)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-comment-dots ml-2"
+      }), "\u062A\u0639\u062F\u0627\u062F \u062E\u0648\u0627\u0633\u062A\u0647 \u0647\u0627\u06CC \u062C\u0627\u0631\u06CC: ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, statistics.demandCounter.asked_demands.unfinished.count)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-comment-medical ml-2"
+      }), "\u062A\u0639\u062F\u0627\u062F \u0646\u06CC\u0627\u0632 \u0647\u0627\u06CC \u062C\u0627\u0631\u06CC: ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, statistics.demandCounter.demands.unfinished.count))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "text-right"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_activity__WEBPACK_IMPORTED_MODULE_4__["Bounce"], {
+        size: 20,
+        color: "#000000"
+      })))))));
     }
   }]);
 
@@ -77314,6 +77377,8 @@ var chart_one = target.getAttribute("data-chart-completed");
 var chart_two = target.getAttribute("data-chart-ontime");
 var chart_three = target.getAttribute("data-chart-yearly");
 var task_counter = target.getAttribute("task-counter");
+var workspace_counter = target.getAttribute("workspace-counter");
+var demand_counter = target.getAttribute("demand-counter");
 
 if (target) {
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_user_profile_index__WEBPACK_IMPORTED_MODULE_2__["default"], {
@@ -77323,13 +77388,15 @@ if (target) {
     chart_one: chart_one,
     chart_two: chart_two,
     chart_three: chart_three,
-    task_counter: task_counter
+    task_counter: task_counter,
+    workspace_counter: workspace_counter,
+    demand_counter: demand_counter
   }), target);
 }
 
 /***/ }),
 
-/***/ 1:
+/***/ 0:
 /*!**************************************************!*\
   !*** multi ./resources/js/react/user-profile.js ***!
   \**************************************************/

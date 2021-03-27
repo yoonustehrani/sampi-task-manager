@@ -11,7 +11,7 @@ class Message extends Component {
                 <p className="card-header text-right d-rtl circle-avatar-pic">
                     {user
                         ? <a className="text-dark" href={getUser(user.id)}>
-                            <img src={`${APP_PATH}${user.avatar_pic ? user.avatar_pic : 'images/male-avatar.svg'}`} alt=""/>
+                            <img src={`${APP_PATH}${user.avatar_pic ? user.avatar_pic : 'images/user-avatar.png'}`} alt=""/>
                             <b className="mr-2">{user.fullname}</b>
                         </a>
                         : <i className="fas fa-user-slash"></i>

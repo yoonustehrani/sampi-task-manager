@@ -30,7 +30,7 @@
                         {{ $loop->index + 1 }}
                     </th>
                     <td class="text-right">
-                        <img src="{{ asset($user->avatar_pic ?: 'images/male-avatar.svg') }}" alt="" style="height: 30px; widh: 30px;">
+                        <img src="{{ asset($user->avatar_pic ?: 'images/user-avatar.png') }}" alt="" style="height: 30px; widh: 30px;">
                         {{ $user->fullname }}
                     </td>
                     <td>

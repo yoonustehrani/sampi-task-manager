@@ -45,7 +45,7 @@ class Task extends Component {
                                 <div key={i} className="user-dropdown-item border-sharp animated jackInTheBox">
                                     <div className="user-right-flex">
                                         <div className="user-img-container ml-2">
-                                            <img src={typeof workspace_users !== 'undefined' ? APP_PATH + workspace_users[user.id].avatar_pic : APP_PATH + 'images/male-avatar.svg'} />
+                                            <img src={typeof workspace_users !== 'undefined' ? APP_PATH + workspace_users[user.id].avatar_pic : APP_PATH + 'images/user-avatar.png'} />
                                         </div>
                                         <div className="user-info ml-2">
                                             <p>{ user.fullname }</p>
