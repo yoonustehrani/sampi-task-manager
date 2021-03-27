@@ -20,7 +20,7 @@ input:-webkit-autofill:active  {
             <img src="{{ asset('/images/user-avatar.png') }}" alt=""></img>
         </div> -->
         <div class="avatar-container mb-4">
-            <img src="{{ asset('/images/logo/sampi.png') }}" alt=""></img>
+            <img src="{{ asset('/images/sampi__task-manager.png') }}" alt=""></img>
         </div>
         <form action="{{ route('login') }}" method="post" autocomplete="off">
             @csrf
