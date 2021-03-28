@@ -37,7 +37,8 @@ class TaskController extends BaseController
         } else {
             $user_tasks = $model->{$relationship}();
         }
-        $user_tasks = $user_tasks->whereNull('parent_id')->with('users')->withCount('demands', 'children');
+        $user_tasks = $user_tasks->with('users')->withCount('demands', 'children');
+        // ->whereNull('parent_id')
         // $group = $request->group ?: $this->default_group;
         // $user_tasks = $user_tasks->where('group', '=', $group);
         return $request->limit
@@ -61,6 +62,18 @@ class TaskController extends BaseController
                 $model = $user;
                 $relationship = $this->model_relationship($request->relationship, $model, '_tasks', 'tasks');
                 $model = $model->{$relationship}();
+            } else {
+                switch ($request->relationship) {
+                    case 'finished':
+                        $model = $model->whereNotNull('finished_at');
+                        break;
+                    case 'unfinished':
+                        $model = $model->whereNull('finished_at');
+                        break;
+                    case 'expired':
+                        $model = $model->whereNull('finished_at')->whereNotNull('due_to')->where('due_to', '<', now('Asia/Tehran'));
+                        break;
+                }
             }
         } else {
             $model = $request->user();
@@ -73,7 +86,9 @@ class TaskController extends BaseController
             $model = $model->{$relationship}();
         }
         
-        $model = $model->whereNull('parent_id')->whereHas('workspace')->with(['users','workspace:id,title,avatar_pic'])->withCount('demands', 'children');
+        $model = $model->whereHas('workspace')->with(['users','workspace:id,title,avatar_pic']);
+        // ->whereNull('parent_id')
+        // ->withCount('demands', 'children');
         return $request->limit
             ? $this->decide_ordered($request, $model)->limit((int) $request->limit)->get()
             : $this->decide_ordered($request, $model)->paginate(10);
