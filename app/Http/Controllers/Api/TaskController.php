@@ -38,9 +38,6 @@ class TaskController extends BaseController
             $user_tasks = $model->{$relationship}();
         }
         $user_tasks = $user_tasks->with('users')->withCount('demands', 'children');
-        // ->whereNull('parent_id')
-        // $group = $request->group ?: $this->default_group;
-        // $user_tasks = $user_tasks->where('group', '=', $group);
         return $request->limit
                 ? $this->decide_ordered($request, $user_tasks)->limit((int) $request->limit)->get()
                 : $this->decide_ordered($request, $user_tasks)->latest()->paginate(10);
@@ -85,10 +82,7 @@ class TaskController extends BaseController
             }
             $model = $model->{$relationship}();
         }
-        
         $model = $model->whereHas('workspace')->with(['users','workspace:id,title,avatar_pic']);
-        // ->whereNull('parent_id')
-        // ->withCount('demands', 'children');
         return $request->limit
             ? $this->decide_ordered($request, $model)->limit((int) $request->limit)->get()
             : $this->decide_ordered($request, $model)->paginate(10);
