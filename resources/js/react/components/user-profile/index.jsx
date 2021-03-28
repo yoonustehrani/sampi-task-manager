@@ -354,7 +354,7 @@ export default class UserProfile extends Component {
                                                 </div>
                                                 <i className="fas fa-long-arrow-alt-right"></i>
                                                 <div className="demand-sender">
-                                                    <h6 className="ml-2 small-font rtl">{ demand.title.length < 30 ? demand.title : demand.title.substring(0, 27) + " ..." }</h6>
+                                                    <h6 className="ml-2 small-font rtl">{ demand.title.length < 22 ? demand.title : demand.title.substring(0, 19) + " ..." }</h6>
                                                     <img src={APP_PATH + `${demand.from.avatar_pic ? demand.from.avatar_pic : 'images/user-avatar.png'}`} alt=""/>
                                                 </div>
                                             </div>
@@ -401,7 +401,7 @@ export default class UserProfile extends Component {
                                             <div key={i} className="demand-item hover-bg" title={need.title} onClick={() => redirectTo(getDemand(need.workspace_id, need.id))}>
                                                 <div className="demand-sender">
                                                     <img src={APP_PATH + `${TargetUser.avatar_pic ? TargetUser.avatar_pic : 'images/user-avatar.png'}`} alt="" />
-                                                    <h6 className="mr-1 small-font rtl">{ need.title.length < 30 ? need.title : need.title.substring(0, 27) + " ..." }</h6>
+                                                    <h6 className="mr-1 small-font rtl">{ need.title.length < 22 ? need.title : need.title.substring(0, 19) + " ..." }</h6>
                                                 </div>
                                                 <i className="fas fa-long-arrow-alt-left"></i>
                                                 <div>

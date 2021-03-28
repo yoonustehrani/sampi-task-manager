@@ -5,7 +5,7 @@
 @endsection
 
 @section('page-content')
-    <div class="col-md-10 offset-md-1 col-12">
+    <div class="col-md-10 offset-md-1 col-12 pr-0 pl-0">
         <div class="col-12 float-right mb-3 pr-0 pl-0 pr-md-3 pl-md-3 animated flipInY">
             <img class="float-right" src="{{ asset($workspace->avatar_pic ?: "images/idea.svg") }}" style="height: 50px; widht: 50px;" alt="">
             <h4 class="text-right mt-3">
@@ -24,12 +24,12 @@
             <span><i class="far fa-comments ml-1 animated heartBeat delay-2s"></i><span class="number ml-1">{{ $workspace->demands_left_count }}</span>خواسته جاری</span>
             <span><i class="far fa-check-circle ml-1 animated heartBeat delay-2s"></i><span class="number ml-1">{{ $workspace->demands_count -  $workspace->demands_left_count }}</span>خواسته انجام شده</span>
         </div>
-        <div class="col-12 float-right pr-0 pl-0 pr-md-3 pl-md-3 animated flipInX">
+        <div class="animated flipInX">
             <div class="title-section workspace-title-section col-12">
                 <i class="fas fa-user-secret"></i>
                 <h4 class="">اعضا ({{ count($workspace->users) }}):</h4>      
             </div>    
-            <div class="col-12">
+            <div>
             @component('theme.tools.table', ['class' => 'table-sm'])
                 @component('theme.tools.table-head')
                     <th scope="col">#</th>

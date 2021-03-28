@@ -367,7 +367,7 @@ export default class MixedDemands extends Component {
                             </select>
                         </div>
                     </div>
-                    <table className="col-12 table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right animated bounce mt-4">
+                    <table className="table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right animated bounce mt-4">
                         <thead className="thead-dark">
                             <tr>
                                 <th scope="col">#</th>
@@ -560,7 +560,7 @@ export default class MixedDemands extends Component {
                             </select>
                         </div>
                     </div>
-                    <table className="col-12 table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right animated bounce mt-4">
+                    <table className="table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right animated bounce mt-4">
                         <thead className="thead-dark">
                             <tr>
                                 <th scope="col">#</th>
@@ -680,7 +680,7 @@ export default class MixedDemands extends Component {
                             </select>
                         </div>
                     </div>
-                    <table className="col-12 table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right animated bounce mt-4">
+                    <table className="table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right animated bounce mt-4">
                         <thead className="thead-dark">
                             <tr>
                                 <th scope="col">#</th>

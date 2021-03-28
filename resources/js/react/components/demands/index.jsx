@@ -261,7 +261,7 @@ export default class Demands extends Component {
                         :   null
                     }
                 </nav>
-                <div className="col-12 mt-4 float-right demand-tab-result active" ref={this.tabResultsRef[0]}>
+                <div className="mt-4 demand-tab-result active" ref={this.tabResultsRef[0]}>
                     <div className="filter-box demand-bg-color mb-4 p-2 col-12 animated fadeIn">
                         <div className="filter-option col-12 col-md-6 col-lg-3 mb-3 mb-lg-0 text-center">
                             <span>جستجو در: </span>
@@ -273,7 +273,7 @@ export default class Demands extends Component {
                         </div>
                         <div className="filter-option col-12 col-md-6 col-lg-3 mb-3 mb-lg-0 text-center">
                             <span>مرتب سازی بر اساس:</span>
-                            <select id="mixed_demands_order_by_select" defaultValue="createdw">
+                            <select id="mixed_demands_order_by_select" defaultValue="created_at">
                                 <option container_class="select-option-big" value="created_at" icon_name="fas fa-calendar-plus">تاریخ ایجاد</option>
                                 <option container_class="select-option-big" value="updated_at" icon_name="fas fa-user-edit">تاریخ تغییرات</option>
                                 <option container_class="select-option-big" value="finished_at" icon_name="fas fa-calendar-check">تاریخ اتمام</option>
@@ -290,7 +290,7 @@ export default class Demands extends Component {
                             <button className="btn btn-outline-info" onClick={this.handleMore.bind(this, true)}>مرتب سازی</button>
                         </div>
                     </div>
-                    <table className="col-12 table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right animated bounce">
+                    <table className="table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right animated bounce">
                         <thead className="thead-dark">
                             <tr>
                                 <th scope="col">#</th>
@@ -369,7 +369,7 @@ export default class Demands extends Component {
                             </div>
                     }
                 </div>
-                <div className="col-12 mt-4 float-right demand-tab-result" ref={this.tabResultsRef[1]}>
+                <div className="mt-4 demand-tab-result" ref={this.tabResultsRef[1]}>
                     <div className="workspace-add-task mb-2 col-12 pl-0 pr-0 pr-md-3 pl-md-3">
                         <div className="workspace-title-section title-section" onClick={this.toggleAddBox}>
                             <i className="fas fa-plus" ref={this.addIconRef}></i>
@@ -439,7 +439,7 @@ export default class Demands extends Component {
                         </div>
                         <div className="filter-option col-12 col-md-6 col-lg-3 mb-3 mb-lg-0 text-center">
                             <span>مرتب سازی بر اساس:</span>
-                            <select id="mixed_needs_order_by_select" defaultValue="createdw">
+                            <select id="mixed_needs_order_by_select" defaultValue="created_at">
                                 <option container_class="select-option-big" value="created_at" icon_name="fas fa-calendar-plus">تاریخ ایجاد</option>
                                 <option container_class="select-option-big" value="updated_at" icon_name="fas fa-user-edit">تاریخ تغییرات</option>
                                 <option container_class="select-option-big" value="finished_at" icon_name="fas fa-calendar-check">تاریخ اتمام</option>
@@ -456,7 +456,7 @@ export default class Demands extends Component {
                             <button className="btn btn-outline-info" onClick={this.handleMore.bind(this, true)}>مرتب سازی</button>
                         </div>
                     </div>
-                    <table className="col-12 table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right animated bounce">
+                    <table className="table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right animated bounce">
                         <thead className="thead-dark">
                             <tr>
                                 <th scope="col">#</th>
@@ -534,7 +534,7 @@ export default class Demands extends Component {
                             </div>
                     }
                 </div>
-                <div className={"col-12 mt-4 float-right demand-tab-result pr-0 pl-0 pr-md-3 pl-md-3 " + `${current_tab === "all" ? "active" : ""}`} ref={this.tabResultsRef[2]}>
+                <div className={"mt-4 demand-tab-result pr-0 pl-0 pr-md-3 pl-md-3 " + `${current_tab === "all" ? "active" : ""}`} ref={this.tabResultsRef[2]}>
                     <div className="filter-box demand-bg-color mb-4 p-2 col-12 animated fadeIn">
                         <div className="filter-option col-12 col-md-6 col-lg-3 mb-3 mb-lg-0 text-center">
                             <span>جستجو در: </span>
@@ -546,7 +546,7 @@ export default class Demands extends Component {
                         </div>
                         <div className="filter-option col-12 col-md-6 col-lg-3 mb-3 mb-lg-0 text-center">
                             <span>مرتب سازی بر اساس:</span>
-                            <select id="mixed_all_order_by_select" defaultValue="createdw">
+                            <select id="mixed_all_order_by_select" defaultValue="created_at">
                                 <option container_class="select-option-big" value="created_at" icon_name="fas fa-calendar-plus">تاریخ ایجاد</option>
                                 <option container_class="select-option-big" value="updated_at" icon_name="fas fa-user-edit">تاریخ تغییرات</option>
                                 <option container_class="select-option-big" value="finished_at" icon_name="fas fa-calendar-check">تاریخ اتمام</option>
@@ -563,7 +563,7 @@ export default class Demands extends Component {
                             <button className="btn btn-outline-info" onClick={this.handleMore.bind(this, true)}>مرتب سازی</button>
                         </div>
                     </div>
-                    <table className="col-12 table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right animated bounce mt-4">
+                    <table className="table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right animated bounce mt-4">
                         <thead className="thead-dark">
                             <tr>
                                 <th scope="col">#</th>
