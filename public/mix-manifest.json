@@ -1,4 +1,21 @@
 {
     "/js/app.js": "/js/app.js",
-    "/js/user-profile.js": "/js/user-profile.js"
+    "/js/chart.js": "/js/chart.js",
+    "/js/confirmDelete.js": "/js/confirmDelete.js",
+    "/js/dashboard.js": "/js/dashboard.js",
+    "/js/datepicker.js": "/js/datepicker.js",
+    "/js/demand.js": "/js/demand.js",
+    "/js/demands.js": "/js/demands.js",
+    "/js/mixedDemands.js": "/js/mixedDemands.js",
+    "/js/mixedTasks.js": "/js/mixedTasks.js",
+    "/js/select2.js": "/js/select2.js",
+    "/css/app.css": "/css/app.css",
+    "/css/welcome.css": "/css/welcome.css",
+    "/css/tinytheme.css": "/css/tinytheme.css",
+    "/css/auth.css": "/css/auth.css",
+    "/js/task.js": "/js/task.js",
+    "/js/tinymce/langs/fa.js": "/js/tinymce/langs/fa.js",
+    "/js/tinymce/tinymce.js": "/js/tinymce/tinymce.js",
+    "/js/user-profile.js": "/js/user-profile.js",
+    "/js/workspace.js": "/js/workspace.js"
 }

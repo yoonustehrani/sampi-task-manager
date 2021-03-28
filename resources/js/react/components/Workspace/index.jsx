@@ -230,188 +230,186 @@ export default class Workspace extends Component {
         let { taskRoute, toggle_task_state_api } = this.props
         return (
             <div>
-                <div className="float-right col-12 pr-0 pl-0 pr-md-3 pl-md-3">
-                    <div className="workspace-title-section title-section col-12">
-                        <i className="fas fa-clipboard-list"></i>
-                        <h4 className="">وظایف :</h4>      
-                    </div>
-                    {CAN_VIEW_AS_ADMIN &&
-                        <div className="form-check col-12 text-right float-right">
-                            <input className="form-check-input c-p" type="checkbox" value={viewing_as_admin} id="flexCheckDefault" onChange={this.setViewAsAdmin} />
-                            <label className="form-check-label c-p" htmlFor="flexCheckDefault">
-                                مشاهده به عنوان ادمین
-                            </label>
-                            <div className="add-task-section rtl mt-2 mb-2 animated slideInLeft d-none" ref={this.adminViewRef}>
-                                <div className="input-group col-12 col-md-4 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line-all">
-                                    <div className="input-group-prepend">
-                                        <span className="input-group-text">مخاطب</span>
-                                    </div>
-                                    <select id="select-user-target" className="form-control text-right">
-                                        <option></option>
-                                        <option value="0" img_address={APP_PATH + "images/check-all.svg"}>همه</option>
-                                        { allUsers ? allUsers.map((user, i) => {
-                                            if (user.id !== CurrentUser.id) {
-                                                return (
-                                                    <option key={i} value={user.id} img_address={user.avatar_pic !== null ? APP_PATH + user.avatar_pic : APP_PATH + 'images/male-avatar.svg'}>{user.fullname}</option>
-                                                )                                            
-                                            }
-                                        }) : null }
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    }  
-                    <div className="workspace-add-task mb-2 col-12 pl-0 pr-0 pr-md-3 pl-md-3">
-                        <div className="workspace-title-section title-section" onClick={this.toggleAddBox}>
-                            <i className="fas fa-plus" ref={this.addIconRef}></i>
-                            <h5>افزودن کار</h5>
-                        </div>
-                        <div className="add-task-section d-none col-12 p-3 animated fadeIn" ref={this.addTaskRef}>
-                            <div className="input-group col-12 col-md-6 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3">
+                <div className="workspace-title-section title-section col-12">
+                    <i className="fas fa-clipboard-list"></i>
+                    <h4 className="">وظایف :</h4>      
+                </div>
+                {CAN_VIEW_AS_ADMIN &&
+                    <div className="form-check col-12 text-right float-right">
+                        <input className="form-check-input c-p" type="checkbox" value={viewing_as_admin} id="flexCheckDefault" onChange={this.setViewAsAdmin} />
+                        <label className="form-check-label c-p" htmlFor="flexCheckDefault">
+                            مشاهده به عنوان ادمین
+                        </label>
+                        <div className="add-task-section rtl mt-2 mb-2 animated slideInLeft d-none" ref={this.adminViewRef}>
+                            <div className="input-group col-12 col-md-4 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line-all">
                                 <div className="input-group-prepend">
-                                    <span className="input-group-text">عنوان</span>
+                                    <span className="input-group-text">مخاطب</span>
                                 </div>
-                                <input type="text" id="new-task-title" className="form-control" placeholder="عنوان کار را در این قسمت وارد کنید" />
-                            </div>
-                            <div className="input-group col-12 col-md-6 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3 input-group-single-line-all">
-                                <div className="input-group-prepend">
-                                    <span className="input-group-text">اولویت</span>
-                                </div>
-                                <select id="new-task-priority" defaultValue="1">
-                                    <option value="1" icon_name="fas fa-hourglass-end">ضروری و مهم</option>
-                                    <option value="2" icon_name="fas fa-hourglass-half">ضروری و غیر مهم</option>
-                                    <option value="3" icon_name="fas fa-hourglass-start">غیر ضروری و مهم</option>
-                                    <option value="4" icon_name="fas fa-hourglass">غیر ضروری و غیر مهم</option>
-                                </select>
-                            </div>
-                            <div className="input-group col-12 col-md-6 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3">
-                                <div className="input-group-prepend">
-                                    <span className="input-group-text">دسته بندی</span>
-                                </div>
-                                <input type="text" id="new-task-group" className="form-control" placeholder="این کار در چه گروهی قرار میگیرد؟" />
-                            </div>
-                            <div className="input-group col-12 col-md-6 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3">
-                                <div className="input-group-prepend">
-                                    <span className="input-group-text">موعد تحویل</span>
-                                </div>
-                                <input type="hidden" id="new-task-due-to" name="due_to" readOnly={!due_to_check} disabled={!due_to_check} />
-                                <input type="text" id="task-due-to" className="form-control" readOnly={!due_to_check} disabled={!due_to_check} />
-                                <div className="input-group-text">
-                                <input className="c-p" type="checkbox" onChange={this.toggle_check.bind(this, "due_to_check")} defaultChecked={true} />
-                        </div>
-                            </div>
-                            <div className="input-group col-12 col-md-6 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3 input-group-single-line">
-                                <div className="input-group-prepend">
-                                    <span className="input-group-text">زیر مجموعه</span>
-                                </div>
-                                <select id="parent-task-select">
+                                <select id="select-user-target" className="form-control text-right">
                                     <option></option>
-                                </select>
-                            </div>
-                            <div className="input-group col-12 col-md-6 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3 input-group-single-line">
-                                <div className="input-group-prepend">
-                                    <span className="input-group-text">مسئولین</span>
-                                </div>
-                                <select id="new-task-members" className="form-control text-right" multiple>
-                                    <option></option>
-                                    { workspace ? workspace.users.map((user, i) => {
+                                    <option value="0" img_address={APP_PATH + "images/check-all.svg"}>همه</option>
+                                    { allUsers ? allUsers.map((user, i) => {
                                         if (user.id !== CurrentUser.id) {
                                             return (
-                                                <option key={i} value={user.id} img_address={APP_PATH + (user.avatar_pic ? user.avatar_pic : "images/male-avatar.svg")} is_admin={user.pivot.is_admin}>{user.fullname}</option>
+                                                <option key={i} value={user.id} img_address={user.avatar_pic !== null ? APP_PATH + user.avatar_pic : APP_PATH + 'images/user-avatar.png'}>{user.fullname}</option>
                                             )                                            
                                         }
                                     }) : null }
                                 </select>
                             </div>
-                            <div className="input-group col-12 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3 mb-3">
-                                <div className="tinymc-container">
-                                    <TinymcEditor changeContent={this.onDescriptionChange} value={new_task_description} />
-                                </div>
-                            </div>
-                            <div className="text-center mt-2">
-                                <button type="button" className="btn btn-outline-primary" onClick={this.addTask}>افزودن <i className="fas fa-check"></i></button>
-                            </div>
                         </div>
                     </div>
-                    <div className="result-container col-12 mt-3 active">
-                        <div id="filter-box" className="filter-box mt-2 mb-2 p-3 col-12">
-                            <div className="filter-option col-12 col-md-6 col-lg-3 mb-3 mb-lg-0 text-center">
-                                <span>جستجو در: </span>
-                                <select id="tasks_relation_select" defaultValue="all">
-                                    <option value="all" container_class="small" icon_name="fas fa-tasks">همه</option>
-                                    <option value="finished" container_class="small" icon_name="fas fa-check-square">انجام شده</option>
-                                    <option value="unfinished" container_class="small" icon_name="fas fa-times-circle">انجام نشده</option>
-                                    <option value="expired" container_class="small" icon_name="fas fa-calendar-minus">منقضی</option>
-                                </select>
+                }  
+                <div className="workspace-add-task mb-2 col-12 pl-0 pr-0 pr-md-3 pl-md-3">
+                    <div className="workspace-title-section title-section" onClick={this.toggleAddBox}>
+                        <i className="fas fa-plus" ref={this.addIconRef}></i>
+                        <h5>افزودن کار</h5>
+                    </div>
+                    <div className="add-task-section d-none col-12 p-3 animated fadeIn" ref={this.addTaskRef}>
+                        <div className="input-group col-12 col-md-6 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3">
+                            <div className="input-group-prepend">
+                                <span className="input-group-text">عنوان</span>
                             </div>
-                            <div className="filter-option col-12 col-md-6 col-lg-3 mb-3 mb-lg-0 text-center">
-                                <span>مرتب سازی بر اساس:</span>
-                                <select id="tasks_order_by_select" defaultValue="due_to">
-                                    <option value="due_to" container_class="small" icon_name="fas fa-hourglass-start">تاریخ تحویل</option>
-                                    <option value="created_at" container_class="small" icon_name="fas fa-calendar-plus">تاریخ ایجاد</option>
-                                    <option value="updated_at" container_class="small" icon_name="fas fa-user-edit">تاریخ تغییرات</option>
-                                    <option value="finished_at" container_class="small" icon_name="fas fa-calendar-check">تاریخ اتمام</option>
-                                </select>
-                            </div>
-                            <div className="filter-option col-12 col-md-6 col-lg-3 mb-3 mb-lg-0 text-center">
-                                <span>نحوه مرتب سازی:</span>
-                                <select id="tasks_order_select" defaultValue="desc">
-                                    <option value="asc" container_class="small" icon_name="fas fa-sort-amount-up">صعودی</option>
-                                    <option value="desc" container_class="small" icon_name="fas fa-sort-amount-down">نزولی</option>
-                                </select>
-                            </div>
-                            <div className="text-center">
-                                <button className="btn btn-outline-info" onClick={this.handleMore.bind(this, "tasks", true)}>مرتب سازی</button>
-                            </div>
+                            <input type="text" id="new-task-title" className="form-control" placeholder="عنوان کار را در این قسمت وارد کنید" />
                         </div>
-                        <div className="col-12 float-right pr-0 pl-0 pr-md-3 pl-md-3">
-                            <table className="table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right">
-                                <thead className="thead-dark">
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">عنوان</th>
-                                        <th scope="col">دسته بندی</th>
-                                        <th scope="col">اولویت</th>
-                                        <th scope="col">انجام دهندگان</th>
-                                        <th scope="col">موعد تحویل</th>
-                                        <th scope="col">وضعیت اتمام</th>
-                                        <th scope="col">تاریخ اتمام</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    { tasks.data.length > 0 
-                                    ? tasks.data.map((task, i) => {
+                        <div className="input-group col-12 col-md-6 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3 input-group-single-line-all">
+                            <div className="input-group-prepend">
+                                <span className="input-group-text">اولویت</span>
+                            </div>
+                            <select id="new-task-priority" defaultValue="1">
+                                <option value="1" icon_name="fas fa-hourglass-end">ضروری و مهم</option>
+                                <option value="2" icon_name="fas fa-hourglass-half">ضروری و غیر مهم</option>
+                                <option value="3" icon_name="fas fa-hourglass-start">غیر ضروری و مهم</option>
+                                <option value="4" icon_name="fas fa-hourglass">غیر ضروری و غیر مهم</option>
+                            </select>
+                        </div>
+                        <div className="input-group col-12 col-md-6 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3">
+                            <div className="input-group-prepend">
+                                <span className="input-group-text">دسته بندی</span>
+                            </div>
+                            <input type="text" id="new-task-group" className="form-control" placeholder="این کار در چه گروهی قرار میگیرد؟" />
+                        </div>
+                        <div className="input-group col-12 col-md-6 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3">
+                            <div className="input-group-prepend">
+                                <span className="input-group-text">موعد تحویل</span>
+                            </div>
+                            <input type="hidden" id="new-task-due-to" name="due_to" readOnly={!due_to_check} disabled={!due_to_check} />
+                            <input type="text" id="task-due-to" className="form-control" readOnly={!due_to_check} disabled={!due_to_check} />
+                            <div className="input-group-text">
+                            <input className="c-p" type="checkbox" onChange={this.toggle_check.bind(this, "due_to_check")} defaultChecked={true} />
+                    </div>
+                        </div>
+                        <div className="input-group col-12 col-md-6 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3 input-group-single-line">
+                            <div className="input-group-prepend">
+                                <span className="input-group-text">زیر مجموعه</span>
+                            </div>
+                            <select id="parent-task-select">
+                                <option></option>
+                            </select>
+                        </div>
+                        <div className="input-group col-12 col-md-6 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3 input-group-single-line">
+                            <div className="input-group-prepend">
+                                <span className="input-group-text">مسئولین</span>
+                            </div>
+                            <select id="new-task-members" className="form-control text-right" multiple>
+                                <option></option>
+                                { workspace ? workspace.users.map((user, i) => {
+                                    if (user.id !== CurrentUser.id) {
                                         return (
-                                            <Task key={i} index={i}                                            
-                                            workspace_users={workspace_users}
-                                            onClick={() => redirectTo(taskRoute.replace("taskId", task.id))} 
-                                            toggle_task_state_api = { toggle_task_state_api }
-                                            {...task}/>
-                                        )
-                                    }) 
-                                    : null
+                                            <option key={i} value={user.id} img_address={APP_PATH + (user.avatar_pic ? user.avatar_pic : "images/user-avatar.png")} is_admin={user.pivot.is_admin}>{user.fullname}</option>
+                                        )                                            
                                     }
-                                </tbody>
-                            </table> 
-                            {
-                                tasks.data.length > 0 && !isGetting && tasks.hasMore && (
-                                    <div className="text-center">
-                                        <button className="btn btn-outline-dark text-center" onClick={this.handleMore.bind(this, 'tasks', false)}>بیشتر</button>
-                                    </div>
-                                )
-                            }
-                            {
-                                tasks.data.length <= 0 && !isGetting &&
-                                    <p className="text-center text-secondary">موردی برای نمایش وجود ندارد</p>
-                            }
-                            {
-                                isGetting && (
-                                    <div className="text-center">
-                                        <Squares color="#000000" size={24} />
-                                    </div>
-                                )
-                            }
+                                }) : null }
+                            </select>
                         </div>
+                        <div className="input-group col-12 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3 mb-3">
+                            <div className="tinymc-container">
+                                <TinymcEditor changeContent={this.onDescriptionChange} value={new_task_description} />
+                            </div>
+                        </div>
+                        <div className="text-center mt-2">
+                            <button type="button" className="btn btn-outline-primary" onClick={this.addTask}>افزودن <i className="fas fa-check"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div className="result-container mt-3 active">
+                    <div id="filter-box" className="filter-box mt-2 mb-2 p-3 col-12">
+                        <div className="filter-option col-12 col-md-6 col-lg-3 mb-3 mb-lg-0 text-center">
+                            <span>جستجو در: </span>
+                            <select id="tasks_relation_select" defaultValue="all">
+                                <option value="all" container_class="small" icon_name="fas fa-tasks">همه</option>
+                                <option value="finished" container_class="small" icon_name="fas fa-check-square">انجام شده</option>
+                                <option value="unfinished" container_class="small" icon_name="fas fa-times-circle">انجام نشده</option>
+                                <option value="expired" container_class="small" icon_name="fas fa-calendar-minus">منقضی</option>
+                            </select>
+                        </div>
+                        <div className="filter-option col-12 col-md-6 col-lg-3 mb-3 mb-lg-0 text-center">
+                            <span>مرتب سازی بر اساس:</span>
+                            <select id="tasks_order_by_select" defaultValue="due_to">
+                                <option value="due_to" container_class="small" icon_name="fas fa-hourglass-start">تاریخ تحویل</option>
+                                <option value="created_at" container_class="small" icon_name="fas fa-calendar-plus">تاریخ ایجاد</option>
+                                <option value="updated_at" container_class="small" icon_name="fas fa-user-edit">تاریخ تغییرات</option>
+                                <option value="finished_at" container_class="small" icon_name="fas fa-calendar-check">تاریخ اتمام</option>
+                            </select>
+                        </div>
+                        <div className="filter-option col-12 col-md-6 col-lg-3 mb-3 mb-lg-0 text-center">
+                            <span>نحوه مرتب سازی:</span>
+                            <select id="tasks_order_select" defaultValue="desc">
+                                <option value="asc" container_class="small" icon_name="fas fa-sort-amount-up">صعودی</option>
+                                <option value="desc" container_class="small" icon_name="fas fa-sort-amount-down">نزولی</option>
+                            </select>
+                        </div>
+                        <div className="text-center">
+                            <button className="btn btn-outline-info" onClick={this.handleMore.bind(this, "tasks", true)}>مرتب سازی</button>
+                        </div>
+                    </div>
+                    <div className="col-12 float-right pr-0 pl-0 pr-md-3 pl-md-3">
+                        <table className="table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right">
+                            <thead className="thead-dark">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">عنوان</th>
+                                    <th scope="col">دسته بندی</th>
+                                    <th scope="col">اولویت</th>
+                                    <th scope="col">انجام دهندگان</th>
+                                    <th scope="col">موعد تحویل</th>
+                                    <th scope="col">وضعیت اتمام</th>
+                                    <th scope="col">تاریخ اتمام</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                { tasks.data.length > 0 
+                                ? tasks.data.map((task, i) => {
+                                    return (
+                                        <Task key={i} index={i}                                            
+                                        workspace_users={workspace_users}
+                                        onClick={() => redirectTo(taskRoute.replace("taskId", task.id))} 
+                                        toggle_task_state_api = { toggle_task_state_api }
+                                        {...task}/>
+                                    )
+                                }) 
+                                : null
+                                }
+                            </tbody>
+                        </table> 
+                        {
+                            tasks.data.length > 0 && !isGetting && tasks.hasMore && (
+                                <div className="text-center">
+                                    <button className="btn btn-outline-dark text-center" onClick={this.handleMore.bind(this, 'tasks', false)}>بیشتر</button>
+                                </div>
+                            )
+                        }
+                        {
+                            tasks.data.length <= 0 && !isGetting &&
+                                <p className="text-center text-secondary">موردی برای نمایش وجود ندارد</p>
+                        }
+                        {
+                            isGetting && (
+                                <div className="text-center">
+                                    <Squares color="#000000" size={24} />
+                                </div>
+                            )
+                        }
                     </div>
                 </div>
             </div>

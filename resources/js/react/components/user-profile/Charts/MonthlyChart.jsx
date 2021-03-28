@@ -20,7 +20,7 @@ class MonthlyChart extends Component {
                 //     t: moment(date).format('jYYYY/jM/jD')
                 // }
             })
-            console.log(targetdata);
+            // console.log(targetdata);
             var myLineChart = new Chart(ctx, {
                 type: 'line',
                 data: {

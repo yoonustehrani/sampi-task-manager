@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import Axios from 'axios'
 import { getDemand, getTask, getUser, getWorkspace, redirectTo } from '../../../helpers'
 import moment from 'moment-jalaali'
-import { Sentry } from 'react-activity'
+import { Sentry, Bounce } from 'react-activity'
 import 'react-activity/lib/Sentry/Sentry.css'
+import 'react-activity/lib/Bounce/Bounce.css'
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import MonthlyChart from './Charts/MonthlyChart'
@@ -149,18 +150,26 @@ export default class UserProfile extends Component {
         //     let { data } = res.data;
             
         // })
-        let statisticApis = [task_counter], statistics = {}
+        let statisticApis = [task_counter, workspace_counter, demand_counter], statistics = {}
         this.setState({
             isGetting: true
         })
         statisticApis.map((url, i) => {
-            Axios.get(url).then(res => {
+            Axios.get(`${url}&user_id=${TargetUser.id}`).then(res => {
                 let { data } = res
                 this.setState(preState => {
                     let catagory
                     switch (i) {
                         case 0:
                             catagory = "taskCounter"
+                            break;
+
+                        case 1:
+                            catagory = "workspaceCounter"
+                            break;
+
+                        case 2:
+                            catagory = "demandCounter"
                             break;
                     
                         default:
@@ -219,7 +228,7 @@ export default class UserProfile extends Component {
                     <div className="user-card pt-4 pb-2">
                         <div className="user-info-section text-center">
                             <div className="user-img-container">
-                                <img src={APP_PATH + (TargetUser.avatar_pic ? TargetUser.avatar_pic : 'images/male-avatar.svg')} alt=""/>
+                                <img src={APP_PATH + (TargetUser.avatar_pic ? TargetUser.avatar_pic : 'images/user-avatar.png')} alt=""/>
                             </div>
                             <div className="user-text-info-container">
                                 <h5 className="d-block mt-3">{TargetUser.fullname}</h5>
@@ -341,12 +350,12 @@ export default class UserProfile extends Component {
                                             <div key={i} className="demand-item hover-bg" title={demand.title} onClick={() => redirectTo(getDemand(demand.workspace_id, demand.id))}>
                                                 <div>
                                                     <i className={`mr-1 fas ${demand.finished_at === null ? "fa-times" : "fa-check"}`}></i>
-                                                    <img src={APP_PATH + `${TargetUser.avatar_pic ? TargetUser.avatar_pic : 'images/male-avatar.svg'}`} alt="" />
+                                                    <img src={APP_PATH + `${TargetUser.avatar_pic ? TargetUser.avatar_pic : 'images/user-avatar.png'}`} alt="" />
                                                 </div>
                                                 <i className="fas fa-long-arrow-alt-right"></i>
                                                 <div className="demand-sender">
-                                                    <h6 className="ml-2 small-font rtl">{ demand.title.length < 30 ? demand.title : demand.title.substring(0, 27) + " ..." }</h6>
-                                                    <img src={APP_PATH + `${demand.from.avatar_pic ? demand.from.avatar_pic : 'images/male-avatar.svg'}`} alt=""/>
+                                                    <h6 className="ml-2 small-font rtl">{ demand.title.length < 22 ? demand.title : demand.title.substring(0, 19) + " ..." }</h6>
+                                                    <img src={APP_PATH + `${demand.from.avatar_pic ? demand.from.avatar_pic : 'images/user-avatar.png'}`} alt=""/>
                                                 </div>
                                             </div>
                                         ))
@@ -391,12 +400,12 @@ export default class UserProfile extends Component {
                                         ? mixed_needs.map((need, i) => (
                                             <div key={i} className="demand-item hover-bg" title={need.title} onClick={() => redirectTo(getDemand(need.workspace_id, need.id))}>
                                                 <div className="demand-sender">
-                                                    <img src={APP_PATH + `${TargetUser.avatar_pic ? TargetUser.avatar_pic : 'images/male-avatar.svg'}`} alt="" />
-                                                    <h6 className="mr-1 small-font rtl">{ need.title.length < 30 ? need.title : need.title.substring(0, 27) + " ..." }</h6>
+                                                    <img src={APP_PATH + `${TargetUser.avatar_pic ? TargetUser.avatar_pic : 'images/user-avatar.png'}`} alt="" />
+                                                    <h6 className="mr-1 small-font rtl">{ need.title.length < 22 ? need.title : need.title.substring(0, 19) + " ..." }</h6>
                                                 </div>
                                                 <i className="fas fa-long-arrow-alt-left"></i>
                                                 <div>
-                                                    <img src={APP_PATH + `${need.to.avatar_pic ? need.to.avatar_pic : 'images/male-avatar.svg'}`} alt=""/>
+                                                    <img src={APP_PATH + `${need.to.avatar_pic ? need.to.avatar_pic : 'images/user-avatar.png'}`} alt=""/>
                                                     <i className={`ml-2 fas ${need.finished_at === null ? "fa-times" : "fa-check"}`}></i>
                                                 </div>
                                             </div>
@@ -476,10 +485,10 @@ export default class UserProfile extends Component {
                         <div className="text-center bg-light col-12 col-md-6 mt-3 mt-md-0">
                             <div className="chart-title-section title-section col-12 p-2">
                                 <i className="fas fa-tasks"></i>
-                                <h5>وضعیت تکمیل نیاز ها</h5>
+                                <h5>وضعیت کاربر</h5>
                             </div>
-                            <div className="col-6 offset-3 small-section-charts p-md-3 pt-3 pb-3">
-                                <CircularProgressbar 
+                            <div className="col-12 p-md-3 pt-3 pb-3 rtl small-section-charts">
+                                {/* <CircularProgressbar 
                                     value={0} 
                                     text={`0%`}
                                     // background
@@ -493,7 +502,17 @@ export default class UserProfile extends Component {
                                         textColor: '#000401',
                                         // backgroundColor: '#3F51B5'
                                     })}
-                                />
+                                /> */}
+                                {Object.keys(statistics).length >= 3
+                                    ? <div className="text-right">
+                                        <h5><i className="fas fa-sitemap ml-2"></i>تعداد پروژه های درگیر: <span>{statistics.workspaceCounter.all.count}</span></h5>
+                                        <h5><i className="fas fa-briefcase ml-2"></i>تعداد کل مسئولیت ها: <span>{statistics.taskCounter.finished.count + statistics.taskCounter.unfinished.count}</span></h5>
+                                        <h5><i className="fas fa-check ml-2"></i>تعداد مسئولیت های انجام شده: <span>{statistics.taskCounter.finished.count}</span></h5>
+                                        <h5><i className="fas fa-comment-dots ml-2"></i>تعداد خواسته های جاری: <span>{statistics.demandCounter.asked_demands.unfinished.count}</span></h5>
+                                        <h5><i className="fas fa-comment-medical ml-2"></i>تعداد نیاز های جاری: <span>{statistics.demandCounter.demands.unfinished.count}</span></h5>
+                                    </div>
+                                    : <div className="text-right"><Bounce size={20} color="#000000" /></div>
+                                }
                             </div>
                         </div>
                         {/* <div className="bg-light col-12 col-md-6 mt-3 mt-md-0">

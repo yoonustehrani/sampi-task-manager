@@ -49,7 +49,7 @@
                                     <div class="user-dropdown-item animated jackInTheBox">
                                         <div class="user-right-flex">
                                             <div class="user-img-container ml-2">
-                                                <img src="{{ asset($user->avatar_pic ?: 'images/male-avatar.svg') }}" />
+                                                <img src="{{ asset($user->avatar_pic ?: 'images/user-avatar.png') }}" />
                                             </div>
                                             <div class="user-info ml-2">
                                                 <p>{{ $user->fullname }}</p>

@@ -304,7 +304,7 @@ export default class MixedDemands extends Component {
                                     { allUsers ? allUsers.map((user, i) => {
                                         if (user.id !== CurrentUser.id) {
                                             return (
-                                                <option key={i} value={user.id} img_address={user.avatar_pic !== null ? APP_PATH + user.avatar_pic : APP_PATH + 'images/male-avatar.svg'}>{user.fullname}</option>
+                                                <option key={i} value={user.id} img_address={user.avatar_pic !== null ? APP_PATH + user.avatar_pic : APP_PATH + 'images/user-avatar.png'}>{user.fullname}</option>
                                             )                                            
                                         }
                                     }) : null }
@@ -367,7 +367,7 @@ export default class MixedDemands extends Component {
                             </select>
                         </div>
                     </div>
-                    <table className="col-12 table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right animated bounce mt-4">
+                    <table className="table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right animated bounce mt-4">
                         <thead className="thead-dark">
                             <tr>
                                 <th scope="col">#</th>
@@ -399,7 +399,7 @@ export default class MixedDemands extends Component {
                                                         <div className="user-dropdown-item animated jackInTheBox">
                                                             <div className="user-right-flex">
                                                                 <div className="user-img-container ml-2">
-                                                                    <img src={from.avatar_pic !== null ? APP_PATH + from.avatar_pic : APP_PATH + 'images/male-avatar.svg'} />
+                                                                    <img src={from.avatar_pic !== null ? APP_PATH + from.avatar_pic : APP_PATH + 'images/user-avatar.png'} />
                                                                 </div>
                                                                 <div className="user-info ml-2">
                                                                     <p>{ from.fullname }</p>
@@ -505,7 +505,7 @@ export default class MixedDemands extends Component {
                                     { selected_workspace ? Object.values(workspaces_users[parseInt(selected_workspace)]).map((user, i) => {
                                         if (user.id !== logged_in_user_id) {
                                             return (
-                                                <option key={i} value={user.id} img_address={user.avatar_pic !== null ? APP_PATH + user.avatar_pic : APP_PATH + 'images/male-avatar.svg'} is_admin={user.is_admin}>{user.fullname}</option>
+                                                <option key={i} value={user.id} img_address={user.avatar_pic !== null ? APP_PATH + user.avatar_pic : APP_PATH + 'images/user-avatar.png'} is_admin={user.is_admin}>{user.fullname}</option>
                                             )                                            
                                         }
                                     }) : null }
@@ -560,7 +560,7 @@ export default class MixedDemands extends Component {
                             </select>
                         </div>
                     </div>
-                    <table className="col-12 table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right animated bounce mt-4">
+                    <table className="table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right animated bounce mt-4">
                         <thead className="thead-dark">
                             <tr>
                                 <th scope="col">#</th>
@@ -592,7 +592,7 @@ export default class MixedDemands extends Component {
                                                         <div className="user-dropdown-item animated jackInTheBox">
                                                             <div className="user-right-flex">
                                                                 <div className="user-img-container ml-2">
-                                                                    <img src={to.avatar_pic !== null ? APP_PATH + to.avatar_pic : APP_PATH + 'images/male-avatar.svg'} />
+                                                                    <img src={to.avatar_pic !== null ? APP_PATH + to.avatar_pic : APP_PATH + 'images/user-avatar.png'} />
                                                                 </div>
                                                                 <div className="user-info ml-2">
                                                                     <p>{ to.fullname }</p>
@@ -680,7 +680,7 @@ export default class MixedDemands extends Component {
                             </select>
                         </div>
                     </div>
-                    <table className="col-12 table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right animated bounce mt-4">
+                    <table className="table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right animated bounce mt-4">
                         <thead className="thead-dark">
                             <tr>
                                 <th scope="col">#</th>
@@ -713,7 +713,7 @@ export default class MixedDemands extends Component {
                                                         <div className="user-dropdown-item animated jackInTheBox">
                                                             <div className="user-right-flex">
                                                                 <div className="user-img-container ml-2">
-                                                                    <img src={from.avatar_pic !== null ? APP_PATH + from.avatar_pic : APP_PATH + 'images/male-avatar.svg'} />
+                                                                    <img src={from.avatar_pic !== null ? APP_PATH + from.avatar_pic : APP_PATH + 'images/user-avatar.png'} />
                                                                 </div>
                                                                 <div className="user-info ml-2">
                                                                     <p>{ from.fullname }</p>
@@ -740,7 +740,7 @@ export default class MixedDemands extends Component {
                                                         <div className="user-dropdown-item animated jackInTheBox">
                                                             <div className="user-right-flex">
                                                                 <div className="user-img-container ml-2">
-                                                                    <img src={to.avatar_pic !== null ? APP_PATH + to.avatar_pic : APP_PATH + 'images/male-avatar.svg'} />
+                                                                    <img src={to.avatar_pic !== null ? APP_PATH + to.avatar_pic : APP_PATH + 'images/user-avatar.png'} />
                                                                 </div>
                                                                 <div className="user-info ml-2">
                                                                     <p>{ to.fullname }</p>

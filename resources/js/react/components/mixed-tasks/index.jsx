@@ -147,6 +147,7 @@ export default class MixedTasks extends Component {
             parent_id: related_task,
             users: users,
             due_to: !due_to_check ? null : Math.trunc(task_due_to),
+            description: new_task_description
         }).then(res => {
             let { data } = res
             let usersObj = {}
@@ -312,7 +313,7 @@ export default class MixedTasks extends Component {
                                     { allUsers ? allUsers.map((user, i) => {
                                         if (user.id !== CurrentUser.id) {
                                             return (
-                                                <option key={i} value={user.id} img_address={user !== null && user.avatar_pic !== null ? APP_PATH + user.avatar_pic : APP_PATH + 'images/male-avatar.svg'}>{user.fullname}</option>
+                                                <option key={i} value={user.id} img_address={user !== null && user.avatar_pic !== null ? APP_PATH + user.avatar_pic : APP_PATH + 'images/user-avatar.png'}>{user.fullname}</option>
                                             )                                            
                                         }
                                     }) : null }
@@ -332,7 +333,7 @@ export default class MixedTasks extends Component {
                                 <div className="input-group-prepend">
                                     <span className="input-group-text">عنوان</span>
                                 </div>
-                                <input type="text" id="new-task-title" className="form-control" placeholder="عنوان نیاز را در این قسمت وارد کنید" />
+                                <input type="text" id="new-task-title" className="form-control" placeholder="عنوان مسئولیت را در این قسمت وارد کنید" />
                             </div>
                             <div className="input-group col-12 col-md-6 pl-0 pr-0 pr-md-3 pl-md-3 mt-3 mt-md-0 float-right input-group-single-line-all">
                                 <div className="input-group-prepend">
@@ -390,7 +391,7 @@ export default class MixedTasks extends Component {
                                     { workspaces_users && selected_workspace ? Object.values(workspaces_users[parseInt(selected_workspace)]).map((user, i) => {
                                         if (user.id !== logged_in_user_id) {
                                             return (
-                                                <option key={i} value={user.id} img_address={APP_PATH + (user !== null ? user.avatar_pic : "iamges/male-avatar.svg") } is_admin={user.is_admin}>{user.fullname}</option>
+                                                <option key={i} value={user.id} img_address={APP_PATH + (user && user.avatar_pic ? user.avatar_pic : "images/user-avatar.png") } is_admin={user.is_admin}>{user.fullname}</option>
                                             )                                            
                                         }
                                     }) : null }
@@ -444,7 +445,7 @@ export default class MixedTasks extends Component {
                             </select>
                         </div>
                     </div>
-                    <table className="col-12 table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right animated bounce mt-4">
+                    <table className="table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right animated bounce mt-4">
                         <thead className="thead-dark">
                             <tr>
                                 <th scope="col">#</th>
@@ -480,7 +481,7 @@ export default class MixedTasks extends Component {
                                                 <div key={i} className="user-dropdown-item animated jackInTheBox">
                                                     <div className="user-right-flex">
                                                         <div className="user-img-container ml-2">
-                                                            <img src={user !== null && user.avatar_pic !== null ? APP_PATH + user.avatar_pic : APP_PATH + 'images/male-avatar.svg'} />
+                                                            <img src={user !== null && user.avatar_pic !== null ? APP_PATH + user.avatar_pic : APP_PATH + 'images/user-avatar.png'} />
                                                         </div>
                                                         <div className="user-info ml-2">
                                                             <p>{ user.fullname }</p>

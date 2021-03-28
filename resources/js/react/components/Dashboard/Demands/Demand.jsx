@@ -22,7 +22,7 @@ export default class Demand extends Component {
                                 <div className="user-dropdown-item animated jackInTheBox">
                                     <div className="user-right-flex">
                                         <div className="user-img-container ml-2">
-                                            <img src={targetUser.avatar_pic !== null ? APP_PATH + targetUser.avatar_pic : APP_PATH + 'images/male-avatar.svg'} />
+                                            <img src={targetUser.avatar_pic !== null ? APP_PATH + targetUser.avatar_pic : APP_PATH + 'images/user-avatar.png'} />
                                         </div>
                                         <div className="user-info ml-2">
                                             <p>{ targetUser.fullname }</p>

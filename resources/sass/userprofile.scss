@@ -141,12 +141,14 @@ div.user-card {
 }
 
 .need-bg-color {
-    background: linear-gradient(#E0EAFC, #CFDEF3);
+    // background: linear-gradient(#E0EAFC, #CFDEF3);
+    background: linear-gradient(#C9D6FF, #E2E2E2);
 }
 
 .task-bg-color {
     // background: linear-gradient(#D3CCE3, #E9E4F0);
-    background-color: #D7DDE8 !important;
+    // background-color: #D7DDE8 !important;
+    background: linear-gradient(#C9D6FF, #E2E2E2);
 }
 
 div.statistics-section {
@@ -238,7 +240,7 @@ a.user-profile-tab-link.active {
 }
 .small-font {
     @media (max-width: 576px) {
-        font-size: 12px;
+        font-size: 10px;
     } 
 }
 
