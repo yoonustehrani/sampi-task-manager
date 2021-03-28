@@ -37,7 +37,7 @@ class TaskController extends BaseController
         } else {
             $user_tasks = $model->{$relationship}();
         }
-        $user_tasks = $user_tasks->with('users')->withCount('demands', 'children');
+        $user_tasks = $user_tasks->with('users');
         return $request->limit
                 ? $this->decide_ordered($request, $user_tasks)->limit((int) $request->limit)->get()
                 : $this->decide_ordered($request, $user_tasks)->latest()->paginate(10);
