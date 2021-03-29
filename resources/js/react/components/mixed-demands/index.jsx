@@ -282,6 +282,9 @@ export default class MixedDemands extends Component {
         $("#select-user-target").on("select2:select", () => {
             setTargetUser()
         }) 
+        $("#select-user-target").on("select2:unselect", () => {
+            setTargetUser()
+        })
     }
 
     render() {

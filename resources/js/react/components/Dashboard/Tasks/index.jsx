@@ -65,6 +65,7 @@ class Tasks extends Component {
                             <th scope="col">عنوان</th>
                             <th scope="col">پروژه</th>
                             <th scope="col">دسته بندی</th>
+                            <th scope="col">مشاهده پدر</th>
                             <th scope="col">انجام دهندگان</th>
                             <th scope="col">اولویت</th>
                             <th scope="col">موعد تحویل</th>

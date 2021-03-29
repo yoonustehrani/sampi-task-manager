@@ -289,6 +289,9 @@ export default class MixedTasks extends Component {
         $("#select-user-target").on("select2:select", () => {
             setTargetUser()
         })   
+        $("#select-user-target").on("select2:unselect", () => {
+            setTargetUser()
+        })
     }
 
     render() {
@@ -452,6 +455,7 @@ export default class MixedTasks extends Component {
                                 <th scope="col">عنوان</th>
                                 <th scope="col">پروژه</th>
                                 <th scope="col">دسته بندی</th>
+                                <th scope="col">مشاهده پدر</th>
                                 <th scope="col">انجام دهندگان</th>
                                 <th scope="col">اولویت</th>
                                 <th scope="col">موعد تحویل</th>
@@ -461,7 +465,7 @@ export default class MixedTasks extends Component {
                         </thead>
                         <tbody>
                         {tasks && tasks.data.length > 0 && tasks.data.map((task, i) => {
-                            let { title, priority_id, due_to, finished_at, id, users, workspace, group, workspace_id } = task
+                            let { title, priority_id, due_to, finished_at, id, users, workspace, group, workspace_id, parent_id } = task
                             return (
                                 <tr key={i} className="animated fadeIn" onClick={() => redirectTo(getTask(id))}>
                                     <th scope="row">{i + 1}</th>
@@ -471,6 +475,7 @@ export default class MixedTasks extends Component {
                                         <a href={getWorkspace(workspace_id)}>{workspace.title}</a>
                                     </td>
                                     <td>{group}</td>
+                                    <td>{parent_id ? <a href={getTask(parent_id)}><i className="fas fa-eye fa-2x"></i></a> : <i className="fas fa-eye-slash fa-2x"></i>}</td>
                                     <td>
                                         <div className="employees-container horizontal-centerlize">
                                             {users.length === 0 && <i className="fas fa-user-slash"></i>}

@@ -1,6 +1,6 @@
 import { bind } from 'lodash';
 import React, { Component } from 'react';
-import { getUser, setPriority, sweetError, sweetSuccess } from '../../../helpers';
+import { getUser, setPriority, sweetError, sweetSuccess, getTask } from '../../../helpers';
 
 class Task extends Component {
     constructor(props) {
@@ -28,12 +28,13 @@ class Task extends Component {
     }
 
     render() {
-        let { index, title, group, finished_at, priority_id, due_to, workspace, workspace_id, users, onClick, workspace_users, id } = this.props;
+        let { index, title, group, finished_at, priority_id, due_to, workspace, workspace_id, users, onClick, workspace_users, id, parent_id } = this.props;
         return (
             <tr onClick={onClick} className="animated fadeIn">
                 <th scope="row">{ index + 1 }</th>
                 <td>{title}</td>
                 <td>{group}</td>
+                <td>{parent_id ? <a href={getTask(parent_id)}><i className="fas fa-eye fa-2x"></i></a> : <i className="fas fa-eye-slash fa-2x"></i>}</td>
                 <td>{setPriority(priority_id)}</td>
                 <td>
                     <div className="employees-container horizontal-centerlize">

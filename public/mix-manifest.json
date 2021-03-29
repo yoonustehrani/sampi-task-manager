@@ -1,3 +1,8 @@
 {
-    "/css/welcome.css": "/css/welcome.css"
+    "/js/dashboard.js": "/js/dashboard.js",
+    "/js/demand.js": "/js/demand.js",
+    "/js/mixedDemands.js": "/js/mixedDemands.js",
+    "/css/app.css": "/css/app.css",
+    "/js/mixedTasks.js": "/js/mixedTasks.js",
+    "/js/workspace.js": "/js/workspace.js"
 }

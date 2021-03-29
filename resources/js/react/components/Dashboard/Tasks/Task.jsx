@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { setPriority, redirectTo, sweetError, sweetSuccess, getUser } from '../../../../helpers'
+import { setPriority, redirectTo, sweetError, sweetSuccess, getUser, getTask } from '../../../../helpers'
+import { simpleSearch } from '../../../../select2';
 
 class Task extends Component {
     constructor(props) {
@@ -27,7 +28,7 @@ class Task extends Component {
     }
 
     render() {
-        let { index, title, group, finished_at, priority_id, due_to, workspace, workspace_id, workspace_route, workspaces_users, users, id } = this.props;
+        let { index, title, group, finished_at, priority_id, due_to, workspace, workspace_id, workspace_route, workspaces_users, users, id, parent_id } = this.props;
         return (
             <tr className="animated fadeIn" onClick={this.props.onClick}>
                 <th scope="row">{ index + 1 }</th>
@@ -37,6 +38,7 @@ class Task extends Component {
                     <a href={workspace_route.replace('workspaceId', workspace_id)}>{workspace.title}</a>
                 </td>
                 <td>{group}</td>
+                <td>{parent_id ? <a href={getTask(parent_id)}><i className="fas fa-eye fa-2x"></i></a> : <i className="fas fa-eye-slash fa-2x"></i>}</td>
                 <td>
                     <div className="employees-container horizontal-centerlize">
                         {

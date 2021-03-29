@@ -5,7 +5,7 @@ import moment from 'moment'
 moment.locale('fa')
 import { Squares } from 'react-activity'
 import 'react-activity/dist/react-activity.css'
-import { setPriority, redirectTo, sweetError, sweetSuccess } from '../../../helpers'
+import { setPriority, redirectTo, sweetError, sweetSuccessm } from '../../../helpers'
 import { simpleSearch, renderWithImg } from '../../../select2'
 import Task from './Task'
 
@@ -370,6 +370,8 @@ export default class Workspace extends Component {
                                     <th scope="col">#</th>
                                     <th scope="col">عنوان</th>
                                     <th scope="col">دسته بندی</th>
+                                    <th scope="col">مشاهده پدر</th>
+                                    {/* <th scope="col"><i className="fas fa-project-diagram"></i></th> */}
                                     <th scope="col">اولویت</th>
                                     <th scope="col">انجام دهندگان</th>
                                     <th scope="col">موعد تحویل</th>
