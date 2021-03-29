@@ -55,8 +55,7 @@ class Demand extends Model
                 $unread_messages = $unread_messages->where('user_id', $this->to_id);
             }
             $unread_messages->update(['read_at' => now()]);
-            return true;
         }
-        return false;
+        return true;
     }
 }
