@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('head')
-    <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset(mix('css/app.css')) }}">
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
     <title>@yield('title')| {{ config('app.name') }}</title>
     <style>

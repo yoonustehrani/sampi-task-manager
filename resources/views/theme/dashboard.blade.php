@@ -22,5 +22,5 @@
 @endsection
 
 @push('scripts')
-    <script src="{{ mix('/js/dashboard.js') }}"></script>
+    <script src="{{ asset(mix('/js/dashboard.js')) }}"></script>
 @endpush

@@ -20,7 +20,7 @@
     <script>
         var simple_search_url = "{{ route('api.task-manager.tasks.search.simple', ['api_token' => auth()->user()->api_token]) }}"
     </script>
-    <script src="{{ mix('js/datepicker.js') }}"></script>
-    <script src="{{ mix("/js/task.js") }}"></script>
-    <script src="{{ mix('js/select2.js') }}"></script>
+    <script src="{{ asset(mix('js/datepicker.js')) }}"></script>
+    <script src="{{ asset(mix("/js/task.js")) }}"></script>
+    <script src="{{ asset(mix('js/select2.js')) }}"></script>
 @endpush
