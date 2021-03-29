@@ -226,9 +226,10 @@ class DemandController extends BaseController
     {
         $this->authorize('view', $demand);
         $user = $request->user();
-        if ($demand->read_unread_messages($user->id)) {
-            return $demand->messages()->with('user')->orderBy('created_at', 'desc')->paginate(10);
+        if (! $request->page || $request->page == '1' || $request->page == 1) {
+            $demand->read_unread_messages($user->id);
         }
+        return $demand->messages()->with('user')->orderBy('created_at', 'desc')->paginate(10);
         return response()->json([
             'okay' => false
         ], 500);
