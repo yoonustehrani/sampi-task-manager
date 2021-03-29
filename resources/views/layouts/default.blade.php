@@ -19,7 +19,7 @@
         const CurrentUser = {!! json_encode(auth()->user()->only(['id', 'fullname', 'avatar_pic'])) !!};
         @endauth
     </script>
-    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ mix('js/app.js') }}"></script>
     @include('partials.error')
     @include('partials.flash')
     @stack('scripts')

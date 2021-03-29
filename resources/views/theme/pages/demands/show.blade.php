@@ -168,6 +168,6 @@
 @endsection
 
 @push('scripts')
-    <script src="{{ asset('js/confirmDelete.js') }}"></script>
-    <script src="{{ asset('js/demand.js') }}"></script>
+    <script src="{{ mix('js/confirmDelete.js') }}"></script>
+    <script src="{{ mix('js/demand.js') }}"></script>
 @endpush

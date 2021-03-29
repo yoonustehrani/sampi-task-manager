@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('head')
-<link rel="stylesheet" href="{{ asset('css/auth.css') }}">
+<link rel="stylesheet" href="{{ mix('css/auth.css') }}">
 <style>
 input:-webkit-autofill,
 input:-webkit-autofill:hover, 
