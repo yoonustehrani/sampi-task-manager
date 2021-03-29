@@ -38,7 +38,7 @@ class Task extends Component {
                     <a href={workspace_route.replace('workspaceId', workspace_id)}>{workspace.title}</a>
                 </td>
                 <td>{group}</td>
-                <td>{parent_id ? <a href={getTask(parent_id)}><i className="fas fa-eye fa-2x"></i></a> : <i className="fas fa-eye-slash fa-2x"></i>}</td>
+                <td>{parent_id && <a className="btn btn-sm btn-warning" href={getTask(parent_id)}><i className="fas fa-eye mt-1"></i></a>}</td>
                 <td>
                     <div className="employees-container horizontal-centerlize">
                         {

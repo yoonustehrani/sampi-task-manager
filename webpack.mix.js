@@ -45,6 +45,8 @@ mix.sass(res.sass + 'app.scss', pub.css)
     .js(res.js + "datepicker.js", pub.js)
     .js(res.js + 'tinymce/langs/fa.js', pub.js + 'tinymce/langs')
     .js(res.js + "chart.js", pub.js)
-    .js(res.js + "confirmDelete.js", pub.js)
-    .version()
-// mix.version(['public/images/amir.jpg'])
+    .js(res.js + "confirmDelete.js", pub.js);
+
+if (mix.inProduction()) {
+    mix.version()
+}

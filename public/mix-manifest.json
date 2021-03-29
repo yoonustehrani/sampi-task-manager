@@ -2,14 +2,14 @@
     "/js/app.js": "/js/app.js?id=0aaacbc0e5e9dd973869",
     "/js/chart.js": "/js/chart.js?id=9277f5911df5be5b8b2c",
     "/js/confirmDelete.js": "/js/confirmDelete.js?id=28a58b6fa88fe6e636ad",
-    "/js/dashboard.js": "/js/dashboard.js?id=1f36e9fd6923211e7553",
+    "/js/dashboard.js": "/js/dashboard.js?id=348ebdacb5877febeb3c",
     "/js/datepicker.js": "/js/datepicker.js?id=81b1b8de6090b12d4c8a",
     "/js/demand.js": "/js/demand.js?id=8e3daa5d1204457fc88f",
     "/js/demands.js": "/js/demands.js?id=79b2b47fb80dc937b049",
     "/js/mixedDemands.js": "/js/mixedDemands.js?id=06dd5c536d29e0cca11d",
-    "/js/mixedTasks.js": "/js/mixedTasks.js?id=71e85a2da2c8a900871d",
+    "/js/mixedTasks.js": "/js/mixedTasks.js?id=2614e23278c2edde61af",
     "/js/select2.js": "/js/select2.js?id=eaec364f90599df7934c",
-    "/css/app.css": "/css/app.css?id=425574bc7ae77875df85",
+    "/css/app.css": "/css/app.css?id=82632cb6604940824b79",
     "/css/welcome.css": "/css/welcome.css?id=7b2b9bf943783f91b2b1",
     "/css/tinytheme.css": "/css/tinytheme.css?id=57b60a9eb34885dd7203",
     "/css/auth.css": "/css/auth.css?id=75b9a4dad3d494d448eb",
@@ -17,5 +17,5 @@
     "/js/tinymce/langs/fa.js": "/js/tinymce/langs/fa.js?id=204f9013b919966376be",
     "/js/tinymce/tinymce.js": "/js/tinymce/tinymce.js?id=6eedf8c2a649af07dfe8",
     "/js/user-profile.js": "/js/user-profile.js?id=d276561ada17294b277a",
-    "/js/workspace.js": "/js/workspace.js?id=8d51d76178e23a8d0a4d"
+    "/js/workspace.js": "/js/workspace.js?id=a5bbe9cc7bafd8c7d80d"
 }
