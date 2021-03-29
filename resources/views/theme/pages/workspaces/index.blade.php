@@ -108,5 +108,9 @@
 @endsection
 
 @push('scripts')
+    @if (config('app.env') == 'local')
+    <script src="{{ asset('js/confirmDelete.js') }}"></script> 
+    @else
     <script src="{{ asset(mix('js/confirmDelete.js')) }}"></script>
+    @endif
 @endpush

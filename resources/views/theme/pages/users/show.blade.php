@@ -23,7 +23,14 @@
     <script>
         const TargetUser = {!! json_encode($user->only(['id', 'fullname', 'avatar_pic', 'name', 'roles'])) !!};
     </script>
+    @if (config('app.env') == 'local')
+    <script src="{{ asset("js/user-profile.js") }}"></script>
+    <script src="{{ asset('js/select2.js') }}"></script>
+    <script src="{{ asset('js/chart.js') }}"></script>
+    @else
     <script src="{{ asset(mix("js/user-profile.js")) }}"></script>
     <script src="{{ asset(mix('js/select2.js')) }}"></script>
-    <script src="{{ asset(mix('js/chart.js')) }}"></script>
+    <script src="{{ asset(mix('js/chart.js')) }}"></script> 
+    @endif
+    
 @endpush

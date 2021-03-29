@@ -168,6 +168,11 @@
 @endsection
 
 @push('scripts')
+    @if (config('app.env') == 'local')
+    <script src="{{ asset('js/confirmDelete.js') }}"></script>
+    <script src="{{ asset('js/demand.js') }}"></script>
+    @else
     <script src="{{ asset(mix('js/confirmDelete.js')) }}"></script>
-    <script src="{{ asset(mix('js/demand.js')) }}"></script>
+    <script src="{{ asset(mix('js/demand.js')) }}"></script>   
+    @endif
 @endpush

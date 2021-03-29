@@ -28,6 +28,11 @@
         var VIEW_AS_ADMIN       = {{ request()->view_as_admin == 'true' ? 'true' : 'false' }};
         var simple_search_url = "{{ route('api.task-manager.tasks.search.simple', ['api_token' => auth()->user()->api_token]) }}"
     </script>
+    @if (config('app.env') == 'local')
+    <script src="{{ asset('js/demands.js') }}"></script>
+    <script src="{{ asset('js/select2.js') }}"></script>
+    @else
     <script src="{{ asset(mix('js/demands.js')) }}"></script>
     <script src="{{ asset(mix('js/select2.js')) }}"></script>
+    @endif
 @endpush

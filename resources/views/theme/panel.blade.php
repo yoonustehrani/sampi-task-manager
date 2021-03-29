@@ -1,8 +1,11 @@
 @extends('layouts.default')
 
 @section('head')
+    @if (config('app.env') == 'local')
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    @else
     <link rel="stylesheet" href="{{ asset(mix('css/app.css')) }}">
-    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
+    @endif
     <title>@yield('title')| {{ config('app.name') }}</title>
     <style>
         table {

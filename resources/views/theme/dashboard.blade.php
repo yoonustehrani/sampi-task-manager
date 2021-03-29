@@ -22,5 +22,9 @@
 @endsection
 
 @push('scripts')
+    @if (config('app.env') == 'local')
+    <script src="{{ asset('/js/dashboard.js') }}"></script>
+    @else
     <script src="{{ asset(mix('/js/dashboard.js')) }}"></script>
+    @endif
 @endpush
