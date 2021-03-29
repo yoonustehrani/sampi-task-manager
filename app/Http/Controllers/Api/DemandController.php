@@ -222,9 +222,15 @@ class DemandController extends BaseController
         event(new DemandMessageCreated($demand, $message));
         return $message;
     }
-    public function messages(Demand $demand)
+    public function messages(Request $request, Demand $demand)
     {
         $this->authorize('view', $demand);
-        return $demand->messages()->with('user')->orderBy('created_at', 'desc')->paginate(10);
+        $user = $request->user();
+        if ($demand->read_unread_messages($user->id)) {
+            return $demand->messages()->with('user')->orderBy('created_at', 'desc')->paginate(10);
+        }
+        return response()->json([
+            'okay' => false
+        ], 500);
     }
 }

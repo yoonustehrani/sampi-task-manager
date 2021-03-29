@@ -41,4 +41,22 @@ class Demand extends Model
     {
         return $this->hasMany(DemandMessage::class);
     }
+    public function unread_messages()
+    {
+        return $this->messages()->whereNull('read_at');
+    }
+    public function read_unread_messages($user_id)
+    {
+        $unread_messages = $this->unread_messages();
+        if ($this->from_id == $user_id || $this->to_id == $user_id) {
+            if ($user_id == $this->to_id) {
+                $unread_messages = $unread_messages->where('user_id', $this->from_id);
+            } else {
+                $unread_messages = $unread_messages->where('user_id', $this->to_id);
+            }
+            $unread_messages->update(['read_at' => now()]);
+            return true;
+        }
+        return false;
+    }
 }
