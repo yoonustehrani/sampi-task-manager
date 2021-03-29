@@ -58,5 +58,5 @@ if ($(window).width() > 576) {
 
 $("#refresh-btn").on("click", function() {
     $(this.childNodes.item(1)).addClass("rotate-animation")
-    window.location.href.endsWith("erasecache=true") ? window.location.reload(true) : window.location.href += "&erasecache=true"
+    window.location.reload(true)
 })
