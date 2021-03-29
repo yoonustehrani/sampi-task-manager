@@ -63,5 +63,5 @@
 @endsection
 
 @push('scripts')
-    <script src="{{ asset('js/confirmDelete.js') }}"></script>
+    <script src="{{ mix('js/confirmDelete.js') }}"></script>
 @endpush

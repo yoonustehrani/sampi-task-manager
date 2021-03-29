@@ -97,7 +97,7 @@
             }, 1000);
         })
     </script>
-    <script src="{{ asset('js/datepicker.js') }}"></script>
-    <script src="{{ asset('js/workspace.js') }}"></script>
-    <script src="{{ asset('js/select2.js') }}"></script>
+    <script src="{{ mix('js/datepicker.js') }}"></script>
+    <script src="{{ mix('js/workspace.js') }}"></script>
+    <script src="{{ mix('js/select2.js') }}"></script>
 @endpush

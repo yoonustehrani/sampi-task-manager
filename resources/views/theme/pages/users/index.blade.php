@@ -92,5 +92,5 @@
             window.location.href = USER_ROUTE.replace('userId', userId)
         }
     </script>
-    <script src="{{ asset('js/confirmDelete.js') }}"></script>
+    <script src="{{ mix('js/confirmDelete.js') }}"></script>
 @endpush
