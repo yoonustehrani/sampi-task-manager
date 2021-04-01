@@ -97,7 +97,13 @@
             }, 1000);
         })
     </script>
+    @if (config('app.env') == 'local')
+    <script src="{{ asset('js/datepicker.js') }}"></script>
+    <script src="{{ asset('js/workspace.js') }}"></script>
+    <script src="{{ asset('js/select2.js') }}"></script>
+    @else
     <script src="{{ asset(mix('js/datepicker.js')) }}"></script>
     <script src="{{ asset(mix('js/workspace.js')) }}"></script>
-    <script src="{{ asset(mix('js/select2.js')) }}"></script>
+    <script src="{{ asset(mix('js/select2.js')) }}"></script>   
+    @endif
 @endpush

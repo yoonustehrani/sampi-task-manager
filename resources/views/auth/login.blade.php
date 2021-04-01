@@ -1,7 +1,11 @@
 @extends('layouts.default')
 
 @section('head')
+@if (config('app.env') == 'local')
+<link rel="stylesheet" href="{{ asset('css/auth.css') }}">
+@else
 <link rel="stylesheet" href="{{ asset(mix('css/auth.css')) }}">
+@endif
 <style>
 input:-webkit-autofill,
 input:-webkit-autofill:hover, 
