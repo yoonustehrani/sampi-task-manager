@@ -5,7 +5,7 @@ import moment from 'moment'
 moment.locale('fa')
 import { Squares } from 'react-activity'
 import 'react-activity/dist/react-activity.css'
-import { setPriority, redirectTo, sweetError, sweetSuccessm } from '../../../helpers'
+import { setPriority, redirectTo, sweetError, sweetSuccess } from '../../../helpers'
 import { simpleSearch, renderWithImg } from '../../../select2'
 import Task from './Task'
 
@@ -144,6 +144,7 @@ export default class Workspace extends Component {
             sweetSuccess("مسئولیت شما به لیست افزوده شد")
             this.emptyFields()
         }).catch(err => {
+            console.log(err)
             sweetError(err)
         })
     }
