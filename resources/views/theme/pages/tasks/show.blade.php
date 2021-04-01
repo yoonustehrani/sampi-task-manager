@@ -23,7 +23,7 @@
     @if (config('app.env') == 'local')
     <script src="{{ asset('js/datepicker.js') }}"></script>
     <script src="{{ asset("/js/task.js") }}"></script>
-    <script src="{{ asset('js/select2.js'))}}"></script> 
+    <script src="{{ asset('js/select2.js') }}"></script> 
     @else
     <script src="{{ asset(mix('js/datepicker.js')) }}"></script>
     <script src="{{ asset(mix("/js/task.js")) }}"></script>
