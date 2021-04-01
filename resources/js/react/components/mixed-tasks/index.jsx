@@ -455,7 +455,7 @@ export default class MixedTasks extends Component {
                                 <th scope="col">عنوان</th>
                                 <th scope="col">پروژه</th>
                                 <th scope="col">دسته بندی</th>
-                                <th scope="col">مشاهده پدر</th>
+                                <th scope="col"><i className="fas fa-project-diagram"></i></th>
                                 <th scope="col">انجام دهندگان</th>
                                 <th scope="col">اولویت</th>
                                 <th scope="col">موعد تحویل</th>
@@ -475,7 +475,7 @@ export default class MixedTasks extends Component {
                                         <a href={getWorkspace(workspace_id)}>{workspace.title}</a>
                                     </td>
                                     <td>{group}</td>
-                                    <td>{parent_id ? <a href={getTask(parent_id)}><i className="fas fa-eye fa-2x"></i></a> : <i className="fas fa-eye-slash fa-2x"></i>}</td>
+                                    <td>{parent_id && <a className="btn btn-sm btn-warning" href={getTask(parent_id)}><i className="fas fa-eye mt-1"></i></a>}</td>
                                     <td>
                                         <div className="employees-container horizontal-centerlize">
                                             {users.length === 0 && <i className="fas fa-user-slash"></i>}

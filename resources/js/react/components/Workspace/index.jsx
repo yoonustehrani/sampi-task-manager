@@ -370,7 +370,6 @@ export default class Workspace extends Component {
                                     <th scope="col">#</th>
                                     <th scope="col">عنوان</th>
                                     <th scope="col">دسته بندی</th>
-                                    {/* <th scope="col">مشاهده پدر</th> */}
                                     <th scope="col"><i className="fas fa-project-diagram"></i></th>
                                     <th scope="col">اولویت</th>
                                     <th scope="col">انجام دهندگان</th>

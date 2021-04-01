@@ -25,7 +25,7 @@
     <div class="col-12 h-100 float-left main-division">
         <div class="col-md-6 col-12 float-left mb-md-0 mb-3 p-3 left-section">
             <div class="logo-section">
-                <img src="{{ asset('images/logo/sampi.png') }}" alt="">
+                <img src="{{ asset(mix('images/logo/sampi.png')) }}" alt="">
                 <p class="m-0">Sampi Tech Group</p>
             </div>
         </div>
