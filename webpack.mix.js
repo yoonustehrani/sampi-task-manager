@@ -48,5 +48,5 @@ mix.sass(res.sass + 'app.scss', pub.css)
     .js(res.js + "confirmDelete.js", pub.js);
 
 if (mix.inProduction()) {
-    mix.version()
+    mix.version();
 }

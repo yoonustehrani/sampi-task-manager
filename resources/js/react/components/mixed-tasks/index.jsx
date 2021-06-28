@@ -296,7 +296,6 @@ export default class MixedTasks extends Component {
 
     render() {
         let { isGetting, already_added_tasks, workspaces, workspaces_users, selected_workspace, tasks, viewing_as_admin, allUsers, due_to_check, new_task_description } = this.state, { logged_in_user_id } = this.props
-
         return (
             <div>
                 {CAN_VIEW_AS_ADMIN &&

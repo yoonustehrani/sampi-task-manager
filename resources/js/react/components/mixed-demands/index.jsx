@@ -583,7 +583,7 @@ export default class MixedDemands extends Component {
                                 let { title, task, priority, due_to, finished_at, to, id, workspace_id } = need
                                 return (
                                     <tr key={i} className="animated fadeIn" onClick={() => redirectTo(getDemand(workspace_id, id))}>
-                                        <a href={getDemand(workspace_id, id)} className="d-contetns">
+                                        <a href={getDemand(workspace_id, id)} className="d-contents">
                                             <th scope="row">{i + 1}</th>
                                             <td>{ title }</td>
                                             <td className="text-right">
@@ -706,7 +706,7 @@ export default class MixedDemands extends Component {
                                 let { title, task, priority, due_to, finished_at, to, from, id, workspace_id, workspace } = item
                                 return (
                                     <tr key={i} className="animated fadeIn" onClick={() => redirectTo(getDemand(workspace_id, id))}>
-                                        <a href={getDemand(workspace_id, id)} className="d-contetns">
+                                        <a href={getDemand(workspace_id, id)} className="d-contents">
                                             <th scope="row">{i + 1}</th>
                                             <td>{ title }</td>
                                             <td className="text-right">
