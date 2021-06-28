@@ -254,11 +254,11 @@ renderWithImg("#new-task-project-select", "پروژه مربوطه را انتخ
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! I:\projects\task-manager\resources\js\select2.js */"./resources/js/select2.js");
-__webpack_require__(/*! I:\projects\task-manager\resources\sass\app.scss */"./resources/sass/app.scss");
-__webpack_require__(/*! I:\projects\task-manager\resources\sass\welcome.scss */"./resources/sass/welcome.scss");
-__webpack_require__(/*! I:\projects\task-manager\resources\sass\tinytheme.scss */"./resources/sass/tinytheme.scss");
-module.exports = __webpack_require__(/*! I:\projects\task-manager\resources\sass\auth.scss */"./resources/sass/auth.scss");
+__webpack_require__(/*! D:\Projects\task-manager\resources\js\select2.js */"./resources/js/select2.js");
+__webpack_require__(/*! D:\Projects\task-manager\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\Projects\task-manager\resources\sass\welcome.scss */"./resources/sass/welcome.scss");
+__webpack_require__(/*! D:\Projects\task-manager\resources\sass\tinytheme.scss */"./resources/sass/tinytheme.scss");
+module.exports = __webpack_require__(/*! D:\Projects\task-manager\resources\sass\auth.scss */"./resources/sass/auth.scss");
 
 
 /***/ })

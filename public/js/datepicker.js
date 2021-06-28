@@ -7874,7 +7874,7 @@ window.persianDatepicker = __webpack_require__(/*! persian-datepicker/dist/js/pe
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! I:\projects\task-manager\resources\js\datepicker.js */"./resources/js/datepicker.js");
+module.exports = __webpack_require__(/*! D:\Projects\task-manager\resources\js\datepicker.js */"./resources/js/datepicker.js");
 
 
 /***/ })

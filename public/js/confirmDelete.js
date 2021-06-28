@@ -4028,7 +4028,7 @@ var sweetFailDelete = function sweetFailDelete() {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! I:\projects\task-manager\resources\js\confirmDelete.js */"./resources/js/confirmDelete.js");
+module.exports = __webpack_require__(/*! D:\Projects\task-manager\resources\js\confirmDelete.js */"./resources/js/confirmDelete.js");
 
 
 /***/ })

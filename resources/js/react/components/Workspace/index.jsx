@@ -91,7 +91,7 @@ export default class Workspace extends Component {
     emptyFields = () => {
         $("#new-task-title").val("")
         $("#new-task-priority").val("1").change()
-        $("#new-task-members").val("").change()
+        $("#new-task-members").val([]).change()
         $("#parent-task-select").val("").change()
         $("#new-task-group").val("")
         const due_to_input = $("input[name='due_to']")
@@ -144,7 +144,6 @@ export default class Workspace extends Component {
             sweetSuccess("مسئولیت شما به لیست افزوده شد")
             this.emptyFields()
         }).catch(err => {
-            console.log(err)
             sweetError(err)
         })
     }
@@ -387,6 +386,7 @@ export default class Workspace extends Component {
                                         workspace_users={workspace_users}
                                         onClick={() => redirectTo(taskRoute.replace("taskId", task.id))} 
                                         toggle_task_state_api = { toggle_task_state_api }
+                                        task_route={taskRoute.replace("taskId", task.id)}
                                         {...task}/>
                                     )
                                 }) 

@@ -37896,7 +37896,7 @@ Chart.platform.disableCSSInjection = true;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! I:\projects\task-manager\resources\js\chart.js */"./resources/js/chart.js");
+module.exports = __webpack_require__(/*! D:\Projects\task-manager\resources\js\chart.js */"./resources/js/chart.js");
 
 
 /***/ })

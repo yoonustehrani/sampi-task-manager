@@ -12510,6 +12510,17 @@ i.rotate-animation {
   left: 5%;
 }
 
+.d-contents {
+  display: contents !important;
+  text-decoration: none !important;
+  color: #000000;
+}
+
+.d-contents:hover {
+  text-decoration: none !important;
+  color: #000000;
+}
+
 .select2-container {
   box-sizing: border-box;
   display: inline-block;

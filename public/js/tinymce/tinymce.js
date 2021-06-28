@@ -81257,7 +81257,7 @@ __webpack_require__(/*! tinymce/plugins/table */ "./node_modules/tinymce/plugins
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! I:\projects\task-manager\resources\js\tinymce\tinymce.js */"./resources/js/tinymce/tinymce.js");
+module.exports = __webpack_require__(/*! D:\Projects\task-manager\resources\js\tinymce\tinymce.js */"./resources/js/tinymce/tinymce.js");
 
 
 /***/ })

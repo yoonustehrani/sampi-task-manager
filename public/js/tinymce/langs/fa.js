@@ -522,7 +522,7 @@ tinymce.addI18n('fa', {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! I:\projects\task-manager\resources\js\tinymce\langs\fa.js */"./resources/js/tinymce/langs/fa.js");
+module.exports = __webpack_require__(/*! D:\Projects\task-manager\resources\js\tinymce\langs\fa.js */"./resources/js/tinymce/langs/fa.js");
 
 
 /***/ })

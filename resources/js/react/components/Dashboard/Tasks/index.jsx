@@ -85,6 +85,7 @@ class Tasks extends Component {
                                         onClick={() => redirectTo(this.state.route.replace("taskId", task.id))} 
                                         workspaces_users={workspaces_users}  
                                         toggle_task_state_api={toggle_task_state_api}
+                                        task_route={this.state.route.replace("taskId", task.id)}
                                         {...task}
                                     />
                                 )
