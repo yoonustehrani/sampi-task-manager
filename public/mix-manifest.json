@@ -1,8 +1,21 @@
 {
-    "/js/dashboard.js": "/js/dashboard.js",
-    "/js/demands.js": "/js/demands.js",
-    "/js/mixedDemands.js": "/js/mixedDemands.js",
-    "/css/app.css": "/css/app.css",
-    "/js/mixedTasks.js": "/js/mixedTasks.js",
-    "/js/workspace.js": "/js/workspace.js"
+    "/js/app.js": "/js/app.js?id=05a417bcf39af2f7ab08",
+    "/js/chart.js": "/js/chart.js?id=9277f5911df5be5b8b2c",
+    "/js/confirmDelete.js": "/js/confirmDelete.js?id=28a58b6fa88fe6e636ad",
+    "/js/dashboard.js": "/js/dashboard.js?id=dd6218642944e751c0af",
+    "/js/datepicker.js": "/js/datepicker.js?id=81b1b8de6090b12d4c8a",
+    "/js/demand.js": "/js/demand.js?id=8e3daa5d1204457fc88f",
+    "/js/demands.js": "/js/demands.js?id=a8663840248209fbeeeb",
+    "/js/mixedDemands.js": "/js/mixedDemands.js?id=1f90bea08f74ad3d7338",
+    "/js/mixedTasks.js": "/js/mixedTasks.js?id=a19b0cfff014f69ce8ce",
+    "/js/select2.js": "/js/select2.js?id=eaec364f90599df7934c",
+    "/css/app.css": "/css/app.css?id=641f76d2f1d49adc4311",
+    "/css/welcome.css": "/css/welcome.css?id=7b2b9bf943783f91b2b1",
+    "/css/tinytheme.css": "/css/tinytheme.css?id=57b60a9eb34885dd7203",
+    "/css/auth.css": "/css/auth.css?id=b67033204a87371a2acb",
+    "/js/task.js": "/js/task.js?id=12dc476c7f222e5aaf1e",
+    "/js/tinymce/langs/fa.js": "/js/tinymce/langs/fa.js?id=204f9013b919966376be",
+    "/js/tinymce/tinymce.js": "/js/tinymce/tinymce.js?id=6eedf8c2a649af07dfe8",
+    "/js/user-profile.js": "/js/user-profile.js?id=d276561ada17294b277a",
+    "/js/workspace.js": "/js/workspace.js?id=cd490f44359f73d29a67"
 }
