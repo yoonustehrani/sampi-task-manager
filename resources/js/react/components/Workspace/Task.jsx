@@ -16,6 +16,7 @@ class Task extends Component {
     changeTaskState = (taskId, e) => {
         e.stopPropagation()
         e.persist()
+        e.preventDefault()
         let { toggle_task_state_api } = this.props
         axios.put(toggle_task_state_api.replace("taskId", taskId)).then(res => {
             sweetSuccess("وضعیت اتمام با موفقیت تغییر یافت")

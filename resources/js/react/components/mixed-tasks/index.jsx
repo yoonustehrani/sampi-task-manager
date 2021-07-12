@@ -99,6 +99,7 @@ export default class MixedTasks extends Component {
     changeTaskState = (workspaceId, taskId, e) => {
         e.stopPropagation()
         e.persist()
+        e.preventDefault()
         let { toggle_task_state_api } = this.props
         axios.put(toggle_task_state_api.replace("workspaceId", workspaceId).replace("taskId", taskId)).then(res => {
             sweetSuccess("وضعیت اتمام با موفقیت تغییر یافت")

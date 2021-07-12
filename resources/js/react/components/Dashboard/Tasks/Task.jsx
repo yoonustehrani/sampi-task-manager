@@ -16,6 +16,7 @@ class Task extends Component {
     changeTaskState = (workspaceId, taskId, e) => {
         e.stopPropagation()
         e.persist()
+        e.preventDefault()
         let { toggle_task_state_api } = this.props
         axios.put(toggle_task_state_api.replace("workspaceId", workspaceId).replace("taskId", taskId)).then(res => {
             sweetSuccess("وضعیت اتمام با موفقیت تغییر یافت")
@@ -30,7 +31,7 @@ class Task extends Component {
     render() {
         let { index, title, group, finished_at, priority_id, due_to, workspace, workspace_id, workspace_route, workspaces_users, users, id, parent_id, task_route } = this.props;
         return (
-            <tr className="animated fadeIn" onClick={this.props.onClick}>
+            <tr className="animated fadeIn">
                 <a href={task_route} className="d-contents">
                     <th scope="row">{ index + 1 }</th>
                     <td>{title}</td>
