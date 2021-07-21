@@ -4,11 +4,13 @@ namespace App\Listeners;
 
 use App\Broadcasting\TelegramChannel;
 use App\Notifications\TaskFinishedNotification;
+use App\Traits\UserNotifiableChannelsTrait;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
 class SendTaskFinishedNotification
 {
+    use UserNotifiableChannelsTrait;
     /**
      * Create the event listener.
      *
@@ -30,11 +32,9 @@ class SendTaskFinishedNotification
         $users = $event->task->users;
         foreach ($users as $user) {
             if ($user->id != $event->task->finisher_id) {
-                if ($user->telegram_chat_id) {
-                    $user->notifyNow(new TaskFinishedNotification([TelegramChannel::class], $event->task));
-                }
-                if ($user->email) {
-                    // $user->notifyNow(new TaskCreatedNotification(['mail'], $event->task));
+                $channels = $this->user_channels($user);
+                if (count($channels) > 0) {
+                    $user->notifyNow(new TaskFinishedNotification($channels, $event->task));
                 }
             }
         }

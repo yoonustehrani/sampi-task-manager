@@ -1,7 +1,11 @@
 @extends('layouts.default')
 
 @section('head')
+    @if (config('app.env') == 'local')
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    @else
+    <link rel="stylesheet" href="{{ asset(mix('css/app.css')) }}">
+    @endif
     <title>@yield('title')| {{ config('app.name') }}</title>
     <style>
         table {
@@ -27,7 +31,7 @@
                 <button class="btn btn-secondary d-md-none float-right collapser-btn">
                     <i class="fas fa-angle-double-left"></i>
                 </button>
-                <img class="logo-top" src="{{ asset('images/logo/sampi.png') }}" alt="sampi-tech-group">
+                <img class="logo-top" src="{{ asset('images/sampi__task-manager.png') }}" alt="sampi-tech-group">
                 <p class="col-12 m-0 mt-1 p-0 float-right text-center">Task Manager</p>
             </div>
             @include('theme.tools.menu')

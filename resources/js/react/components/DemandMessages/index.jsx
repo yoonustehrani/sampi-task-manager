@@ -98,7 +98,7 @@ class DemandMessages extends Component {
         let {updateDemand} = this.props;
         return (
             <div className="h-100">
-                {demand && demand.to.id == CurrentUser.id && ! demand.finished_at &&
+                {demand && demand.to && demand.to.id == CurrentUser.id && ! demand.finished_at &&
                     <div className="col-12 float-left text-center p-3">
                         <button onClick={this.handleToggleDemand} className="btn btn-sm btn-danger"><i className="far fa-check-circle"></i> اعلام اتمام</button>
                     </div>

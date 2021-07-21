@@ -4,24 +4,34 @@ import moment from 'moment-jalaali'
 moment.locale('fa')
 import TinymcEditor from '../tinymce-editor/index'
 import { formatOptionWithIcon, formatOptionWithImage, formatOption } from '../../../select2'
-import { setPriority, redirectTo, getTask, getDemand, getWorkspace } from '../../../helpers'
+import { setPriority, redirectTo, getTask, getDemand, getWorkspace, sweetError, sweetSuccess, sweetSuccessDelete, sweetConfirm, getUser } from '../../../helpers'
 import { Spinner } from 'react-activity'
 import 'react-activity/dist/react-activity.css'
 
 export default class ShowTask extends Component {
     constructor(props) {
         super(props)
+        this.pdt = null
         this.state = {
             mode: "show",
             task_active_users: [],
-            due_to_check: true
         }
     }
 
     toggle_check = (val) => {
         this.setState(prevState => ({
             [val]: !prevState[val]
-        }))
+        }), () => {
+            if (val === "due_to_check" && this.state.due_to_check === true) {
+                let due_to_input = $("input[name='due_to']")
+                let defate = this.state.task.due_to ? new Date(this.state.task.due_to).valueOf() : new Date().valueOf()
+                this.pdt.setDate(defate)
+                due_to_input.val(defate / 1000)
+                this.setState({
+                    task_due_to: due_to_input.val()
+                })
+            }
+        })
     }
 
     handleDescriptionChange = (content) => {
@@ -38,6 +48,8 @@ export default class ShowTask extends Component {
                 task: data,
                 finished_at_check: data.finished_at !== null ? true : false,
                 first_check_state: data.finished_at !== null ? true : false,
+                due_to_check: data.due_to === null ? false : true,
+                task_description: data.description
             }, () => {
                 this.state.task.users.map((user, i) => {
                     this.setState(prevState => {
@@ -81,7 +93,16 @@ export default class ShowTask extends Component {
                     width: "100%",
                     dir: 'rtl',
                     multiple: true,
-                    templateResult: formatOptionWithImage
+                    templateResult: formatOptionWithImage,
+                    language: {
+                        searching: function () {
+                            return "درحال جستجو ..."
+                        },
+                        noResults: function () {
+                            return "نتیجه ای یافت نشد"
+                        }
+                    },
+                    allowClear: true,
                 })
                 $('.select2-search__field').css('width', '100%')
                 $("#parent-task-select").select2({
@@ -125,11 +146,12 @@ export default class ShowTask extends Component {
                     allowClear: true
                 })
                 const due_to_input = $("input[name='due_to']");
-                var pdt = $('#task-due-to').persianDatepicker({
+                this.pdt = $('#task-due-to').persianDatepicker({
                     format: 'dddd D MMMM YYYY، HH:mm',
                     viewMode: 'day',
                     onSelect: unix => {
                         due_to_input.val(unix / 1000)
+                        this.pdt.setDate(unix)
                         this.setState({
                             task_due_to: due_to_input.val()
                         })
@@ -139,34 +161,56 @@ export default class ShowTask extends Component {
                     // minDate: new persianDate().valueOf(),
                     timePicker: {enabled: true,second:{enabled: false},meridiem:{enabled: true}},
                 })
-                let defate = this.state.task.due_to ? this.state.task.due_to : new Date().valueOf();
-                pdt.setDate(defate)
+                let defate = this.state.task.due_to ? new Date(this.state.task.due_to).valueOf() : new Date().valueOf()
+                this.pdt.setDate(defate)
+                due_to_input.val(defate / 1000)
+                this.setState({
+                    task_due_to: due_to_input.val()
+                })
             } else {
                 let { edit_task_api, toggle_task_state_api } = this.props, { task_description, finished_at_check, first_check_state, task_due_to, due_to_check } = this.state
-                if (finished_at_check !== first_check_state) {
-                    Axios.put(toggle_task_state_api).then(res => {
-                        // we will show the erros with swal
-                    })
-                }
                 Axios.put(edit_task_api, {
                     title: edited_title,
                     group: edited_group,
                     priority: edited_priority,
                     users: edited_users,
                     description: task_description,
-                    due_to: !due_to_check ? null : task_due_to,
-                    parent_id: parent_id
+                    due_to: due_to_check ? Math.trunc(task_due_to) : null,
+                    parent_id: parent_id.length === 0 ? null : parent_id,
+                    finished: finished_at_check
                 }).then(res => {
                     let { data } = res
-                    this.setState({
-                        task: data,
-                        first_check_state: data.finished_at !== null ? true : false,
+                    this.setState(prevState => {
+                        let active_users = []
+                        data.users.map((user, i) => {
+                            active_users.push(user.id)
+                        })
+                        return {
+                            task: data,
+                            first_check_state: data.finished_at !== null ? true : false,
+                            task_active_users: active_users
+                        }
                     })
+                    sweetSuccess("جزئیات مسئولیت با موفقیت بروزرسانی شد")
+                }).catch(err => {
+                    sweetError(err)
                 })
                 $.each($(".select2"), (i, item) => {
                     item.remove()
                 })
             }
+        })
+    }
+
+    deleteItem = () => {
+        let { delete_task_api } = this.props
+        let { workspace } = this.state
+        sweetConfirm("آیا از حذف این مسئولیت اطمینان دارید؟", () => {
+            Axios.delete(delete_task_api).then(res => {
+                sweetSuccessDelete("مسئولیت مورد نظر با موفقیت حذف شد", getWorkspace(workspace.id))
+            }).catch(err => {
+                sweetError(err)
+            })
         })
     }
 
@@ -187,7 +231,7 @@ export default class ShowTask extends Component {
                         </div>
                         <input id="task-group-edit" type="text" className="form-control" defaultValue={task.group}/>
                     </div>
-                    <div className="input-group col-12 col-md-6 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3 input-group-single-line-all">
+                    <div className="input-group col-12 col-md-6 pl-0 pr-0 pr-md-3 pl-md-3 float-right mt-3 input-group-single-line">
                         <div className="input-group-prepend">
                             <span className="input-group-text">زیر مجموعه</span>
                         </div>
@@ -217,7 +261,7 @@ export default class ShowTask extends Component {
                         <select id="edit-task-priority" defaultValue={`${task.priority_id}`}>
                             <option value="1" icon_name="fas fa-hourglass-end">ضروری و مهم</option>
                             <option value="2" icon_name="fas fa-hourglass-half">ضروری و غیر مهم</option>
-                            <option value="3" icon_name="fas fa-hourglass-start">غیر ضروری و غیر مهم</option>
+                            <option value="3" icon_name="fas fa-hourglass-start">غیر ضروری و مهم</option>
                             <option value="4" icon_name="fas fa-hourglass">غیر ضروری و غیر مهم</option>
                         </select>                    
                     </div>
@@ -225,8 +269,8 @@ export default class ShowTask extends Component {
                         <div className="input-group-prepend">
                             <span className="input-group-text">موعد تحویل</span>
                         </div>
-                        <input type="hidden" id="new-task-due-to" name="due_to" readOnly={!due_to_check} />
-                        <input type="text" id="task-due-to" className="form-control" readOnly={!due_to_check} />
+                        <input type="hidden" id="new-task-due-to" name="due_to" readOnly={!due_to_check} disabled={!due_to_check} />
+                        <input type="text" id="task-due-to" className="form-control" readOnly={!due_to_check} disabled={!due_to_check} />
                         <div className="input-group-text">
                             <input className="c-p" type="checkbox" onChange={this.toggle_check.bind(this, "due_to_check")} defaultChecked={task.due_to !== null ? true : false} />
                         </div>
@@ -265,7 +309,7 @@ export default class ShowTask extends Component {
                                 <i className="fas fa-hand-point-left"></i>
                                 <span>عنوان:</span>
                             </div>
-                            <div className="task-detail">
+                            <div className="task-detail text-right">
                                 <span>{ task.title }</span>
                             </div>
                         </div>
@@ -295,7 +339,7 @@ export default class ShowTask extends Component {
                             <div className="task-detail">
                                 {task.parent
                                     ?   <a href={getTask(task.parent.id)}>{ task.parent.title }</a>
-                                    :   <i className="fas fa-minus"></i>
+                                    :   <i className="fas fa-minus pb-1 pt-1 minus-icon"></i>
                                 }
                             </div>
                         </div>
@@ -326,7 +370,7 @@ export default class ShowTask extends Component {
                                     task.users.length > 1 &&
                                         <span>{ task.users.length }<i className="fas fa-users mr-2 pb-1 pt-1"></i></span>
                                 }
-                                <div className="dropdown-users d-none" onClick={(e) => e.stopPropagation()}>
+                                <div className="dropdown-users d-none left-5" onClick={(e) => e.stopPropagation()}>
                                 {
                                     task.users.length >= 1 && task.users.map((user, i) => (
                                         <div key={i} className="user-dropdown-item border-sharp animated flipInX all-sharp">
@@ -336,7 +380,7 @@ export default class ShowTask extends Component {
                                                 </div>
                                                 <div className="user-info ml-md-2 ml-1">
                                                     <p>{user.fullname}</p>
-                                                    <a href={"#user"}>@{user.name}</a>
+                                                    <a href={getUser(user.id)}>@{user.name}</a>
                                                 </div>
                                             </div>
                                             <div className="user-label-container">
@@ -357,7 +401,7 @@ export default class ShowTask extends Component {
                                 <span>اتمام کننده:</span>
                             </div>
                             <div className="task-detail">
-                                {/* <a className="task-finisher"><img src={APP_PATH + 'images/male-avatar.svg'} alt="" />امیررضا منصوریان</a> */}
+                                {/* <a className="task-finisher"><img src={APP_PATH + 'images/user-avatar.png'} alt="" />امیررضا منصوریان</a> */}
                                 {task.finisher_id !== null ? (<a href="" className="task-finisher">{workspace_users[task.finisher_id].fullname}</a>) : <i className="fas fa-minus pt-1 pb-1 minus-icon"></i>}
                             </div>
                         </div>
@@ -385,7 +429,7 @@ export default class ShowTask extends Component {
                                 <span>موعد تحویل:</span>
                             </div>
                             <div className="task-detail">
-                                <span>{moment(task.due_to).format("HH:mm jYYYY/jMM/jDD")} ({moment(task.due_to).fromNow()})</span>
+                                <span>{ task.due_to !== null ? moment(task.due_to).format("HH:mm jYYYY/jMM/jDD") + " (" + moment(task.due_to).fromNow() + ")" : <i className="fas fa-minus pt-1 pb-1 minus-icon"></i> }</span>
                             </div>
                         </div>
                         <div className="mt-3 col-12 col-md-5">
@@ -454,7 +498,10 @@ export default class ShowTask extends Component {
                             <div className="task-detail next-line" dangerouslySetInnerHTML={{__html: task.description}}></div>
                         </div>
                     </div>
-                    <div className="text-center mt-4"><button className="btn btn-outline-info" onClick={this.changeMode.bind(this, "edit")}>ویرایش <i className="fas fa-pen-alt"></i></button></div>
+                    <div className="text-center mt-4">
+                        <button className="btn btn-outline-danger ml-2" onClick={this.deleteItem.bind(this)}>حذف <i className="fas fa-trash-alt"></i></button>
+                        <button className="btn btn-outline-info" onClick={this.changeMode.bind(this, "edit")}>ویرایش <i className="fas fa-pen-alt"></i></button>
+                    </div>
                 </div>
             )
         }
@@ -468,7 +515,7 @@ export default class ShowTask extends Component {
                     <div className="col-12 float-right task-info-container pl-0 pr-0 pr-md-3 pl-md-3">
                         <div className="breadcrumb col-12 float-right animated flipInX">
                             <a className="float-right hoverable" href={getWorkspace(workspace.id)}>
-                                <img src={APP_PATH + workspace.avatar_pic} alt=""/>
+                                <img src={APP_PATH + (workspace.avatar_pic !== null ? workspace.avatar_pic : "images/idea.svg")} alt=""/>
                                 <h6>{ workspace.title }</h6>
                             </a>
                             <i className="fas fa-arrow-circle-left"></i>

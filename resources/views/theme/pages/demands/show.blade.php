@@ -31,24 +31,32 @@
                     </div>
                     <div class="box-body-row col-12">
                         <b>از :</b>
-                        <a href="{{ route('task-manager.users.show', ['user' => $demand->from->id]) }}" class="avatar-pic text-secondary">
-                            <img src="{{ asset($demand->from->avatar_pic ?: 'images/male-avatar.svg') }}" alt="">
-                            @if($demand->from->id == auth()->user()->id) من @else {{ $demand->from->fullname }} @endif
-                        </a>
+                        @if ($demand->from)
+                            <a href="{{ route('task-manager.users.show', ['user' => $demand->from->id]) }}" class="avatar-pic text-secondary">
+                                <img src="{{ asset($demand->from->avatar_pic ?: 'images/user-avatar.png') }}" alt="">
+                                @if($demand->from->id == auth()->user()->id) من @else {{ $demand->from->fullname }} @endif
+                            </a>
+                        @else
+                            <i class="fas fa-user-slash"></i>
+                        @endif
                     </div>
                     <div class="box-body-row col-12">
                         <b>به :</b>
-                        <a href="{{ route('task-manager.users.show', ['user' => $demand->to->id]) }}" class="avatar-pic text-secondary">
-                            <img src="{{ asset($demand->to->avatar_pic ?: 'images/male-avatar.svg') }}" alt="">
-                            @if($demand->to->id == auth()->user()->id) من @else {{ $demand->to->fullname }} @endif
-                        </a>
+                        @if ($demand->to)
+                            <a href="{{ route('task-manager.users.show', ['user' => $demand->to->id]) }}" class="avatar-pic text-secondary">
+                                <img src="{{ asset($demand->to->avatar_pic ?: 'images/user-avatar.png') }}" alt="">
+                                @if($demand->to->id == auth()->user()->id) من @else {{ $demand->to->fullname }} @endif
+                            </a>
+                        @else
+                            <i class="fas fa-user-slash"></i>
+                        @endif
                     </div>
                     @can('delete', $demand)
                     <div class="box-body-row col-12 text-center">
                         <form action="{{ route('task-manager.demands.destroy', ['demand' => $demand->id, 'workspace' => $workspace->id]) }}" method="post">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-outline-danger btn-sm">حذف <i class="fas fa-trash"></i></button>
+                        <button type="submit" class="btn btn-outline-danger btn-sm delete-btn" deleting-item="demand">حذف <i class="fas fa-trash"></i></button>
                         </form>
                     </div>
                     @endcan
@@ -61,7 +69,7 @@
                     </div>
                     <p class="box-header-title">اطلاعات پروژه 
                         <span class="avatar-pic">
-                            <img src="{{ asset($demand->workspace->avatar_pic ?: 'male-avatar.svg') }}" alt="">
+                            <img src="{{ asset($demand->workspace->avatar_pic ?: 'images/idea.svg') }}" alt="">
                         </span>
                     </p>
                 </div>
@@ -135,7 +143,7 @@
                     <div class="box-body-row col-12">
                         <b>پروژه :</b>
                         <a href="{{ route('task-manager.workspaces.show', ['workspace' => $demand->task->workspace->id]) }}" title="{{ $demand->task->workspace->title }}" class="avatar-pic text-secondary">
-                            <img src="{{ asset($demand->task->workspace->avatar_pic ?: 'male-avatar.svg') }}" alt="{{ $demand->task->workspace->title }}">
+                            <img src="{{ asset($demand->task->workspace->avatar_pic ?: 'images/idea.svg') }}" alt="{{ $demand->task->workspace->title }}">
                             {{ $demand->task->workspace->title }}
                         </a>
                     </div>
@@ -160,5 +168,11 @@
 @endsection
 
 @push('scripts')
+    @if (config('app.env') == 'local')
+    <script src="{{ asset('js/confirmDelete.js') }}"></script>
     <script src="{{ asset('js/demand.js') }}"></script>
+    @else
+    <script src="{{ asset(mix('js/confirmDelete.js')) }}"></script>
+    <script src="{{ asset(mix('js/demand.js')) }}"></script>   
+    @endif
 @endpush

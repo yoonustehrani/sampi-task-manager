@@ -21,7 +21,7 @@
             </div>
             <input type="text" value="{{ old('avatar_pic') ?: $workspace->avatar_pic }}" name="avatar_pic" id="avatar_pic" class="form-control text-left d-ltr" placeholder="{{ __('avatar_pic') }}">
         </div>
-        <br><br><br><hr>
+        <br><br><br><hr class="d-none d-md-block border-top">
         <div class="col-lg-4 col-md-6 col-12 input-group float-right mb-3">
             <div class="input-group-append">
                 <span class="input-group-text"><i class="fas fa-user-tag"></i></span>
@@ -56,9 +56,9 @@
                 @endforeach
             </select>
         </div>
-        <br><br><br><hr>
-        <div class="col-lg-6 col-md-6 col-12 input-group float-right mb-3">
-            <textarea required rows="10" name="description" id="description" class="form-control" placeholder="{{ __('description') }}">{{ old('description') ?: $workspace->description }}</textarea>
+        {{-- <br><br><br><hr> --}}
+        <div class="col-12 input-group float-right mt-md-4 pt-md-3 border-top">
+            <textarea required rows="10" name="description" id="description" class="form-control col-lg-6 col-md-6 offset-md-6 col-12" placeholder="{{ __('description') }}">{{ old('description') ?: $workspace->description }}</textarea>
         </div>
         <div class="col-12 p-3 float-right text-right">
             <button type="submit" class="btn btn-outline-primary">{{ __('save') }}</button>

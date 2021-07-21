@@ -5,12 +5,13 @@ namespace App\Listeners;
 use App\Broadcasting\TelegramChannel;
 use App\Notifications\TaskCreatedNotification;
 use App\Notifications\WorkspaceNotification;
+use App\Traits\UserNotifiableChannelsTrait;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
 class SendTaskCreatedNotification
 {
-    
+    use UserNotifiableChannelsTrait;
     /**
      * Create the event listener.
      *
@@ -31,11 +32,9 @@ class SendTaskCreatedNotification
     {
         $users = $event->task->users;
         foreach ($users as $user) {
-            if ($user->telegram_chat_id) {
-                $user->notifyNow(new TaskCreatedNotification([TelegramChannel::class], $event->task));
-            }
-            if ($user->email) {
-                // $user->notifyNow(new TaskCreatedNotification(['mail'], $event->task));
+            $channels = $this->user_channels($user);
+            if (count($channels) > 0) {
+                $user->notifyNow(new TaskCreatedNotification($channels, $event->task));
             }
         }
     }

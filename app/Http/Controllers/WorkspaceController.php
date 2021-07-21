@@ -6,6 +6,7 @@ use App\Events\WorkspaceCreated;
 use App\User;
 use App\Workspace;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class WorkspaceController extends Controller
 {
@@ -45,6 +46,16 @@ class WorkspaceController extends Controller
     public function store(Request $request)
     {
         $this->authorize('create', Workspace::class);
+        $request->validate([
+            'title' => [
+                'required',
+                'min:3',
+                'max:60',
+                Rule::unique('workspaces', 'title')->whereNull('deleted_at')
+            ],
+            'description' => 'required|string',
+            'avatar_pic' => 'nullable|string'
+        ]);  
         $workspace = new Workspace();
         $workspace->title = $request->title;
         $workspace->description = $request->description;
@@ -55,6 +66,7 @@ class WorkspaceController extends Controller
         dispatch(function () use($workspace) {
             event(new WorkspaceCreated($workspace));
         })->afterResponse();
+        flash()->success("پروژه {$workspace->title} با موفقیت ساخته شده");
         return response()->redirectTo(route('task-manager.workspaces.index'));
     }
 
@@ -104,6 +116,16 @@ class WorkspaceController extends Controller
     {
         $workspace = Workspace::findOrFail($workspace);
         $this->authorize('update', $workspace);
+        $request->validate([
+            'title' => [
+                'required',
+                'min:3',
+                'max:60',
+                Rule::unique('workspaces', 'title')->ignore($workspace->id)->whereNull('deleted_at')
+            ],
+            'description' => 'required|string',
+            'avatar_pic' => 'nullable|string'
+        ]); 
         $workspace->title = $request->title;
         $workspace->description = $request->description;
         $workspace->avatar_pic = $request->avatar_pic;
@@ -113,6 +135,7 @@ class WorkspaceController extends Controller
         $admins = $request->input('admins') ? array_merge([auth()->user()->id], $request->input('admins')) : [auth()->user()->id];
         $workspace->admins()->sync($admins);
         $workspace->members()->sync($members);
+        flash()->success("پروژه {$workspace->title} با موفقیت بروزرسانی شده");
         return redirect()->to(route('task-manager.workspaces.edit', ['workspace' => $workspace->id]));
     }
 

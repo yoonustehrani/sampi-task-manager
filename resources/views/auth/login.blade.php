@@ -1,7 +1,11 @@
 @extends('layouts.default')
 
 @section('head')
+@if (config('app.env') == 'local')
 <link rel="stylesheet" href="{{ asset('css/auth.css') }}">
+@else
+<link rel="stylesheet" href="{{ asset(mix('css/auth.css')) }}">
+@endif
 <style>
 input:-webkit-autofill,
 input:-webkit-autofill:hover, 
@@ -17,10 +21,10 @@ input:-webkit-autofill:active  {
 <div class="container col-12">
     <div class="card col-lg-4 col-md-6 col-sm-10 offset-lg-4 offset-md-3 offset-sm-1 text-center">
         <!-- <div class="avatar-container mb-4">
-            <img src="{{ asset('/images/male-avatar.svg') }}" alt=""></img>
+            <img src="{{ asset('/images/user-avatar.png') }}" alt=""></img>
         </div> -->
         <div class="avatar-container mb-4">
-            <img src="{{ asset('/images/logo/sampi.png') }}" alt=""></img>
+            <img src="{{ asset('/images/sampi__task-manager.png') }}" alt=""></img>
         </div>
         <form action="{{ route('login') }}" method="post" autocomplete="off">
             @csrf

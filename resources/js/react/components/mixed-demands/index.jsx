@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import { getTask, getDemand, getUser, getWorkspace, sweetError, setPriority, redirectTo } from '../../../helpers'
+import { getTask, getDemand, getUser, getWorkspace, sweetError, sweetSuccess, setPriority, redirectTo } from '../../../helpers'
 import { renderWithImg } from '../../../select2'
 import { Digital, Spinner } from 'react-activity'
 import 'react-activity/lib/Digital/Digital.css'
@@ -29,7 +29,8 @@ export default class MixedDemands extends Component {
             new_demand_description: "",
             already_added_needs: {},
             api_target: 'mixed',
-            viewing_as_admin: false
+            viewing_as_admin: false,
+            target_user_id: null
         }
     }
 
@@ -64,9 +65,11 @@ export default class MixedDemands extends Component {
                     break;
             }
             return ({
-                current_tab: activeTab
+                current_tab: activeTab,
+                api_target: "mixed"
             })
         }, () => {
+            $(`#${activeTab}-search-input`).val("")
             this.setState({[activeTab]: {data: [], nextPage: 1, hasMore: true}}, () => this.getData())
         })
     }
@@ -105,9 +108,11 @@ export default class MixedDemands extends Component {
         })
     }
 
-    handleMore = (filtering) => {
-        let { current_tab } = this.state
-        filtering ? this.setState({[current_tab]: {data: [], nextPage: 1, hasMore: true}, already_added_needs: {}}, () => this.getData(true)) : this.getData()
+    handleMore = (filtering, e) => {
+        if (e.type === "click" || e.keyCode === 13) {
+            let { current_tab } = this.state
+            filtering ? this.setState({[current_tab]: {data: [], nextPage: 1, hasMore: true}, already_added_needs: {}}, () => this.getData(true)) : this.getData()
+        }
     }
 
     toggleAddBox = () => {
@@ -126,8 +131,19 @@ export default class MixedDemands extends Component {
         })
     }
 
+    emptyFields = () => {
+        $("#new-demand-title").val("")
+        $("#new-task-priority").val("1").change()
+        $("#new-demand-member").val("").change()
+        $("#task-select").val("").change()
+        $("#new-demand-project-select").val("").change()
+        this.setState({
+            new_demand_description: ""
+        })
+    }
+
     addDemand = () => {
-        let { post_demand_api } = this.props, { new_demand_description, workspaces_users } = this.state
+        let { post_demand_api } = this.props, { new_demand_description, workspaces_users, viewing_as_admin, target_user_id } = this.state
         let title = $("#new-demand-title").val(), priority = parseInt($("#new-task-priority").val()), toUser = $("#new-demand-member").val(), related_task = $("#task-select").val() === "0" ? "" : $("#task-select").val(), workspaceId = $("#new-demand-project-select").val()
         axios.post(post_demand_api.replace("workspaceId", workspaceId), {
             title: title,
@@ -137,37 +153,32 @@ export default class MixedDemands extends Component {
             text: new_demand_description 
         }).then(res => {
             let { data } = res
-            this.setState(prevState => {
-                return ({
-                    needs: Object.assign(prevState.needs, {
-                        data: [
-                            {
-                                ...data,
-                                priority: {title: setPriority(data.priority_id)},
-                                to: {
-                                    id: data.to_id, 
-                                    fullname: workspaces_users[data.workspace_id][data.to_id].fullname, 
-                                    avatar_pic: workspaces_users[data.workspace_id][data.to_id].avatar_pic, 
-                                    name: workspaces_users[data.workspace_id][data.to_id].name
-                                },
-                                finished_at: null
-                            }, 
-                        ...prevState.needs.data],
-                    }),
-                    already_added_needs: Object.assign({}, prevState.already_added_needs, {
-                        [data.id]: data.id
+            if (target_user_id === null) {
+                this.setState(prevState => {
+                    return ({
+                        needs: Object.assign(prevState.needs, {
+                            data: [
+                                {
+                                    ...data,
+                                    priority: {title: setPriority(data.priority_id)},
+                                    to: {
+                                        id: data.to_id, 
+                                        fullname: workspaces_users[data.workspace_id][data.to_id].fullname, 
+                                        avatar_pic: workspaces_users[data.workspace_id][data.to_id].avatar_pic, 
+                                        name: workspaces_users[data.workspace_id][data.to_id].name
+                                    },
+                                    finished_at: null
+                                }, 
+                            ...prevState.needs.data],
+                        }),
+                        already_added_needs: Object.assign({}, prevState.already_added_needs, {
+                            [data.id]: data.id
+                        })
                     })
-                })
-            })
-            Swal.default.fire({
-                icon: 'success',
-                title: "موفقیت",
-                text: "درخواست شما ارسال شد",
-                showConfirmButton: true,
-                customClass: {
-                    content: 'persian-text'
-                }
-            })
+                })   
+            }
+            sweetSuccess("درخواست شما ارسال شد")
+            this.emptyFields()
         }).catch(err => {
             sweetError(err)
         })
@@ -271,19 +282,22 @@ export default class MixedDemands extends Component {
         $("#select-user-target").on("select2:select", () => {
             setTargetUser()
         }) 
+        $("#select-user-target").on("select2:unselect", () => {
+            setTargetUser()
+        })
     }
 
     render() {
-        let { demands, needs, isGetting, already_added_needs, workspaces, workspaces_users, selected_workspace, current_tab, viewing_as_admin, allUsers, all } = this.state, { logged_in_user_id, demand_show_route } = this.props
+        let { demands, needs, isGetting, already_added_needs, workspaces, workspaces_users, selected_workspace, current_tab, viewing_as_admin, allUsers, all, new_demand_description } = this.state, { logged_in_user_id, demand_show_route } = this.props
         return (
             <div>
                 {CAN_VIEW_AS_ADMIN &&
-                    <div className="form-check col-12 text-right">
+                    <div className="form-check col-12 text-right mb-4">
                         <input className="form-check-input c-p" type="checkbox" value={viewing_as_admin} id="flexCheckDefault" onChange={this.setViewAsAdmin} />
                         <label className="form-check-label c-p" htmlFor="flexCheckDefault">
                             مشاهده به عنوان ادمین
                         </label>
-                        <div className="add-task-section rtl mt-2 mb-4 animated slideInLeft d-none" ref={this.adminViewRef}>
+                        <div className="add-task-section rtl mt-2 animated slideInLeft d-none" ref={this.adminViewRef}>
                             <div className="input-group col-12 col-md-4 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line-all">
                                 <div className="input-group-prepend">
                                     <span className="input-group-text">مخاطب</span>
@@ -293,7 +307,7 @@ export default class MixedDemands extends Component {
                                     { allUsers ? allUsers.map((user, i) => {
                                         if (user.id !== CurrentUser.id) {
                                             return (
-                                                <option key={i} value={user.id} img_address={user.avatar_pic !== null ? APP_PATH + user.avatar_pic : APP_PATH + 'images/male-avatar.svg'}>{user.fullname}</option>
+                                                <option key={i} value={user.id} img_address={user.avatar_pic !== null ? APP_PATH + user.avatar_pic : APP_PATH + 'images/user-avatar.png'}>{user.fullname}</option>
                                             )                                            
                                         }
                                     }) : null }
@@ -325,7 +339,7 @@ export default class MixedDemands extends Component {
                             <div className="input-group-prepend">
                                 <button className="btn btn-primary" onClick={this.handleMore.bind(this, true)}>جستجو</button>
                             </div>
-                            <input type="text" id="demands-search-input" className="form-control" placeholder="جستجو در خواسته ها"/>
+                            <input type="text" id="demands-search-input" className="form-control" placeholder="جستجو در خواسته ها" onKeyDown={this.handleMore.bind(this, true)} />
                             <div className="input-group-append">
                                 <button className="btn btn-info" onClick={this.toggleFilterBox.bind(this, 0)}>فیلتر ها<i className="fas fa-filter"></i></button>
                             </div>
@@ -356,7 +370,7 @@ export default class MixedDemands extends Component {
                             </select>
                         </div>
                     </div>
-                    <table className="col-12 table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right animated bounce mt-4">
+                    <table className="table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right animated bounce mt-4">
                         <thead className="thead-dark">
                             <tr>
                                 <th scope="col">#</th>
@@ -374,46 +388,50 @@ export default class MixedDemands extends Component {
                                 let { title, task, priority, finished_at, from, workspace_id, id } = demand
                                 return (
                                     <tr key={i} className="animated fadeIn" onClick={() => redirectTo(getDemand(workspace_id, id))}>
-                                        <th scope="row">{i + 1}</th>
-                                        <td>{ title }</td>
-                                        <td className="text-right">
-                                            <img className="workspace_avatar" src={APP_PATH + demand.workspace.avatar_pic} />
-                                            <a href={getWorkspace(workspace_id)}>{demand.workspace.title}</a>
-                                        </td>
-                                        <td>
-                                            <div className="employees-container horizontal-centerlize">
-                                                <span>{ from.fullname }</span>
-                                                <div className="dropdown-users d-none" onClick={(e) => e.stopPropagation()}>
-                                                    <div className="user-dropdown-item animated jackInTheBox">
-                                                        <div className="user-right-flex">
-                                                            <div className="user-img-container ml-2">
-                                                                <img src={from.avatar_pic !== null ? APP_PATH + from.avatar_pic : APP_PATH + 'images/male-avatar.svg'} />
-                                                            </div>
-                                                            <div className="user-info ml-2">
-                                                                <p>{ from.fullname }</p>
-                                                                <a href={getUser(from.id)}>@{from.name}</a>
-                                                            </div>
+                                        <a href={getDemand(workspace_id, id)} className="d-contents">   
+                                            <th scope="row">{i + 1}</th>
+                                            <td>{ title }</td>
+                                            <td className="text-right">
+                                                <img className="workspace_avatar" src={APP_PATH + (demand.workspace.avatar_pic !== null ? demand.workspace.avatar_pic : "images/idea.svg")} />
+                                                <a href={getWorkspace(workspace_id)}>{demand.workspace.title}</a>
+                                            </td>
+                                            <td>
+                                                <div className="employees-container horizontal-centerlize">
+                                                    <span>{ from ? from.fullname : <i className="fas fa-user-slash"></i> }</span>
+                                                    {from &&
+                                                        <div className="dropdown-users d-none" onClick={(e) => e.stopPropagation()}>
+                                                            <div className="user-dropdown-item animated jackInTheBox">
+                                                                <div className="user-right-flex">
+                                                                    <div className="user-img-container ml-2">
+                                                                        <img src={from.avatar_pic !== null ? APP_PATH + from.avatar_pic : APP_PATH + 'images/user-avatar.png'} />
+                                                                    </div>
+                                                                    <div className="user-info ml-2">
+                                                                        <p>{ from.fullname }</p>
+                                                                        <a href={getUser(from.id)}>@{from.name}</a>
+                                                                    </div>
+                                                                </div>
+                                                                <div className="user-label-container">
+                                                                    {
+                                                                        workspaces_users && workspaces_users[demand.workspace_id][from.id].is_admin === 1 
+                                                                        ? <button className="btn btn-sm btn-success rtl admin p-1"><span>ادمین<i className="fas fa-user-tie mr-1"></i></span></button>
+                                                                        : <button className="btn btn-sm btn-primary rtl"><span>عضو<i className="fas fa-user mr-1"></i></span></button>
+                                                                    } 
+                                                                </div>
+                                                            </div>                                                
                                                         </div>
-                                                        <div className="user-label-container">
-                                                            {
-                                                                workspaces_users && workspaces_users[demand.workspace_id][from.id].is_admin === 1 
-                                                                ? <button className="btn btn-sm btn-success rtl admin p-1"><span>ادمین<i className="fas fa-user-tie mr-1"></i></span></button>
-                                                                : <button className="btn btn-sm btn-primary rtl"><span>عضو<i className="fas fa-user mr-1"></i></span></button>
-                                                            } 
-                                                        </div>
-                                                    </div>                                                
+                                                    }
                                                 </div>
-                                            </div>
-                                        </td>
+                                            </td>
 
-                                        <td>{task !== null ? <a href={getTask(task.id)}>{ task.title }</a> : <i className="fas fa-minus fa-3x"></i>}</td>
-                                        <td>{ priority.title }</td>
-                                        <td>
-                                            {finished_at === null ? <i className="fas fa-times-circle fa-3x"></i> : <i className="fas fa-check-circle fa-3x"></i>}
-                                        </td>
-                                        <td>
-                                            {finished_at === null ? <i className="fas fa-calendar-times fa-3x"></i> : moment(finished_at).fromNow()}
-                                        </td>
+                                            <td>{task !== null ? <a href={getTask(task.id)}>{ task.title }</a> : <i className="fas fa-minus fa-3x"></i>}</td>
+                                            <td>{ priority.title }</td>
+                                            <td>
+                                                {finished_at === null ? <i className="fas fa-times-circle fa-3x"></i> : <i className="fas fa-check-circle fa-3x"></i>}
+                                            </td>
+                                            <td>
+                                                {finished_at === null ? <i className="fas fa-calendar-times fa-3x"></i> : moment(finished_at).fromNow()}
+                                            </td>
+                                        </a>
                                     </tr>
                                 )
                             })
@@ -458,7 +476,7 @@ export default class MixedDemands extends Component {
                                 <select id="new-task-priority" defaultValue="1">
                                     <option value="1" icon_name="fas fa-hourglass-end">ضروری و مهم</option>
                                     <option value="2" icon_name="fas fa-hourglass-half">ضروری و غیر مهم</option>
-                                    <option value="3" icon_name="fas fa-hourglass-start">غیر ضروری و غیر مهم</option>
+                                    <option value="3" icon_name="fas fa-hourglass-start">غیر ضروری و مهم</option>
                                     <option value="4" icon_name="fas fa-hourglass">غیر ضروری و غیر مهم</option>
                                 </select>
                             </div>
@@ -470,12 +488,12 @@ export default class MixedDemands extends Component {
                                     <option></option>
                                     {
                                         workspaces && Object.values(workspaces).length > 0 &&  Object.values(workspaces).map((workspace, i) => (
-                                            <option key={i} value={workspace.id} img_address={APP_PATH + workspace.avatar_pic}>{workspace.title}</option>
+                                            <option key={i} value={workspace.id} img_address={APP_PATH + (workspace.avatar_pic ? workspace.avatar_pic : "images/idea.svg")}>{workspace.title}</option>
                                         ))
                                     }
                                 </select>
                             </div>
-                            <div className="input-group col-12 col-md-4 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line-all">
+                            <div className="input-group col-12 col-md-4 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line">
                                 <div className="input-group-prepend">
                                     <span className="input-group-text">کار مربوطه</span>
                                 </div>
@@ -492,7 +510,7 @@ export default class MixedDemands extends Component {
                                     { selected_workspace ? Object.values(workspaces_users[parseInt(selected_workspace)]).map((user, i) => {
                                         if (user.id !== logged_in_user_id) {
                                             return (
-                                                <option key={i} value={user.id} img_address={user.avatar_pic !== null ? APP_PATH + user.avatar_pic : APP_PATH + 'images/male-avatar.svg'} is_admin={user.is_admin}>{user.fullname}</option>
+                                                <option key={i} value={user.id} img_address={user.avatar_pic !== null ? APP_PATH + user.avatar_pic : APP_PATH + 'images/user-avatar.png'} is_admin={user.is_admin}>{user.fullname}</option>
                                             )                                            
                                         }
                                     }) : null }
@@ -503,7 +521,7 @@ export default class MixedDemands extends Component {
                                     <span className="input-group-text">توضیحات</span>
                                 </div> */}
                                 <div className="tinymc-container">
-                                    <TinymcEditor changeContent={this.onDescriptionChange} />
+                                    <TinymcEditor changeContent={this.onDescriptionChange} value={new_demand_description} />
                                 </div>
                             </div>
                             <div className="text-center mt-2">
@@ -516,7 +534,7 @@ export default class MixedDemands extends Component {
                             <div className="input-group-prepend">
                                 <button className="btn btn-primary" onClick={this.handleMore.bind(this, true)}>جستجو</button>
                             </div>
-                            <input type="text" id="needs-search-input" className="form-control" placeholder="جستجو در نیاز ها"/>
+                            <input type="text" id="needs-search-input" className="form-control" placeholder="جستجو در نیاز ها" onKeyDown={this.handleMore.bind(this, true)} />
                             <div className="input-group-append">
                                 <button className="btn btn-info" onClick={this.toggleFilterBox.bind(this, 1)}>فیلتر ها<i className="fas fa-filter"></i></button>
                             </div>
@@ -547,7 +565,7 @@ export default class MixedDemands extends Component {
                             </select>
                         </div>
                     </div>
-                    <table className="col-12 table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right animated bounce mt-4">
+                    <table className="table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right animated bounce mt-4">
                         <thead className="thead-dark">
                             <tr>
                                 <th scope="col">#</th>
@@ -565,45 +583,49 @@ export default class MixedDemands extends Component {
                                 let { title, task, priority, due_to, finished_at, to, id, workspace_id } = need
                                 return (
                                     <tr key={i} className="animated fadeIn" onClick={() => redirectTo(getDemand(workspace_id, id))}>
-                                        <th scope="row">{i + 1}</th>
-                                        <td>{ title }</td>
-                                        <td className="text-right">
-                                            <img className="workspace_avatar" src={APP_PATH + workspaces[workspace_id].avatar_pic} />
-                                            <a href={getWorkspace(workspace_id)}>{workspaces[need.workspace_id].title}</a>
-                                        </td>
-                                        <td>
-                                            <div className="employees-container horizontal-centerlize">
-                                                <span>{ to.fullname }</span>
-                                                <div className="dropdown-users d-none" onClick={(e) => e.stopPropagation()}>
-                                                    <div className="user-dropdown-item animated jackInTheBox">
-                                                        <div className="user-right-flex">
-                                                            <div className="user-img-container ml-2">
-                                                                <img src={to.avatar_pic !== null ? APP_PATH + to.avatar_pic : APP_PATH + 'images/male-avatar.svg'} />
-                                                            </div>
-                                                            <div className="user-info ml-2">
-                                                                <p>{ to.fullname }</p>
-                                                                <a href={getUser(to.id)}>@{to.name}</a>
-                                                            </div>
+                                        <a href={getDemand(workspace_id, id)} className="d-contents">
+                                            <th scope="row">{i + 1}</th>
+                                            <td>{ title }</td>
+                                            <td className="text-right">
+                                                <img className="workspace_avatar" src={APP_PATH + (workspaces && workspaces[workspace_id].avatar_pic !== null ? workspaces[workspace_id].avatar_pic : "images/idea.svg")} />
+                                                <a href={getWorkspace(workspace_id)}>{workspaces && workspaces[need.workspace_id].title}</a>
+                                            </td>
+                                            <td>
+                                                <div className="employees-container horizontal-centerlize">
+                                                    <span>{ to ? to.fullname : <i className="fas fa-user-slash"></i> }</span>
+                                                    { to &&
+                                                        <div className="dropdown-users d-none" onClick={(e) => e.stopPropagation()}>
+                                                            <div className="user-dropdown-item animated jackInTheBox">
+                                                                <div className="user-right-flex">
+                                                                    <div className="user-img-container ml-2">
+                                                                        <img src={to.avatar_pic !== null ? APP_PATH + to.avatar_pic : APP_PATH + 'images/user-avatar.png'} />
+                                                                    </div>
+                                                                    <div className="user-info ml-2">
+                                                                        <p>{ to.fullname }</p>
+                                                                        <a href={getUser(to.id)}>@{to.name}</a>
+                                                                    </div>
+                                                                </div>
+                                                                <div className="user-label-container">
+                                                                    {
+                                                                        workspaces_users && workspaces_users[workspace_id][to.id].is_admin === 1 
+                                                                        ? <button className="btn btn-sm btn-success rtl admin p-1"><span>ادمین<i className="fas fa-user-tie mr-1"></i></span></button>
+                                                                        : <button className="btn btn-sm btn-primary rtl"><span>عضو<i className="fas fa-user mr-1"></i></span></button>
+                                                                    } 
+                                                                </div>
+                                                            </div>                                                
                                                         </div>
-                                                        <div className="user-label-container">
-                                                            {
-                                                                workspaces_users && workspaces_users[workspace_id][to.id].is_admin === 1 
-                                                                ? <button className="btn btn-sm btn-success rtl admin p-1"><span>ادمین<i className="fas fa-user-tie mr-1"></i></span></button>
-                                                                : <button className="btn btn-sm btn-primary rtl"><span>عضو<i className="fas fa-user mr-1"></i></span></button>
-                                                            } 
-                                                        </div>
-                                                    </div>                                                
+                                                    }
                                                 </div>
-                                            </div>
-                                        </td>
-                                        <td>{task !== null ? <a href={getTask(task.id)}>{ task.title }</a> : <i className="fas fa-minus fa-3x"></i>}</td>
-                                        <td>{ priority.title }</td>
-                                        <td>
-                                            {finished_at === null ? <i className="fas fa-times-circle fa-3x"></i> : <i className="fas fa-check-circle fa-3x"></i>}
-                                        </td>
-                                        <td>
-                                            {finished_at === null ? <i className="fas fa-calendar-times fa-3x"></i> : moment(finished_at).fromNow()}
-                                        </td>
+                                            </td>
+                                            <td>{task !== null ? <a href={getTask(task.id)}>{ task.title }</a> : <i className="fas fa-minus fa-3x"></i>}</td>
+                                            <td>{ priority.title }</td>
+                                            <td>
+                                                {finished_at === null ? <i className="fas fa-times-circle fa-3x"></i> : <i className="fas fa-check-circle fa-3x"></i>}
+                                            </td>
+                                            <td>
+                                                {finished_at === null ? <i className="fas fa-calendar-times fa-3x"></i> : moment(finished_at).fromNow()}
+                                            </td>
+                                        </a>
                                     </tr>
                                 )
                             })
@@ -634,7 +656,7 @@ export default class MixedDemands extends Component {
                             <div className="input-group-prepend">
                                 <button className="btn btn-primary" onClick={this.handleMore.bind(this, true)}>جستجو</button>
                             </div>
-                            <input type="text" id="all-search-input" className="form-control" placeholder="جستجو در همه"/>
+                            <input type="text" id="all-search-input" className="form-control" placeholder="جستجو در همه" onKeyDown={this.handleMore.bind(this, true)} />
                             <div className="input-group-append">
                                 <button className="btn btn-info" onClick={this.toggleFilterBox.bind(this, 2)}>فیلتر ها<i className="fas fa-filter"></i></button>
                             </div>
@@ -665,7 +687,7 @@ export default class MixedDemands extends Component {
                             </select>
                         </div>
                     </div>
-                    <table className="col-12 table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right animated bounce mt-4">
+                    <table className="table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right animated bounce mt-4">
                         <thead className="thead-dark">
                             <tr>
                                 <th scope="col">#</th>
@@ -681,73 +703,79 @@ export default class MixedDemands extends Component {
                         </thead>
                         <tbody>
                             {all && all.data.length > 0 && all.data.map((item, i) => {
-                                let { title, task, priority, due_to, finished_at, to, from, id, workspace_id } = item
+                                let { title, task, priority, due_to, finished_at, to, from, id, workspace_id, workspace } = item
                                 return (
                                     <tr key={i} className="animated fadeIn" onClick={() => redirectTo(getDemand(workspace_id, id))}>
-                                        <th scope="row">{i + 1}</th>
-                                        <td>{ title }</td>
-                                        <td className="text-right">
-                                            <img className="workspace_avatar" src={APP_PATH + workspaces[workspace_id].avatar_pic} />
-                                            <a href={getWorkspace(workspace_id)}>{workspaces[workspace_id].title}</a>
-                                        </td>
-                                        <td>
-                                            <div className="employees-container horizontal-centerlize">
-                                                <span>{ from.fullname }</span>
-                                                <div className="dropdown-users d-none" onClick={(e) => e.stopPropagation()}>
-                                                    <div className="user-dropdown-item animated jackInTheBox">
-                                                        <div className="user-right-flex">
-                                                            <div className="user-img-container ml-2">
-                                                                <img src={from.avatar_pic !== null ? APP_PATH + from.avatar_pic : APP_PATH + 'images/male-avatar.svg'} />
-                                                            </div>
-                                                            <div className="user-info ml-2">
-                                                                <p>{ from.fullname }</p>
-                                                                <a href={getUser(from.id)}>@{from.name}</a>
-                                                            </div>
+                                        <a href={getDemand(workspace_id, id)} className="d-contents">
+                                            <th scope="row">{i + 1}</th>
+                                            <td>{ title }</td>
+                                            <td className="text-right">
+                                                <img className="workspace_avatar" src={APP_PATH + (workspace.avatar_pic !== null ? workspace.avatar_pic : "images/idea.svg")} />
+                                                <a href={getWorkspace(workspace_id)}>{workspace.title}</a>
+                                            </td>
+                                            <td>
+                                                <div className="employees-container horizontal-centerlize">
+                                                    <span>{ from ? from.fullname : <i className="fas fa-user-slash"></i> }</span>
+                                                    {from &&
+                                                        <div className="dropdown-users d-none" onClick={(e) => e.stopPropagation()}>
+                                                            <div className="user-dropdown-item animated jackInTheBox">
+                                                                <div className="user-right-flex">
+                                                                    <div className="user-img-container ml-2">
+                                                                        <img src={from.avatar_pic !== null ? APP_PATH + from.avatar_pic : APP_PATH + 'images/user-avatar.png'} />
+                                                                    </div>
+                                                                    <div className="user-info ml-2">
+                                                                        <p>{ from.fullname }</p>
+                                                                        <a href={getUser(from.id)}>@{from.name}</a>
+                                                                    </div>
+                                                                </div>
+                                                                <div className="user-label-container">
+                                                                    {
+                                                                        workspaces_users && workspaces_users[workspace_id][from.id].is_admin === 1 
+                                                                        ? <button className="btn btn-sm btn-success rtl admin p-1"><span>ادمین<i className="fas fa-user-tie mr-1"></i></span></button>
+                                                                        : <button className="btn btn-sm btn-primary rtl"><span>عضو<i className="fas fa-user mr-1"></i></span></button>
+                                                                    } 
+                                                                </div>
+                                                            </div>                                                
                                                         </div>
-                                                        <div className="user-label-container">
-                                                            {
-                                                                workspaces_users && workspaces_users[workspace_id][from.id].is_admin === 1 
-                                                                ? <button className="btn btn-sm btn-success rtl admin p-1"><span>ادمین<i className="fas fa-user-tie mr-1"></i></span></button>
-                                                                : <button className="btn btn-sm btn-primary rtl"><span>عضو<i className="fas fa-user mr-1"></i></span></button>
-                                                            } 
-                                                        </div>
-                                                    </div>                                                
+                                                    }
                                                 </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div className="employees-container horizontal-centerlize">
-                                                <span>{ to.fullname }</span>
-                                                <div className="dropdown-users d-none" onClick={(e) => e.stopPropagation()}>
-                                                    <div className="user-dropdown-item animated jackInTheBox">
-                                                        <div className="user-right-flex">
-                                                            <div className="user-img-container ml-2">
-                                                                <img src={to.avatar_pic !== null ? APP_PATH + to.avatar_pic : APP_PATH + 'images/male-avatar.svg'} />
-                                                            </div>
-                                                            <div className="user-info ml-2">
-                                                                <p>{ to.fullname }</p>
-                                                                <a href={getUser(to.id)}>@{to.name}</a>
-                                                            </div>
+                                            </td>
+                                            <td>
+                                                <div className="employees-container horizontal-centerlize">
+                                                    <span>{ to ? to.fullname : <i className="fas fa-user-slash"></i> }</span>
+                                                    {to &&
+                                                        <div className="dropdown-users d-none" onClick={(e) => e.stopPropagation()}>
+                                                            <div className="user-dropdown-item animated jackInTheBox">
+                                                                <div className="user-right-flex">
+                                                                    <div className="user-img-container ml-2">
+                                                                        <img src={to.avatar_pic !== null ? APP_PATH + to.avatar_pic : APP_PATH + 'images/user-avatar.png'} />
+                                                                    </div>
+                                                                    <div className="user-info ml-2">
+                                                                        <p>{ to.fullname }</p>
+                                                                        <a href={getUser(to.id)}>@{to.name}</a>
+                                                                    </div>
+                                                                </div>
+                                                                <div className="user-label-container">
+                                                                    {
+                                                                        workspaces_users && workspaces_users[workspace_id][to.id].is_admin === 1 
+                                                                        ? <button className="btn btn-sm btn-success rtl admin p-1"><span>ادمین<i className="fas fa-user-tie mr-1"></i></span></button>
+                                                                        : <button className="btn btn-sm btn-primary rtl"><span>عضو<i className="fas fa-user mr-1"></i></span></button>
+                                                                    } 
+                                                                </div>
+                                                            </div>                                                
                                                         </div>
-                                                        <div className="user-label-container">
-                                                            {
-                                                                workspaces_users && workspaces_users[workspace_id][to.id].is_admin === 1 
-                                                                ? <button className="btn btn-sm btn-success rtl admin p-1"><span>ادمین<i className="fas fa-user-tie mr-1"></i></span></button>
-                                                                : <button className="btn btn-sm btn-primary rtl"><span>عضو<i className="fas fa-user mr-1"></i></span></button>
-                                                            } 
-                                                        </div>
-                                                    </div>                                                
+                                                    }
                                                 </div>
-                                            </div>
-                                        </td>
-                                        <td>{task !== null ? <a href={getTask(task.id)}>{ task.title }</a> : <i className="fas fa-minus fa-3x"></i>}</td>
-                                        <td>{ priority.title }</td>
-                                        <td>
-                                            {finished_at === null ? <i className="fas fa-times-circle fa-3x"></i> : <i className="fas fa-check-circle fa-3x"></i>}
-                                        </td>
-                                        <td>
-                                            {finished_at === null ? <i className="fas fa-calendar-times fa-3x"></i> : moment(finished_at).fromNow()}
-                                        </td>
+                                            </td>
+                                            <td>{task !== null ? <a href={getTask(task.id)}>{ task.title }</a> : <i className="fas fa-minus fa-3x"></i>}</td>
+                                            <td>{ priority.title }</td>
+                                            <td>
+                                                {finished_at === null ? <i className="fas fa-times-circle fa-3x"></i> : <i className="fas fa-check-circle fa-3x"></i>}
+                                            </td>
+                                            <td>
+                                                {finished_at === null ? <i className="fas fa-calendar-times fa-3x"></i> : moment(finished_at).fromNow()}
+                                            </td>
+                                        </a>    
                                     </tr>
                                 )
                             })

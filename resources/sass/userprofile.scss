@@ -1,6 +1,7 @@
 div.user-card {
     background-color: #ffffff;
     min-width: 300px;
+    box-shadow: 2px 2px 6px 0px #bdc3c7;
     // @media (min-width: 768px) {
     //     min-width: 500px;
     // }
@@ -32,7 +33,9 @@ div.user-card {
             overflow-x: hidden;
             overflow-y: auto;
             max-height: 480px;
-            box-shadow: 5px 5px 10px 2px #bdc3c7;
+        }
+        div.scrollable-shadow {
+            box-shadow: 0px 2px 5px 2px rgb(156 156 156 / 15%);
         }
         div.user-works-results {
             display: none;
@@ -43,6 +46,7 @@ div.user-card {
                 transition: 0.5s;
                 padding: 10px;
                 border-radius: 4px;
+                border-bottom: 1px solid #bdc3c7;
                 div.workspace-img-container {
                     float: right !important;
                     img {
@@ -81,6 +85,8 @@ div.user-card {
                     transition: 0.5s;
                     padding: 10px;
                     border-radius: 4px;
+                    border-bottom: 1px solid #bdc3c7;
+                    // box-shadow: 5px 5px 10px 2px #bdc3c7;
                 }  
                 div.task-item {
                     h6 {
@@ -103,6 +109,7 @@ div.user-card {
                     transition: 0.5s;
                     padding: 10px;
                     border-radius: 4px;
+                    border-bottom: 1px solid #bdc3c7;
                     > i {
                         color: #2C5364;
                         font-size: 26px;
@@ -134,12 +141,14 @@ div.user-card {
 }
 
 .need-bg-color {
-    background: linear-gradient(#E0EAFC, #CFDEF3);
+    // background: linear-gradient(#E0EAFC, #CFDEF3);
+    background: linear-gradient(#C9D6FF, #E2E2E2);
 }
 
 .task-bg-color {
     // background: linear-gradient(#D3CCE3, #E9E4F0);
-    background-color: #D7DDE8 !important;
+    // background-color: #D7DDE8 !important;
+    background: linear-gradient(#C9D6FF, #E2E2E2);
 }
 
 div.statistics-section {
@@ -149,16 +158,23 @@ div.statistics-section {
     align-items: flex-start;
     flex-wrap: wrap;
     div.wide-section-statistics {
-        box-shadow: 0px 2px 5px 2px rgb(156 156 156 / 10%);
+        // box-shadow: 0px 2px 5px 2px rgb(156 156 156 / 10%);
+        box-shadow: 2px 2px 6px 0px #bdc3c7;
         div.wide-section-charts {
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-direction: row;
             flex-wrap: wrap;
+            height: 80%;
             div.wide-chart {
                 > div {
-                    border-right: 1px solid #D7DDE8;
+                    @media (max-width: 576px) {
+                        border-bottom: 1px solid #D7DDE8; 
+                    }
+                    @media (min-width: 576px) {
+                        border-right: 1px solid #D7DDE8; 
+                    }
                 }
             }
         }
@@ -168,12 +184,21 @@ div.statistics-section {
 div.chart-title-section {
     border-bottom: 1px solid #D7DDE8;
     align-items: center !important;
+    height: 20%;
     h5 {
-        font-size: 22px;
+        font-size: 20px;
     }
     i {
-        font-size: 30px;
+        font-size: 28px;
         color: #3A6073;
+    }
+    @media (max-width: 576px) {
+        h5 {
+            font-size: 18px;
+        }
+        i {
+            font-size: 24px;
+        }
     }
 }
 
@@ -183,10 +208,15 @@ div.small-chart-sections-container {
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-    height: 270px;
     > div {
-        width: 49%;
-        height: 95%;
+        box-shadow: 2px 2px 6px 0px #bdc3c7;
+    }
+    @media (min-width: 576px) {
+        height: 270px;
+        > div {
+            max-width: 49%;
+            height: 95%;
+        }  
     }
 }
 
@@ -198,3 +228,28 @@ div.select-option-big {
     font-size: 16px !important;
 }
 
+a.user-profile-tab-link {
+    color: #108dc7 !important;
+}
+a.user-profile-tab-link:hover {
+    color: #EF3B36 !important;
+}
+a.user-profile-tab-link.active {
+    color: #EF3B36 !important;
+    border-bottom: 2px solid #EF3B36 !important;
+}
+.small-font {
+    @media (max-width: 576px) {
+        font-size: 10px;
+    } 
+}
+
+.small-section-charts {
+    display: flex;
+    height: 80%;
+}
+
+.btn-warning {
+    background-color: #f3c609 !important;
+    border-color: #f3c609 !important;
+}

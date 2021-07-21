@@ -5,7 +5,7 @@ moment.locale('fa')
 import axios from 'axios'
 import 'react-activity/dist/react-activity.css'
 import TinymcEditor from '../tinymce-editor/index'
-import { setPriority, redirectTo, sweetError } from '../../../helpers'
+import { setPriority, redirectTo, sweetError, getUser, getTask, getDemand, getWorkspace, sweetSuccess } from '../../../helpers'
 import { simpleSearch, renderWithImg } from '../../../select2'
 
 export default class Demands extends Component {
@@ -104,8 +104,18 @@ export default class Demands extends Component {
         })
     }
 
+    emptyFields = () => {
+        $("#new-demand-title").val("")
+        $("#new-task-priority").val("1").change()
+        $("#new-demand-member").val("").change()
+        $("#related-task-select").val("").change()
+        this.setState({
+            new_demand_description: ""
+        })
+    }
+
     addDemand = () => {
-        let { post_new_ticket_api } = this.props, { new_demand_description, workspace_users } = this.state
+        let { post_new_ticket_api } = this.props, { new_demand_description, workspace_users, target_user_id } = this.state
         let title = $("#new-demand-title").val(), priority = parseInt($("#new-task-priority").val()), toUser = $("#new-demand-member").val(), related_task = $("#related-task-select").val() === "0" ? "" : $("#related-task-select").val()
         axios.post(post_new_ticket_api, {
             title: title,
@@ -115,34 +125,29 @@ export default class Demands extends Component {
             text: new_demand_description 
         }).then(res => {
             let { data } = res
-            this.setState(prevState => {
-                return ({
-                    needs: Object.assign(prevState.needs, {
-                        data: [
-                            {
-                                ...data, 
-                                priority: {title: setPriority(data.priority_id)}, 
-                                to: {id: data.to_id, fullname: workspace_users[data.to_id].fullname, avatar_pic: workspace_users[data.to_id].avatar_pic}, 
-                                task: data.task,
-                                finished_at: null
-                            }, 
-                            ...prevState.needs.data
-                        ],
-                    }),
-                    already_added_needs: Object.assign({}, prevState.already_added_needs, {
-                        [data.id]: data.id
+            if (target_user_id === null) {
+                this.setState(prevState => {
+                    return ({
+                        needs: Object.assign(prevState.needs, {
+                            data: [
+                                {
+                                    ...data, 
+                                    priority: {title: setPriority(data.priority_id)}, 
+                                    to: {id: data.to.id, fullname: data.to.fullname, avatar_pic: data.to.avatar_pic, name: data.to.name}, 
+                                    task: data.task,
+                                    finished_at: null
+                                }, 
+                                ...prevState.needs.data
+                            ],
+                        }),
+                        already_added_needs: Object.assign({}, prevState.already_added_needs, {
+                            [data.id]: data.id
+                        })
                     })
-                })
-            })
-            Swal.default.fire({
-                icon: 'success',
-                title: "موفقیت",
-                text: "درخواست شما ارسال شد",
-                showConfirmButton: true,
-                customClass: {
-                    content: 'persian-text'
-                }
-            })
+                })   
+            }
+            sweetSuccess("درخواست شما ارسال شد")
+            this.emptyFields()
         }).catch(err => {
             sweetError(err);
         })
@@ -207,16 +212,16 @@ export default class Demands extends Component {
     }
     
     render() {
-        let { demands, needs, all, isGetting, workspace, already_added_needs, workspace_users, viewing_as_admin, allUsers, current_tab } = this.state, { user_profile_route, task_route, logged_in_user_id, demand_show_route } = this.props
+        let { demands, needs, all, isGetting, workspace, already_added_needs, workspace_users, viewing_as_admin, allUsers, current_tab, new_demand_description } = this.state, { user_profile_route, task_route, logged_in_user_id, demand_show_route } = this.props
         return (
             <div>
                 {CAN_VIEW_AS_ADMIN &&
-                    <div className="form-check col-12 text-right">
+                    <div className="form-check col-12 text-right mb-4">
                         <input className="form-check-input c-p" type="checkbox" value={viewing_as_admin} id="flexCheckDefault" onChange={this.setViewAsAdmin} />
                         <label className="form-check-label c-p" htmlFor="flexCheckDefault">
                             مشاهده به عنوان ادمین
                         </label>
-                        <div className="add-task-section rtl mt-2 mb-4 animated slideInLeft d-none" ref={this.adminViewRef}>
+                        <div className="add-task-section rtl mt-2 animated slideInLeft d-none" ref={this.adminViewRef}>
                             <div className="input-group col-12 col-md-4 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line-all">
                                 <div className="input-group-prepend">
                                     <span className="input-group-text">مخاطب</span>
@@ -226,7 +231,7 @@ export default class Demands extends Component {
                                     { allUsers ? allUsers.map((user, i) => {
                                         if (user.id !== CurrentUser.id) {
                                             return (
-                                                <option key={i} value={user.id} img_address={user.avatar_pic !== null ? APP_PATH + user.avatar_pic : APP_PATH + 'images/male-avatar.svg'}>{user.fullname}</option>
+                                                <option key={i} value={user.id} img_address={user.avatar_pic !== null ? APP_PATH + user.avatar_pic : APP_PATH + 'images/user-avatar.png'}>{user.fullname}</option>
                                             )                                            
                                         }
                                     }) : null }
@@ -256,7 +261,7 @@ export default class Demands extends Component {
                         :   null
                     }
                 </nav>
-                <div className="col-12 mt-4 float-right demand-tab-result active" ref={this.tabResultsRef[0]}>
+                <div className="mt-4 demand-tab-result active" ref={this.tabResultsRef[0]}>
                     <div className="filter-box demand-bg-color mb-4 p-2 col-12 animated fadeIn">
                         <div className="filter-option col-12 col-md-6 col-lg-3 mb-3 mb-lg-0 text-center">
                             <span>جستجو در: </span>
@@ -268,7 +273,7 @@ export default class Demands extends Component {
                         </div>
                         <div className="filter-option col-12 col-md-6 col-lg-3 mb-3 mb-lg-0 text-center">
                             <span>مرتب سازی بر اساس:</span>
-                            <select id="mixed_demands_order_by_select" defaultValue="createdw">
+                            <select id="mixed_demands_order_by_select" defaultValue="created_at">
                                 <option container_class="select-option-big" value="created_at" icon_name="fas fa-calendar-plus">تاریخ ایجاد</option>
                                 <option container_class="select-option-big" value="updated_at" icon_name="fas fa-user-edit">تاریخ تغییرات</option>
                                 <option container_class="select-option-big" value="finished_at" icon_name="fas fa-calendar-check">تاریخ اتمام</option>
@@ -285,7 +290,7 @@ export default class Demands extends Component {
                             <button className="btn btn-outline-info" onClick={this.handleMore.bind(this, true)}>مرتب سازی</button>
                         </div>
                     </div>
-                    <table className="col-12 table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right animated bounce">
+                    <table className="table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right animated bounce">
                         <thead className="thead-dark">
                             <tr>
                                 <th scope="col">#</th>
@@ -299,45 +304,49 @@ export default class Demands extends Component {
                         </thead>
                         <tbody>
                             {demands && demands.data.length > 0 && demands.data.map((demand, i) => {
-                                let { title, task, priority, finished_at, from } = demand
+                                let { title, task, priority, finished_at, from, workspace_id, id } = demand
                                 return (
-                                    <tr key={i} className="animated fadeIn" onClick={() => redirectTo(demand_show_route.replace("demandId", demand.id))}>
-                                        <th scope="row">{i + 1}</th>
-                                        <td>{ title }</td>
-                                        <td>
-                                            <div className="employees-container horizontal-centerlize">
-                                                <span>{ from.fullname }</span>
-                                                <div className="dropdown-users d-none" onClick={(e) => e.stopPropagation()}>
-                                                    <div className="user-dropdown-item animated jackInTheBox">
-                                                        <div className="user-right-flex">
-                                                            <div className="user-img-container ml-2">
-                                                                <img src={from.avatar_pic !== null ? APP_PATH + from.avatar_pic : APP_PATH + 'images/male-avatar.svg'} />
-                                                            </div>
-                                                            <div className="user-info ml-2">
-                                                                <p>{ from.fullname }</p>
-                                                                <a href={user_profile_route.replace("userId", from.id)}>@{from.name}</a>
-                                                            </div>
+                                    <tr key={i} className="animated fadeIn" onClick={() => redirectTo(getDemand(workspace_id, id))}>
+                                        <a href={getDemand(workspace_id, id)} className="d-contents">
+                                            <th scope="row">{i + 1}</th>
+                                            <td>{ title }</td>
+                                            <td>
+                                                <div className="employees-container horizontal-centerlize">
+                                                    <span>{ from ? from.fullname : <i className="fas fa-user-slash"></i> }</span>
+                                                    {from &&
+                                                        <div className="dropdown-users d-none" onClick={(e) => e.stopPropagation()}>
+                                                            <div className="user-dropdown-item animated jackInTheBox">
+                                                                <div className="user-right-flex">
+                                                                    <div className="user-img-container ml-2">
+                                                                        <img src={from.avatar_pic !== null ? APP_PATH + from.avatar_pic : APP_PATH + 'images/user-avatar.png'} />
+                                                                    </div>
+                                                                    <div className="user-info ml-2">
+                                                                        <p>{ from.fullname }</p>
+                                                                        <a href={user_profile_route.replace("userId", from.id)}>@{from.name}</a>
+                                                                    </div>
+                                                                </div>
+                                                                <div className="user-label-container">
+                                                                    {
+                                                                        workspace_users && workspace_users[from.id] && workspace_users[from.id].is_admin === 1 
+                                                                        ? <button className="btn btn-sm btn-success rtl admin p-1"><span>ادمین<i className="fas fa-user-tie mr-1"></i></span></button>
+                                                                        : <button className="btn btn-sm btn-primary rtl"><span>عضو<i className="fas fa-user mr-1"></i></span></button>
+                                                                    }
+                                                                </div>
+                                                            </div>                                                
                                                         </div>
-                                                        <div className="user-label-container">
-                                                            {
-                                                                workspace_users && workspace_users[from.id] && workspace_users[from.id].is_admin === 1 
-                                                                ? <button className="btn btn-sm btn-success rtl admin p-1"><span>ادمین<i className="fas fa-user-tie mr-1"></i></span></button>
-                                                                : <button className="btn btn-sm btn-primary rtl"><span>عضو<i className="fas fa-user mr-1"></i></span></button>
-                                                            }
-                                                        </div>
-                                                    </div>                                                
+                                                    }
                                                 </div>
-                                            </div>
-                                        </td>
+                                            </td>
 
-                                        <td>{task !== null ? <a href={task_route.replace("taskId", task.id)}>{ task.title }</a> : <i className="fas fa-minus fa-3x"></i>}</td>
-                                        <td>{ priority.title }</td>
-                                        <td>
-                                            {finished_at === null ? <i className="fas fa-times-circle fa-3x"></i> : <i className="fas fa-check-circle fa-3x"></i>}
-                                        </td>
-                                        <td>
-                                            {finished_at === null ? <i className="fas fa-calendar-times fa-3x"></i> : moment(finished_at).fromNow()}
-                                        </td>
+                                            <td>{task !== null ? <a href={task_route.replace("taskId", task.id)}>{ task.title }</a> : <i className="fas fa-minus fa-3x"></i>}</td>
+                                            <td>{ priority.title }</td>
+                                            <td>
+                                                {finished_at === null ? <i className="fas fa-times-circle fa-3x"></i> : <i className="fas fa-check-circle fa-3x"></i>}
+                                            </td>
+                                            <td>
+                                                {finished_at === null ? <i className="fas fa-calendar-times fa-3x"></i> : moment(finished_at).fromNow()}
+                                            </td>
+                                        </a>
                                     </tr>
                                 )
                             })
@@ -362,7 +371,7 @@ export default class Demands extends Component {
                             </div>
                     }
                 </div>
-                <div className="col-12 mt-4 float-right demand-tab-result" ref={this.tabResultsRef[1]}>
+                <div className="mt-4 demand-tab-result" ref={this.tabResultsRef[1]}>
                     <div className="workspace-add-task mb-2 col-12 pl-0 pr-0 pr-md-3 pl-md-3">
                         <div className="workspace-title-section title-section" onClick={this.toggleAddBox}>
                             <i className="fas fa-plus" ref={this.addIconRef}></i>
@@ -382,7 +391,7 @@ export default class Demands extends Component {
                                 <select id="new-task-priority" defaultValue="1">
                                     <option value="1" icon_name="fas fa-hourglass-end">ضروری و مهم</option>
                                     <option value="2" icon_name="fas fa-hourglass-half">ضروری و غیر مهم</option>
-                                    <option value="3" icon_name="fas fa-hourglass-start">غیر ضروری و غیر مهم</option>
+                                    <option value="3" icon_name="fas fa-hourglass-start">غیر ضروری و مهم</option>
                                     <option value="4" icon_name="fas fa-hourglass">غیر ضروری و غیر مهم</option>
                                 </select>
                             </div>
@@ -394,7 +403,7 @@ export default class Demands extends Component {
                                     <option></option>
                                 </select>
                             </div>
-                            <div className="input-group col-12 col-md-6 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line">
+                            <div className="input-group col-12 col-md-6 pl-0 pr-0 mb-2 mb-md-0 input-group-single-line-all">
                                 <div className="input-group-prepend">
                                     <span className="input-group-text">مخاطب نیاز</span>
                                 </div>
@@ -402,7 +411,7 @@ export default class Demands extends Component {
                                     { workspace ? workspace.users.map((user, i) => {
                                         if (user.id !== logged_in_user_id) {
                                             return (
-                                                <option key={i} value={user.id} img_address={user.avatar_pic !== null ? APP_PATH + user.avatar_pic : APP_PATH + 'images/male-avatar.svg'} is_admin={user.pivot.is_admin}>{user.fullname}</option>
+                                                <option key={i} value={user.id} img_address={user.avatar_pic !== null ? APP_PATH + user.avatar_pic : APP_PATH + 'images/user-avatar.png'} is_admin={user.pivot.is_admin}>{user.fullname}</option>
                                             )                                            
                                         }
                                     }) : null }
@@ -413,7 +422,7 @@ export default class Demands extends Component {
                                     <span className="input-group-text">توضیحات</span>
                                 </div> */}
                                 <div className="tinymc-container">
-                                    <TinymcEditor changeContent={this.onDescriptionChange} />
+                                    <TinymcEditor changeContent={this.onDescriptionChange} value={new_demand_description} />
                                 </div>
                             </div>
                             <div className="text-center mt-2">
@@ -432,7 +441,7 @@ export default class Demands extends Component {
                         </div>
                         <div className="filter-option col-12 col-md-6 col-lg-3 mb-3 mb-lg-0 text-center">
                             <span>مرتب سازی بر اساس:</span>
-                            <select id="mixed_needs_order_by_select" defaultValue="createdw">
+                            <select id="mixed_needs_order_by_select" defaultValue="created_at">
                                 <option container_class="select-option-big" value="created_at" icon_name="fas fa-calendar-plus">تاریخ ایجاد</option>
                                 <option container_class="select-option-big" value="updated_at" icon_name="fas fa-user-edit">تاریخ تغییرات</option>
                                 <option container_class="select-option-big" value="finished_at" icon_name="fas fa-calendar-check">تاریخ اتمام</option>
@@ -449,7 +458,7 @@ export default class Demands extends Component {
                             <button className="btn btn-outline-info" onClick={this.handleMore.bind(this, true)}>مرتب سازی</button>
                         </div>
                     </div>
-                    <table className="col-12 table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right animated bounce">
+                    <table className="table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right animated bounce">
                         <thead className="thead-dark">
                             <tr>
                                 <th scope="col">#</th>
@@ -463,44 +472,48 @@ export default class Demands extends Component {
                         </thead>
                         <tbody>
                             {needs && needs.data.length > 0 && needs.data.map((need, i) => {
-                                let { title, task, priority, due_to, finished_at, to, id } = need
+                                let { title, task, priority, due_to, finished_at, to, id, workspace_id } = need
                                 return (
-                                    <tr key={i} className="animated fadeIn" onClick={() => redirectTo(demand_show_route.replace("demandId", demand.id))}>
-                                        <th scope="row">{i + 1}</th>
-                                        <td>{ title }</td>
-                                        <td>
-                                            <div className="employees-container horizontal-centerlize">
-                                                <span>{ to.fullname }</span>
-                                                <div className="dropdown-users d-none" onClick={(e) => e.stopPropagation()}>
-                                                    <div className="user-dropdown-item animated jackInTheBox">
-                                                        <div className="user-right-flex">
-                                                            <div className="user-img-container ml-2">
-                                                                <img src={to.avatar_pic !== null ? APP_PATH + to.avatar_pic : APP_PATH + 'images/male-avatar.svg'} />
-                                                            </div>
-                                                            <div className="user-info ml-2">
-                                                                <p>{ to.fullname }</p>
-                                                                <a href={user_profile_route.replace("userId", to.id)}>@{to.name}</a>
-                                                            </div>
+                                    <tr key={i} className="animated fadeIn" onClick={() => redirectTo(getDemand(workspace_id, id))}>
+                                        <a href={getDemand(workspace_id, id)} className="d-contents">
+                                            <th scope="row">{i + 1}</th>
+                                            <td>{ title }</td>
+                                            <td>
+                                                <div className="employees-container horizontal-centerlize">
+                                                    <span>{ to ? to.fullname : <i className="fas fa-user-slash"></i> }</span>
+                                                    {to &&
+                                                        <div className="dropdown-users d-none" onClick={(e) => e.stopPropagation()}>
+                                                            <div className="user-dropdown-item animated jackInTheBox">
+                                                                <div className="user-right-flex">
+                                                                    <div className="user-img-container ml-2">
+                                                                        <img src={to.avatar_pic !== null ? APP_PATH + to.avatar_pic : APP_PATH + 'images/user-avatar.png'} />
+                                                                    </div>
+                                                                    <div className="user-info ml-2">
+                                                                        <p>{ to.fullname }</p>
+                                                                        <a href={user_profile_route.replace("userId", to.id)}>@{to.name}</a>
+                                                                    </div>
+                                                                </div>
+                                                                <div className="user-label-container">
+                                                                    {
+                                                                        workspace_users && workspace_users[to.id].is_admin === 1 
+                                                                        ? <button className="btn btn-sm btn-success rtl admin p-1"><span>ادمین<i className="fas fa-user-tie mr-1"></i></span></button>
+                                                                        : <button className="btn btn-sm btn-primary rtl"><span>عضو<i className="fas fa-user mr-1"></i></span></button>
+                                                                    } 
+                                                                </div>
+                                                            </div>                                                
                                                         </div>
-                                                        <div className="user-label-container">
-                                                            {
-                                                                workspace_users && workspace_users[to.id].is_admin === 1 
-                                                                ? <button className="btn btn-sm btn-success rtl admin p-1"><span>ادمین<i className="fas fa-user-tie mr-1"></i></span></button>
-                                                                : <button className="btn btn-sm btn-primary rtl"><span>عضو<i className="fas fa-user mr-1"></i></span></button>
-                                                            } 
-                                                        </div>
-                                                    </div>                                                
+                                                    }
                                                 </div>
-                                            </div>
-                                        </td>
-                                        <td>{task !== null ? <a href={task_route.replace("taskId", task.id)}>{ task.title }</a> : <i className="fas fa-minus fa-3x"></i>}</td>
-                                        <td>{ priority.title }</td>
-                                        <td>
-                                            {finished_at === null ? <i className="fas fa-times-circle fa-3x"></i> : <i className="fas fa-check-circle fa-3x"></i>}
-                                        </td>
-                                        <td>
-                                            {finished_at === null ? <i className="fas fa-calendar-times fa-3x"></i> : moment(finished_at).fromNow()}
-                                        </td>
+                                            </td>
+                                            <td>{task !== null ? <a href={task_route.replace("taskId", task.id)}>{ task.title }</a> : <i className="fas fa-minus fa-3x"></i>}</td>
+                                            <td>{ priority.title }</td>
+                                            <td>
+                                                {finished_at === null ? <i className="fas fa-times-circle fa-3x"></i> : <i className="fas fa-check-circle fa-3x"></i>}
+                                            </td>
+                                            <td>
+                                                {finished_at === null ? <i className="fas fa-calendar-times fa-3x"></i> : moment(finished_at).fromNow()}
+                                            </td>
+                                        </a>
                                     </tr>
                                 )
                             })
@@ -525,7 +538,7 @@ export default class Demands extends Component {
                             </div>
                     }
                 </div>
-                <div className={"col-12 mt-4 float-right demand-tab-result pr-0 pl-0 pr-md-3 pl-md-3 " + `${current_tab === "all" ? "active" : ""}`} ref={this.tabResultsRef[2]}>
+                <div className={"mt-4 demand-tab-result pr-0 pl-0 pr-md-3 pl-md-3 " + `${current_tab === "all" ? "active" : ""}`} ref={this.tabResultsRef[2]}>
                     <div className="filter-box demand-bg-color mb-4 p-2 col-12 animated fadeIn">
                         <div className="filter-option col-12 col-md-6 col-lg-3 mb-3 mb-lg-0 text-center">
                             <span>جستجو در: </span>
@@ -537,7 +550,7 @@ export default class Demands extends Component {
                         </div>
                         <div className="filter-option col-12 col-md-6 col-lg-3 mb-3 mb-lg-0 text-center">
                             <span>مرتب سازی بر اساس:</span>
-                            <select id="mixed_all_order_by_select" defaultValue="createdw">
+                            <select id="mixed_all_order_by_select" defaultValue="created_at">
                                 <option container_class="select-option-big" value="created_at" icon_name="fas fa-calendar-plus">تاریخ ایجاد</option>
                                 <option container_class="select-option-big" value="updated_at" icon_name="fas fa-user-edit">تاریخ تغییرات</option>
                                 <option container_class="select-option-big" value="finished_at" icon_name="fas fa-calendar-check">تاریخ اتمام</option>
@@ -554,7 +567,7 @@ export default class Demands extends Component {
                             <button className="btn btn-outline-info" onClick={this.handleMore.bind(this, true)}>مرتب سازی</button>
                         </div>
                     </div>
-                    <table className="col-12 table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right animated bounce mt-4">
+                    <table className="table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right animated bounce mt-4">
                         <thead className="thead-dark">
                             <tr>
                                 <th scope="col">#</th>
@@ -572,66 +585,72 @@ export default class Demands extends Component {
                                 let { title, task, priority, due_to, finished_at, to, from, id, workspace_id } = item
                                 return (
                                     <tr key={i} className="animated fadeIn" onClick={() => redirectTo(getDemand(workspace_id, id))}>
-                                        <th scope="row">{i + 1}</th>
-                                        <td>{ title }</td>
-                                        <td>
-                                            <div className="employees-container horizontal-centerlize">
-                                                <span>{ from.fullname }</span>
-                                                <div className="dropdown-users d-none" onClick={(e) => e.stopPropagation()}>
-                                                    <div className="user-dropdown-item animated jackInTheBox">
-                                                        <div className="user-right-flex">
-                                                            <div className="user-img-container ml-2">
-                                                                <img src={from.avatar_pic !== null ? APP_PATH + from.avatar_pic : APP_PATH + 'images/male-avatar.svg'} />
-                                                            </div>
-                                                            <div className="user-info ml-2">
-                                                                <p>{ from.fullname }</p>
-                                                                <a href={getUser(from.id)}>@{from.name}</a>
-                                                            </div>
+                                        <a href={getDemand(workspace_id, id)} className="d-contents">
+                                            <th scope="row">{i + 1}</th>
+                                            <td>{ title }</td>
+                                            <td>
+                                                <div className="employees-container horizontal-centerlize">
+                                                    <span>{ from ? from.fullname : <i className="fas fa-user-slash"></i> }</span>
+                                                    {from &&
+                                                        <div className="dropdown-users d-none" onClick={(e) => e.stopPropagation()}>
+                                                            <div className="user-dropdown-item animated jackInTheBox">
+                                                                <div className="user-right-flex">
+                                                                    <div className="user-img-container ml-2">
+                                                                        <img src={from.avatar_pic !== null ? APP_PATH + from.avatar_pic : APP_PATH + 'images/user-avatar.png'} />
+                                                                    </div>
+                                                                    <div className="user-info ml-2">
+                                                                        <p>{ from.fullname }</p>
+                                                                        <a href={getUser(from.id)}>@{from.name}</a>
+                                                                    </div>
+                                                                </div>
+                                                                <div className="user-label-container">
+                                                                    {
+                                                                        workspace_users && workspace_users[from.id].is_admin === 1 
+                                                                        ? <button className="btn btn-sm btn-success rtl admin p-1"><span>ادمین<i className="fas fa-user-tie mr-1"></i></span></button>
+                                                                        : <button className="btn btn-sm btn-primary rtl"><span>عضو<i className="fas fa-user mr-1"></i></span></button>
+                                                                    } 
+                                                                </div>
+                                                            </div>                                                
                                                         </div>
-                                                        <div className="user-label-container">
-                                                            {
-                                                                workspaces_users && workspaces_users[workspace_id][from.id].is_admin === 1 
-                                                                ? <button className="btn btn-sm btn-success rtl admin p-1"><span>ادمین<i className="fas fa-user-tie mr-1"></i></span></button>
-                                                                : <button className="btn btn-sm btn-primary rtl"><span>عضو<i className="fas fa-user mr-1"></i></span></button>
-                                                            } 
-                                                        </div>
-                                                    </div>                                                
+                                                    }
                                                 </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div className="employees-container horizontal-centerlize">
-                                                <span>{ to.fullname }</span>
-                                                <div className="dropdown-users d-none" onClick={(e) => e.stopPropagation()}>
-                                                    <div className="user-dropdown-item animated jackInTheBox">
-                                                        <div className="user-right-flex">
-                                                            <div className="user-img-container ml-2">
-                                                                <img src={to.avatar_pic !== null ? APP_PATH + to.avatar_pic : APP_PATH + 'images/male-avatar.svg'} />
-                                                            </div>
-                                                            <div className="user-info ml-2">
-                                                                <p>{ to.fullname }</p>
-                                                                <a href={getUser(to.id)}>@{to.name}</a>
-                                                            </div>
+                                            </td>
+                                            <td>
+                                                <div className="employees-container horizontal-centerlize">
+                                                    <span>{ to ? to.fullname : <i className="fas fa-user-slash"></i> }</span>
+                                                    {to && 
+                                                        <div className="dropdown-users d-none" onClick={(e) => e.stopPropagation()}>
+                                                            <div className="user-dropdown-item animated jackInTheBox">
+                                                                <div className="user-right-flex">
+                                                                    <div className="user-img-container ml-2">
+                                                                        <img src={to.avatar_pic !== null ? APP_PATH + to.avatar_pic : APP_PATH + 'images/user-avatar.png'} />
+                                                                    </div>
+                                                                    <div className="user-info ml-2">
+                                                                        <p>{ to.fullname }</p>
+                                                                        <a href={getUser(to.id)}>@{to.name}</a>
+                                                                    </div>
+                                                                </div>
+                                                                <div className="user-label-container">
+                                                                    {
+                                                                        workspace_users && workspace_users[to.id].is_admin === 1 
+                                                                        ? <button className="btn btn-sm btn-success rtl admin p-1"><span>ادمین<i className="fas fa-user-tie mr-1"></i></span></button>
+                                                                        : <button className="btn btn-sm btn-primary rtl"><span>عضو<i className="fas fa-user mr-1"></i></span></button>
+                                                                    } 
+                                                                </div>
+                                                            </div>                                                
                                                         </div>
-                                                        <div className="user-label-container">
-                                                            {
-                                                                workspaces_users && workspaces_users[workspace_id][to.id].is_admin === 1 
-                                                                ? <button className="btn btn-sm btn-success rtl admin p-1"><span>ادمین<i className="fas fa-user-tie mr-1"></i></span></button>
-                                                                : <button className="btn btn-sm btn-primary rtl"><span>عضو<i className="fas fa-user mr-1"></i></span></button>
-                                                            } 
-                                                        </div>
-                                                    </div>                                                
+                                                    }
                                                 </div>
-                                            </div>
-                                        </td>
-                                        <td>{task !== null ? <a href={getTask(task.id)}>{ task.title }</a> : <i className="fas fa-minus fa-3x"></i>}</td>
-                                        <td>{ priority.title }</td>
-                                        <td>
-                                            {finished_at === null ? <i className="fas fa-times-circle fa-3x"></i> : <i className="fas fa-check-circle fa-3x"></i>}
-                                        </td>
-                                        <td>
-                                            {finished_at === null ? <i className="fas fa-calendar-times fa-3x"></i> : moment(finished_at).fromNow()}
-                                        </td>
+                                            </td>
+                                            <td>{task !== null ? <a href={getTask(task.id)}>{ task.title }</a> : <i className="fas fa-minus fa-3x"></i>}</td>
+                                            <td>{ priority.title }</td>
+                                            <td>
+                                                {finished_at === null ? <i className="fas fa-times-circle fa-3x"></i> : <i className="fas fa-check-circle fa-3x"></i>}
+                                            </td>
+                                            <td>
+                                                {finished_at === null ? <i className="fas fa-calendar-times fa-3x"></i> : moment(finished_at).fromNow()}
+                                            </td>
+                                        </a>
                                     </tr>
                                 )
                             })

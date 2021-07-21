@@ -46,7 +46,7 @@ class TaskController extends Controller
      */
     public function show($task)
     {
-        $task = Task::with('demands', 'users', 'workspace')->findOrFail($task);
+        $task = Task::whereHas('workspace')->with('demands', 'users', 'workspace')->findOrFail($task);
         $this->authorize('view', $task);
         return view('theme.pages.tasks.show', compact('task'));
     }

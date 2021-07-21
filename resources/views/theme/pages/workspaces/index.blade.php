@@ -32,7 +32,7 @@
                         {{ $loop->index + 1 }}
                     </th>
                     <td class="text-right">
-                        <img src="{{ asset($workspace->avatar_pic ?: 'images/male-avatar.svg') }}" alt="" style="height: 30px; widh: 30px;">
+                        <img src="{{ asset($workspace->avatar_pic ?: 'images/idea.svg') }}" alt="" style="height: 30px; widh: 30px;">
                         <a href="{{ route('task-manager.workspaces.show', ['workspace' => $workspace->id]) }}">{{ $workspace->title }}</a>
                     </td>
                     <td>
@@ -49,11 +49,11 @@
                                     <div class="user-dropdown-item animated jackInTheBox">
                                         <div class="user-right-flex">
                                             <div class="user-img-container ml-2">
-                                                <img src="{{ asset($user->avatar_pic ?: 'images/male-avatar.svg') }}" />
+                                                <img src="{{ asset($user->avatar_pic ?: 'images/user-avatar.png') }}" />
                                             </div>
                                             <div class="user-info ml-2">
                                                 <p>{{ $user->fullname }}</p>
-                                                <a href="">{{"@".$user->name }}</a>
+                                                <a href="{{ route('task-manager.users.show', ['user' => $user->id]) }}">{{"@".$user->name }}</a>
                                             </div>
                                         </div>
                                         <div class="user-label-container">
@@ -91,7 +91,7 @@
                         <form action="{{ route('task-manager.workspaces.destroy', ['workspace' => $workspace->id]) }}" method="post">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-sm btn-danger">
+                            <button type="submit" class="btn btn-sm btn-danger delete-btn" deleting-item="workspace">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </form>
@@ -106,3 +106,11 @@
         {{ $workspaces->links() }}
     </div>
 @endsection
+
+@push('scripts')
+    @if (config('app.env') == 'local')
+    <script src="{{ asset('js/confirmDelete.js') }}"></script> 
+    @else
+    <script src="{{ asset(mix('js/confirmDelete.js')) }}"></script>
+    @endif
+@endpush

@@ -16,20 +16,20 @@ class Flash
     {
         return $this->create($title, $msg, $level,"flash_message_overlay");
     }
-    public function info($title,$msg)
+    public function info($title,$msg = "")
     {
-        return $this->create($title, $msg  = "", "info");
+        return $this->create($title, $msg, "info");
     }
-    public function success($title,$msg)
+    public function success($title,$msg = "")
     {
-        return $this->create($title, $msg  = "", "success");
+        return $this->create($title, $msg, "success");
     }
-    public function warning($title,$msg)
+    public function warning($title,$msg = "")
     {
-        return $this->create($title, $msg  = "", "warning");
+        return $this->create($title, $msg, "warning");
     }
-    public function error($title,$msg)
+    public function error($title,$msg = "")
     {
-        return $this->create($title, $msg  = "", "error");
+        return $this->create($title, $msg, "error");
     }
 }

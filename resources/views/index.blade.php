@@ -5,8 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Sampi Tech Group</title>
+    
+    @if (config('app.env') == 'local')
+        
+    @else
+        
+    @endif
+
+    @if (config('app.env') == 'local')
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/welcome.css') }}">
+    @else
+    <link rel="stylesheet" href="{{ asset(mix('css/app.css')) }}">
+    <link rel="stylesheet" href="{{ asset(mix('css/welcome.css')) }}">
+    @endif
+    
 </head>
 <body>
     <div class="col-12 h-100 float-left main-division">
@@ -16,7 +29,7 @@
                 <p class="m-0">Sampi Tech Group</p>
             </div>
         </div>
-        <div class="col-md-6 col-12 float-left mb-md-0 mb-3 p-3 right-section">
+        <div class="col-md-6 col-12 float-left mb-md-0 mb-3 p-3 right-section rtl">
             <p class="col-12 float-left text-center"><i class="fas fa-list"></i> ماژول ها</p>
             <div class="float-left module-section">
                 <ul class="col-md-6 col-12 p-0 module-list float-right">

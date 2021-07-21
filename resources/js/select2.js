@@ -7,7 +7,8 @@ export const formatOptionWithIcon = (option) => {
 }
 export const formatOptionWithImage = (option) => {
     if (option.element) {
-        let img_src = option.element.attributes.img_address.nodeValue, is_user_admin = option.element.attributes.is_admin
+        let img_src = option.element.attributes.img_address.nodeValue ? option.element.attributes.img_address.nodeValue : console.log('kirsag')
+        let is_user_admin = option.element.attributes.is_admin
         return $(`
             <div class="select-option circle-avatar-pic">
                 <img class="ml-1" src="${img_src}"/>
@@ -27,7 +28,7 @@ export const formatOption = (option) => {
     `)
 }
 
-$('#new-task-priority, #tasks_order_select, #tasks_order_by_select, #tasks_relation_select, #mixed_tasks_order_select, #mixed_tasks_order_by_select, #mixed_tasks_relation_select, #mixed_demands_order_select, #mixed_demands_order_by_select, #mixed_demands_relation_select, #mixed_needs_order_select, #mixed_needs_order_by_select, #mixed_needs_relation_select').select2({
+$('#new-task-priority, #tasks_order_select, #tasks_order_by_select, #tasks_relation_select, #mixed_tasks_order_select, #mixed_tasks_order_by_select, #mixed_tasks_relation_select, #mixed_demands_order_select, #mixed_demands_order_by_select, #mixed_demands_relation_select, #mixed_needs_order_select, #mixed_needs_order_by_select, #mixed_needs_relation_select, #mixed_all_order_select, #mixed_all_order_by_select, #mixed_all_relation_select').select2({
     templateResult: formatOptionWithIcon,
     minimumResultsForSearch: Infinity,
     width: '100%',

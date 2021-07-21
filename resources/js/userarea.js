@@ -55,3 +55,8 @@ $('.collapser-btn').click(toggleCollapser)
 if ($(window).width() > 576) {
     toggleCollapser()
 }
+
+$("#refresh-btn").on("click", function() {
+    $(this.childNodes.item(1)).addClass("rotate-animation")
+    window.location.reload(true)
+})

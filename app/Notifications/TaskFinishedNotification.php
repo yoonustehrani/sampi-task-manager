@@ -43,10 +43,15 @@ class TaskFinishedNotification extends Notification
      */
     public function toMail($notifiable)
     {
+        $task = $this->task;
+        // $workspace_url = route('task-manager.workspaces.show', ['workspace' => $task->workspace->id]);
+        $task_url = route('task-manager.tasks.show', ['task' => $task->id]);
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+                    ->greeting("{$notifiable->fullname} عزیز سلام")
+                    ->subject("مسئولیت {$task->title} پایان یافت !")
+                    ->line("مسئولیت با عنوان {$task->title} از پروژه {$task->workspace->title} اتمام یافت.")
+                    ->action('مشاهده', $task_url)
+                    ->line('پیروز و سربلند باشید !');
     }
 
     public function toTelegram($notifiable)
@@ -54,7 +59,7 @@ class TaskFinishedNotification extends Notification
         $chat_id = $notifiable->telegram_chat_id;
         $task = $this->task;
         $workspace_url = "http://ourobot.ir/task-manager/workspaces/{$task->workspace->id}";
-        $task_url = "http://ourobot.ir/task-manager/tasks/{$task->id}";    
+        $task_url = "http://ourobot.ir/task-manager/tasks/{$task->id}";
         $finisher = "";
         if ($task->finisher) {
             $finisher .= "توسط : ";
@@ -68,7 +73,7 @@ class TaskFinishedNotification extends Notification
 {$notifiable->fullname} عزیز
 مسئولیت با عنوان <b>{$task->title}</b> از پروژه <a href=\"{$workspace_url}\">{$task->workspace->title}</a> اتمام یافت.
 {$finisher}
-Sampi Task Manager (http://ourobot.ir)";
+Sampi Task Manager";
         $tg = new TelegramBot(config('services.telegram.task_manager.bot_token'));
         $keyboard = [
             'inline_keyboard' => [[
@@ -87,7 +92,7 @@ Sampi Task Manager (http://ourobot.ir)";
             if ($task->workspace->avatar_pic) {
                 $res = $tg->sendPhoto(
                     $chat_id,
-                    "http://ourobot.ir/{$task->workspace->avatar_pic}",
+                    config('app.url') . "$task->workspace->avatar_pic}",
                     ['parse_mode' => 'HTML', 'caption' => trim($text), 'reply_markup' => json_encode($keyboard)]
                 );
             } else {

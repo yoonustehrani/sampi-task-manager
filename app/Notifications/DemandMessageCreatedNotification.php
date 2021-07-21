@@ -45,10 +45,15 @@ class DemandMessageCreatedNotification extends Notification
      */
     public function toMail($notifiable)
     {
+        $demand = $this->demand;
+        $message = $this->message;
+        $demand_url = route('task-manager.demands.show', ['workspace' => $demand->workspace_id, 'demand' => $demand->id]);  
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+                    ->greeting("{$notifiable->fullname} عزیز سلام")
+                    ->subject("پیام جدید از طرف {$message->user->fullname}")
+                    ->line("پیام جدید از سوی {$message->user->fullname} برای درخواست {$demand->title} ارسال شده است.")
+                    ->action('مشاهده پیام', $demand_url)
+                    ->line('موفق و سربلند باشید !');
     }
     
     public function toTelegram($notifiable)
@@ -67,7 +72,7 @@ class DemandMessageCreatedNotification extends Notification
         }
         $text = "
 پیام جدید از سوی {$from} برای درخواست <b>{$demand->title}</b> ارسال شده است.
-Sampi Task Manager (http://ourobot.ir)";
+Sampi Task Manager";
         $tg = new TelegramBot(config('services.telegram.task_manager.bot_token'));
         $keyboard = [
             'inline_keyboard' => [[
@@ -82,7 +87,7 @@ Sampi Task Manager (http://ourobot.ir)";
             if ($demand->workspace->avatar_pic) {
                 $res = $tg->sendPhoto(
                     $chat_id,
-                    "http://ourobot.ir/{$demand->workspace->avatar_pic}",
+                    config('app.url') . "$demand->workspace->avatar_pic}",
                     ['parse_mode' => 'HTML', 'caption' => trim($text), 'reply_markup' => json_encode($keyboard)]
                 );
             } else {

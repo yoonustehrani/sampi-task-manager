@@ -1,3 +1,5 @@
+import Swal from "sweetalert2"
+
 export const setPriority = (id) => {
     switch(parseInt(id)) {
         case 1:
@@ -94,4 +96,57 @@ export const sweetError = (errObject) => {
             break;
     }
     return {'code': status};
+}
+
+export const sweetSuccess = (message) => {
+    Swal.default.fire({
+        icon: "success",
+        title: "موفقیت",
+        text: message,
+        showConfirmButton: true,
+        customClass: {
+            content: "persian-text"
+        }
+    })
+}
+
+export const sweetConfirm = (message, func) => {
+    Swal.default.fire({
+        icon: "warning",
+        title: "حذف",
+        text: message,
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: "بله",
+        cancelButtonText: "خیر",
+        reverseButtons: true,
+        customClass: {
+            content: "persian-text"
+        }
+    }).then((res) => {
+        if (res.isConfirmed) {
+            func()
+        }
+    })
+}
+
+export const sweetSuccessDelete = (message, url) => {
+    Swal.default.fire(
+        "موفقیت",
+        message,
+        'success'
+    ).then(res => {
+        if (url && res.isConfirmed || res.isDismissed) {
+            redirectTo(url)
+        }
+    })
+}
+
+export const sweetFailDelete = () => {
+    Swal.default.fire(
+        "خطا",
+        "لطفا دوباره تلاش کنید",
+        'error'
+    )
 }

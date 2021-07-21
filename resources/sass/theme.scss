@@ -67,16 +67,19 @@ a {
     float: left;
     .navbar-top {
         background: $white;
-        height: 10%;
+        min-height: 10%;
         // padding: 15px 10px;
         display: flex;
         flex-direction: column;
         justify-content: center;
+        > div {
+            white-space: nowrap;
+        }
     }
 }
 .contentbar {
     overflow-y: auto;
-    height: 87%;
+    height: 84%;
 }
 nav {
     a:hover {
@@ -199,6 +202,7 @@ div.admin-info-container {
     // position: relative;
     // top: 50%;
     // transform: translateY(-50%);
+    width: 70%;
     > div {
         display: flex;
         flex-direction: column;
@@ -223,6 +227,8 @@ div.admin-info-container {
         font-size: 12px;
         position: relative;
         top: 8px;
+        word-break: break-all;
+        white-space: pre-line;
     }
 }
 
@@ -616,4 +622,43 @@ div.edit-tasks-container {
 
 .rtl {
     direction: rtl !important;
+}
+
+i.finished-status-icon {
+    position: relative;
+    z-index: 99;
+}
+
+i.rotate-animation {
+    animation: rotate-animation infinite 1.5s linear;
+}
+
+@keyframes rotate-animation {
+    0% {
+        transform-origin: center;
+    }
+    100% {
+        transform-origin: center;
+        transform: rotate(360deg)
+    }
+}
+
+.border-top {
+    @media (min-width: 576px) {
+        border-top: 1px solid #D7DDE8
+    }
+}
+
+.left-5 {
+    left: 5%;
+}
+
+.d-contents {
+    display: contents !important;
+    text-decoration: none !important;
+    color: #000000;
+    &:hover {
+        text-decoration: none !important;
+        color: #000000;
+    }
 }

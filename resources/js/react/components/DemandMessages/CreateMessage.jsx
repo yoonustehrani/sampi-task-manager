@@ -32,6 +32,7 @@ class CreateMessage extends Component {
             $('#last-message').removeClass('d-none');
             $('#last-message > span').html(moment(message.created_at).locale('fa').fromNow());
             editMessage(id, message);
+            this.setState({text: ""})
         }).catch(err => {
             let {code} = sweetError(err);
             if (code !== 200) {
@@ -47,13 +48,14 @@ class CreateMessage extends Component {
         }))
     }
     render() {
+        let { text } = this.state
         return (
             <div className="col-12 float-left p-0 text-right">
                 <button type="button" className="btn btn-sm btn-primary mb-3" onClick={this.handleToggle}><i className={`fas ${this.state.display ? 'fa-minus' : 'fa-plus'}`}></i></button>
                 <div className={`col-12 p-3 ${this.state.display ? '' : 'd-none'} animated fadeIn`}>
                     <div className="input-group col-12 pl-0 pr-0">
                         <div className="tinymc-container">
-                            <TinymcEditor changeContent={this.handleChangeContent}/>
+                            <TinymcEditor changeContent={this.handleChangeContent} value={text} />
                         </div>
                         <div className="text-center mt-2">
                             <button type="button" className="btn btn-outline-primary" onClick={this.handleSubmit}>ارسال <i className="fas fa-paper-plane"></i></button>

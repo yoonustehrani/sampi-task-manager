@@ -37,9 +37,7 @@ class TaskController extends BaseController
         } else {
             $user_tasks = $model->{$relationship}();
         }
-        $user_tasks = $user_tasks->whereNull('parent_id')->with('users')->withCount('demands', 'children');
-        // $group = $request->group ?: $this->default_group;
-        // $user_tasks = $user_tasks->where('group', '=', $group);
+        $user_tasks = $user_tasks->with('users');
         return $request->limit
                 ? $this->decide_ordered($request, $user_tasks)->limit((int) $request->limit)->get()
                 : $this->decide_ordered($request, $user_tasks)->latest()->paginate(10);
@@ -61,6 +59,18 @@ class TaskController extends BaseController
                 $model = $user;
                 $relationship = $this->model_relationship($request->relationship, $model, '_tasks', 'tasks');
                 $model = $model->{$relationship}();
+            } else {
+                switch ($request->relationship) {
+                    case 'finished':
+                        $model = $model->whereNotNull('finished_at');
+                        break;
+                    case 'unfinished':
+                        $model = $model->whereNull('finished_at');
+                        break;
+                    case 'expired':
+                        $model = $model->whereNull('finished_at')->whereNotNull('due_to')->where('due_to', '<', now('Asia/Tehran'));
+                        break;
+                }
             }
         } else {
             $model = $request->user();
@@ -72,8 +82,7 @@ class TaskController extends BaseController
             }
             $model = $model->{$relationship}();
         }
-        
-        $model = $model->whereNull('parent_id')->with(['users','workspace:id,title,avatar_pic'])->withCount('demands', 'children');
+        $model = $model->whereHas('workspace')->with(['users','workspace:id,title,avatar_pic']);
         return $request->limit
             ? $this->decide_ordered($request, $model)->limit((int) $request->limit)->get()
             : $this->decide_ordered($request, $model)->paginate(10);
@@ -87,7 +96,7 @@ class TaskController extends BaseController
         ]);
         $user = ($request->user_id) ? \App\User::find($request->user_id) : $request->user();
         $relationship = $this->model_relationship($request->relationship, $user, '_tasks', 'tasks');
-        $tasks = $tasks = $user->{$relationship}()->with(['workspace:id,title,avatar_pic', 'parent', 'users'])->withCount('children');
+        $tasks = $tasks = $user->{$relationship}()->whereHas('workspace')->with(['workspace:id,title,avatar_pic', 'parent', 'users'])->withCount('children');
         return $request->limit
                 ? $this->decide_ordered($request, $tasks)->search($request->q, null, true)->limit((int) $request->limit)->get()
                 : $this->decide_ordered($request, $tasks)->search($request->q, null, true)->paginate(10);
@@ -104,7 +113,7 @@ class TaskController extends BaseController
         if ($request->workspace) {
             $tasks = $tasks->where('workspace_id', $request->workspace);
         } else {
-            $tasks = $tasks->with('workspace:id,title,avatar_pic');
+            $tasks = $tasks->whereHas('workspace')->with('workspace:id,title,avatar_pic');
         }
         if ($request->parent_only) {
             $tasks = $tasks->whereNull('parent_id');
@@ -132,23 +141,21 @@ class TaskController extends BaseController
             'title' => 'required|string',
             'group' => 'nullable|string|min:3|max:100',
             'priority' => 'required|numeric',
-            'due_to' => 'nullable|numeric',
         ]);
         $this->authorize('create', Task::class);
         $user = ($request->user_id) ? \App\User::find($request->user_id) : $request->user();
         $workspace = $user->workspaces()->findOrFail($workspace);
         try {
             \DB::beginTransaction();
-                $task = new Task();
+                $task = new Task;
                 $task->title = $request->title;
                 $task->description = $request->description;
-                $task->parent = $request->parent;
+                $task->parent_id = $request->parent_id;
                 $task->group = $request->group ?: $this->default_group;
                 $task->priority_id = $request->priority;
-                $due_to = $request->due_to ? (new \Carbon\Carbon(((int) $request->due_to)))->timezone('Asia/Tehran')->seconds(0) : null;
-                $task->due_to = $due_to;
+                $task->due_to = $request->due_to ?: null;
                 $task->creator_id = $request->user()->id;
-                $task = $workspace->tasks()->create($task->toArray());
+                $task = $workspace->tasks()->save($task);
                 $users = $request->input('users') ?: [];
                 $task->users()->attach(
                     array_merge($users, [(string) $request->user()->id])
@@ -169,7 +176,6 @@ class TaskController extends BaseController
             'title' => 'required|string',
             'group' => 'nullable|string|min:3|max:100',
             'priority' => 'required|numeric',
-            'due_to' => 'nullable|numeric',
         ]);
         $task = Task::where('workspace_id', $workspace)->findOrFail($task);
         $this->authorize('update', $task);
@@ -177,18 +183,20 @@ class TaskController extends BaseController
             \DB::beginTransaction();
                 $task->title = $request->title;
                 $task->description = $request->description;
-                if ($request->parent_id) {
-                    $task->parent_id = $request->parent_id;
-                }
+                $task->parent_id = $request->parent_id;
                 $task->group = $request->group ?: $this->default_group;
                 $task->priority_id = $request->priority;
-                $due_to = $request->due_to ? (new \Carbon\Carbon(((int) $request->due_to)))->timezone('Asia/Tehran')->seconds(0) : null;
-                $task->due_to = $due_to;
-                if ($request->finished) {
-                    $task->finished_at = $task->finished_at ? null : now();
-                    $task->finisher_id = $request->user()->id;
-                }
-                $task->save();
+                $task->due_to = $request->due_to ?: null;
+                $finisher = $task->finisher_id ?: $request->user()->id;
+                $finished_at = $task->finished_at ?: now();
+                $task->finisher_id = $request->finished ? $finisher : null;
+                $task->finished_at = $request->finished ? $finished_at : null;
+                if ($task->save()) {
+                    if ($task->finished_at) {
+                        $task->load('workspace', 'finisher');
+                        event(new TaskFinished($task));
+                    }
+                };
                 $users = $request->input('users') ?: [];
                 $task->users()->sync(
                     array_merge($users, [(string) $request->user()->id])
@@ -212,8 +220,8 @@ class TaskController extends BaseController
     {
         $user = ($request->user_id) ? \App\User::find($request->user_id) : $request->user();
         $task = $user->tasks()->findOrFail($task);
+        $task->finisher_id = $task->finished_at ? null : $user->id;
         $task->finished_at = $task->finished_at ? null : now();
-        $task->finisher_id = $user->id;
         if ($task->save()) {
             if ($task->finished_at) {
                 $task->load('workspace', 'finisher');

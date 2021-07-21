@@ -44,16 +44,19 @@ class WorkspaceNotification extends Notification
      */
     public function toMail($notifiable)
     {
+        $workspace_url = route('task-manager.workspaces.show', ['workspace' => $this->workspace->id]);
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+                    ->greeting("{$notifiable->fullname} عزیز سلام")
+                    ->subject("شما به پروژه {$this->workspace->title} اضافه شدید.")
+                    ->line("پروژه {$this->workspace->title} در سیستم مدیریت پروژه Sampi ایجاد شده است.")
+                    ->action('مشاهده پروژه', $workspace_url)
+                    ->line('موفق و پیروز باشید.');
     }
 
     public function toTelegram($notifiable)
     {
         $chat_id = $notifiable->telegram_chat_id;
-        $workspace_url = "http://ourobot.ir/task-manager/workspaces/{$this->workspace->id}";
+        $workspace_url = route('task-manager.workspaces.show', ['workspace' => $this->workspace->id]);
         $text = "
 {$notifiable->fullname} عزیز
 پروژه <a href=\"{$workspace_url}\">{$this->workspace->title}</a> در سیستم مدیریت پروژه Sampi ایجاد شده است.
@@ -72,7 +75,7 @@ class WorkspaceNotification extends Notification
             if ($this->workspace->avatar_pic) {
                 $res = $tg->sendPhoto(
                     $chat_id,
-                    "http://ourobot.ir/{$this->workspace->avatar_pic}",
+                    config('app.url') . "$this->workspace->avatar_pic}",
                     ['parse_mode' => 'HTML', 'caption' => trim($text), 'reply_markup' => json_encode($keyboard)]
                 );
             } else {

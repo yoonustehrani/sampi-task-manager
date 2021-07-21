@@ -43,18 +43,22 @@ class DemandCreatedNotification extends Notification
      */
     public function toMail($notifiable)
     {
+        $demand = $this->demand;
+        $demand_url = route('task-manager.demands.show', ['workspace' => $demand->workspace_id, 'demand' => $demand->id]);
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+                    ->subject("درخواست {$demand->from->fullname} از شما - {$demand->title}")
+                    ->greeting("$notifiable->fullname عزیز سلام")
+                    ->line("{$demand->from->fullname} درخواست جدیدی با عنوان {$demand->title} از شما دارد.")
+                    ->action('مشاهده درخواست', $demand_url)
+                    ->line('موفق و پیروز باشید !');
     }
 
     public function toTelegram($notifiable)
     {
         $chat_id = $notifiable->telegram_chat_id;
         $demand = $this->demand;
-        $workspace_url = "http://ourobot.ir/task-manager/workspaces/{$demand->workspace->id}";
-        $demand_url = "http://ourobot.ir/task-manager/workspaces/{$demand->workspace->id}/demands/{$demand->id}";    
+        $workspace_url = route('task-manager.workspaces.show', ['workspace' => $demand->workspace_id]);
+        $demand_url = route('task-manager.demands.show', ['workspace' => $demand->workspace_id, 'demand' => $demand->id]);
         $from = "";
         if ($demand->from) {
             $from .= "درخواست دهنده : ";
@@ -68,7 +72,7 @@ class DemandCreatedNotification extends Notification
 {$notifiable->fullname} عزیز
 درخواستی جدید با عنوان <b>{$demand->title}</b> در پروژه <a href=\"{$workspace_url}\">{$demand->workspace->title}</a> در سیستم مدیریت پروژه Sampi ایجاد شده است.
 {$from}
-Sampi Task Manager (http://ourobot.ir)";
+Sampi Task Manager";
         $tg = new TelegramBot(config('services.telegram.task_manager.bot_token'));
         $keyboard = [
             'inline_keyboard' => [[
@@ -87,7 +91,7 @@ Sampi Task Manager (http://ourobot.ir)";
             if ($demand->workspace->avatar_pic) {
                 $res = $tg->sendPhoto(
                     $chat_id,
-                    "http://ourobot.ir/{$demand->workspace->avatar_pic}",
+                    config('app.url') . "{$demand->workspace->avatar_pic}",
                     ['parse_mode' => 'HTML', 'caption' => trim($text), 'reply_markup' => json_encode($keyboard)]
                 );
             } else {

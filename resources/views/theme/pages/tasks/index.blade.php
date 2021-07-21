@@ -14,6 +14,7 @@
         add_task_api = "{{ route('api.task-manager.tasks.store', ['workspace' => "workspaceId", 'api_token' => auth()->user()->api_token]) }}"
         logged-in-user-id = "{{ auth()->user()->id }}"
         get-all-users="{{ route('api.task-manager.users.index', ['api_token' => auth()->user()->api_token]) }}"
+        toggle-task-state-api = "{{ route('api.task-manager.tasks.toggle_state', ['workspace' => "workspaceId", 'task' => 'taskId', 'api_token' => auth()->user()->api_token]) }}"
     >
     </div>
 @endsection
@@ -24,7 +25,13 @@
         var VIEW_AS_ADMIN       = {{ request()->view_as_admin == 'true' ? 'true' : 'false' }}; 
         var simple_search_url = "{{ route('api.task-manager.tasks.search.simple', ['api_token' => auth()->user()->api_token]) }}"
     </script>
+    @if (config('app.env') == 'local')
     <script src="{{ asset('js/datepicker.js') }}"></script>
     <script src="{{ asset('js/mixedTasks.js') }}"></script>
     <script src="{{ asset('js/select2.js') }}"></script>
+    @else
+    <script src="{{ asset(mix('js/datepicker.js')) }}"></script>
+    <script src="{{ asset(mix('js/mixedTasks.js')) }}"></script>
+    <script src="{{ asset(mix('js/select2.js')) }}"></script>  
+    @endif
 @endpush

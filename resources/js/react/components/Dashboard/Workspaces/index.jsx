@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { redirectTo } from '../../../../helpers'
 import Workspace from './Workspace';
 
 export default class Workspaces extends Component {

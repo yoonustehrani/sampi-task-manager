@@ -79,6 +79,7 @@ class UserController extends Controller
     public function show($user)
     {
         $user = User::with(['roles', 'workspaces' => function($q) { $q->withCount('users'); }])->findOrFail($user);
+        $this->authorize('view', $user);
         return view('theme.pages.users.show', compact('user'));
     }
 

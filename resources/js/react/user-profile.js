@@ -9,6 +9,9 @@ const mixedTasks = target.getAttribute('data-mixed-tasks');
 const chart_one = target.getAttribute("data-chart-completed")
 const chart_two = target.getAttribute("data-chart-ontime")
 const chart_three = target.getAttribute("data-chart-yearly")
+const task_counter = target.getAttribute("task-counter")
+const workspace_counter = target.getAttribute("workspace-counter")
+const demand_counter = target.getAttribute("demand-counter")
 
 if (target) {
     ReactDom.render(
@@ -19,6 +22,9 @@ if (target) {
             chart_one={chart_one}
             chart_two={chart_two}
             chart_three={chart_three}
+            task_counter={task_counter}
+            workspace_counter={workspace_counter}
+            demand_counter={demand_counter}
         />,
         target
     )

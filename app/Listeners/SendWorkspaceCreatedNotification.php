@@ -4,12 +4,13 @@ namespace App\Listeners;
 
 use App\Broadcasting\TelegramChannel;
 use App\Notifications\WorkspaceNotification;
+use App\Traits\UserNotifiableChannelsTrait;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
 class SendWorkspaceCreatedNotification
 {
-    
+    use UserNotifiableChannelsTrait;
     /**
      * Create the event listener.
      *
@@ -30,8 +31,9 @@ class SendWorkspaceCreatedNotification
     {
         $users = $event->workspace->users;
         foreach ($users as $user) {
-            if ($user->telegram_chat_id) {
-                $user->notifyNow(new WorkspaceNotification([TelegramChannel::class], $event->workspace));
+            $channels = $this->user_channels($user);
+            if (count($channels) > 0) {
+                $user->notifyNow(new WorkspaceNotification($channels, $event->workspace));
             }
         }
     }

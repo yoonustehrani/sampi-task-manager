@@ -1,16 +1,17 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import { getTask, getUser, getWorkspace, sweetError, setPriority, redirectTo } from '../../../helpers'
+import { getTask, getUser, getWorkspace, sweetError, setPriority, redirectTo, sweetSuccess } from '../../../helpers'
 import { renderWithImg } from '../../../select2'
 import { Digital } from 'react-activity'
 import 'react-activity/lib/Digital/Digital.css'
 import TinymcEditor from '../tinymce-editor/index'
-import moment from 'moment'
+import moment from 'moment-jalaali'
 moment.locale('fa')
 
 export default class MixedTasks extends Component {
     constructor(props) {
         super(props)
+        this.pdt = null
         this.filterBoxRef = React.createRef()
         this.addIconRef = React.createRef()
         this.addTaskRef = React.createRef()
@@ -23,7 +24,7 @@ export default class MixedTasks extends Component {
             api_target: 'mixed',
             viewing_as_admin: false,
             target_user_id: null,
-            due_to_check: true
+            due_to_check: true,
         }
     }
 
@@ -61,8 +62,10 @@ export default class MixedTasks extends Component {
         })
     }
 
-    handleMore = (filtering) => {
-        filtering ? this.setState({tasks: {data: [], nextPage: 1, hasMore: true}, already_added_tasks: {}}, () => this.getData(true)) : this.getData()
+    handleMore = (filtering, e) => {
+        if (e.type === "click" || e.keyCode === 13) {
+            filtering ? this.setState({tasks: {data: [], nextPage: 1, hasMore: true}, already_added_tasks: {}}, () => this.getData(true)) : this.getData()
+        }
     }
 
     toggleAddBox = () => {
@@ -74,7 +77,38 @@ export default class MixedTasks extends Component {
     toggle_check = (val) => {
         this.setState(prevState => ({
             [val]: !prevState[val]
-        }))
+        }), () => {
+            if (val === "due_to_check" && this.state.due_to_check === true) {
+                let due_to_input = $("input[name='due_to']")
+                let defate = this.state.task_due_to, now = new Date().valueOf()
+                this.pdt.setDate(defate ? defate : now)
+                due_to_input.val(defate ? defate : now / 1000)
+                this.setState({
+                    task_due_to: due_to_input.val()
+                })
+            }
+        })
+    }
+
+    hoverStateIcon = (e) => {
+        e.stopPropagation()
+        e.target.classList.toggle("fas")
+        e.target.classList.toggle("far")
+    }
+
+    changeTaskState = (workspaceId, taskId, e) => {
+        e.stopPropagation()
+        e.persist()
+        e.preventDefault()
+        let { toggle_task_state_api } = this.props
+        axios.put(toggle_task_state_api.replace("workspaceId", workspaceId).replace("taskId", taskId)).then(res => {
+            sweetSuccess("وضعیت اتمام با موفقیت تغییر یافت")
+            e.target.classList.toggle("fa-times-circle")
+            e.target.classList.toggle("fa-check-circle")
+            e.target.parentElement.nextSibling.innerHTML = res.data.finished_at ? moment(res.data.finished_at).fromNow() : '<i class="fas fa-calendar-times fa-3x"></i>'
+        }).catch(err => {
+            sweetError(err)
+        })
     }
 
     toggleFilterBox = () => {
@@ -87,18 +121,34 @@ export default class MixedTasks extends Component {
         })
     }
 
+    emptyFields = () => {
+        $("#new-task-title").val("")
+        $("#new-task-priority").val("1").change()
+        $("#new-task-members").val([]).change()
+        $("#parent-task-select").val("").change()
+        $("#new-task-project-select").val("").change()
+        $("#new-task-group").val("")
+        const due_to_input = $("input[name='due_to']")
+        let defate = new Date().valueOf()
+        this.pdt.setDate(defate)
+        due_to_input.val(defate / 1000)
+        this.setState({
+            task_due_to: due_to_input.val(),
+            new_task_description: ""
+        })
+    }
+
     addtask = () => {
         let { post_task_api } = this.props, { new_task_description, workspace_users, target_user_id, viewing_as_admin, due_to_check, task_due_to } = this.state
         let title = $("#new-task-title").val(), priority = parseInt($("#new-task-priority").val()), users = $("#new-task-members").val(), related_task = $("#parent-task-select").val() === "0" ? "" : $("#parent-task-select").val(), workspaceId = $("#new-task-project-select").val(), group = $("#new-task-group").val(), due_to = $("input[name='due_to']").val()
-        console.log(users)
         axios.post(post_task_api.replace("workspaceId", workspaceId), {
             title: title,
             priority: priority,
             group: group,
             parent_id: related_task,
             users: users,
-            due_to: !due_to_check ? null : task_due_to,
-            description: new_task_description 
+            due_to: !due_to_check ? null : Math.trunc(task_due_to),
+            description: new_task_description
         }).then(res => {
             let { data } = res
             let usersObj = {}
@@ -120,19 +170,12 @@ export default class MixedTasks extends Component {
                         }),
                         already_added_tasks: Object.assign({}, prevState.already_added_tasks, {
                             [data.id]: data.id
-                        })
+                        }),
                     })
                 })   
             }
-            Swal.default.fire({
-                icon: 'success',
-                title: "موفقیت",
-                text: "مسئولیت جدید ثبت شد",
-                showConfirmButton: true,
-                customClass: {
-                    content: 'persian-text'
-                }
-            })
+            sweetSuccess("مسئولیت جدید ثبت شد")
+            this.emptyFields()
         }).catch(err => {
             sweetError(err)
         })
@@ -192,19 +235,26 @@ export default class MixedTasks extends Component {
             })
         })
         const due_to_input = $("input[name='due_to']");
-        var pdt = $('#task-due-to').persianDatepicker({
+        this.pdt = $('#task-due-to').persianDatepicker({
             format: 'dddd D MMMM YYYY، HH:mm',
             viewMode: 'day',
             onSelect: unix => {
                 due_to_input.val(unix / 1000)
+                this.pdt.setDate(unix)
                 this.setState({
                     task_due_to: due_to_input.val()
                 })
             },
             toolbox:{calendarSwitch:{enabled: true,format: 'YYYY'}},
             calendar:{gregorian: {due_tolocale: 'en'},persian: {locale: 'fa'}},   
-            // minDate: new persianDate().valueOf(),
+            minDate: new persianDate().valueOf(),
             timePicker: {enabled: true,second:{enabled: false},meridiem:{enabled: true}},
+        })
+        let defate = new Date().valueOf()
+        this.pdt.setDate(defate)
+        due_to_input.val(defate / 1000)
+        this.setState({
+            task_due_to: due_to_input.val()
         })
         // here we will use select2, jquery and react states to make a connection between three select2s and the options inside them(warning: do not move this code to another js file(like select2.js) or out of this order)
         const setWorkspaceId = () => {
@@ -240,11 +290,13 @@ export default class MixedTasks extends Component {
         $("#select-user-target").on("select2:select", () => {
             setTargetUser()
         })   
+        $("#select-user-target").on("select2:unselect", () => {
+            setTargetUser()
+        })
     }
 
     render() {
-        let { isGetting, already_added_tasks, workspaces, workspaces_users, selected_workspace, tasks, viewing_as_admin, allUsers, due_to_check } = this.state, { logged_in_user_id } = this.props
-
+        let { isGetting, already_added_tasks, workspaces, workspaces_users, selected_workspace, tasks, viewing_as_admin, allUsers, due_to_check, new_task_description } = this.state, { logged_in_user_id } = this.props
         return (
             <div>
                 {CAN_VIEW_AS_ADMIN &&
@@ -264,7 +316,7 @@ export default class MixedTasks extends Component {
                                     { allUsers ? allUsers.map((user, i) => {
                                         if (user.id !== CurrentUser.id) {
                                             return (
-                                                <option key={i} value={user.id} img_address={user.avatar_pic !== null ? APP_PATH + user.avatar_pic : APP_PATH + 'images/male-avatar.svg'}>{user.fullname}</option>
+                                                <option key={i} value={user.id} img_address={user !== null && user.avatar_pic !== null ? APP_PATH + user.avatar_pic : APP_PATH + 'images/user-avatar.png'}>{user.fullname}</option>
                                             )                                            
                                         }
                                     }) : null }
@@ -284,16 +336,16 @@ export default class MixedTasks extends Component {
                                 <div className="input-group-prepend">
                                     <span className="input-group-text">عنوان</span>
                                 </div>
-                                <input type="text" id="new-task-title" className="form-control" placeholder="عنوان نیاز را در این قسمت وارد کنید" />
+                                <input type="text" id="new-task-title" className="form-control" placeholder="عنوان مسئولیت را در این قسمت وارد کنید" />
                             </div>
-                            <div className="input-group col-12 col-md-6 pl-0 pr-0 pr-md-3 pl-md-3 float-right input-group-single-line-all">
+                            <div className="input-group col-12 col-md-6 pl-0 pr-0 pr-md-3 pl-md-3 mt-3 mt-md-0 float-right input-group-single-line-all">
                                 <div className="input-group-prepend">
                                     <span className="input-group-text">اولویت</span>
                                 </div>
                                 <select id="new-task-priority" defaultValue="1">
                                     <option value="1" icon_name="fas fa-hourglass-end">ضروری و مهم</option>
                                     <option value="2" icon_name="fas fa-hourglass-half">ضروری و غیر مهم</option>
-                                    <option value="3" icon_name="fas fa-hourglass-start">غیر ضروری و غیر مهم</option>
+                                    <option value="3" icon_name="fas fa-hourglass-start">غیر ضروری و مهم</option>
                                     <option value="4" icon_name="fas fa-hourglass">غیر ضروری و غیر مهم</option>
                                 </select>
                             </div>
@@ -301,8 +353,8 @@ export default class MixedTasks extends Component {
                                 <div className="input-group-prepend">
                                     <span className="input-group-text">موعد تحویل</span>
                                 </div>
-                                <input type="hidden" id="new-task-due-to" name="due_to" readOnly={!due_to_check} />
-                                <input type="text" id="task-due-to" className="form-control" readOnly={!due_to_check} />
+                                <input type="hidden" id="new-task-due-to" name="due_to" readOnly={!due_to_check} disabled={!due_to_check} />
+                                <input type="text" id="task-due-to" className="form-control" readOnly={!due_to_check} disabled={!due_to_check} />
                                 <div className="input-group-text">
                                 <input className="c-p" type="checkbox" onChange={this.toggle_check.bind(this, "due_to_check")} defaultChecked={true} />
                             </div>
@@ -321,7 +373,7 @@ export default class MixedTasks extends Component {
                                     <option></option>
                                     {
                                         workspaces && Object.values(workspaces).length > 0 && Object.values(workspaces).map((workspace, i) => (
-                                            <option key={i} value={workspace.id} img_address={APP_PATH + workspace.avatar_pic}>{workspace.title}</option>
+                                            <option key={i} value={workspace.id} img_address={APP_PATH + (workspace.avatar_pic !== null ? workspace.avatar_pic : "images/idea.svg")}>{workspace.title}</option>
                                         ))
                                     }
                                 </select>
@@ -342,7 +394,7 @@ export default class MixedTasks extends Component {
                                     { workspaces_users && selected_workspace ? Object.values(workspaces_users[parseInt(selected_workspace)]).map((user, i) => {
                                         if (user.id !== logged_in_user_id) {
                                             return (
-                                                <option key={i} value={user.id} img_address={APP_PATH + user.avatar_pic} is_admin={user.is_admin}>{user.fullname}</option>
+                                                <option key={i} value={user.id} img_address={APP_PATH + (user && user.avatar_pic ? user.avatar_pic : "images/user-avatar.png") } is_admin={user.is_admin}>{user.fullname}</option>
                                             )                                            
                                         }
                                     }) : null }
@@ -350,7 +402,7 @@ export default class MixedTasks extends Component {
                             </div>
                             <div className="input-group col-12 pl-0 pr-0 mt-3">
                                 <div className="tinymc-container">
-                                    <TinymcEditor changeContent={this.onDescriptionChange} />
+                                    <TinymcEditor changeContent={this.onDescriptionChange} value={new_task_description} />
                                 </div>
                             </div>
                             <div className="text-center mt-2">
@@ -363,7 +415,7 @@ export default class MixedTasks extends Component {
                             <div className="input-group-prepend">
                                 <button className="btn btn-primary" onClick={this.handleMore.bind(this, true)}>جستجو</button>
                             </div>
-                            <input type="text" id="tasks-search-input" className="form-control" placeholder="جستجو در مسئولیت ها"/>
+                            <input type="text" id="tasks-search-input" className="form-control" placeholder="جستجو در مسئولیت ها" onKeyDown={this.handleMore.bind(this, true)} />
                             <div className="input-group-append">
                                 <button className="btn btn-info" onClick={this.toggleFilterBox}>فیلتر ها<i className="fas fa-filter"></i></button>
                             </div>
@@ -396,13 +448,14 @@ export default class MixedTasks extends Component {
                             </select>
                         </div>
                     </div>
-                    <table className="col-12 table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right animated bounce mt-4">
+                    <table className="table table-striped table-bordered table-hover table-responsive w-100 d-block d-md-table float-right animated bounce mt-4">
                         <thead className="thead-dark">
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">عنوان</th>
                                 <th scope="col">پروژه</th>
                                 <th scope="col">دسته بندی</th>
+                                <th scope="col"><i className="fas fa-project-diagram"></i></th>
                                 <th scope="col">انجام دهندگان</th>
                                 <th scope="col">اولویت</th>
                                 <th scope="col">موعد تحویل</th>
@@ -412,54 +465,57 @@ export default class MixedTasks extends Component {
                         </thead>
                         <tbody>
                         {tasks && tasks.data.length > 0 && tasks.data.map((task, i) => {
-                            let { title, priority_id, due_to, finished_at, id, users, workspace, group, workspace_id } = task
+                            let { title, priority_id, due_to, finished_at, id, users, workspace, group, workspace_id, parent_id } = task
                             return (
                                 <tr key={i} className="animated fadeIn" onClick={() => redirectTo(getTask(id))}>
-                                    <th scope="row">{i + 1}</th>
-                                    <td>{ title }</td>
-                                    <td className="text-right">
-                                        <img className="workspace_avatar" src={APP_PATH + workspace.avatar_pic} />
-                                        <a href={getWorkspace(workspace_id)}>{workspace.title}</a>
-                                    </td>
-                                    <td>{group}</td>
-                                    <td>
-                                        <div className="employees-container horizontal-centerlize">
-                                            {users.length === 0 && <i className="fas fa-user-slash"></i>}
-                                            {users.length === 1 && <span>{ users.length }<i className="fas fa-user mr-2"></i></span>}
-                                            {users.length > 1 && <span>{ users.length }<i className="fas fa-users mr-2"></i></span>}
-                                            <div className="dropdown-users d-none" onClick={(e) => e.stopPropagation()}>
-                                            {users.length >= 1 && users.map((user, i) => (
-                                                <div key={i} className="user-dropdown-item animated jackInTheBox">
-                                                    <div className="user-right-flex">
-                                                        <div className="user-img-container ml-2">
-                                                            <img src={user.avatar_pic !== null ? APP_PATH + user.avatar_pic : APP_PATH + 'images/male-avatar.svg'} />
+                                    <a href={getTask(id)} className="d-contents">
+                                        <th scope="row">{i + 1}</th>
+                                        <td>{ title }</td>
+                                        <td className="text-right">
+                                            <img className="workspace_avatar" src={APP_PATH + (workspace.avatar_pic !== null ? workspace.avatar_pic : "images/idea.svg")} />
+                                            <a href={getWorkspace(workspace_id)}>{workspace.title}</a>
+                                        </td>
+                                        <td>{group}</td>
+                                        <td>{parent_id && <a className="btn btn-sm btn-warning" href={getTask(parent_id)}><i className="fas fa-eye mt-1"></i></a>}</td>
+                                        <td>
+                                            <div className="employees-container horizontal-centerlize">
+                                                {users.length === 0 && <i className="fas fa-user-slash"></i>}
+                                                {users.length === 1 && <span>{ users.length }<i className="fas fa-user mr-2"></i></span>}
+                                                {users.length > 1 && <span>{ users.length }<i className="fas fa-users mr-2"></i></span>}
+                                                <div className="dropdown-users d-none" onClick={(e) => e.stopPropagation()}>
+                                                {users.length >= 1 && users.map((user, i) => (
+                                                    <div key={i} className="user-dropdown-item animated jackInTheBox">
+                                                        <div className="user-right-flex">
+                                                            <div className="user-img-container ml-2">
+                                                                <img src={user !== null && user.avatar_pic !== null ? APP_PATH + user.avatar_pic : APP_PATH + 'images/user-avatar.png'} />
+                                                            </div>
+                                                            <div className="user-info ml-2">
+                                                                <p>{ user.fullname }</p>
+                                                                <a href={getUser(user.id)}>@{user.name}</a>
+                                                            </div>
                                                         </div>
-                                                        <div className="user-info ml-2">
-                                                            <p>{ user.fullname }</p>
-                                                            <a href={"#user"}>@{user.name}</a>
+                                                        <div className="user-label-container">
+                                                            {workspaces_users && workspaces_users[workspace_id][user.id].is_admin === 1 
+                                                            ? <button className="btn btn-sm btn-success rtl admin"><span>ادمین<i className="fas fa-user-tie mr-1"></i></span></button>
+                                                            : <button className="btn btn-sm btn-primary rtl"><span>عضو<i className="fas fa-user mr-1"></i></span></button>
+                                                            } 
                                                         </div>
                                                     </div>
-                                                    <div className="user-label-container">
-                                                        {workspaces_users && workspaces_users[workspace_id][user.id].is_admin === 1 
-                                                        ? <button className="btn btn-sm btn-success rtl admin"><span>ادمین<i className="fas fa-user-tie mr-1"></i></span></button>
-                                                        : <button className="btn btn-sm btn-primary rtl"><span>عضو<i className="fas fa-user mr-1"></i></span></button>
-                                                        } 
-                                                    </div>
+                                                ))}
                                                 </div>
-                                            ))}
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td>{ setPriority(priority_id) }</td>
-                                    <td>
-                                        {due_to !== null ? moment(due_to).fromNow() : <i className="fas fa-calendar-minus  fa-3x"></i>}
-                                    </td>
-                                    <td>
-                                        {finished_at === null ? <i className="fas fa-times-circle fa-3x"></i> : <i className="fas fa-check-circle fa-3x"></i>}
-                                    </td>
-                                    <td>
-                                        {finished_at === null ? <i className="fas fa-calendar-times fa-3x"></i> : moment(finished_at).fromNow()}
-                                    </td>
+                                        </td>
+                                        <td>{ setPriority(priority_id) }</td>
+                                        <td>
+                                            {due_to !== null ? moment(due_to).fromNow() : <i className="fas fa-calendar-minus  fa-3x"></i>}
+                                        </td>
+                                        <td>
+                                            {finished_at === null ? <i className="fas fa-times-circle fa-3x finished-status-icon" onClick={this.changeTaskState.bind(this, workspace_id, id)} onMouseEnter={this.hoverStateIcon.bind(this)} onMouseLeave={this.hoverStateIcon.bind(this)}></i> : <i className="fas fa-check-circle fa-3x finished-status-icon" onClick={this.changeTaskState.bind(this, workspace_id, id)} onMouseEnter={this.hoverStateIcon.bind(this)} onMouseLeave={this.hoverStateIcon.bind(this)}></i>}
+                                        </td>
+                                        <td>
+                                            {finished_at === null ? <i className="fas fa-calendar-times fa-3x"></i> : moment(finished_at).fromNow()}
+                                        </td>
+                                    </a>
                                 </tr>
                             )
                         })}

@@ -179,16 +179,16 @@ export default class Dashboard extends Component {
 
     render() {
         let { mixed_tasks, statistics, isGetting, workspaces, navbar, mixed_demands, mixed_needs, workspaces_users } = this.state
-        let { workspace_route, task_route, demand_show_route, user_profile_route } = this.props
+        let { workspace_route, task_route, demand_show_route, user_profile_route, toggle_task_state_api } = this.props
         return (
             <div>
-                <div className="analysis-boxes analysis-container">
+                <div className="analysis-boxes col-12 analysis-container">
                     <CounterTab Title="پروژه های من" Item={statistics.workspaceCounter ? statistics.workspaceCounter.all : null} CustomClasses="projects" Icon="fas fa-project-diagram"/>
                     <CounterTab Title="وظایف انجام شده" Item={statistics.taskCounter ? statistics.taskCounter.finished : null} CustomClasses="finished-tasks" Icon="fas fa-check-double"/>
-                    <CounterTab Title="نیازهای جاری" Item={statistics.demandCounter ? statistics.demandCounter.demands.unfinished : null} CustomClasses="finished-demands" Icon="fas fa-check"/>
+                    <CounterTab Title="نیازهای جاری" Item={statistics.demandCounter ? statistics.demandCounter.demands.unfinished : null} CustomClasses="finished-demands" Icon="fas fa-clipboard-list"/>
                     <CounterTab Title="وظایف عقب افتاده" Item={statistics.taskCounter ? statistics.taskCounter.expired : null} CustomClasses="delayed-tasks" Icon="fas fa-hourglass-end"/>
                     <CounterTab Title="وظایف جاری" Item={statistics.taskCounter ? statistics.taskCounter.unfinished : null} CustomClasses="current-tasks" Icon="fas fa-tasks"/>
-                    <CounterTab Title="خواسته های جاری" Item={statistics.demandCounter ? statistics.demandCounter.asked_demands.unfinished : null} CustomClasses="current-demands" Icon="fas fa-list-alt"/>
+                    <CounterTab Title="خواسته های جاری" Item={statistics.demandCounter ? statistics.demandCounter.asked_demands.unfinished : null} CustomClasses="current-demands" Icon="fas fa-comment-dots"/>
                 </div>
                 <div className="col-12 dashboard-tab-container">
                     <nav className="tab-title-bar text-center">
@@ -201,20 +201,20 @@ export default class Dashboard extends Component {
                             )
                         })}
                     </nav>
-                    <div className="result-container col-12 mt-3 active" ref={this.tabResultsRef[0]}>
+                    <div className="result-container mt-3 active" ref={this.tabResultsRef[0]}>
                         {isGetting
                             ? <div className="text-center"><Digital color="#000000" size={24} /></div>
                             : <Workspaces AllWorkspaces={workspaces} Route={workspace_route} />
                         }
                     </div>
-                    <div className="result-container col-12 mt-3" ref={this.tabResultsRef[1]}>
-                        <Tasks AllTasks={mixed_tasks} Route={task_route} workspace_route={workspace_route} sortData={(tab) => this.sortData.bind(this, tab)} isGetting={isGetting} workspaces_users={workspaces_users} />
+                    <div className="result-container mt-3" ref={this.tabResultsRef[1]}>
+                        <Tasks AllTasks={mixed_tasks} Route={task_route} workspace_route={workspace_route} sortData={(tab) => this.sortData.bind(this, tab)} isGetting={isGetting} workspaces_users={workspaces_users} toggle_task_state_api={toggle_task_state_api} />
                     </div>
-                    <div className="result-container col-12 mt-3" ref={this.tabResultsRef[2]}>
+                    <div className="result-container mt-3" ref={this.tabResultsRef[2]}>
                         <Demands mixed_demands={mixed_demands} demand_show_route={demand_show_route} task_route={task_route} workspace_route={workspace_route} sortData={(tab) => this.sortData.bind(this, tab)} user_profile_route={user_profile_route} isGetting={isGetting} workspaces_users={workspaces_users} />
                     </div>
 
-                    <div className="result-container col-12 mt-3" ref={this.tabResultsRef[3]}>
+                    <div className="result-container mt-3" ref={this.tabResultsRef[3]}>
                         <Demands mixed_needs={mixed_needs} demand_show_route={demand_show_route} task_route={task_route} workspace_route={workspace_route} sortData={(tab) => this.sortData.bind(this, tab)} user_profile_route={user_profile_route} isGetting={isGetting} workspaces_users={workspaces_users} />
                     </div>
                 </div>

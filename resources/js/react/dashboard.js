@@ -13,6 +13,7 @@ const mixedDemands = target.getAttribute("mixed_demands")
 const mixedTasks = target.getAttribute("mixed_tasks")
 const demand_show_route = target.getAttribute("demand-show-route")
 const user_profile_route = target.getAttribute("user-profile-route")
+const toggleTaskStateApi = target.getAttribute("toggle-task-state-api")
 
 if (target) {
     ReactDom.render(
@@ -27,6 +28,7 @@ if (target) {
             mixedDemandsApi={mixedDemands}
             demand_show_route={demand_show_route}
             user_profile_route={user_profile_route}
+            toggle_task_state_api={toggleTaskStateApi}
         />
     ,target)
 }

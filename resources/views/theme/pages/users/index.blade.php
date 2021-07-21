@@ -25,12 +25,12 @@
         @endcomponent
         @component('theme.tools.table-body')
             @foreach ($users as $user)
-                <tr>
+                <tr onclick="getUser({{ $user->id }})">
                     <th scope="row">
                         {{ $loop->index + 1 }}
                     </th>
                     <td class="text-right">
-                        <img src="{{ asset($user->avatar_pic ?: 'images/male-avatar.svg') }}" alt="" style="height: 30px; widh: 30px;">
+                        <img src="{{ asset($user->avatar_pic ?: 'images/user-avatar.png') }}" alt="" style="height: 30px; widh: 30px;">
                         {{ $user->fullname }}
                     </td>
                     <td>
@@ -68,7 +68,7 @@
                             <form action="{{ route('task-manager.users.destroy', ['user' => $user->id]) }}" method="post">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-danger">
+                                <button type="submit" class="btn btn-sm btn-danger delete-btn" deleting-item="user">
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </form>
@@ -84,3 +84,17 @@
         {{ $users->links() }}
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        $("table").addClass("table-hover")
+        function getUser(userId) {
+            window.location.href = USER_ROUTE.replace('userId', userId)
+        }
+    </script>
+    @if (config('app.env') == 'local')
+    <script src="{{ asset('js/confirmDelete.js') }}"></script> 
+    @else
+    <script src="{{ asset(mix('js/confirmDelete.js')) }}"></script>
+    @endif
+@endpush

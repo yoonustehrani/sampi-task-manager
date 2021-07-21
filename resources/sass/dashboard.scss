@@ -202,7 +202,7 @@ div.employees-container {
     }
     div.user-dropdown-item {
         position: relative;
-        z-index: 99;
+        z-index: 100;
         box-shadow: 4px 4px 5px 0px #8e9eab;
         width: max-content;
         background-color: #D7DDE8;
@@ -237,7 +237,7 @@ div.employees-container {
                 justify-content: flex-start;
                 align-items: flex-start;
                 > a {
-                    direction: ltr;
+                    direction: ltr !important;
                     color: #000000;
                     cursor: pointer;
                     transition: 0.3s;
