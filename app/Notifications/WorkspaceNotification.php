@@ -75,7 +75,7 @@ class WorkspaceNotification extends Notification
             if ($this->workspace->avatar_pic) {
                 $res = $tg->sendPhoto(
                     $chat_id,
-                    config('app.url') . "$this->workspace->avatar_pic}",
+                    config('app.url') . "/$this->workspace->avatar_pic}",
                     ['parse_mode' => 'HTML', 'caption' => trim($text), 'reply_markup' => json_encode($keyboard)]
                 );
             } else {
