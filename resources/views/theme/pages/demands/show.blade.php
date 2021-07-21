@@ -33,7 +33,7 @@
                         <b>از :</b>
                         @if ($demand->from)
                             <a href="{{ route('task-manager.users.show', ['user' => $demand->from->id]) }}" class="avatar-pic text-secondary">
-                                <img src="{{ asset($demand->from->avatar_pic ?: 'images/male-avatar.svg') }}" alt="">
+                                <img src="{{ asset($demand->from->avatar_pic ?: 'images/user-avatar.png') }}" alt="">
                                 @if($demand->from->id == auth()->user()->id) من @else {{ $demand->from->fullname }} @endif
                             </a>
                         @else
@@ -44,7 +44,7 @@
                         <b>به :</b>
                         @if ($demand->to)
                             <a href="{{ route('task-manager.users.show', ['user' => $demand->to->id]) }}" class="avatar-pic text-secondary">
-                                <img src="{{ asset($demand->to->avatar_pic ?: 'images/male-avatar.svg') }}" alt="">
+                                <img src="{{ asset($demand->to->avatar_pic ?: 'images/user-avatar.png') }}" alt="">
                                 @if($demand->to->id == auth()->user()->id) من @else {{ $demand->to->fullname }} @endif
                             </a>
                         @else
@@ -143,7 +143,7 @@
                     <div class="box-body-row col-12">
                         <b>پروژه :</b>
                         <a href="{{ route('task-manager.workspaces.show', ['workspace' => $demand->task->workspace->id]) }}" title="{{ $demand->task->workspace->title }}" class="avatar-pic text-secondary">
-                            <img src="{{ asset($demand->task->workspace->avatar_pic ?: 'male-avatar.svg') }}" alt="{{ $demand->task->workspace->title }}">
+                            <img src="{{ asset($demand->task->workspace->avatar_pic ?: 'images/idea.svg') }}" alt="{{ $demand->task->workspace->title }}">
                             {{ $demand->task->workspace->title }}
                         </a>
                     </div>

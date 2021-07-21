@@ -72,7 +72,7 @@ class DemandMessageCreatedNotification extends Notification
         }
         $text = "
 پیام جدید از سوی {$from} برای درخواست <b>{$demand->title}</b> ارسال شده است.
-Sampi Task Manager (http://ourobot.ir)";
+Sampi Task Manager";
         $tg = new TelegramBot(config('services.telegram.task_manager.bot_token'));
         $keyboard = [
             'inline_keyboard' => [[
@@ -87,7 +87,7 @@ Sampi Task Manager (http://ourobot.ir)";
             if ($demand->workspace->avatar_pic) {
                 $res = $tg->sendPhoto(
                     $chat_id,
-                    "http://ourobot.ir/{$demand->workspace->avatar_pic}",
+                    config('app.url') . "$demand->workspace->avatar_pic}",
                     ['parse_mode' => 'HTML', 'caption' => trim($text), 'reply_markup' => json_encode($keyboard)]
                 );
             } else {
