@@ -3,6 +3,7 @@
 namespace App\Notifications;
 
 use App\Http\Tools\TelegramBot;
+use App\Traits\TelegramEmojies;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -10,7 +11,7 @@ use Illuminate\Notifications\Notification;
 
 class DemandFinishedNotification extends Notification
 {
-    use Queueable;
+    use Queueable, TelegramEmojies;
     public $via;
     public $demand;
     /**
@@ -68,7 +69,9 @@ class DemandFinishedNotification extends Notification
             }
         }
         $text = "
-{$notifiable->fullname} عزیز
+{$this->emojies['person']}{$notifiable->fullname} عزیز
+
+
 درخواست شما تحت عنوان <b>{$demand->title}</b> توسط {$to} بسته شده است.
 - پروژه <a href=\"{$workspace_url}\">{$demand->workspace->title}</a>
 
@@ -91,7 +94,7 @@ Sampi Task Manager";
             if ($demand->workspace->avatar_pic) {
                 $res = $tg->sendPhoto(
                     $chat_id,
-                    config('app.url') . "$demand->workspace->avatar_pic}",
+                    config('app.url') . "/{$demand->workspace->avatar_pic}",
                     ['parse_mode' => 'HTML', 'caption' => trim($text), 'reply_markup' => json_encode($keyboard)]
                 );
             } else {

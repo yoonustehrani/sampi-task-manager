@@ -7,10 +7,11 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use App\Traits\TelegramEmojies;
 
 class DemandMessageCreatedNotification extends Notification
 {
-    use Queueable;
+    use Queueable, TelegramEmojies;
     public $via;
     public $demand;
     public $message;
@@ -51,7 +52,7 @@ class DemandMessageCreatedNotification extends Notification
         return (new MailMessage)
                     ->greeting("{$notifiable->fullname} عزیز سلام")
                     ->subject("پیام جدید از طرف {$message->user->fullname}")
-                    ->line("پیام جدید از سوی {$message->user->fullname} برای درخواست {$demand->title} ارسال شده است.")
+                    ->line("پیام جدید از طرف {$message->user->fullname} برای درخواست {$demand->title} ارسال شده است.")
                     ->action('مشاهده پیام', $demand_url)
                     ->line('موفق و سربلند باشید !');
     }
@@ -61,7 +62,7 @@ class DemandMessageCreatedNotification extends Notification
         $chat_id = $notifiable->telegram_chat_id;
         $demand = $this->demand;
         $message = $this->message;
-        $demand_url = "http://ourobot.ir/task-manager/workspaces/{$demand->workspace_id}/demands/{$demand->id}";    
+        $demand_url = route('task-manager.demands.show', ['workspace' => $demand->workspace_id, 'demand' => $demand->id]);
         $from = "";
         if ($message->user) {
             if ($message->user->telegram_chat_id) {
@@ -71,7 +72,7 @@ class DemandMessageCreatedNotification extends Notification
             }
         }
         $text = "
-پیام جدید از سوی {$from} برای درخواست <b>{$demand->title}</b> ارسال شده است.
+{$this->emojies['mailbox_with_mail']} پیام جدید از طرف {$from} برای درخواست <b>{$demand->title}</b> ارسال شده است.
 Sampi Task Manager";
         $tg = new TelegramBot(config('services.telegram.task_manager.bot_token'));
         $keyboard = [
@@ -87,7 +88,7 @@ Sampi Task Manager";
             if ($demand->workspace->avatar_pic) {
                 $res = $tg->sendPhoto(
                     $chat_id,
-                    config('app.url') . "$demand->workspace->avatar_pic}",
+                    config('app.url') . "/{$demand->workspace->avatar_pic}",
                     ['parse_mode' => 'HTML', 'caption' => trim($text), 'reply_markup' => json_encode($keyboard)]
                 );
             } else {

@@ -14,23 +14,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['prefix' => 'task-manager', 'as' => 'api.task-manager.'], function () {
-    Route::get('priorities', function() {
-        return \App\Priority::all();
-    })->name('priorities.index');
-    Route::get('permissions/all', function () {
-        return \App\Permission::all();
-    })->name('permissions.index');
-    Route::get('roles/all', function () {
-        return \App\Role::all();
-    })->name('roles.index');
-    Route::get('users/{user}/roles', function ($user) {
-        return \App\User::findOrFail($user)->roles()->get();
-    })->name('user.roles');
-    Route::get('roles/{role}/permissions', function ($role) {
-        return \App\Role::findOrFail($role)->permissions()->get();
-    })->name('role.permissions');
-    Route::group(['middleware' => ['auth:api']], function () {
-        $api_controllers = '\\App\\Http\\Controllers\\Api\\';
+    $api_controllers = '\\App\\Http\\Controllers\\Api\\';
+    Route::get('priorities', $api_controllers . 'BaseController@priorities')->name('priorities.index');
+    Route::get('permissions/all', $api_controllers . 'BaseController@permissions')->name('permissions.index');
+    Route::get('roles/all', $api_controllers . 'BaseController@roles')->name('roles.index');
+    Route::get('users/{user}/roles', $api_controllers . 'UserController@roles')->name('user.roles');
+    Route::get('roles/{role}/permissions', $api_controllers . 'BaseController@role_permissions')->name('role.permissions');
+    Route::group(['middleware' => ['auth:api']], function () use($api_controllers) {
         Route::apiResource('workspaces', $api_controllers . 'WorkspaceController');
         Route::get('workspaces/{workspace}/task_groups', $api_controllers . 'WorkspaceController@groups')->name('workspaces.groups');
         Route::apiResource('workspaces/{workspace}/tasks', $api_controllers . 'TaskController');

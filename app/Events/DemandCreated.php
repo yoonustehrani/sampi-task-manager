@@ -26,5 +26,4 @@ class DemandCreated
         $this->demand = $demand;
     }
 
-
 }
