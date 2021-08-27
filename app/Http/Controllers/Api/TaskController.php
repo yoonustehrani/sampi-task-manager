@@ -230,4 +230,10 @@ class TaskController extends BaseController
             return $task;
         }
     }
+
+    public function remind(Request $request, Task $task)
+    {
+        $this->authorize('delete', $task);
+
+    }
 }

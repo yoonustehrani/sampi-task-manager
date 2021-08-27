@@ -7,6 +7,7 @@ use App\DemandMessage;
 use App\Events\DemandCreated;
 use App\Events\DemandFinished;
 use App\Events\DemandMessageCreated;
+use App\Events\DemandReminded;
 use App\User;
 use App\Workspace;
 use Illuminate\Http\Request;
@@ -233,5 +234,13 @@ class DemandController extends BaseController
         return response()->json([
             'okay' => false
         ], 500);
+    }
+    public function remind(Request $request, Demand $demand)
+    {
+        $this->authorize('view', $demand);
+        $side = $request->side == 'to' ? 'to' : 'from';
+        $demand->load('from', 'to');
+        event(new DemandReminded($demand, $side, $request->user()));
+        return ['okay' => true];
     }
 }
