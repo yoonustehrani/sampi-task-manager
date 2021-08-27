@@ -2,8 +2,6 @@
 
 namespace App\Events;
 
-use App\Demand;
-use App\DemandMessage;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -12,18 +10,18 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class DemandCreated
+class TaskReminded
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-    public $demand;
+
+    public $task;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(Demand $demand)
+    public function __construct($task)
     {
-        $this->demand = $demand;
+        $this->task = $task;
     }
-
 }

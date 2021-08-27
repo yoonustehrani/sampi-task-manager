@@ -36,6 +36,9 @@
                                 <img src="{{ asset($demand->from->avatar_pic ?: 'images/user-avatar.png') }}" alt="">
                                 @if($demand->from->id == auth()->user()->id) من @else {{ $demand->from->fullname }} @endif
                             </a>
+                            @if($demand->from_id !== auth()->user()->id && ! $demand->finished_at)
+                            <button id="reminder-button" data-remind="{{ route('api.task-manager.demands.remind', ['demand' => $demand->id, 'side' => 'from', 'api_token' => auth()->user()->api_token]) }}" class="btn btn-sm btn-outline-success">یادآوری</button>
+                            @endif
                         @else
                             <i class="fas fa-user-slash"></i>
                         @endif
@@ -47,12 +50,20 @@
                                 <img src="{{ asset($demand->to->avatar_pic ?: 'images/user-avatar.png') }}" alt="">
                                 @if($demand->to->id == auth()->user()->id) من @else {{ $demand->to->fullname }} @endif
                             </a>
+                            @if($demand->to_id !== auth()->user()->id && ! $demand->finished_at)
+                            <button id="reminder-button" data-remind="{{ route('api.task-manager.demands.remind', ['demand' => $demand->id, 'side' => 'to', 'api_token' => auth()->user()->api_token]) }}" class="btn btn-sm btn-outline-success">یادآوری</button>
+                            @endif
                         @else
                             <i class="fas fa-user-slash"></i>
                         @endif
                     </div>
+                    @if (auth()->user()->id == $demand->from_id || auth()->user()->id == $demand->to_id)
+                    <div class="box-body-row col-12 mt-3 text-center">
+                        
+                    </div>
+                    @endif
                     @can('delete', $demand)
-                    <div class="box-body-row col-12 text-center">
+                    <div class="box-body-row col-12 mt-3 text-center">
                         <form action="{{ route('task-manager.demands.destroy', ['demand' => $demand->id, 'workspace' => $workspace->id]) }}" method="post">
                         @csrf
                         @method('DELETE')

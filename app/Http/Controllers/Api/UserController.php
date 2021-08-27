@@ -19,4 +19,8 @@ class UserController extends Controller
         $this->authorize('view', $user);
         return $user;
     }
+    public function roles($user)
+    {
+        return \App\User::findOrFail($user)->roles()->get();
+    }
 }

@@ -19,4 +19,20 @@ class BaseController extends Controller
         }
         return $model;
     }
+    public function role_permissions($role)
+    {
+        return \App\Role::findOrFail($role)->permissions()->get();
+    }
+    public function roles()
+    {
+        return \App\Role::all();
+    }
+    public function permissions()
+    {
+        return \App\Permission::all();
+    }
+    public function priorities()
+    {
+        return \App\Priority::all();
+    }
 }

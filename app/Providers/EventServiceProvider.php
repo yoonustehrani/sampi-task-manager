@@ -61,8 +61,14 @@ class EventServiceProvider extends ServiceProvider
             \App\Listeners\SendDemandMessageCreatedNotification::class
         ],
         \App\Events\DemandFinished::class => [
-            '\App\Listeners\SendDemandFinishedNotification'
+            \App\Listeners\SendDemandFinishedNotification::class
         ],
+        \App\Events\DemandReminded::class => [
+            \App\Listeners\SendDemandRemindedNotification::class
+        ],
+        \App\Events\TaskReminded::class => [
+            \App\Listeners\SendTaskRemindedNotification::class
+        ]
     ];
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Notifications;
 
 use App\Http\Tools\TelegramBot;
+use App\Traits\TelegramEmojies;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -10,7 +11,7 @@ use Illuminate\Notifications\Notification;
 
 class DemandCreatedNotification extends Notification
 {
-    use Queueable;
+    use Queueable, TelegramEmojies;
     public $via;
     public $demand;
     /**
@@ -69,8 +70,10 @@ class DemandCreatedNotification extends Notification
             }
         }
         $text = "
-{$notifiable->fullname} عزیز
-درخواستی جدید با عنوان <b>{$demand->title}</b> در پروژه <a href=\"{$workspace_url}\">{$demand->workspace->title}</a> در سیستم مدیریت پروژه Sampi ایجاد شده است.
+{$this->emojies['person']}{$notifiable->fullname} عزیز
+
+
+{$this->emojies['letter-in']} {$this->emojies['new']} درخواستی جدید با عنوان <b>{$demand->title}</b> در پروژه <a href=\"{$workspace_url}\">{$demand->workspace->title}</a> در سیستم مدیریت پروژه Sampi ایجاد شده است.
 {$from}
 Sampi Task Manager";
         $tg = new TelegramBot(config('services.telegram.task_manager.bot_token'));
