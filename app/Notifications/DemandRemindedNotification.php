@@ -62,7 +62,6 @@ class DemandRemindedNotification extends Notification
         $chat_id = $notifiable->telegram_chat_id;
         $demand = $this->demand;
         $demand_url = route('task-manager.demands.show', ['workspace' => $demand->workspace_id, 'demand' => $demand->id]);
-        $demand_url = str_replace('localhost', 'localhost.net', $demand_url);
         $reminder = $this->reminder->telegram_chat_id ? "<a href=\"tg://user?id={$this->reminder->telegram_chat_id}\">{$this->reminder->fullname}</a>" : "{$this->reminder->fullname}";
         $text = "{$this->emojies['bell']} {$reminder} از شما خواسته است تا درخواست {$demand->title} را هرچه سریعتر بررسی کنید
 \nباتشکر
