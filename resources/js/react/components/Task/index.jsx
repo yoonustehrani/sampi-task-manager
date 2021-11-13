@@ -460,7 +460,7 @@ export default class ShowTask extends Component {
                                         <ul className="child-tasks">
                                             {
                                                 task.children.map((child, index) => (
-                                                    <li key={index}><a href={getTask(child.id)}>{ child.title }</a></li>
+                                                    <li key={index}><a href={getTask(child.id)} className={child.finished_at ? "text-success" : ""}>{ child.title }</a></li>
                                                 ))
                                             }
                                         </ul>
